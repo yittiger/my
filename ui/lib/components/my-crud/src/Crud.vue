@@ -255,6 +255,15 @@
          */
         this.$emit('error', type, message)
       },
+      emitSuccess(type, message) {
+        /**
+         * 请求成功时触发
+         * @event success
+         * @param {string} type 请求方法名，如 fetch/get/update/remove/batch
+         * @param {*} message 响应数据
+         */
+        this.$emit('success', type, message)
+      },
       loader(page, limit) {
         if (!this.dataAdapter.fetch) {
           return Promise.reject(new Error('缺少fetch方法'))
@@ -263,7 +272,10 @@
           page,
           limit,
           ...this.currentQuery
-        }, this)
+        }, this).then(res => {
+          this.emitSuccess('fetch', res)
+          return res
+        })
           .catch(e => {
             this.emitError('fetch', e)
           })
@@ -280,6 +292,7 @@
               ...row,
               ...res
             })
+            this.emitSuccess('get', res)
           })
           .catch(e => {
             this.emitError('get', e)
@@ -302,10 +315,11 @@
             row,
             index: 0
           })
-            .then(() => {
+            .then(res => {
               this.formDialogVisible = false
               this.currentRow = null
               this.reload()
+              this.emitSuccess('update', res)
             })
             .catch(e => {
               this.emitError('update', e)
@@ -316,9 +330,10 @@
             row,
             index: 0
           })
-            .then(() => {
+            .then(res => {
               this.formDialogVisible = false
               this.refresh()
+              this.emitSuccess('add', res)
             })
             .catch(e => {
               this.emitError('add', e)
@@ -354,22 +369,19 @@
         if (handle.remove) {
           this.$confirm('此操作将删除该条数据，是否继续？', '提示', {
             type: 'warning'
+          }).then(() => {
+            this.dataAdapter.remove({
+              row,
+              index
+            }).then(res => {
+              this.currentRow = null
+              this.reload()
+              this.emitSuccess('remove', res)
+            }).catch(e => {
+              this.emitError('remove', e)
+            })
+          }).catch(e => {
           })
-            .then(() => {
-              this.dataAdapter.remove({
-                row,
-                index
-              })
-                .then(() => {
-                  this.currentRow = null
-                  this.reload()
-                })
-                .catch(e => {
-                  this.emitError('add', e)
-                })
-            })
-            .catch(e => {
-            })
         }
         /**
          * 点击操作列按钮触发
@@ -412,14 +424,14 @@
         this.dataAdapter.batch({
           rows,
           indexes
+        }).then(res => {
+          this.reload()
+          this.emitSuccess('batch', res)
+        }).catch(e => {
+          this.emitError('batch', e)
+        }).finally(() => {
+          message.close()
         })
-          .then(this.reload)
-          .catch(e => {
-            this.emitError('batch', e)
-          })
-          .finally(() => {
-            message.close()
-          })
       }
     },
     created() {
