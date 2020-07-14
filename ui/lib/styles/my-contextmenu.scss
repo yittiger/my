@@ -1,0 +1,14 @@
+@import "~v-contextmenu/dist/index.css";
+@import "common/var";
+
+@include b(contextmenu) {
+  @include e(placeholder) {
+    display: inline-block;
+    width: 20px;
+    vertical-align: top !important;
+  }
+}
+
+.v-contextmenu-group__menus > .v-contextmenu-item > .my-contextmenu__placeholder {
+  width: auto;
+}

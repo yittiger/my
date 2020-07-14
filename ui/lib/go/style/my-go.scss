@@ -1,0 +1,82 @@
+@import "./vars";
+.my-go {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  
+  .my-go__menu {
+    background: $my-go-menu-background;
+    color: $my-go-menu-color;
+    z-index: 999;
+    border-radius: 5px;
+  }
+  .my-go__box {
+    cursor: pointer;
+    background-color: $my-go-box-color;
+    padding: 0;
+    margin: $my-go-box-margin;
+    min-width: $my-go-box-width;
+    border-radius: $my-go-box-radius;
+    border: 1px solid $my-go-box-border-color;
+    font-size: $my-go-box-fontsize;
+    display: inline-block;
+    padding: $my-go-box-padding;
+    text-align: center;
+    .box {
+      margin-top: -8px;
+    }
+    .icon-con {
+      height: 40px;
+      line-height: 40px;
+    }
+    &.disabled {
+      cursor: not-allowed;
+      color: $my-go-box-disabled-color;
+    }
+    .submenu {
+      color: $my-go-box-text-color;
+      display: block;
+      margin-top: -8px;
+      .disabled {
+        cursor: not-allowed;
+        color: $my-go-box-disabled-color;
+        pointer-events: none;
+      }
+    }
+  }
+  
+  .my-go__dropdown.el-dropdown-menu {
+    padding: 5px 0;
+    border: 1px solid $my-go-dropdown-border-color;
+    background-color: $my-go-dropdown-background;
+    .el-dropdown-menu__item {
+      line-height: 25px;
+      color: $my-go-dropdown-text-color;
+      &.is-disabled {
+        color: $my-go-dropdown-disabled-color;
+      }
+      &:not(.is-disabled):hover,
+      &.active {
+        background-color: $my-go-dropdown-active-color;
+        color: #fff;
+      }
+    }
+    & /deep/ .popper__arrow {
+      border-bottom-color: $my-go-popover-border-color;
+      &:after {
+        border-bottom-color: $my-go-popover-border-color2;
+      }
+    }
+  }
+  .my-go__tips {
+    &.el-alert--warning.is-light {
+      position: fixed;
+      top: 10px;
+      z-index: 999;
+      width: 400px;
+      left: 50%;
+      margin-left: -200px;
+    }
+  }
+  
