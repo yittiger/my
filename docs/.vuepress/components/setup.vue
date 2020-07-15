@@ -43,6 +43,14 @@
           location.href = url
         }
       }
+    },
+    mounted() {
+      this.$notify({
+        title: '版本更新',
+        message: 'v4.0 正式版已发布',
+        type: 'success',
+        duration: 3000
+      })
     }
   }
 </script>
