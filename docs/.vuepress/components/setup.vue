@@ -33,6 +33,7 @@
 
 <script>
 
+  let notify = null
   export default {
     name: 'setup',
     methods: {
@@ -45,7 +46,10 @@
       }
     },
     mounted() {
-      this.$notify({
+      if (notify) {
+        notify.close()
+      }
+      notify = this.$notify({
         title: '版本更新',
         message: 'v4.0 正式版已发布',
         type: 'success',
@@ -67,7 +71,7 @@
     height: 100%;
 
     &__title {
-      margin: 0;
+      margin: 4rem 0 0 0;
     }
 
     &__descrition {
