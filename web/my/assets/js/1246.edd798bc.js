@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[1246],{2784:function(t,e,a){"use strict";a.r(e);a(1707),a(298);var n=a(2093);a(0).default.use(n.a);var r={},s=a(39),l=Object(s.a)(r,(function(){var t=this.$createElement,e=this._self._c||t;return e("my-watermark",{attrs:{text:"水印文本"}},[e("div",{staticStyle:{height:"400px"}})])}),[],!1,null,null,null);e.default=l.exports}}]);

@@ -1,5 +1,5 @@
 <template>
-  <my-wrapper title="页面模板"></my-wrapper>
+  <my-wrapper title="Hello MyUI"></my-wrapper>
 </template>
 
 <script>

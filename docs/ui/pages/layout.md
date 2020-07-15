@@ -1,8 +1,7 @@
-# 后台管理页面框架布局
+#  页面框架
 
-## layout-01
-<PageLoader page="layout-01" local="_layout"></PageLoader>
+## 通用布局
+<PageLoader page="layout" local="_layout"></PageLoader>
 
-## layout-02
-<PageLoader page="layout-02" local="_layout"></PageLoader>
+
 

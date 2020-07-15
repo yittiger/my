@@ -22,7 +22,7 @@
     <div class="copyright">
       <slot name="setup__footer">
         <div class="ercode">
-          <div>反馈、交流钉钉群</div>
+          <div>交流钉钉群</div>
           <img src="~$docs/public/img/dingtalk.png" alt="">
         </div>
         <!--        <p>新德汇前端团队出品 @ 2020</p>-->
@@ -43,6 +43,14 @@
           location.href = url
         }
       }
+    },
+    mounted() {
+      this.$notify({
+        title: '版本更新',
+        message: 'v4.0 正式版已发布',
+        type: 'success',
+        duration: 3000
+      })
     }
   }
 </script>
@@ -91,6 +99,7 @@
       left: 0;
       bottom: 0;
       margin-left: -1rem;
+      margin-bottom: -2rem;
 
       p {
         margin: 0;
@@ -106,7 +115,7 @@
       }
 
       img {
-        width: 130px;
+        width: 100px;
       }
     }
   }

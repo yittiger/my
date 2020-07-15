@@ -74,6 +74,8 @@ function handleComplete(instance, next, queue) {
  * @param {Queue} queue 队列实例
  */
 function handleFail(instance, next, middleware, action, queue) {
+  const {progress} = instance.options
+  progress && progress.done()
   queue.destroy()
 
   // 未登录

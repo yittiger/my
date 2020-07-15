@@ -1,4 +1,4 @@
-# Login 登录页面
+# 登录页面
 
-## login-01
-<PageLoader page="login-01" local="_login"></PageLoader>
+## 通用登录
+<PageLoader page="login" local="_login"></PageLoader>

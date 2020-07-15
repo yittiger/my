@@ -244,7 +244,12 @@ module.exports = {
   ],
   '/ui/pages/': [
     'layout',
-    'login'
+    'login',
+    'dashboard',
+    'form',
+    'search-list',
+    'list',
+    'profile'
   ],
   '/guide/': [
     createMenus('开发指南', [

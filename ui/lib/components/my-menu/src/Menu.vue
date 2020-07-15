@@ -207,7 +207,7 @@
         if (item.trigger) {
           switch (item.trigger) {
             case 'route':
-              this.$router.push(item.index)
+              this.$router.push(item.index).catch(e => e)
               break
             case 'href':
               if (typeof window === 'undefined') return
@@ -219,7 +219,7 @@
               break
           }
         } else if (this.router && this.$router) {
-          this.$router.push(item.index)
+          this.$router.push(item.index).catch(e => e)
         }
 
         /**
