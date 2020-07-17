@@ -243,7 +243,8 @@
       openAddDialog() {
         // 必须要适配了添加方法，才能激活弹窗
         if (!this.dataAdapter.add) return
-        this.currentRow = null
+        const model = this.formOptions?.model || {}
+        this.currentRow = Object.freeze({...model})
         this.formDialogVisible = true
       },
       emitError(type, message) {
@@ -288,7 +289,9 @@
           index
         })
           .then(res => {
+            const model = this.formOptions?.model || {}
             this.currentRow = Object.freeze({
+              ...model,
               ...row,
               ...res
             })
