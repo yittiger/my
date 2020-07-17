@@ -28,9 +28,8 @@ if (process.env.APP) {
 }
 
 if (config.devServerProxy) {
-  Object.assign(proxy || {}, config.devServerProxy)
+  proxy = Object.assign(proxy || {}, config.devServerProxy)
 }
-
 
 module.exports = {
   // 网站访问路径（部署目录）
@@ -51,7 +50,6 @@ module.exports = {
   devServer: {
     // 开发环境服务启动端口号
     port: port,
-
     // API 代理
     proxy: proxy,
     hot: true,

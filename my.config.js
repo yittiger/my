@@ -2,7 +2,7 @@ module.exports = {
   /**
    * 开发环境服务端口号
    */
-  devServerPort: 8000,
+  devServerPort: 8801,
   /**
    * 部署目录
    */
@@ -14,9 +14,17 @@ module.exports = {
   /**
    * 开启模拟数据
    */
-  mock: true,
+  mock: false,
   /**
    * 开启微应用服务
    */
-  microApp: true
+  microApp: false,
+
+  devServerProxy: {
+    '/api': {
+      target: 'http://localhost:4000',
+      ws: true,
+      changeOrigin: true
+    }
+  }
 }
