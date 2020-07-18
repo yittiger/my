@@ -28,7 +28,7 @@ if (process.env.APP) {
 }
 
 if (config.devServerProxy) {
-  Object.assign(proxy || {}, config.devServerProxy)
+  proxy = Object.assign(proxy || {}, config.devServerProxy)
 }
 
 
