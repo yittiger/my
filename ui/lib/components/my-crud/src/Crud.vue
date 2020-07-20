@@ -57,7 +57,7 @@
               :visible.sync="formDialogVisible"
               :footer="null"
               target="body"
-              :title="currentRow ? '编辑': '新增'">
+              :title="isEdit ? '编辑': '新增'">
       <MyForm v-bind="formProps" :model="currentRow" :on-submit="handleFormSubmit">
         <slot name="form" :row="currentRow" :loading="loading"></slot>
       </MyForm>
@@ -194,6 +194,7 @@
         currentQuery: this.query,
         loading: false,
         currentRow: null,
+        isEdit: false,
         viewVisible: false,
         formDialogVisible: false
       }
@@ -245,6 +246,7 @@
         if (!this.dataAdapter.add) return
         const model = this.formOptions?.model || {}
         this.currentRow = Object.freeze({...model})
+        this.isEdit = false
         this.formDialogVisible = true
       },
       emitError(type, message) {
@@ -313,7 +315,7 @@
       },
       handleFormSubmit(row) {
         // 编辑
-        if (this.currentRow) {
+        if (this.isEdit) {
           return this.dataAdapter.update({
             row,
             index: 0
@@ -360,6 +362,7 @@
         // 编辑
         if (handle.edit) {
           this.$nextTick(() => {
+            this.isEdit = true
             this.formDialogVisible = true
           })
           this.getDetail({
