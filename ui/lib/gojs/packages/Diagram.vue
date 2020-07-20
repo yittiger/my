@@ -1,9 +1,10 @@
 <template>
-  <div className="my-go-diagram"></div>
+  <div class="my-go-diagram"></div>
 </template>
 
 <script>
-  const go = require('gojs')
+  import go from '../utils/lib'
+
   export default {
     name: 'MyGoDiagram',
     props: {

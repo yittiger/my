@@ -90,6 +90,7 @@ function fixGojs(file) {
       const start = index - 8, end = index + 32 + flag.length
       const section = content.substring(start, end)
       content = content.replace(section, 'function(){return true;};/*flag*/')
+      content = content.replace('bfunction(){return true;}', 'function(){return true;}')
       fs.writeFileSync(file, content, 'utf-8')
 
       console.log(`fix ${file} ${chalk.green('success')}`)

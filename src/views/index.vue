@@ -37,7 +37,7 @@
       MyGoDiagram
     },
     data() {
-      const {nodes, links} = mock(5000)
+      const {nodes, links} = mock(1000)
       return {
         nodes: nodes,
         links: links
@@ -62,7 +62,7 @@
           linkKeyProperty: 'key'
         })
 
-        diagram.layout = $(go.Layout)
+        diagram.layout = $(go.ForceDirectedLayout)
 
         diagram.addDiagramListener('LayoutCompleted', () => {
           console.log('LayoutCompleted')
