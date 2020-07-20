@@ -4,6 +4,6 @@
 
 <script>
   export default {
-    name: 'MyGoOverview'
+    name: 'Overview'
   }
 </script>

@@ -1,11 +1,11 @@
 import go from './utils/lib'
-import MyGoDiagram from './packages/Diagram'
-import MyGoOverview from './packages/Overview'
+import Diagram from './packages/Diagram'
+import Overview from './packages/Overview'
 
 const $ = go.GraphObject.make
 export {
   go,
   $,
-  MyGoDiagram,
-  MyGoOverview
+  Diagram,
+  Overview
 }

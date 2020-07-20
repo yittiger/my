@@ -1,48 +1,111 @@
 <template>
-  <div class="my-go-diagram"></div>
+  <div class="my-go-diagram"
+       v-loading.body="loading"
+       element-loading-text="拼命加载中..."></div>
 </template>
 
 <script>
   import go from '../utils/lib'
 
   export default {
-    name: 'MyGoDiagram',
+    name: 'Diagram',
     props: {
+      // 初始化函数，必须返回go.Diagram实例
       init: {
         type: Function
       },
+      // 节点数据数组
       nodes: {
         type: Array,
         default() {
           return []
         }
       },
+      // 连线数据数组
       links: Array,
-      modelData: Object
+      // modelData 共享数据对象
+      modelData: Object,
+      // diagram.model发生变化时回调函数，当 undoManager.isEnabled=true时才生效
+      onModelChange: {
+        type: Function
+      }
+    },
+    data() {
+      return {
+        loading: true
+      }
+    },
+    watch: {
+      nodes() {
+        this.commit(this.merge, 'update', 20)
+      },
+      links() {
+        this.commit(this.merge, 'update', 20)
+      },
+      modelData() {
+        this.commit(this.merge, 'update', 20)
+      }
     },
     methods: {
-      handleModelChange(e) {
-        if (e.isTransactionFinished) {
-          const dataChanges = e.model?.toIncrementalData(e);
-          if (dataChanges !== null) {
-            this.$emit('model-change', dataChanges)
-          }
-        }
+      commit(func, name = '', delay = 0) {
+        const model = this.diagram?.model
+        if (!model) return
+        clearTimeout(this.delayCommitId)
+        this.loading = true
+        this.delayCommitId = setTimeout(() => {
+          model.commit(func, name)
+          this.loading = false
+        }, delay)
       },
-      mergeData(model) {
-        model.mergeNodeDataArray(model.cloneDeep(this.nodes))
-        if (this.links) {
+      merge() {
+        const model = this.diagram?.model
+        if (!model) return
+        model.mergeNodeDataArray(this.nodes)
+        if (this.links && model instanceof go.GraphLinksModel) {
           model.mergeLinkDataArray(model.cloneDeep(this.links))
         }
         if (this.modelData) {
           model.assignAllDataProperties(model.modelData, this.modelData)
         }
       },
-      delayInit(diagram) {
-        diagram.delayInitialization(() => {
-          console.time()
-          diagram.model.commit(m => this.mergeData(m, 'init merge'))
-          console.timeEnd()
+      layout(layout, delay = 0) {
+        if (!this.diagram) return
+        const {initialAutoScale, autoScale, initialContentAlignment, contentAlignment} = this.diagram
+        const prevAutoScale = autoScale, prevContentAlignment = contentAlignment
+        return new Promise(resolve => {
+          this.commit(() => {
+            this.diagram.autoScale = initialAutoScale
+            this.diagram.contentAlignment = initialContentAlignment
+            this.diagram.layout = layout
+            this.commit(() => {
+              this.diagram.autoScale = prevAutoScale
+              this.diagram.contentAlignment = prevContentAlignment
+              resolve(this.diagram)
+            }, 'restore autoScale and contentAlignment')
+          }, 'layout', delay)
+
+        })
+      },
+      bind(diagram) {
+        this.handleModelChange = e => {
+          if (e.isTransactionFinished) {
+            const data = e.model.toIncrementalData(e);
+            if (data !== null) {
+              this.onModelChange && this.onModelChange(data, e)
+            }
+          }
+        }
+        diagram.addModelChangedListener(this.handleModelChange)
+        Object.entries(this.$listeners).forEach(([name, listener]) => {
+          diagram.addDiagramListener(name, listener)
+        })
+      },
+      unbind() {
+        const diagram = this.diagram
+        if (!diagram) return
+        this.handleModelChange && diagram.removeModelChangedListener(this.handleModelChange)
+        Object.entries(this.$listeners).forEach(([name, listener]) => {
+          diagram.removeDiagramListener(name, listener)
         })
       }
     },
@@ -50,13 +113,15 @@
       const diagram = this.init ? this.init(go.GraphObject.make, go) : null
       if (!diagram) return
       diagram.div = this.$el
-      diagram.addModelChangedListener(this.handleModelChange)
-      this.delayInit(diagram)
+      this.bind(diagram)
+      diagram.delayInitialization(() => {
+        this.commit(this.merge, 'init')
+      })
       this.diagram = diagram
     },
     beforeDestroy() {
       if (!this.diagram) return
-      this.diagram.removeModelChangedListener(this.handleModelChange)
+      this.unbind()
       this.diagram.div = null
       this.diagram = null
     }
