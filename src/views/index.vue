@@ -82,10 +82,7 @@
         console.log(data)
       },
       changeLayout() {
-        this.$refs.go.layout($(go.CircularLayout), 100).then(diagram => {
-
-        })
-
+        this.$refs.go.layout($(go.CircularLayout))
 
       },
       addNodes() {

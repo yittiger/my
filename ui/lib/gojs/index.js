@@ -1,3 +1,4 @@
+import './style/index.scss'
 import go from './utils/lib'
 import Diagram from './packages/Diagram'
 import Overview from './packages/Overview'

@@ -68,7 +68,7 @@
           model.assignAllDataProperties(model.modelData, this.modelData)
         }
       },
-      layout(layout, delay = 0) {
+      layout(layout, delay = 100) {
         if (!this.diagram) return
         const {initialAutoScale, autoScale, initialContentAlignment, contentAlignment} = this.diagram
         const prevAutoScale = autoScale, prevContentAlignment = contentAlignment
@@ -81,7 +81,7 @@
               this.diagram.autoScale = prevAutoScale
               this.diagram.contentAlignment = prevContentAlignment
               resolve(this.diagram)
-            }, 'restore autoScale and contentAlignment')
+            }, 'reset')
           }, 'layout', delay)
 
         })
