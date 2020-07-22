@@ -1,3 +1,14 @@
-export default function ($, go) {
-
+export function defaultDiagramInit($, go) {
+  return $(go.Diagram, {
+    initialAutoScale: go.Diagram.Uniform,
+    autoScale: go.Diagram.None,
+    allowSelect: true,
+    initialContentAlignment: go.Spot.Center,
+    'undoManager.isEnabled': true,
+    'toolManager.mouseWheelBehavior': go.ToolManager.WheelZoom,
+    model: $(go.GraphLinksModel, {
+      linkKeyProperty: 'key'
+    }),
+    layout: $(go.ForceDirectedLayout)
+  })
 }

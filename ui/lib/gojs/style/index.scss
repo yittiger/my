@@ -1,5 +1,51 @@
+
 .my-go-diagram {
+  position: relative;
+
+  &.is-fit {
+    height: 100%;
+    width: 100%;
+  }
+
   canvas {
     outline: none;
+  }
+
+  &__content {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.my-go-overview {
+  position: absolute;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.9);
+  z-index: 100;
+  border-radius: 2px;
+
+  &.is-dark {
+    background: rgba(30, 30, 30, .95);
+    box-shadow: 0 2px 12px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  &.is-left-top {
+    left: 0;
+    top: 0
+  }
+
+  &.is-left-bottom {
+    left: 0;
+    bottom: 0
+  }
+
+  &.is-right-top {
+    right: 0;
+    top: 0;
+  }
+
+  &.is-right-bottom {
+    right: 0;
+    bottom: 0;
   }
 }

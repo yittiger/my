@@ -1,7 +1,11 @@
 <template>
   <div class="my-go-diagram"
+       :class="classes"
        v-loading.body="loading"
-       element-loading-text="拼命加载中..."></div>
+       element-loading-text="拼命加载中...">
+    <div ref="content" class="my-go-diagram__content"></div>
+    <slot></slot>
+  </div>
 </template>
 
 <script>
@@ -9,6 +13,11 @@
 
   export default {
     name: 'Diagram',
+    provide() {
+      return {
+        diagram: this
+      }
+    },
     props: {
       // 初始化函数，必须返回go.Diagram实例
       init: {
@@ -28,11 +37,19 @@
       // diagram.model发生变化时回调函数，当 undoManager.isEnabled=true时才生效
       onModelChange: {
         type: Function
-      }
+      },
+      fit: Boolean
     },
     data() {
       return {
         loading: true
+      }
+    },
+    computed: {
+      classes() {
+        return {
+          'is-fit': this.fit
+        }
       }
     },
     watch: {
@@ -74,9 +91,11 @@
         const prevAutoScale = autoScale, prevContentAlignment = contentAlignment
         return new Promise(resolve => {
           this.commit(() => {
+            // 切换布局把内容居中并自动缩放到最合适位置
             this.diagram.autoScale = initialAutoScale
             this.diagram.contentAlignment = initialContentAlignment
             this.diagram.layout = layout
+            // 还原对齐和缩放设置
             this.commit(() => {
               this.diagram.autoScale = prevAutoScale
               this.diagram.contentAlignment = prevContentAlignment
@@ -112,12 +131,13 @@
     mounted() {
       const diagram = this.init ? this.init(go.GraphObject.make, go) : null
       if (!diagram) return
-      diagram.div = this.$el
+      diagram.div = this.$refs.content
       this.bind(diagram)
       diagram.delayInitialization(() => {
         this.commit(this.merge, 'init')
       })
       this.diagram = diagram
+      this.$emit('init', diagram)
     },
     beforeDestroy() {
       if (!this.diagram) return

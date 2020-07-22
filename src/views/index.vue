@@ -6,18 +6,20 @@
       <my-timer auto :interval="10" format="H:mm:ss.SSS"></my-timer>
     </template>
 
-    <Diagram style="height: 100%"
+    <Diagram fit
              @ChangedSelection="handleEvent"
              ref="go"
              :init="init"
              :on-model-change="onModelChange"
              :nodes="nodes"
-             :links="links"></Diagram>
+             :links="links">
+      <Overview width="200px" height="150px"></Overview>
+    </Diagram>
   </my-wrapper>
 </template>
 
 <script>
-  import {Diagram, go, $} from '$ui/gojs'
+  import {Diagram, Overview, go, $, defaultDiagramInit, defaultNodeTemplate} from '$ui/gojs'
 
   function mock(total) {
     const nodes = [], links = []
@@ -41,10 +43,11 @@
 
   export default {
     components: {
-      Diagram
+      Diagram,
+      Overview
     },
     data() {
-      const {nodes, links} = mock(500)
+      const {nodes, links} = mock(100)
       return {
         nodes: nodes,
         links: links
@@ -52,34 +55,17 @@
     },
     methods: {
       handleEvent(e) {
-        console.log('event', e)
+        // console.log('event', e)
       },
       init($, go) {
-        const diagram = $(go.Diagram, {
-          initialAutoScale: go.Diagram.Uniform,
-          autoScale: go.Diagram.None,
-          initialContentAlignment: go.Spot.Center,
-          'undoManager.isEnabled': true,
-          'toolManager.mouseWheelBehavior': go.ToolManager.WheelZoom,
-          model: $(go.GraphLinksModel, {
-            linkKeyProperty: 'key'
-          }),
-          layout: $(go.ForceDirectedLayout)
-        })
+        const diagram = defaultDiagramInit($, go)
 
-        diagram.nodeTemplate = $(go.Node, 'Horizontal',
-          {background: '#44CCFF'},
-          new go.Binding('location', 'loc', go.Point.parse).makeTwoWay(go.Point.stringify),
-          $(go.TextBlock, 'Default',
-            {margin: 12, stroke: '#fff'},
-            new go.Binding('text', 'key'))
-        )
-
+        diagram.nodeTemplate = defaultNodeTemplate()
 
         return diagram
       },
       onModelChange(data, e) {
-        console.log(data)
+        // console.log(data)
       },
       changeLayout() {
         this.$refs.go.layout($(go.CircularLayout))
