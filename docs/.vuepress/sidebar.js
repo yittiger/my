@@ -132,7 +132,8 @@ module.exports = {
       'sidebar',
       'back-top',
       'contextmenu',
-      'anchor'
+      'anchor',
+      'radial-menu'
     ]),
     createMenus('数据录入', [
       'form',

@@ -39,6 +39,10 @@
 </template>
 
 <script>
+  /**
+   * 圆形菜单组件
+   * @module $ui/components/my-radial-menu
+   */
   import MenuItem from './MenuItem'
   import {resolveLoopIndex, numberToString, setClassAndWaitForTransition} from './utils'
   import clickoutside from 'element-ui/lib/utils/clickoutside'
@@ -56,6 +60,21 @@
         radialMenu: this
       }
     },
+    /**
+     * 属性参数
+     * @member props
+     * @property {number} [200] 菜单尺寸，直径
+     * @property {Array} [items] 菜单数据项 [{id, label, icon, children}]
+     * @property {boolean} [closeOnClick=true] 点击菜单后关闭
+     * @property {boolean} [closeOnClickOutside=true] 点击菜单外部关闭
+     * @property {number} [miniSectors=6] 最小菜单项数量
+     * @property {string} [defaultSelected] 默认选中的菜单项id
+     * @property {boolean} [resetOnClose=true] 关闭菜单后重置为初始状态
+     * @property {number[]} [position] 菜单显示的坐标，圆心是参照点
+     * @property {boolean} [visible=true] 显示菜单，支持 sync 修饰符
+     * @property {number} [zIndex=1] 显示层级
+     * @property {boolean} [appendToBody] 渲染 html 到 body
+     */
     props: {
       size: {
         type: Number,
@@ -80,7 +99,7 @@
         default: 6
       },
       defaultSelected: {
-        type: String
+        type: [String, Number]
       },
       resetOnClose: {
         type: Boolean,
@@ -92,6 +111,13 @@
       visible: {
         type: Boolean,
         default: true
+      },
+      zIndex: {
+        type: Number,
+        default: 1
+      },
+      appendToBody: {
+        type: Boolean
       }
     },
     data() {
@@ -122,14 +148,19 @@
       },
       visible(val) {
         if (val) {
+          /**
+           * 显示时触发
+           * @event open
+           */
           this.$emit('open')
         } else {
+          /**
+           * 关闭时触发
+           * @event close
+           */
           this.$emit('close')
           if (this.resetOnClose) {
-            this.nested = false
-            this.selected = this.defaultSelected
-            this.levelItems = this.items
-            this.parentMenus = []
+            this.reset()
           }
         }
       }
@@ -142,7 +173,8 @@
           width: `${this.size}px`,
           height: `${this.size}px`,
           left: `${x - radius}px`,
-          top: `${y - radius}px`
+          top: `${y - radius}px`,
+          zIndex: this.zIndex
         }
       },
       sectorCount() {
@@ -218,18 +250,11 @@
         }
       },
       outerEffect() {
-        this.timerId && clearTimeout(this.timerId)
-        if (this.cloneEl) {
-          this.cloneEl.parentNode.removeChild(this.cloneEl)
-        }
+        this.clean()
         this.cloneEl = this.$el.cloneNode(true)
         this.$el.parentNode.appendChild(this.cloneEl)
         this.timerId = setTimeout(() => {
-          setClassAndWaitForTransition(this.cloneEl, 'my-radial-menu-outer').then(() => {
-            this.cloneEl.parentNode.removeChild(this.cloneEl)
-            this.cloneEl = null
-            this.timerId = null
-          })
+          setClassAndWaitForTransition(this.cloneEl, 'my-radial-menu-outer').then(this.clean)
         }, 20)
       },
       handleMenuClick(item) {
@@ -245,16 +270,39 @@
         } else {
           this.selected = item.id
           this.closeOnClick && this.$emit('update:visible', false)
+          /**
+           * 点击菜单时触发
+           * @event click
+           * @param {object} item 菜单项对象
+           */
           this.$emit('click', item)
         }
       },
       handleClickOutside() {
         this.closeOnClickOutside && this.$emit('update:visible', false)
+      },
+      reset() {
+        this.nested = false
+        this.selected = this.defaultSelected
+        this.levelItems = this.items
+        this.parentMenus = []
+      },
+      clean() {
+        this.timerId && clearTimeout(this.timerId)
+        if (this.cloneEl) {
+          this.cloneEl.parentNode.removeChild(this.cloneEl)
+        }
+        this.timerId = null
+        this.cloneEl = null
       }
+    },
+    mounted() {
+      if (this.appendToBody) {
+        document.body.appendChild(this.$el)
+      }
+    },
+    beforeDestroy() {
+      this.clean()
     }
   }
 </script>
-
-<style scoped>
-
-</style>
