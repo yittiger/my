@@ -15,6 +15,13 @@
              :links="links">
       <Overview width="200px" height="150px"></Overview>
     </Diagram>
+    <my-radial-menu ref="menu"
+                    :size="200"
+                    :z-index="1000"
+                    :visible.sync="visible"
+                    :items="items"
+                    :position="position"
+                    appendToBody></my-radial-menu>
   </my-wrapper>
 </template>
 
@@ -50,7 +57,15 @@
       const {nodes, links} = mock(100)
       return {
         nodes: nodes,
-        links: links
+        links: links,
+        visible: false,
+        position: null,
+        items: [
+          {id: 11, label: '子菜单'},
+          {id: 12, label: '子菜单'},
+          {id: 13, label: '子菜单'},
+          {id: 13, label: '子菜单'}
+        ]
       }
     },
     methods: {
@@ -59,8 +74,22 @@
       },
       init($, go) {
         const diagram = defaultDiagramInit($, go)
-
-        diagram.nodeTemplate = defaultNodeTemplate()
+        diagram.nodeTemplate = defaultNodeTemplate({
+          label: null,
+          icon: {},
+          tooltip: {},
+          events: {
+            contextClick: e => {
+              console.log(e, e.event.preventDefault)
+              const {pageX, pageY} = e.event
+              e.event.preventDefault()
+              e.event.stopPropagation()
+              this.position = [pageX, pageY]
+              this.visible = true
+              return false
+            }
+          }
+        })
 
         return diagram
       },

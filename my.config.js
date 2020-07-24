@@ -18,13 +18,5 @@ module.exports = {
   /**
    * 开启微应用服务
    */
-  microApp: false,
-
-  devServerProxy: {
-    '/api': {
-      target: 'http://localhost:4000',
-      ws: true,
-      changeOrigin: true
-    }
-  }
+  microApp: false
 }

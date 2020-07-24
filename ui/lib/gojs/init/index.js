@@ -6,6 +6,7 @@ export function defaultDiagramInit($, go) {
     initialContentAlignment: go.Spot.Center,
     'undoManager.isEnabled': true,
     'toolManager.mouseWheelBehavior': go.ToolManager.WheelZoom,
+    'toolManager.hoverDelay': 300,
     model: $(go.GraphLinksModel, {
       linkKeyProperty: 'key'
     }),

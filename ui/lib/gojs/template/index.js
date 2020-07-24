@@ -1,78 +1,117 @@
-import go from '../utils/lib'
+import {go, merge} from '../utils/lib'
+import creator from '../utils/creator'
+import {nodeOptions, tooltipOptions} from './options'
 
-const $ = go.GraphObject.make
-
-const iconPath = 'M825.1638884 444.66484003c-9.23242596 0-21.66542623 0-30.8978522 3.07747533l-52.56327844-133.07003277 9.23242595-52.56327844h61.91880341c15.5104756 0 30.89785218-6.15495063 30.89785219-21.66542624 0-15.5104756-12.43300028-30.89785218-30.89785219-30.8978522h-89.73918028c-15.5104756 0-27.82037688 9.23242596-27.82037688 24.74290156l-9.23242596 64.99627873L382.74603662 336.33770883 351.84818444 262.10900415H395.05593791c15.5104756 0 33.97532751-6.15495063 33.97532751-21.66542624 0-15.5104756-12.43300028-30.89785218-30.89785221-30.8978522H280.57385606c-15.5104756 0-30.89785218 12.43300028-30.8978522 30.8978522 0 15.5104756 15.5104756 21.66542623 33.97532752 21.66542624h3.07747532l46.40832781 98.97160624-61.91880341 98.97160624c-21.66542623-9.23242596-46.40832779-15.5104756-71.15122936-15.51047562-102.04908156 0-182.55583589 83.58422963-182.55583588 182.55583588 0 102.04908156 83.58422963 182.55583589 182.55583588 182.55583589 89.73918028 0 167.04536027-64.99627873 182.55583588-151.65798367h105.24965587v-6.15495066c3.07747533 0 9.23242596 0 12.4330003-3.07747531 3.07747533-3.07747533 6.15495063-3.07747533 9.23242597-6.15495063L710.68180656 370.43613535l33.9753275 92.81665561c-64.99627873 27.82037688-108.32713121 92.8166556-108.32713121 167.04536028 0 102.04908156 83.58422963 182.55583589 182.5558359 182.55583588 102.04908156 0 182.55583589-83.58422963 182.55583589-182.55583588 6.27804966-102.17218056-77.18308098-185.6333112-176.27778624-185.63331121zM382.74603662 608.63272498c-6.15495063-49.48580312-30.89785218-89.73918028-64.99627871-120.63703246l46.40832781-74.2287047 92.81665558 194.86573716H382.74603662z m111.40460653-30.89785218l-83.58422964-191.78826184L661.19600343 358.1262341 494.15064315 577.7348728z m52.56327844 108.2040322h-58.8413281c-15.5104756 0-30.89785218 9.23242596-30.89785219 27.82037687 0 15.5104756 24.74290156 21.66542623 40.25337717 21.66542625h49.48580312c15.5104756 0 30.89785218-3.07747533 30.8978522-21.66542625 0-18.46485191-12.30990128-27.82037688-30.8978522-27.82037687z m0 0'
-
-// {
-//   shape:{type, width, height, color, fill, stroke, strokeWidth, icon},
-//   label:{text, color, font},
-//   tooltip,
-//   menus
-// }
-export function defaultNodeTemplate({config, hover, selected, binding} = {}) {
-
-  const iconSize = 64
-
-  return $(go.Node, 'Vertical',
-    {
-      selectionAdorned: false,
-      mouseEnter: (e, obj) => {
-        const shape = obj.findObject('shape')
-        shape.fill = '#6DAB80'
-        shape.stroke = '#A6E6A1'
-        const label = obj.findObject('innerLabel')
-        label.stroke = '#fff'
-      },
-      mouseLeave: (e, obj) => {
-        const shape = obj.findObject('shape')
-        shape.fill = 'lightcoral'
-        shape.stroke = 'green'
-        const label = obj.findObject('innerLabel')
-        label.stroke = '#000'
-      },
-      toolTip: $(go.Adornment, 'Spot',
-        $(go.Placeholder, {padding: 5}),
-        $(go.TextBlock, 'Tooltip文本Tooltip文本Tooltip文本Tooltip文本Tooltip文本Tooltip文本Tooltip文本', {
-          background: '#eee',
-          stroke: 'red',
-          alignment: go.Spot.Top,
-          margin: 5,
-          alignmentFocus: go.Spot.Bottom,
-          isMultiline: true,
-          wrap: go.TextBlock.WrapBreakAll
-        })
-      )
+/**
+ * 基础结点
+ * @param {object} options go.Node属性
+ * @param {GraphObject|GraphObject[]} children 子GraphObject
+ * @returns {GraphObject}
+ */
+export function baseNode({options, children} = {}) {
+  const $events = options.$events || {}
+  const {mouseEnter, mouseLeave} = $events
+  options.$events = {
+    ...$events,
+    mouseEnter: (e, obj) => {
+      obj.isHighlighted = true
+      ++obj.zOrder
+      mouseEnter && mouseEnter(e, obj)
     },
-    $(go.Panel, 'Auto', {},
-      $(go.Shape, 'Circle', {
-        name: 'shape',
-        fill: 'lightcoral',
-        stroke: 'green',
-        strokeWidth: 2,
-        strokeDashArray: [3],
-        width: iconSize,
-        height: iconSize
+    mouseLeave: (e, obj) => {
+      obj.isHighlighted = false
+      --obj.zOrder
+      mouseLeave && mouseLeave(e, obj)
+    }
+  }
+  return creator({
+    name: go.Node,
+    options,
+    children
+  })
+}
+
+/**
+ * 基础Tooltip
+ * @param {object} options 包含三个GraphObject，{panel, shape, text}
+ * @returns {GraphObject}
+ */
+export function baseTooltip(options = {}) {
+  const {panel, shape, text} = merge({}, tooltipOptions, options)
+  return creator({
+    name: go.Adornment,
+    options: {type: go.Panel.Spot},
+    children: [
+      creator({
+        name: go.Placeholder,
+        options: {padding: 5}
       }),
-      $(go.Shape, 'Circle', {
-        name: 'icon',
-        geometry: go.Geometry.parse(iconPath, true),
-        fill: '#fff',
-        scale: 0.6,
-        strokeWidth: 0,
-        desiredSize: new go.Size(iconSize, iconSize),
-        margin: new go.Margin(-8, 0, 0, 0)
-      }),
-      $(go.TextBlock, '中文', {
-        name: 'innerLabel',
-        textAlign: 'center',
-        font: 'bold 16px "Microsoft YaHei",Serif'
+      creator({
+        name: go.Panel,
+        options: panel,
+        children: [
+          creator({
+            name: go.Shape,
+            options: shape
+          }),
+          creator({
+            name: go.TextBlock,
+            options: text
+          })
+        ]
       })
-    ),
-    $(go.TextBlock, '默认文本默认文本默认文本默认文本默认文本', {
-      name: 'label',
-      textAlign: 'center',
-      font: '14px "Microsoft YaHei",Serif'
-    })
-  )
+    ]
+  })
+}
+
+export function defaultNodeTemplate(options = {}) {
+  const {shape, icon, label, events, tooltip} = merge({}, nodeOptions, options)
+  const nodeObj = baseNode({
+    options: {
+      zOrder: 1,
+      toolTip: tooltip ? baseTooltip(tooltip) : null,
+      type: go.Panel.Vertical,
+      selectionAdorned: false,
+      $events: events
+    }
+  })
+
+  const panelObj = creator({
+    name: go.Panel,
+    options: {
+      type: go.Panel.Auto
+    }
+  })
+
+  const shapeObj = shape ? creator({
+    name: go.Shape,
+    options: shape
+  }) : null
+
+  const iconObj = icon ? creator({
+    name: go.Shape,
+    options: icon
+  }) : null
+
+  const labelObj = label ? creator({
+    name: go.TextBlock,
+    options: label
+  }) : null
+
+  nodeObj.add(panelObj)
+
+  if (shape) {
+    panelObj.add(shapeObj)
+    if (icon) {
+      panelObj.add(iconObj)
+      label && nodeObj.add(labelObj)
+    } else {
+      label && panelObj.add(labelObj)
+    }
+  } else {
+    panelObj.type = go.Panel.Vertical
+    icon && panelObj.add(iconObj)
+    label && panelObj.add(labelObj)
+  }
+  return nodeObj
 }

@@ -46,7 +46,9 @@
     "release": "npm run svg && npm run lint && npm run build && npm run build:docs",
     "deploy:major": "npm version major && npm publish --access public",
     "deploy:minor": "version minor && npm publish --access public",
-    "deploy:patch": "npm version patch && npm publish --access public"
+    "deploy:patch": "npm version patch && npm publish --access public",
+    "dev:app1": "npm run ready && cross-env APP=app1 concurrently \"npm run serve -- --open\" \"npm run route watch app1\"",
+    "build:app1": "npm run ready && npm run route build app1 && npm run theme prod app1 && cross-env APP=app1 npm run build"
   },
   "engines": {
     "node": ">=10"
@@ -191,5 +193,16 @@
     "preset": "@vue/cli-plugin-unit-jest"
   },
   "typings": "types/index.d.ts",
-  "apps": {}
+  "apps": {
+    "app1": {
+      "name": "app1",
+      "port": 8001,
+      "autoRoutes": true,
+      "publicPath": null,
+      "outputDir": null,
+      "staticConfig": false,
+      "mock": false,
+      "contentBase": []
+    }
+  }
 }

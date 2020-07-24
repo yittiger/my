@@ -15,22 +15,22 @@ const core = require('../index')
 const backupFilePath = core.BackupLocalThemesFile
 
 class ThemeSwitchForCompilePlugin {
-  
+
   constructor(opt = {}) {
     const o = this.options = {
       // 主题名称
       theme: '',
-      
+
       // 主题scss引入文件路径，即 _theme.scss 的路径
       src: '',
-      
+
       ...opt
     }
-    
+
     // 先备份文件
     utils.copyFile(o.src, backupFilePath)
   }
-  
+
   apply(compiler) {
     // 开始编译之前写入主题路径
     compiler.hooks.beforeCompile.tap('writeFile', () => {
@@ -38,7 +38,7 @@ class ThemeSwitchForCompilePlugin {
       const content = `@import "../themes/${o.theme}";`
       utils.writeFile(o.src, content)
     })
-    
+
     // 编译完成，还原配置
     compiler.hooks.done.tap('restore', () => {
       utils.copyFile(backupFilePath, this.options.src)
