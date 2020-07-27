@@ -9,6 +9,7 @@ import DragPan from 'ol/interaction/DragPan'
 import MouseWheelZoom from 'ol/interaction/MouseWheelZoom'
 import PointerInteraction from 'ol/interaction/Pointer';
 import VectorLayer from 'ol/layer/Vector'
+import WebGLPointsLayer from 'ol/layer/WebGLPoints'
 import VectorSource from 'ol/source/Vector'
 import {createLayer} from '../../utils/layer'
 import {addResizeListener, removeResizeListener} from 'element-ui/lib/utils/resize-event'
@@ -23,6 +24,7 @@ export default {
   /**
    * 属性参数
    * @member props
+   * @property {String} [render=canvas] 地图point渲染模式
    * @property {number} [zoom=10] 地图初始化层级
    * @property {number} [minZoom=1] 最小支持的层级
    * @property {number} [maxZoom=20] 最大支持的层级
@@ -37,6 +39,13 @@ export default {
    * @property {Object} [viewOptions] ol/View 实例化参数选项
    */
   props: {
+    // 渲染模式
+    render: {
+      type: String,
+      default() {
+        return 'canvas' // webgl or canvas
+      }
+    },
     // 初始化缩放层级
     zoom: {
       type: Number,
@@ -403,7 +412,10 @@ export default {
     createVectorLayer() {
       if (!this.map || this.vectorLayer) return
       const vectorSource = new VectorSource()
-      this.vectorLayer = new VectorLayer({
+      this.vectorLayer = this.render === 'webgl' ? new WebGLPointsLayer({
+        source: vectorSource,
+        zIndex: 1
+      }) : new VectorLayer({
         source: vectorSource,
         zIndex: 1
       })
