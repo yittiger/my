@@ -1,4 +1,6 @@
-export function defaultDiagramInit($, go) {
+import {go, $} from '../utils/lib'
+
+export function init(options = {}) {
   return $(go.Diagram, {
     initialAutoScale: go.Diagram.Uniform,
     autoScale: go.Diagram.None,
@@ -10,6 +12,7 @@ export function defaultDiagramInit($, go) {
     model: $(go.GraphLinksModel, {
       linkKeyProperty: 'key'
     }),
-    layout: $(go.ForceDirectedLayout)
+    layout: $(go.ForceDirectedLayout),
+    ...options
   })
 }
