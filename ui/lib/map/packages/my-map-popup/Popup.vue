@@ -29,7 +29,6 @@
 import MyMapHtml from '../my-map-html/Html'
 import { MyIcon } from '$ui'
 import clickoutside from 'element-ui/lib/utils/clickoutside'
-import '../../style/popup.scss'
 /**
    * 属性参数
    * @member props
