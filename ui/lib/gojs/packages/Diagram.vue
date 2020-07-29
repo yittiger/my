@@ -130,7 +130,10 @@
     },
     mounted() {
       const diagram = this.init ? this.init(go.GraphObject.make, go) : null
-      if (!diagram) return
+      if (!diagram) {
+        this.loading = false
+        return
+      }
       diagram.div = this.$refs.content
       this.bind(diagram)
       diagram.delayInitialization(() => {

@@ -1,7 +1,34 @@
 import {go} from '../utils/lib'
-import defaultTheme from './theme'
+import defaultTheme, {normal} from './theme'
+
+export function normalNodeOptions({node} = normal) {
+  return {
+    shape: {
+      name: 'NodeShape',
+      figure: node.figure,
+      fill: node.fill,
+      stroke: node.stroke,
+      strokeWidth: node.strokeWidth,
+      width: node.width,
+      height: node.height,
+      $hover: {
+        fill: node.hoverFill,
+        stroke: node.hoverStroke
+      },
+      $selected: {
+        fill: node.selectedFill,
+        stroke: node.selectedStroke
+      },
+      $disabled: {
+        fill: node.disabledFill,
+        stroke: node.disabledStroke
+      }
+    }
+  }
+}
 
 
+// --------------------------------------------------------------------
 export function tooltipOptions(theme = defaultTheme) {
   return {
     panel: {
@@ -27,12 +54,12 @@ export function nodeOptions(theme = defaultTheme) {
   return {
     shape: {
       name: 'shape',
-      figure: 'Circle',
+      figure: theme.NODE_FIGURE,
       fill: theme.NODE_FILL,
       stroke: theme.NODE_STROKE,
       strokeWidth: theme.NODE_STROKE_WIDTH,
-      width: theme.NODE_SIZE,
-      height: theme.NODE_SIZE,
+      width: theme.NODE_WIDTH,
+      height: theme.NODE_HEIGHT,
       $hover: {
         fill: theme.NODE_FILL_HOVER
       },
@@ -42,11 +69,11 @@ export function nodeOptions(theme = defaultTheme) {
     },
     icon: {
       name: 'icon',
-      figure: 'Circle',
+      figure: theme.NODE_FIGURE,
       fill: theme.NODE_ICON_COLOR,
       scale: 0.6,
       strokeWidth: 0,
-      desiredSize: new go.Size(theme.NODE_SIZE, theme.NODE_SIZE),
+      desiredSize: new go.Size(theme.NODE_WIDTH, theme.NODE_HEIGHT),
       margin: new go.Margin(-8, 0, 0, 0),
       $hover: {
         fill: theme.NODE_ICON_COLOR_HOVER
@@ -56,19 +83,19 @@ export function nodeOptions(theme = defaultTheme) {
       }
     },
     label: {
+      name: 'label',
       stroke: theme.NODE_TEXT_COLOR,
       text: '文本',
-      name: 'label',
       textAlign: 'center',
       font: '14px "Microsoft YaHei",Serif'
     }
   }
 }
 
-
 export function linkOptions(theme = defaultTheme) {
   return {
     line: {
+      name: 'line',
       stroke: theme.LINK_STROKE,
       strokeWidth: theme.LINK_STROKE_WIDTH,
       $selected: {
@@ -81,6 +108,7 @@ export function linkOptions(theme = defaultTheme) {
       }
     },
     arrow: {
+      name: 'arrow',
       toArrow: 'Standard',
       fill: theme.LINK_STROKE,
       stroke: theme.LINK_STROKE,
@@ -97,9 +125,12 @@ export function linkOptions(theme = defaultTheme) {
       }
     },
     label: {
+      name: 'linkLabel',
       text: '连线文本',
       segmentOffset: new go.Point(0, -10),
       segmentOrientation: go.Link.OrientUpright,
+      segmentFraction: 0.5,
+      segmentIndex: 0,
       stroke: theme.LINK_TEXT_COLOR,
       $hover: {
         stroke: theme.LINK_TEXT_COLOR_HOVER
