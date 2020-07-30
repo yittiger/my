@@ -1,38 +1,25 @@
 import {go, $} from './lib'
 
 /**
- * 检测当前的图形时候被选中
- * @param obj
- * @returns {boolean}
+ * 清理无效的参数选项，排除undefined的项
+ * @param props
+ * @returns {Object}
  */
-// function isSelected(obj) {
-//   const selection = obj.diagram.selection
-//   const it = selection.iterator
-//   let selected = false
-//   while (!selected && it.next()) {
-//     selected = obj.isContainedBy(it.value)
-//   }
-//   return selected
-// }
-//
-// function createHoverBindings(normal, hover = {}, selected = {}) {
-//   return Object.entries(hover).map(([k, v]) => {
-//     return new go.Binding(k, 'isHighlighted', function (yes, obj) {
-//       console.log(yes)
-//       return yes ? v : normal[k]
-//       // return yes ? v : normal[k]
-//       // const selectedValue = selected[k]
-//       // // 如果有配置selected属性，优先取selected
-//       // if (isSelected(obj) && selectedValue !== undefined) {
-//       //   return selectedValue
-//       // } else {
-//       //   return yes ? v : normal[k]
-//       // }
-//     }).ofObject()
-//   })
-// }
+function cleanProps(props) {
+  const opts = Object.create(null)
+  if (!props) return opts
+  const propArray = Object.entries(props).filter(([k, v]) => v !== undefined)
+  propArray.forEach(([k, v]) => {
+    opts[k] = v
+  })
+  return opts
+}
 
-
+/**
+ * 解析Graph配置参数，转换为标准格式
+ * @param props
+ * @returns {Object}
+ */
 function parseProps(props = {}) {
   const opts = {...props}
   const {$hover, $selected, $bindings, $events, $disabled} = opts
@@ -42,53 +29,77 @@ function parseProps(props = {}) {
   delete opts.$events
   delete opts.$disabled
   return {
-    $normal: {...opts, ...$events},
-    $hover,
-    $selected,
-    $bindings,
-    $disabled
+    $normal: {...cleanProps(opts), ...$events},
+    $hover: cleanProps($hover),
+    $selected: cleanProps($selected),
+    $bindings: $bindings,
+    $disabled: cleanProps($disabled)
   }
 }
 
-function createHoverBindings(normal, hover, selected = {}, disabled = {}) {
-  if (!hover) return []
-  return Object.entries(hover).map(([name, value]) => {
+/**
+ * 绑定鼠标经过状态
+ * @param $normal
+ * @param $hover
+ * @param $selected
+ * @param $disabled
+ * @returns {Array}
+ */
+function createHoverBindings({$normal, $hover, $selected, $disabled}) {
+  if (!$hover) return []
+  return Object.entries($hover).map(([name, value]) => {
     return new go.Binding(name, 'isHighlighted', (yes, obj) => {
-      const isSelected = obj.part?.isSelected
       const isEnabled = obj.part?.isEnabled
-      const selectedValue = selected[name]
-      const disabledValue = disabled[name]
+      const disabledValue = $disabled ? $disabled[name] : undefined
+      // 禁用状态不响应 hover
       if (!isEnabled && disabledValue !== undefined) {
         return disabledValue
       }
-      // 如果当前节点已经选中了，不改变鼠标经过样式
+      const isSelected = obj.part?.isSelected
+      const selectedValue = $selected[name]
+      // 已选中状态不响应hover
       if (isSelected && selectedValue !== undefined) {
         return selectedValue
       }
-      return yes ? value : normal[name]
+
+      return yes ? value : $normal[name]
     }).ofObject()
   })
 }
 
-function createSelectedBindings(normal, selected = {}, disabled = {}) {
-  if (!selected) return []
-  return Object.entries(selected).map(([name, value]) => {
+/**
+ * 绑定选中状态
+ * @param $normal
+ * @param $selected
+ * @param $disabled
+ * @returns {Array}
+ */
+function createSelectedBindings({$normal, $selected, $disabled}) {
+  if (!$selected) return []
+  return Object.entries($selected).map(([name, value]) => {
     return new go.Binding(name, 'isSelected', (yes, obj) => {
       const isEnabled = obj.part?.isEnabled
-      const disabledValue = disabled[name]
+      const disabledValue = $disabled ? $disabled[name] : undefined
+      // 禁用状态不响应选中
       if (!isEnabled && disabledValue !== undefined) {
         return disabledValue
       }
-      return yes ? value : normal[name]
+      return yes ? value : $normal[name]
     }).ofObject()
   })
 }
 
-function createDisabledBindings(normal, disabled = {}) {
-  if (!disabled) return []
-  return Object.entries(disabled).map(([name, value]) => {
+/**
+ * 绑定禁用状态
+ * @param $normal
+ * @param $disabled
+ * @returns {Array}
+ */
+function createDisabledBindings({$normal, $disabled}) {
+  if (!$disabled) return []
+  return Object.entries($disabled).map(([name, value]) => {
     return new go.Binding(name, 'isEnabled', yes => {
-      return yes ? normal[name] : value
+      return yes ? $normal[name] : value
     }).ofObject()
   })
 }
@@ -102,19 +113,14 @@ function createDisabledBindings(normal, disabled = {}) {
  * @returns {GraphObject}
  */
 export default function ({name, props, children} = {}) {
-  const {$normal, $hover, $selected, $bindings, $disabled} = parseProps(props || {})
+  const opts = parseProps(props || {})
   const items = [].concat(children || [])
   return $(name,
-    $normal,
+    opts.$normal,
     ...items,
-    ...($bindings || []),
-    ...createHoverBindings($normal, $hover, $selected, $disabled),
-    ...createSelectedBindings($normal, $selected, $disabled),
-    ...createDisabledBindings($normal, $disabled)
+    ...(opts.$bindings || []),
+    ...createHoverBindings(opts),
+    ...createSelectedBindings(opts),
+    ...createDisabledBindings(opts)
   )
-  // const hoverBindings = [] // createHoverBindings($normal, $hover, $selected)
-  // const selectedBindings = [] // createSelectedBindings($normal, $selected)
-  // const items = [].concat(children || [])
-  // const mergeBindings = [...hoverBindings, ...selectedBindings, ...($bindings || [])]
-  // return $(name, $normal, ...items, ...mergeBindings)
 }

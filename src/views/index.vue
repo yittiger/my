@@ -2,14 +2,15 @@
   <my-wrapper title="Hello MyUI" fit>
 
 
-    <Diagram fit ref="go" :init="init" :nodes="nodes">
+    <Diagram fit ref="go" :init="init" :nodes="nodes" :links="links">
     </Diagram>
 
   </my-wrapper>
 </template>
 
 <script>
-  import {Diagram, nodeTemplate} from '$ui/gojs'
+  import {Diagram, init, normalIconNode, templateMap, normalLink, theme} from '$ui/gojs'
+  // import avatar from '@/assets/avatar.jpeg'
 
   export default {
     components: {
@@ -18,25 +19,45 @@
     data() {
       return {
         nodes: [
-          {key: 'Alpha'}
+          {key: 'Alpha', category: '1', enabled: true},
+          {key: 'Beta', category: '2', enabled: true}
+        ],
+        links: [
+          {from: 'Alpha', to: 'Beta'}
         ]
       }
     },
     methods: {
       init($, go) {
-        const myDiagram =
-          $(go.Diagram)
-        const myModel = $(go.Model)
-        myDiagram.model = myModel
+        const myDiagram = init()
 
-        myDiagram.nodeTemplate = nodeTemplate({
-          events: {
-            doubleClick(e, obj) {
-              console.log('doubleClick')
-              obj.isEnabled = false
-            }
-          }
+        myDiagram.nodeTemplateMap = templateMap({
+          1: normalIconNode(),
+          2: normalIconNode(null, theme.normalColor1)
         })
+
+        myDiagram.linkTemplate = normalLink()
+
+        // myDiagram.nodeTemplate = normalIconNode({
+        //   tooltip: {},
+        //   label: {
+        //     $bindings: [
+        //       new go.Binding('text', 'key')
+        //     ]
+        //   },
+        //   $bindings: [
+        //     new go.Binding('isEnabled', 'enabled')
+        //   ],
+        //   $events: {
+        //     doubleClick(e, obj) {
+        //       console.log('doubleClick')
+        //       myDiagram.model.commit(() => {
+        //         obj.isEnabled = !obj.isEnabled
+        //       }, 'doubleClick')
+        //
+        //     }
+        //   }
+        // }, theme.normalColor1)
 
 
         return myDiagram
