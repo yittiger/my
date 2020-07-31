@@ -229,19 +229,20 @@ module.exports = {
   ],
   '/ui/go/': [
     '',
-    createMenus('组件', [
-      'components/go',
-      'components/circle-menu',
-      'components/overview',
-      'components/draft',
-      'components/layout',
-      'components/search',
-      'components/select',
-      'components/snapshot',
-      'components/tool',
-      'components/tooltip',
-      'components/view'
-    ])
+    'template'
+    // createMenus('组件', [
+    //   'components/go',
+    //   'components/circle-menu',
+    //   'components/overview',
+    //   'components/draft',
+    //   'components/layout',
+    //   'components/search',
+    //   'components/select',
+    //   'components/snapshot',
+    //   'components/tool',
+    //   'components/tooltip',
+    //   'components/view'
+    // ])
   ],
   '/ui/pages/': [
     'layout',

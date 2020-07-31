@@ -28,14 +28,15 @@ export function linkTemplate(options = {}) {
 
 /**
  * 通用连线模板
- * @param {object} options 配置项 {line, arrow, label, tooltip, $events, $bindings}
+ * @param {object} options 配置项 {props, line, arrow, label, tooltip, $events, $bindings}
  * @param theme
  * @returns {GraphObject}
  */
 export function normalLink(options = {}, theme) {
   const opts = merge({}, normalLinkOptions(theme), options)
-  const {line, arrow, label, tooltip, $events, $bindings} = opts
+  const {line, arrow, label, tooltip, props, $events, $bindings} = opts
   return linkTemplate({
+    props,
     tooltip,
     $events,
     $bindings,
@@ -54,5 +55,24 @@ export function normalLink(options = {}, theme) {
       })
     ]
   })
+}
 
+/**
+ * 折线连线
+ * @param options options 配置项 {props, line, arrow, label, tooltip, $events, $bindings}
+ * @param theme
+ * @returns {GraphObject}
+ */
+export function cornerLink(options = {}, theme) {
+  const opts = {
+    props: {
+      routing: go.Link.Orthogonal,
+      curve: go.Link.JumpOver,
+      corner: 10
+    },
+    label: {
+      segmentIndex: 2
+    }
+  }
+  return normalLink(merge(opts, options), theme)
 }

@@ -44,14 +44,18 @@ export function normalNode(options = {}, theme) {
     $events,
     $bindings,
     children: [
-      creator({
-        name: go.Shape,
-        props: shape || {}
-      }),
-      creator({
-        name: go.TextBlock,
-        props: label || {}
-      })
+      shape
+        ? creator({
+          name: go.Shape,
+          props: shape
+        })
+        : null,
+      label
+        ? creator({
+          name: go.TextBlock,
+          props: label
+        })
+        : null
     ]
   })
 }
@@ -76,20 +80,26 @@ export function normalIconNode(options = {}, theme) {
           type: go.Panel.Auto
         },
         children: [
-          creator({
-            name: go.Shape,
-            props: shape || {}
-          }),
-          creator({
-            name: go.Shape,
-            props: icon || {}
-          })
+          shape
+            ? creator({
+              name: go.Shape,
+              props: shape
+            })
+            : null,
+          icon
+            ? creator({
+              name: go.Shape,
+              props: icon
+            })
+            : null
         ]
       }),
-      creator({
-        name: go.TextBlock,
-        props: label || {}
-      })
+      label
+        ? creator({
+          name: go.TextBlock,
+          props: label
+        })
+        : null
     ]
   })
 }
@@ -142,17 +152,21 @@ export function normalImageNode(options = {}, theme) {
           height: height + strokeWidth * 2
         },
         children: [
-          creator({
-            name: go.Shape,
-            props: shape || {}
-          }),
-          imageGraph
+          shape
+            ? creator({
+              name: go.Shape,
+              props: shape
+            })
+            : null,
+          image ? imageGraph : null
         ]
       }),
-      creator({
-        name: go.TextBlock,
-        props: label || {}
-      })
+      label
+        ? creator({
+          name: go.TextBlock,
+          props: label || {}
+        })
+        : null
     ]
   })
 }

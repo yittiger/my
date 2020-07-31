@@ -16,12 +16,26 @@ export function base({name, props, children} = {}) {
     ...$events,
     mouseEnter: (e, obj) => {
       obj.part.isHighlighted = true
-      ++obj.part.zOrder
+      if (obj instanceof go.Group) {
+        const parts = obj.findSubGraphParts()
+        parts.each(parts => {
+          ++parts.zOrder
+        })
+      } else {
+        ++obj.part.zOrder
+      }
       mouseEnter && mouseEnter(e, obj)
     },
     mouseLeave: (e, obj) => {
       obj.part.isHighlighted = false
-      --obj.part.zOrder
+      if (obj instanceof go.Group) {
+        const parts = obj.findSubGraphParts()
+        parts.each(parts => {
+          --parts.zOrder
+        })
+      } else {
+        --obj.part.zOrder
+      }
       mouseLeave && mouseLeave(e, obj)
     }
   }

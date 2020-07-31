@@ -16,6 +16,15 @@ function cleanProps(props) {
 }
 
 /**
+ * 清理数组，排除 null和 undefined的项
+ * @param array
+ * @returns {*[]}
+ */
+function cleanArray(array = []) {
+  return array.filter(n => !!n)
+}
+
+/**
  * 解析Graph配置参数，转换为标准格式
  * @param props
  * @returns {Object}
@@ -117,7 +126,7 @@ export default function ({name, props, children} = {}) {
   const items = [].concat(children || [])
   return $(name,
     opts.$normal,
-    ...items,
+    ...cleanArray(items),
     ...(opts.$bindings || []),
     ...createHoverBindings(opts),
     ...createSelectedBindings(opts),

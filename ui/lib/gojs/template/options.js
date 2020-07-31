@@ -1,5 +1,5 @@
 import {go, merge} from '../utils/lib'
-import defaultTheme, {normal} from './theme'
+import {normal} from './theme'
 
 export function tooltipOptions(theme = {}) {
   const {tooltip} = merge({}, normal, theme)
@@ -54,7 +54,7 @@ export function normalNodeOptions(theme = {}) {
     },
     label: {
       name: 'NodeLabel',
-      text: 'Text',
+      text: 'text',
       stroke: node.color,
       $hover: {
         stroke: node.hoverColor
@@ -222,104 +222,9 @@ export function normalGroupOptions(theme = {}) {
       text: 'Title',
       alignment: go.Spot.TopLeft,
       alignmentFocus: new go.Spot(0, 0, -4, -4),
-      font: '12px Sans-Serif',
+      font: '14px Sans-Serif',
       stroke: group.color,
       margin: new go.Margin(3, 5, 3, 5)
-    }
-  }
-}
-
-// --------------------------------------------------------------------
-
-
-export function nodeOptions(theme = defaultTheme) {
-  return {
-    shape: {
-      name: 'shape',
-      figure: theme.NODE_FIGURE,
-      fill: theme.NODE_FILL,
-      stroke: theme.NODE_STROKE,
-      strokeWidth: theme.NODE_STROKE_WIDTH,
-      width: theme.NODE_WIDTH,
-      height: theme.NODE_HEIGHT,
-      $hover: {
-        fill: theme.NODE_FILL_HOVER
-      },
-      $selected: {
-        fill: theme.NODE_FILL_SELECTED
-      }
-    },
-    icon: {
-      name: 'icon',
-      figure: theme.NODE_FIGURE,
-      fill: theme.NODE_ICON_COLOR,
-      scale: 0.6,
-      strokeWidth: 0,
-      desiredSize: new go.Size(theme.NODE_WIDTH, theme.NODE_HEIGHT),
-      margin: new go.Margin(-8, 0, 0, 0),
-      $hover: {
-        fill: theme.NODE_ICON_COLOR_HOVER
-      },
-      $selected: {
-        fill: theme.NODE_ICON_COLOR_SELECTED
-      }
-    },
-    label: {
-      name: 'label',
-      stroke: theme.NODE_TEXT_COLOR,
-      text: '文本',
-      textAlign: 'center',
-      font: '14px "Microsoft YaHei",Serif'
-    }
-  }
-}
-
-export function linkOptions(theme = defaultTheme) {
-  return {
-    line: {
-      name: 'line',
-      stroke: theme.LINK_STROKE,
-      strokeWidth: theme.LINK_STROKE_WIDTH,
-      $selected: {
-        stroke: theme.LINK_STROKE_SELECTED,
-        strokeWidth: theme.LINK_STROKE_WIDTH
-      },
-      $hover: {
-        stroke: theme.LINK_STROKE_HOVER,
-        strokeWidth: theme.LINK_STROKE_WIDTH
-      }
-    },
-    arrow: {
-      name: 'arrow',
-      toArrow: 'Standard',
-      fill: theme.LINK_STROKE,
-      stroke: theme.LINK_STROKE,
-      strokeWidth: theme.LINK_STROKE_WIDTH,
-      $hover: {
-        stroke: theme.LINK_STROKE_HOVER,
-        fill: theme.LINK_STROKE_HOVER,
-        strokeWidth: theme.LINK_STROKE_WIDTH
-      },
-      $selected: {
-        stroke: theme.LINK_STROKE_SELECTED,
-        fill: theme.LINK_STROKE_SELECTED,
-        strokeWidth: theme.LINK_STROKE_WIDTH
-      }
-    },
-    label: {
-      name: 'linkLabel',
-      text: '连线文本',
-      segmentOffset: new go.Point(0, -10),
-      segmentOrientation: go.Link.OrientUpright,
-      segmentFraction: 0.5,
-      segmentIndex: 0,
-      stroke: theme.LINK_TEXT_COLOR,
-      $hover: {
-        stroke: theme.LINK_TEXT_COLOR_HOVER
-      },
-      $selected: {
-        stroke: theme.LINK_TEXT_COLOR_SELECTED
-      }
     }
   }
 }

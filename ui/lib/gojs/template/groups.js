@@ -86,35 +86,49 @@ export function normalGroup(options = {}, theme) {
     props: shape
   })
 
+  const header = (button || title)
+    ? creator({
+      name: go.Panel,
+      props: {
+        type: go.Panel.Horizontal,
+        defaultAlignment: go.Spot.Left
+      },
+      children: []
+    })
+    : null
+
+  const placeholder = creator({
+    name: go.Placeholder,
+    props: {
+      padding: new go.Margin(header ? 5 : 10, 10, 10, 10)
+    }
+  })
+
+
   const wrapper = creator({
     name: go.Panel,
     props: {
       type: go.Panel.Vertical,
       defaultAlignment: go.Spot.Left
-    },
-    children: [
-      creator({
-        name: go.Panel,
-        props: {
-          type: go.Panel.Horizontal,
-          defaultAlignment: go.Spot.Left
-        },
-        children: [
-          expandGraph,
-          creator({
-            name: go.TextBlock,
-            props: title
-          })
-        ]
-      }),
-      creator({
-        name: go.Placeholder,
-        props: {
-          padding: new go.Margin(5, 10, 10, 10)
-        }
-      })
-    ]
+    }
   })
+
+  if (header && button) {
+    header.add(expandGraph)
+  }
+
+  if (header && title) {
+    header.add(creator({
+      name: go.TextBlock,
+      props: title
+    }))
+  }
+
+  if (header) {
+    wrapper.add(header)
+  }
+
+  wrapper.add(placeholder)
 
   return groupTemplate({
     props: {

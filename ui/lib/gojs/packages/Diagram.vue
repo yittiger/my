@@ -3,7 +3,7 @@
        :class="classes"
        v-loading.body="loading"
        element-loading-text="拼命加载中...">
-    <div ref="content" class="my-go-diagram__content"></div>
+    <div ref="content" :style="styles" class="my-go-diagram__content"></div>
     <slot></slot>
   </div>
 </template>
@@ -38,7 +38,12 @@
       onModelChange: {
         type: Function
       },
-      fit: Boolean
+      fit: Boolean,
+      width: String,
+      height: {
+        type: String,
+        default: '500px'
+      }
     },
     data() {
       return {
@@ -49,6 +54,12 @@
       classes() {
         return {
           'is-fit': this.fit
+        }
+      },
+      styles() {
+        return {
+          width: this.fit ? '100%' : this.width,
+          height: this.fit ? '100%' : this.height
         }
       }
     },

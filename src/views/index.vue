@@ -1,15 +1,11 @@
 <template>
-  <my-wrapper title="Hello MyUI" fit>
 
+  <Diagram fit height="500px" :init="init"></Diagram>
 
-    <Diagram fit ref="go" :init="init" :nodes="nodes" :links="links">
-    </Diagram>
-
-  </my-wrapper>
 </template>
 
 <script>
-  import {Diagram, init, normalIconNode, templateMap, normalLink, normalGroup, theme} from '$ui/gojs'
+  import {Diagram, init, normalNode, normalIconNode, normalImageNode} from '$ui/gojs'
   // import avatar from '@/assets/avatar.jpeg'
 
   export default {
@@ -19,51 +15,42 @@
     data() {
       return {
         nodes: [
-          {key: 'a', isGroup: true},
-          {key: 'Alpha', category: '1', group: 'a'},
-          {key: 'Beta', category: '2', group: 'b'}
-        ],
-        links: [
-          {from: 'Alpha', to: 'Beta'}
+          {key: 'Alpha'}
         ]
       }
     },
     methods: {
       init($, go) {
-        const myDiagram = init()
+        const diagram = init()
+        diagram.add(normalNode({
+          shape: null
+        }))
+        // diagram.add(normalNode({}, theme.color1))
+        // diagram.add(normalNode({}, theme.color2))
+        // diagram.add(normalNode({}, theme.color3))
+        // diagram.add(normalNode({}, theme.color4))
+        diagram.add(normalNode({
+          shape: {
+            width: 20,
+            height: 20
+          },
+          label: null
+        }))
 
-        myDiagram.nodeTemplateMap = templateMap({
-          1: normalIconNode(),
-          2: normalIconNode(null, theme.normalColor1)
-        })
+        diagram.add(normalIconNode())
+        diagram.add(normalIconNode({
+          label: null
+        }))
+        diagram.add(normalIconNode({
+          label: null,
+          shape: null
+        }))
 
-        myDiagram.linkTemplate = normalLink()
+        diagram.add(normalImageNode({
+          shape: null
+        }))
 
-        myDiagram.groupTemplate = normalGroup()
-
-        // myDiagram.nodeTemplate = normalIconNode({
-        //   tooltip: {},
-        //   label: {
-        //     $bindings: [
-        //       new go.Binding('text', 'key')
-        //     ]
-        //   },
-        //   $bindings: [
-        //     new go.Binding('isEnabled', 'enabled')
-        //   ],
-        //   $events: {
-        //     doubleClick(e, obj) {
-        //       console.log('doubleClick')
-        //       myDiagram.model.commit(() => {
-        //         obj.isEnabled = !obj.isEnabled
-        //       }, 'doubleClick')
-        //
-        //     }
-        //   }
-        // }, theme.normalColor1)
-
-
-        return myDiagram
+        return diagram
       }
     }
   }
