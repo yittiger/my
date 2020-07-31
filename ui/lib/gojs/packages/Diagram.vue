@@ -88,7 +88,8 @@
       layout(layout, delay = 100) {
         if (!this.diagram) return
         const {initialAutoScale, autoScale, initialContentAlignment, contentAlignment} = this.diagram
-        const prevAutoScale = autoScale, prevContentAlignment = contentAlignment
+        const prevAutoScale = autoScale,
+          prevContentAlignment = contentAlignment
         return new Promise(resolve => {
           this.commit(() => {
             // 切换布局把内容居中并自动缩放到最合适位置

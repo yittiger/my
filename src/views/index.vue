@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import {Diagram, init, normalIconNode, templateMap, normalLink, theme} from '$ui/gojs'
+  import {Diagram, init, normalIconNode, templateMap, normalLink, normalGroup, theme} from '$ui/gojs'
   // import avatar from '@/assets/avatar.jpeg'
 
   export default {
@@ -19,8 +19,9 @@
     data() {
       return {
         nodes: [
-          {key: 'Alpha', category: '1', enabled: true},
-          {key: 'Beta', category: '2', enabled: true}
+          {key: 'a', isGroup: true},
+          {key: 'Alpha', category: '1', group: 'a'},
+          {key: 'Beta', category: '2', group: 'b'}
         ],
         links: [
           {from: 'Alpha', to: 'Beta'}
@@ -37,6 +38,8 @@
         })
 
         myDiagram.linkTemplate = normalLink()
+
+        myDiagram.groupTemplate = normalGroup()
 
         // myDiagram.nodeTemplate = normalIconNode({
         //   tooltip: {},
