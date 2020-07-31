@@ -13,7 +13,7 @@ export function nodeTemplate(options = {}) {
   return base({
     name: go.Node,
     props: {
-      name: 'Node',
+      name: 'node',
       zOrder: 1,
       type: go.Panel.Vertical,
       selectionAdorned: false,

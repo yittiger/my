@@ -32,7 +32,7 @@ export function normalNodeOptions(theme = {}) {
   const {node} = merge({}, normal, theme)
   return {
     shape: {
-      name: 'NodeShape',
+      name: 'shape',
       figure: node.figure,
       fill: node.fill,
       stroke: node.stroke,
@@ -53,7 +53,7 @@ export function normalNodeOptions(theme = {}) {
       }
     },
     label: {
-      name: 'NodeLabel',
+      name: 'label',
       text: 'text',
       stroke: node.color,
       $hover: {
@@ -79,7 +79,7 @@ export function normalIconNodeOptions(theme = {}) {
   return {
     ...normalNodeOptions(theme),
     icon: {
-      name: 'NodeIcon',
+      name: 'icon',
       strokeWidth: 0,
       scale: 0.6,
       fill: node.color,
@@ -97,7 +97,7 @@ export function normalIconNodeOptions(theme = {}) {
       }
     },
     label: {
-      name: 'NodeLabel',
+      name: 'label',
       text: 'Text',
       stroke: node.textColor,
       margin: new go.Margin(5, 0, 0, 0),
@@ -118,11 +118,11 @@ export function normalImageNodeOptions(theme = {}) {
   return {
     ...normalNodeOptions(theme),
     image: {
-      name: 'NodeImage',
+      name: 'image',
       source: node.imageSource
     },
     label: {
-      name: 'NodeLabel',
+      name: 'label',
       text: 'Text',
       stroke: node.textColor,
       margin: new go.Margin(5, 0, 0, 0),
@@ -142,7 +142,7 @@ export function normalLinkOptions(theme = {}) {
   const {link} = merge({}, normal, theme)
   return {
     line: {
-      name: 'LinkLine',
+      name: 'line',
       stroke: link.color,
       strokeWidth: link.strokeWidth,
       $selected: {
@@ -156,7 +156,7 @@ export function normalLinkOptions(theme = {}) {
       }
     },
     arrow: {
-      name: 'LinkArrow',
+      name: 'arrow',
       toArrow: 'Standard',
       fill: link.color,
       stroke: link.color,
@@ -175,8 +175,8 @@ export function normalLinkOptions(theme = {}) {
       }
     },
     label: {
-      name: 'LinkLabel',
-      text: 'Link Text',
+      name: 'label',
+      text: 'text',
       segmentOffset: new go.Point(0, -10),
       segmentOrientation: go.Link.OrientUpright,
       segmentFraction: 0.5,
@@ -204,7 +204,7 @@ export function normalGroupOptions(theme = {}) {
   const {group} = merge({}, normal, theme)
   return {
     shape: {
-      name: 'GroupShape',
+      name: 'shape',
       figure: 'RoundedRectangle',
       fill: group.fill,
       stroke: group.stroke,
@@ -212,13 +212,13 @@ export function normalGroupOptions(theme = {}) {
       strokeDashArray: [3]
     },
     button: {
-      name: 'GroupButton',
+      name: 'button',
       figure: 'Rectangle',
       fill: 'rgba(0,0,0,0.1)',
       stroke: 'rgba(0,0,0,0.2)'
     },
     title: {
-      name: 'GroupTitle',
+      name: 'title',
       text: 'Title',
       alignment: go.Spot.TopLeft,
       alignmentFocus: new go.Spot(0, 0, -4, -4),

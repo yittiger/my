@@ -13,7 +13,7 @@ export function linkTemplate(options = {}) {
   return base({
     name: go.Link,
     props: {
-      name: 'Link',
+      name: 'link',
       zOrder: 1,
       curve: go.Link.Bezier,
       selectionAdorned: false,

@@ -13,7 +13,7 @@ export function groupTemplate(options = {}) {
   return base({
     name: go.Group,
     props: {
-      name: 'Group',
+      name: 'group',
       zOrder: 1,
       type: go.Panel.Auto,
       toSpot: go.Spot.AllSides,
