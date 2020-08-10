@@ -32,7 +32,7 @@ export function linkTemplate(options = {}) {
  * @param theme
  * @returns {GraphObject}
  */
-export function normalLink(options = {}, theme) {
+export function link(options = {}, theme) {
   const opts = merge({}, normalLinkOptions(theme), options)
   const {line, arrow, label, tooltip, props, $events, $bindings} = opts
   return linkTemplate({
@@ -74,5 +74,5 @@ export function cornerLink(options = {}, theme) {
       segmentIndex: 2
     }
   }
-  return normalLink(merge(opts, options), theme)
+  return link(merge(opts, options), theme)
 }

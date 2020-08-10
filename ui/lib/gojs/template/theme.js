@@ -40,6 +40,9 @@ export const normal = {
     color: '#599ad1',
     // 形状外的文本颜色
     textColor: '#595959',
+
+    opacity: 1,
+
     // 边框厚度
     strokeWidth: 2,
 
@@ -49,20 +52,23 @@ export const normal = {
     hoverStroke: '#8ecafd',
     // 鼠标经过时文本和icon颜色
     hoverColor: '#599ad1',
+    hoverOpacity: 1,
 
     // 选中时背景颜色
-    selectedFill: '#8ecafd',
+    selectedFill: '#599ad1',
     // 选中时边框颜色
-    selectedStroke: '#8ecafd',
+    selectedStroke: '#599ad1',
     // 选中时文本和icon颜色
     selectedColor: '#fff',
+    selectedOpacity: 1,
 
     // 禁用时背景颜色
-    disabledFill: '#efefef',
+    disabledFill: 'rgba(239,239,239,0.1)',
     // 禁用时边框颜色
-    disabledStroke: '#dfdfdf',
+    disabledStroke: 'rgba(223,223,223,0.1)',
     // 禁用时文本和icon颜色
-    disabledColor: '#c3c3c3',
+    disabledColor: 'rgba(195,195,195,0.1)',
+    disabledOpacity: 0.1,
     // 默认图标
     geometryString: defaultIcon,
     // 默认图片
@@ -72,7 +78,7 @@ export const normal = {
     color: '#a3b1bf',
     hoverColor: '#788694',
     selectedColor: '#4d5761',
-    disabledColor: '#dfdfdf',
+    disabledColor: 'rgba(223,223,223,0.1)',
     strokeWidth: 2
   },
   group: {
@@ -92,10 +98,15 @@ export const normal = {
     // 描边
     stroke: 'rgba(0,0,0,0)'
   }
-
 }
 
-export const color1 = merge({}, normal, {
+export const dark = merge({}, normal, {
+  node: {
+    textColor: '#fff'
+  }
+})
+
+export const color1 = {
   node: {
     fill: '#f8c7c5',
     stroke: '#9f504d',
@@ -109,9 +120,9 @@ export const color1 = merge({}, normal, {
     selectedStroke: '#9f504d',
     selectedColor: '#fff'
   }
-})
+}
 
-export const color2 = merge({}, normal, {
+export const color2 = {
   node: {
     fill: '#9ca7ae',
     stroke: '#2f4554',
@@ -125,9 +136,9 @@ export const color2 = merge({}, normal, {
     selectedStroke: '#2f4554',
     selectedColor: '#fff'
   }
-})
+}
 
-export const color3 = merge({}, normal, {
+export const color3 = {
   node: {
     fill: '#b8d7db',
     stroke: '#61a0a8',
@@ -141,9 +152,9 @@ export const color3 = merge({}, normal, {
     selectedStroke: '#61a0a8',
     selectedColor: '#fff'
   }
-})
+}
 
-export const color4 = merge({}, normal, {
+export const color4 = {
   node: {
     fill: '#e7dccb',
     stroke: '#ca8622',
@@ -157,4 +168,4 @@ export const color4 = merge({}, normal, {
     selectedStroke: '#ca8622',
     selectedColor: '#fff'
   }
-})
+}

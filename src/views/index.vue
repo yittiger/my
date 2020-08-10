@@ -1,12 +1,14 @@
 <template>
+  <div style="height: 100%; background: #fff;">
+    <Diagram fit height="500px" :init="init" :nodes="nodes" :links="links"></Diagram>
+  </div>
 
-  <Diagram fit height="500px" :init="init"></Diagram>
 
 </template>
 
 <script>
-  import {Diagram, init, normalNode, normalIconNode, normalImageNode} from '$ui/gojs'
-  // import avatar from '@/assets/avatar.jpeg'
+  import {Diagram, init, icon, link} from '$ui/gojs'
+  // import avatar from '$ui/gojs/sources/QQ1.png'
 
   export default {
     components: {
@@ -15,41 +17,51 @@
     data() {
       return {
         nodes: [
-          {key: 'Alpha'}
+          {key: 'Alpha', selected: false},
+          {key: 'Beta', selected: false}
+        ],
+        links: [
+          {key: 1, from: 'Alpha', to: 'Beta'}
         ]
       }
     },
     methods: {
       init($, go) {
         const diagram = init()
-        diagram.add(normalNode({
-          shape: null
-        }))
-        // diagram.add(normalNode({}, theme.color1))
-        // diagram.add(normalNode({}, theme.color2))
-        // diagram.add(normalNode({}, theme.color3))
-        // diagram.add(normalNode({}, theme.color4))
-        diagram.add(normalNode({
-          shape: {
-            width: 20,
-            height: 20
+        diagram.nodeTemplate = icon({
+          label: {
+            $bindings: [
+              new go.Binding('text', 'key')
+            ]
           },
-          label: null
-        }))
-
-        diagram.add(normalIconNode())
-        diagram.add(normalIconNode({
-          label: null
-        }))
-        diagram.add(normalIconNode({
-          label: null,
-          shape: null
-        }))
-
-        diagram.add(normalImageNode({
-          shape: null
-        }))
-
+          // image: {
+          //   source: avatar
+          // },
+          $events: {
+            click(e, obj) {
+              console.log('click')
+              obj.movable = !obj.movable
+              obj.isEnabled = !obj.isEnabled
+              setTimeout(() => {
+                obj.movable = !obj.movable
+                obj.isEnabled = !obj.isEnabled
+              }, 2000)
+            }
+          },
+          $bindings: [
+            new go.Binding('isSelected', 'selected')
+          ]
+        })
+        diagram.linkTemplate = link({
+          label: {
+            $bindings: [
+              new go.Binding('text', 'key', (v, o) => {
+                const data = diagram.model.findLinkDataForKey(o.part.key)
+                return data.from + '->' + data.to
+              })
+            ]
+          }
+        })
         return diagram
       }
     }

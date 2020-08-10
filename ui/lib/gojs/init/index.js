@@ -9,8 +9,10 @@ export function init(options = {}) {
     'undoManager.isEnabled': true,
     'toolManager.mouseWheelBehavior': go.ToolManager.WheelZoom,
     'toolManager.hoverDelay': 300,
-    model: $(go.Model),
-    layout: $(go.Layout),
+    model: $(go.GraphLinksModel, {
+      linkKeyProperty: 'key'
+    }),
+    layout: $(go.ForceDirectedLayout),
     ...options
   })
 }

@@ -68,9 +68,9 @@ function createHoverBindings({$normal, $hover, $selected, $disabled}) {
       const selectedValue = $selected[name]
       // 已选中状态不响应hover
       if (isSelected && selectedValue !== undefined) {
+
         return selectedValue
       }
-
       return yes ? value : $normal[name]
     }).ofObject()
   })
@@ -104,11 +104,24 @@ function createSelectedBindings({$normal, $selected, $disabled}) {
  * @param $disabled
  * @returns {Array}
  */
-function createDisabledBindings({$normal, $disabled}) {
+function createDisabledBindings({$normal, $selected, $hover, $disabled}) {
   if (!$disabled) return []
   return Object.entries($disabled).map(([name, value]) => {
-    return new go.Binding(name, 'isEnabled', yes => {
-      return yes ? $normal[name] : value
+    return new go.Binding(name, 'isEnabled', (yes, obj) => {
+      if (!yes) {
+        return value
+      }
+      const isSelected = obj.part?.isSelected
+      const selectedValue = $selected[name]
+      if (isSelected && selectedValue !== undefined) {
+        return selectedValue
+      }
+      const isHighlighted = obj.part?.isHighlighted
+      const hoverValue = $hover[name]
+      if (isHighlighted && hoverValue !== undefined) {
+        return hoverValue
+      }
+      return $normal[name]
     }).ofObject()
   })
 }

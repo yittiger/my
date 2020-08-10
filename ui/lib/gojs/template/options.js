@@ -56,6 +56,7 @@ export function normalNodeOptions(theme = {}) {
       name: 'label',
       text: 'text',
       stroke: node.color,
+      opacity: node.opacity,
       $hover: {
         stroke: node.hoverColor
       },
@@ -100,7 +101,7 @@ export function normalIconNodeOptions(theme = {}) {
       name: 'label',
       text: 'Text',
       stroke: node.textColor,
-      margin: new go.Margin(5, 0, 0, 0),
+      margin: new go.Margin(0, 3, 0, 3),
       $disabled: {
         stroke: node.disabledColor
       }
@@ -119,15 +120,21 @@ export function normalImageNodeOptions(theme = {}) {
     ...normalNodeOptions(theme),
     image: {
       name: 'image',
-      source: node.imageSource
+      source: node.imageSource,
+      opacity: node.opacity,
+      $disabled: {
+        opacity: node.disabledOpacity
+      }
     },
     label: {
       name: 'label',
       text: 'Text',
       stroke: node.textColor,
-      margin: new go.Margin(5, 0, 0, 0),
+      opacity: node.opacity,
+      margin: new go.Margin(0, 3, 0, 3),
       $disabled: {
-        stroke: node.disabledColor
+        stroke: node.disabledColor,
+        opacity: node.disabledOpacity
       }
     }
   }
@@ -156,7 +163,7 @@ export function normalLinkOptions(theme = {}) {
       }
     },
     arrow: {
-      name: 'arrow',
+      name: 'toArrow',
       toArrow: 'Standard',
       fill: link.color,
       stroke: link.color,
@@ -176,7 +183,7 @@ export function normalLinkOptions(theme = {}) {
     },
     label: {
       name: 'label',
-      text: 'text',
+      text: '',
       segmentOffset: new go.Point(0, -10),
       segmentOrientation: go.Link.OrientUpright,
       segmentFraction: 0.5,
