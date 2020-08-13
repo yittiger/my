@@ -1,5 +1,7 @@
 <template>
   <div style="height: 100%; background: #fff;">
+
+    <my-contextmenu :data="menus" theme="light" @click="handleClick"></my-contextmenu>
     <Diagram fit height="500px" :init="init" :nodes="nodes" :links="links"></Diagram>
   </div>
 
@@ -8,6 +10,7 @@
 
 <script>
   import {Diagram, init, icon, link} from '$ui/gojs'
+  import '$ui/icons/audio'
   // import avatar from '$ui/gojs/sources/QQ1.png'
 
   export default {
@@ -16,6 +19,23 @@
     },
     data() {
       return {
+        menus: [
+          {icon: 'el-icon-view', label: '查看'},
+          {icon: 'el-icon-edit', label: '编辑'},
+          {
+            icon: 'el-icon-finished',
+            label: '完成',
+            children: [
+              {label: '二级菜单'},
+              {label: '二级菜单'},
+              {label: '二级菜单'},
+              {label: '二级菜单'}
+            ]
+          },
+          {icon: 'el-icon-delete', label: '删除'},
+          {divider: true},
+          {icon: 'el-icon-document', label: '属性'}
+        ],
         nodes: [
           {key: 'Alpha', selected: false},
           {key: 'Beta', selected: false}
@@ -26,9 +46,19 @@
       }
     },
     methods: {
+      handleClick(item, vm) {
+        console.log(item, vm)
+      },
       init($, go) {
         const diagram = init()
         diagram.nodeTemplate = icon({
+          tooltip: {
+            text: {
+              $bindings: [
+                new go.Binding('text', 'key')
+              ]
+            }
+          },
           label: {
             $bindings: [
               new go.Binding('text', 'key')
