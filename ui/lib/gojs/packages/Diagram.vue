@@ -10,6 +10,7 @@
 
 <script>
   import go from '../utils/lib'
+  import '../style/index.scss'
 
   export default {
     name: 'Diagram',

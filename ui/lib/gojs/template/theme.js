@@ -39,7 +39,7 @@ export const normal = {
     // 文本/icon颜色
     color: '#599ad1',
     // 形状外的文本颜色
-    textColor: '#595959',
+    textColor: '#ffffff',
 
     opacity: 1,
 

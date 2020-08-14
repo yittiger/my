@@ -107,12 +107,15 @@ Prefetch 链接将会消耗带宽。
 
 默认：['@xdh/my']
 
+### productionSourceMap
+生成环境是否生成SourceMap, 默认不生成
+
 ### mock
 开启模拟支持，默认值： process.env.NODE_ENV !== 'production'， 默认在开发环境下开启
 
 ### microApp
-开启微应用支持，默认：true
-在项目不需要做主应用时，建议关闭，设置为false，可以提高减少打包文件体积，提高性能。
+开启微应用支持，默认：false
+在项目不需要做主应用时，建议关闭，设置为false，可高减少打包文件体积，提高性能。
 
 ### chainWebpack
 Webpack自定义配置。

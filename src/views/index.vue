@@ -2,6 +2,7 @@
   <div style="height: 100%; background: #fff;">
 
     <my-contextmenu :data="menus" theme="light" @click="handleClick"></my-contextmenu>
+
     <Diagram fit height="500px" :init="init" :nodes="nodes" :links="links"></Diagram>
   </div>
 
@@ -9,7 +10,8 @@
 </template>
 
 <script>
-  import {Diagram, init, icon, link} from '$ui/gojs'
+  import {Diagram, init, icon, link, theme} from '$ui/gojs'
+  import Avatar from '@/assets/avatar.jpeg'
   import '$ui/icons/audio'
   // import avatar from '$ui/gojs/sources/QQ1.png'
 
@@ -37,7 +39,7 @@
           {icon: 'el-icon-document', label: '属性'}
         ],
         nodes: [
-          {key: 'Alpha', selected: false},
+          {key: 'Alpha', selected: true},
           {key: 'Beta', selected: false}
         ],
         links: [
@@ -64,24 +66,25 @@
               new go.Binding('text', 'key')
             ]
           },
-          // image: {
-          //   source: avatar
-          // },
+          image: {
+            source: Avatar
+          },
           $events: {
             click(e, obj) {
               console.log('click')
               obj.movable = !obj.movable
-              obj.isEnabled = !obj.isEnabled
+              // obj.isEnabled = !obj.isEnabled
               setTimeout(() => {
                 obj.movable = !obj.movable
-                obj.isEnabled = !obj.isEnabled
+                // obj.isEnabled = !obj.isEnabled
               }, 2000)
             }
           },
           $bindings: [
             new go.Binding('isSelected', 'selected')
           ]
-        })
+        }, theme.color2)
+
         diagram.linkTemplate = link({
           label: {
             $bindings: [

@@ -1,4 +1,3 @@
-import './style/index.scss'
 import Diagram from './packages/Diagram'
 import Overview from './packages/Overview'
 import * as theme from './template/theme'

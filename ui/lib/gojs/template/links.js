@@ -16,7 +16,7 @@ export function linkTemplate(options = {}) {
       name: 'link',
       zOrder: 1,
       curve: go.Link.Bezier,
-      selectionAdorned: false,
+      // selectionAdorned: false,
       toolTip: tooltip ? defaultTooltip(tooltip) : null,
       $events,
       $bindings,

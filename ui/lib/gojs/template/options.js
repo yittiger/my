@@ -57,6 +57,7 @@ export function normalNodeOptions(theme = {}) {
       text: 'text',
       stroke: node.color,
       opacity: node.opacity,
+      margin: new go.Margin(2, 5, 2, 5),
       $hover: {
         stroke: node.hoverColor
       },
@@ -101,10 +102,7 @@ export function normalIconNodeOptions(theme = {}) {
       name: 'label',
       text: 'Text',
       stroke: node.textColor,
-      margin: new go.Margin(0, 3, 0, 3),
-      $disabled: {
-        stroke: node.disabledColor
-      }
+      margin: new go.Margin(0, 3, 0, 3)
     }
   }
 }
@@ -131,11 +129,7 @@ export function normalImageNodeOptions(theme = {}) {
       text: 'Text',
       stroke: node.textColor,
       opacity: node.opacity,
-      margin: new go.Margin(0, 3, 0, 3),
-      $disabled: {
-        stroke: node.disabledColor,
-        opacity: node.disabledOpacity
-      }
+      margin: new go.Margin(0, 3, 0, 3)
     }
   }
 }

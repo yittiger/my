@@ -4,6 +4,7 @@
 
 <script>
   import go from '../utils/lib'
+  import '../style/index.scss'
 
   const defaultInit = ($, go) => {
     return $(go.Overview, {

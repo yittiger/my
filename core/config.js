@@ -113,6 +113,9 @@ let __config__ = {
    */
   transpileDependencies: ['@xdh/my'],
 
+  // 生成环境是否生成SourceMap
+  productionSourceMap: false,
+
   /**
    * 开启模拟数据
    */
