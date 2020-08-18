@@ -134,6 +134,17 @@ $gradual-background: linear-gradient(to bottom, $--color-primary-light-1, $--col
     filter: invert(85%) brightness(1.2) hue-rotate(180deg);
   }
 
+  @include when(menus-level-split) {
+    .my-menu.el-menu--horizontal > .el-menu-item.is-active {
+      font-size: 18px;
+
+      > .my-icon {
+        font-size: 21px;
+
+      }
+    }
+  }
+
 }
 
 @include b(pro-tabs) {
