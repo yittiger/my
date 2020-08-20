@@ -182,7 +182,7 @@ export default {
     // 检测是否可以用CSS实现省略号功能
     canUseCSSEllipsis() {
       // 如果有操作相关功能，就不能用css实现
-      if (this.editable || this.copyable || this.expandable) {
+      if (this.editable || this.copyable || this.expandable || this.tooltip) {
         return false
       }
 
@@ -261,6 +261,7 @@ export default {
     syncEllipsis() {
       if (!this.children || this.children.length === 0) return
       if (!this.rows || this.rows < 0) return
+
       if (this.canUseCSSEllipsis()) return
 
       const {content, ellipsis} = ellipsisHelper(
@@ -322,6 +323,7 @@ export default {
         placement: 'top',
         ...this.tooltip
       }
+
       return (
         <Tooltip {...{props}}>{vnode}</Tooltip>
       )
@@ -359,14 +361,14 @@ export default {
   },
   mounted() {
     if (this.ellipsis) {
-      addResizeListener(this.$el, this.resizeOnNextFrame)
+      addResizeListener(this.tooltip ? this.$el.parentNode : this.$el, this.resizeOnNextFrame)
       this.resizeOnNextFrame()
     }
   },
   beforeDestroy() {
     clearTimeout(this.copyTimerId)
     if (this.ellipsis) {
-      removeResizeListener(this.$el, this.resizeOnNextFrame)
+      removeResizeListener(this.tooltip ? this.$el.parentNode : this.$el, this.resizeOnNextFrame)
     }
   }
 }
