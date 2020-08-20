@@ -79,6 +79,7 @@ export default {
    * @property {Boolean} [ellipsis=false] 设置自动溢出省略
    * @property {Number} [rows=1] 超出几行显示省略， ellipsis true 有效
    * @property {Boolean} [expandable=false] 显示展开按钮 ellipsis true 有效
+   * @property {Boolean|Object} [tooltip] 显示tooltip，ellipsis true 有效
    * @property {Boolean} [mark=false] 添加标记样式
    * @property {Boolean} [underline=false] 添加下划线样式
    * @property {Boolean} [code=false] 添加引用样式
@@ -114,6 +115,8 @@ export default {
     },
     // ellipsis true 有效
     expandable: Boolean,
+    // 显示tooltip，ellipsis true 有效, 设置tooltip后，expandable 将失效
+    tooltip: [Boolean, Object],
     // 添加标记样式
     mark: Boolean,
     // 添加下划线样式
@@ -297,7 +300,7 @@ export default {
       )
     },
     renderExpand() {
-      if (!this.ellipsis || !this.expandable) return
+      if (!this.ellipsis || !this.expandable || this.tooltip) return
       if (!this.isEllipsis) return
       return (<a class="my-typography__expand" onClick={this.toggleExpand}>{this.expanded ? '收起' : '展开'}</a>)
     },
@@ -310,6 +313,18 @@ export default {
     },
     renderOperations() {
       return [this.renderExpand(), this.renderEdit(), this.renderCopy()].filter(vnode => vnode)
+    },
+    renderTooltip(h, vnode) {
+      if (!this.ellipsis || !this.tooltip) return vnode
+      if (!this.isEllipsis) return vnode
+      const props = {
+        content: this.getText(),
+        placement: 'top',
+        ...this.tooltip
+      }
+      return (
+        <Tooltip {...{props}}>{vnode}</Tooltip>
+      )
     }
   },
 
@@ -336,11 +351,11 @@ export default {
         this.renderOperations()
       )
     }
-
-    return h(this.tag, {
+    const vnode = h(this.tag, {
       class: this.classes,
       style: this.styles
     }, children)
+    return this.renderTooltip(h, vnode)
   },
   mounted() {
     if (this.ellipsis) {
