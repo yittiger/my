@@ -109,6 +109,8 @@ fixGojs(GOJS_FILE)
 fixGojs(GOJS_FILE.replace('go.js', 'go-module.js'))
 fixGojs(GOJS_FILE.replace('go.js', 'go-debug.js'))
 fixGojs(GOJS_FILE.replace('go.js', 'go-debug-module.js'))
+fixGojs(GOJS_FILE.replace('go.js', 'go.mjs'))
+fixGojs(GOJS_FILE.replace('go.js', 'go-debug.mjs'))
 
 
 
