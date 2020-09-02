@@ -1,5 +1,5 @@
 import {go, merge} from '../utils/lib';
-import {normalIconNodeOptions, normalImageNodeOptions, normalNodeOptions} from './options'
+import {normal} from './theme'
 import creator from '../utils/creator'
 import {base, defaultTooltip} from './common'
 
@@ -17,34 +17,36 @@ const lockPath = 'F M860.069521 429.487623h-73.242947v-170.422692C786.826574 ' +
   '5v-166.202091c0-87.912723 71.55278-159.501618 159.417351-159.501618s159.287337 ' +
   '71.588895 159.287337 159.501618l0.002407 166.202091z'
 
-function createLockIcon() {
+function createLockIcon(lock = {}) {
   return creator({
     name: go.Shape,
     props: {
-      width: 14,
-      height: 14,
+      name: 'lock',
+      width: 12,
+      height: 12,
       geometryString: lockPath,
-      alignment: new go.Spot(0, 0, 10, 10),
+      alignment: go.Spot.BottomCenter,
       fill: 'yellow',
-      opacity: 1,
-      $disabled: {
-        opacity: 0.1
-      },
+      strokeWidth: 1,
       $bindings: [
         new go.Binding('visible', 'movable', (yes, obj) => {
           return !obj.part.movable
         }).ofObject()
-      ]
+      ],
+      ...lock
     }
   })
+
 }
 
-function createLabel(label, shape) {
+function createLabel(label, t) {
   if (!label) return null
   return creator({
     name: go.Panel,
     props: {
       type: go.Panel.Auto,
+      name: 'label',
+      alignment: go.Spot.Center,
       margin: new go.Margin(3, 0, 0, 0)
     },
     children: [
@@ -52,47 +54,52 @@ function createLabel(label, shape) {
         name: go.Shape,
         props: {
           figure: 'RoundedRectangle',
-          fill: shape?.stroke || 'rgba(0,0,0,0.15)',
           strokeWidth: 0,
-          visible: true,
-          $disabled: {
-            visible: false
-          }
+          fill: t.stroke || 'rgba(0,0,0,0.3)'
         }
       }),
       creator({
         name: go.TextBlock,
-        props: label
+        props: {
+          text: '',
+          stroke: t.textColor,
+          margin: new go.Margin(2, 8, 2, 8),
+          maxLines: 1,
+          overflow: go.TextBlock.OverflowEllipsis,
+          ...label
+        }
       })
     ]
   })
 }
 
-function createTags(tags) {
+function createTags(tags = {}, colors = []) {
   return creator({
     name: go.Panel,
     props: {
+      name: 'tags',
       type: go.Panel.Horizontal,
-      alignment: go.Spot.TopCenter,
-      itemArray: [
-        {label: '黄', color: '#7f6e05', fill: '#fde0ac'},
-        {label: '毒', color: '#f31506', fill: '#fcb2b2'}
-      ],
+      alignment: go.Spot.BottomCenter,
+      // {label: '黄', color: '#7f6e05', fill: '#fde0ac'}
+      itemArray: [],
       itemTemplate: creator({
         name: go.Panel,
         props: {
           type: go.Panel.Auto,
-          margin: new go.Margin(0, 2, 25, 2)
+          margin: new go.Margin(35, 2, 0, 2)
         },
         children: [
           creator({
             name: go.Shape,
             props: {
               figure: 'RoundedRectangle',
-              fill: '#cccccc',
+              fill: '#ecebeb',
               strokeWidth: 0,
               $bindings: [
-                new go.Binding('fill', 'fill')
+                new go.Binding('fill', 'itemIndex', (v, obj) => {
+                  const index = v % colors.length
+                  return colors[index] || '#ecebeb'
+                }).ofObject()
               ]
             }
           }),
@@ -100,37 +107,99 @@ function createTags(tags) {
             name: go.TextBlock,
             props: {
               text: '黄',
-              stroke: '#ff0000',
+              stroke: '#ffffff',
               margin: new go.Margin(0, 2, 0, 2),
-              $bindings: [
-                new go.Binding('text', 'label'),
-                new go.Binding('stroke', 'color')
-              ]
+              $bindings: {
+                text: 'label',
+                stroke: 'color'
+              }
             }
           })
         ]
-      })
+      }),
+      ...tags
     }
   })
 }
 
+function createNodeAdornment(t = {}) {
+  return creator({
+    name: go.Adornment,
+    props: {
+      type: go.Panel.Auto
+    },
+    children: [
+      creator({
+        name: go.Shape,
+        props: {
+          figure: 'RoundedRectangle',
+          fill: t.selectedFill,
+          strokeWidth: t.selectedStrokeWidth,
+          stroke: t.selectedStroke
+        }
+      }),
+      creator({name: go.Placeholder})
+    ]
+  })
+}
+
+function createBadge(badge = {}) {
+  const {props, shape, label} = badge
+  return creator({
+    name: go.Panel,
+    props: {
+      type: go.Panel.Auto,
+      name: 'badge',
+      alignment: go.Spot.TopCenter,
+      ...props
+    },
+    children: [
+      creator({
+        name: go.Shape,
+        props: {
+          figure: 'Circle',
+          fill: 'red',
+          strokeWidth: 0,
+          ...shape
+        }
+      }),
+      creator({
+        name: go.TextBlock,
+        props: {
+          stroke: '#fff',
+          text: '0',
+          ...label
+        }
+      })
+    ]
+  })
+}
 
 /**
  * 基础节点模板
- * @param {Object} options 配置参数，{tooltip, props, children, $events, $bindings}
- * @param {Object} wrapperProps
+ * @param {Object} options 配置参数，{props, wrapper, tooltip, lock, tags, badge, children, $events, $bindings}
+ * @param {object} [t]
  * @returns {GraphObject}
  */
-export function nodeTemplate(options = {}) {
-  const {props, wrapper, tooltip, children, $events, $bindings} = options
+export function nodeTemplate(options = {}, t) {
+  const {props, wrapper, tooltip, lock, tags, badge, children, $events, $bindings} = options
   return base({
     name: go.Node,
     props: {
       name: 'node',
-      zOrder: 1,
+      zOrder: 2,
       type: go.Panel.Spot,
       minSize: new go.Size(20, 20),
       toolTip: tooltip ? defaultTooltip(tooltip) : null,
+      selectionAdorned: true,
+      selectionAdornmentTemplate: createNodeAdornment(t),
+      opacity: t.opacity,
+      $hover: {
+        opacity: t.hoverOpacity
+      },
+      $disabled: {
+        opacity: t.disabledOpacity
+      },
       $events,
       $bindings,
       ...(props || {})
@@ -144,41 +213,55 @@ export function nodeTemplate(options = {}) {
         },
         children: children || []
       }),
-      createLockIcon(),
-      createTags()
+      lock ? createLockIcon(lock) : null,
+      tags ? createTags(tags, t.tags) : null,
+      badge ? createBadge(badge) : null
     ]
   })
 }
 
 /**
  * 通用节点模板
- * @param options options 配置参数，{shape, label, tooltip, $events, $bindings}
+ * @param options options 配置参数，{shape, label}
  * @param theme
  * @returns {GraphObject}
  */
-export function normalNode(options = {}, theme) {
-  const opts = merge({}, normalNodeOptions(theme), options)
-  const {props, shape, label, tooltip, $events, $bindings} = opts
+export function node(options = {}, theme = {}) {
+  const t = merge({}, normal, theme)
+  const {shape, label} = options
   return nodeTemplate({
-    props,
-    tooltip,
-    $events,
-    $bindings,
+    ...options,
     children: [
       shape
         ? creator({
           name: go.Shape,
-          props: shape
+          props: {
+            name: 'shape',
+            fill: t.fill,
+            stroke: t.stroke,
+            strokeWidth: t.strokeWidth,
+            ...shape
+          }
         })
         : null,
       label
         ? creator({
           name: go.TextBlock,
-          props: label
+          props: {
+            name: 'label',
+            text: 'text',
+            stroke: t.color,
+            margin: new go.Margin(2, 5, 2, 5),
+            maxLines: 1,
+            alignment: go.Spot.Left,
+            verticalAlignment: go.Spot.Center,
+            overflow: go.TextBlock.OverflowEllipsis,
+            ...label
+          }
         })
         : null
     ]
-  })
+  }, t)
 }
 
 /**
@@ -193,7 +276,7 @@ export function circle(options = {}, theme) {
       figure: 'Circle'
     }
   })
-  return normalNode(opts, theme)
+  return node(opts, theme)
 }
 
 /**
@@ -212,7 +295,7 @@ export function rectangle(options = {}, theme) {
       figure: 'RoundedRectangle'
     }
   })
-  return normalNode(opts, theme)
+  return node(opts, theme)
 }
 
 /**
@@ -231,26 +314,23 @@ export function diamond(options = {}, theme) {
       figure: 'Diamond'
     }
   })
-  return normalNode(opts, theme)
+  return node(opts, theme)
 }
 
 /**
  * 带图标的普通节点模板
- * @param options options 配置参数，{shape, label, icon, tooltip, $events, $bindings}
+ * @param options options 配置参数，{shape, label, icon}
  * @param theme
  * @returns {GraphObject}
  */
 export function icon(options = {}, theme) {
-  const opts = merge({}, normalIconNodeOptions(theme), options)
-  const {props, shape, label, icon, tooltip, $events, $bindings} = opts
+  const t = merge({}, normal, theme)
+  const {shape, label, icon} = options
   return nodeTemplate({
-    props,
+    ...options,
     wrapper: {
       type: go.Panel.Vertical
     },
-    tooltip,
-    $events,
-    $bindings,
     children: [
       creator({
         name: go.Panel,
@@ -261,36 +341,50 @@ export function icon(options = {}, theme) {
           shape
             ? creator({
               name: go.Shape,
-              props: shape
+              props: {
+                name: 'shape',
+                figure: 'Circle',
+                fill: t.fill,
+                stroke: t.stroke,
+                strokeWidth: t.strokeWidth,
+                ...shape
+              }
             })
             : null,
-          icon
-            ? creator({
-              name: go.Shape,
-              props: icon
-            })
-            : null
+          creator({
+            name: go.Shape,
+            props: {
+              name: 'icon',
+              strokeWidth: 0,
+              scale: 0.6,
+              fill: t.color,
+              desiredSize: new go.Size(t.width || 50, t.height || 50),
+              margin: new go.Margin(5, 5, 5, 5),
+              geometryString: t.geometryString,
+              ...icon
+            }
+          })
         ]
       }),
-      createLabel(label, shape)
+      createLabel(label, t)
     ]
-  })
+  }, t)
 }
 
 /**
  * 带图片的普通节点
- * @param options options 配置参数，{shape, label, image, tooltip, $events, $bindings}
+ * @param options options 配置参数，{shape, label, image}
  * @param theme
  * @returns {GraphObject}
  */
 export function image(options = {}, theme) {
-  const opts = merge({}, normalImageNodeOptions(theme), options)
-  const {props, shape, label, image, tooltip, $events, $bindings} = opts
-  const {width = 64, height = 64, strokeWidth = 0, figure} = shape || {}
+  const t = merge({}, normal, theme)
+  const {shape, label, image} = options
+  const {width = 64, height = 64, figure = 'Circle'} = shape || {}
+
   const imageGraph = creator({
     name: go.Panel,
     props: {
-      ...props,
       type: go.Panel.Spot,
       isClipping: true
     },
@@ -298,7 +392,7 @@ export function image(options = {}, theme) {
       creator({
         name: go.Shape,
         props: {
-          figure: figure,
+          figure,
           width,
           height
         }
@@ -306,36 +400,45 @@ export function image(options = {}, theme) {
       creator({
         name: go.Picture,
         props: {
+          name: 'image',
+          source: t.imageSource,
           width,
           height,
-          ...(image || {})
+          ...image
         }
       })
     ]
   })
   return nodeTemplate({
-    tooltip,
-    $events,
-    $bindings,
+    ...options,
+    wrapper: {
+      type: go.Panel.Vertical
+    },
     children: [
       creator({
         name: go.Panel,
         props: {
           type: go.Panel.Spot,
-          width: width + strokeWidth * 2,
-          height: height + strokeWidth * 2
+          width: width + t.strokeWidth * 2,
+          height: height + t.strokeWidth * 2
         },
         children: [
           shape
             ? creator({
               name: go.Shape,
-              props: shape
+              props: {
+                figure,
+                fill: t.fill,
+                stroke: t.stroke,
+                strokeWidth: t.strokeWidth * 2,
+                ...shape
+              }
             })
             : null,
           image ? imageGraph : null
         ]
       }),
-      createLabel(label, shape)
+      createLabel(label, t)
     ]
-  })
+  }, t)
 }

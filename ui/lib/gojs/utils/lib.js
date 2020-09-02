@@ -19,9 +19,19 @@ go.Shape.defineFigureGenerator('Terminator', function (shape, w, h) {
   return geo;
 })
 
+const toList = function (collection) {
+  const items = []
+  const it = collection.iterator
+  while (it.next()) {
+    items.push(it.value)
+  }
+  return items
+}
+
 export default go
 export {
   go,
   $,
-  merge
+  merge,
+  toList
 }

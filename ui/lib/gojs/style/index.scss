@@ -1,51 +1,163 @@
+@import "vars";
 
-.my-go-diagram {
+@include b(go-diagram) {
   position: relative;
-
-  &.is-fit {
-    height: 100%;
-    width: 100%;
-  }
-
+  background: $--go-background-light;
+  color: $--go-color-light;
+  font-size: 16px;
   canvas {
     outline: none;
   }
 
-  &__content {
+  @include e(content) {
     height: 100%;
     width: 100%;
   }
+  @include e(loading) {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.3);
+  }
+  @include e(loading-inner) {
+    padding: 15px 20px;
+    box-shadow: $--go-shadow-light;
+    background: #fff;
+    display: inline-block;
+    border-radius: 5px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  @include when(fit) {
+    height: 100%;
+    width: 100%;
+  }
+  @include when(dark) {
+    background: $--go-background-dark;
+    color: $--go-color-dark;
+  }
 }
 
-.my-go-overview {
+@include b(go-overview) {
   position: absolute;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  background: rgba(255, 255, 255, 0.9);
+  box-shadow: $--go-shadow-light;
+  background: $--go-overview-background-light;
   z-index: 100;
   border-radius: 2px;
 
-  &.is-dark {
-    background: rgba(30, 30, 30, .95);
-    box-shadow: 0 2px 12px 0 rgba(255, 255, 255, 0.1);
+  @include when(dark) {
+    box-shadow: $--go-shadow-dark;
+    background: $--go-overview-background-dark;
   }
 
-  &.is-left-top {
+  @include when(left-top) {
     left: 0;
     top: 0
   }
 
-  &.is-left-bottom {
+  @include when(left-bottom) {
     left: 0;
     bottom: 0
   }
 
-  &.is-right-top {
+  @include when(right-top) {
     right: 0;
     top: 0;
   }
 
-  &.is-right-bottom {
+  @include when(right-bottom) {
     right: 0;
     bottom: 0;
   }
 }
+
+@include b(go-palette) {
+  canvas {
+    outline: none;
+  }
+}
+
+@include b(go-toolbar) {
+  position: absolute;
+  padding: 0 10px;
+  height: 50px;
+  width: 100%;
+  left: 0;
+  top: 0;
+  background: $neutral-white-2;
+  z-index: 2;
+  border-bottom: 1px solid $neutral-black-7;
+
+  @include e(item) {
+    display: inline-block;
+    margin: 5px 0 5px 0;
+    cursor: pointer;
+    font-size: 20px;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    color: $neutral-black-3;
+    .my-icon {
+      vertical-align: middle;
+      margin-top: 9px;
+    }
+
+    &:hover {
+      background: $blue-10;
+      border: 1px solid $blue-9;
+      color: $blue-5
+    }
+  }
+
+  @include e(divider) {
+    margin: 5px 10px 0 10px;
+    height: 20px;
+    background-color: $neutral-black-6;
+  }
+}
+
+
+//@include b(go-toolbar) {
+//  position: absolute;
+//  height: 50px;
+//  width: 100%;
+//  left: 0;
+//  top: 0;
+//  background: $blue-2;
+//  z-index: 2;
+//  border-bottom: 1px solid $neutral-white-6;
+//
+//  @include e(item) {
+//    display: inline-block;
+//    margin: 5px 0 5px 5px;
+//    cursor: pointer;
+//    font-size: 20px;
+//    height: 40px;
+//    width: 40px;
+//    text-align: center;
+//    border-radius: 4px;
+//    background: $blue-1;
+//    border: 1px solid $neutral-white-5;
+//    color: #fff;
+//    .my-icon {
+//      vertical-align: middle;
+//      margin-top: 9px;
+//    }
+//  }
+//
+//  @include e(divider) {
+//    margin: 5px 5px 0 10px;
+//    height: 20px;
+//    background-color: $neutral-white-5
+//  }
+//}
+//
+//

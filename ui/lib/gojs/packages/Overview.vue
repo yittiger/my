@@ -4,25 +4,22 @@
 
 <script>
   import go from '../utils/lib'
-  import '../style/index.scss'
+  import creator from '../utils/creator'
 
-  const defaultInit = ($, go) => {
-    return $(go.Overview, {
-      contentAlignment: go.Spot.Center
-    })
+  const defaultOptions = {
+    contentAlignment: go.Spot.Center
   }
 
   export default {
     name: 'Overview',
-    inject: ['diagram'],
+    inject: ['myDiagram'],
     props: {
-      init: {
-        type: Function,
-        default: defaultInit
+      options: {
+        type: [Object, Function]
       },
       placement: {
         type: String,
-        default: 'left-bottom',
+        default: 'right-bottom',
         validator(val) {
           return ['left-bottom', 'left-top', 'right-top', 'right-bottom'].includes(val)
         }
@@ -63,10 +60,21 @@
       }
     },
     mounted() {
-      const parent = this?.diagram
+      const parent = this?.myDiagram
       if (parent) {
-        parent.$once('init', diagram => {
-          this.overview = this.init(go.GraphObject.make, go)
+        parent.$once('ready', diagram => {
+          this.overview = typeof this.options === 'function'
+            ? this.options(creator({
+              name: go.Overview,
+              props: defaultOptions
+            }))
+            : creator({
+              name: go.Overview,
+              props: {
+                ...defaultOptions,
+                ...this.options
+              }
+            })
           if (diagram && this.overview) {
             this.overview.div = this.$el
             this.overview.observed = diagram

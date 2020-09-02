@@ -22,7 +22,8 @@ export default {
   },
   methods: {
     scrollLoaded(res) {
-      this.list = Object.freeze(this.list.concat(res.list || []))
+      const list = this.list.concat(res.list || [])
+      this.list = this.freeze ? Object.freeze(list) : list
       if (this.isNoMore) {
         /**
          * 滚动加载结束时触发

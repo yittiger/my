@@ -1,6 +1,6 @@
 import creator from '../utils/creator'
-import {go, merge} from '../utils/lib'
-import {tooltipOptions} from './options'
+import {go} from '../utils/lib'
+
 
 /**
  * 基础节点或连线
@@ -48,16 +48,16 @@ export function base({name, props, children} = {}) {
 
 /**
  * 基础Tooltip
- * @param {object} props 包含三个GraphObject，{panel, shape, text}
- * @param {object} theme 主题变量配置
+ * @param {object} tooltip
  * @returns {GraphObject}
  */
-export function defaultTooltip(props = {}, theme) {
-  const {panel, shape, text} = merge({}, tooltipOptions(theme), props)
+export function defaultTooltip(tooltip = {}) {
   return creator({
     name: go.Adornment,
     props: {
-      type: go.Panel.Spot
+      name: 'tooltip',
+      type: go.Panel.Spot,
+      zOrder: 1
     },
     children: [
       creator({
@@ -66,15 +66,29 @@ export function defaultTooltip(props = {}, theme) {
       }),
       creator({
         name: go.Panel,
-        props: panel,
+        props: {
+          type: go.Panel.Auto,
+          alignment: go.Spot.Top,
+          alignmentFocus: go.Spot.Bottom
+        },
         children: [
           creator({
             name: go.Shape,
-            props: shape
+            props: {
+              figure: 'RoundedRectangle',
+              fill: 'rgba(0,0,0,0.5)',
+              strokeWidth: 0
+            }
           }),
           creator({
             name: go.TextBlock,
-            props: text
+            props: {
+              text: 'tooltip text',
+              stroke: '#fff',
+              margin: new go.Margin(1, 5, 1, 5),
+              wrap: go.TextBlock.WrapBreakAll,
+              ...tooltip
+            }
           })
         ]
       })

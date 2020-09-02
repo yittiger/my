@@ -1,5 +1,4 @@
 export * from './theme'
-export * from './options'
 export * from './common'
 export * from './nodes'
 export * from './links'

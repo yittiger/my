@@ -4,6 +4,7 @@
       <div class="my-dialog__modal" v-if="modal"></div>
       <MyDrag ref="dialog"
               @mousedown.native="handleMousedown"
+              v-clickoutside="handleClickOutside"
               v-bind="dragOptions"
               :class="dialogClass"
               :style="dialogStyle"
@@ -65,6 +66,7 @@
    */
   import {MyDrag, MyResize, MySpin} from '$ui'
   import {addResizeListener, removeResizeListener} from 'element-ui/lib/utils/resize-event'
+  import clickoutside from 'element-ui/lib/utils/clickoutside'
   import {addClass, removeClass} from 'element-ui/lib/utils/dom'
   import Panel from './Panel'
   import SrcFrame from './SrcFrame'
@@ -103,14 +105,17 @@
       MySpin,
       SrcFrame
     },
+    directives: {
+      clickoutside
+    },
     /**
      * 属性参数
      * @member props
      * @property {boolean} [visible=true] 显示弹窗，支持sync修饰符
      * @property {string} [title] 标题文本，复杂内容可通过插槽定义
      * @property {string|object} [icon] 标题前的图标，可以是字体图标或svg
-     * @property {string} [width=300px] 弹窗宽度
-     * @property {string} [height=150px] 高度
+     * @property {string} [width] 弹窗宽度
+     * @property {string} [height] 高度
      * @property {boolean} [modal] 显示遮罩层
      * @property {string} [theme] 主题风格，可选值：'primary', 'dark', 'light'
      * @property {boolean|object} [draggable] 拖拽配置，参考MyDrag组件
@@ -132,6 +137,7 @@
      * @property {string} [src] 用iframe加载的页面地址
      * @property {string} [bodyClass] dialog内容容器className
      * @property {string} [target] 窗体加载到容器的html选择器
+     * @property {boolean} [closeOnClickOutside] 点击窗体外部关闭
      */
     props: {
       // 显示
@@ -191,7 +197,8 @@
       src: String,
       bodyClass: String,
       // 窗体加载到容器的html选择器
-      target: String
+      target: String,
+      closeOnClickOutside: Boolean
     },
     data() {
       return {
@@ -448,6 +455,11 @@
       },
       handleMousedown() {
         this.zIndex = ++Z_INDEX
+      },
+      handleClickOutside() {
+        if (this.closeOnClickOutside) {
+          this.handleClose()
+        }
       },
       handleClose() {
         this.currentVisible = false

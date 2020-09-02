@@ -39,7 +39,7 @@ export default {
       set(val) {
         const list = [...this.list]
         list.splice(this.startIndex, this.endIndex + 1 - this.startIndex, ...val)
-        this.list = Object.freeze(list)
+        this.list = this.freeze ? Object.freeze(list) : list
       }
     },
     // 在可视区的行数

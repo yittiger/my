@@ -101,6 +101,8 @@ function createSelectedBindings({$normal, $selected, $disabled}) {
 /**
  * 绑定禁用状态
  * @param $normal
+ * @param $selected
+ * @param $hover
  * @param $disabled
  * @returns {Array}
  */
@@ -126,6 +128,14 @@ function createDisabledBindings({$normal, $selected, $hover, $disabled}) {
   })
 }
 
+function transformBindings(bindings = []) {
+  if (Array.isArray(bindings)) {
+    return bindings
+  }
+  return Object.entries(bindings)
+    .map(([key, src]) => new go.Binding(key, src))
+}
+
 
 /**
  * GraphObject 模板构造器
@@ -140,7 +150,7 @@ export default function ({name, props, children} = {}) {
   return $(name,
     opts.$normal,
     ...cleanArray(items),
-    ...(opts.$bindings || []),
+    ...transformBindings(opts.$bindings),
     ...createHoverBindings(opts),
     ...createSelectedBindings(opts),
     ...createDisabledBindings(opts)

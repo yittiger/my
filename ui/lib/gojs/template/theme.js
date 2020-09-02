@@ -1,4 +1,4 @@
-import {merge} from '../utils/lib'
+// import {merge} from '../utils/lib'
 import defaultImage from '$ui/assets/img/placeholder.png'
 
 const defaultIcon = 'F M927.51552691 838.62786695c0 47.2488403-13.46404948 ' +
@@ -23,149 +23,78 @@ const defaultIcon = 'F M927.51552691 838.62786695c0 47.2488403-13.46404948 ' +
   '43s24.31008934-127.53446866 73.0549351-176.27931449S443.1837471 13.33150084 512 ' +
   '13.33150084s127.53446866 24.31008934 176.27931447 73.0549351z'
 
+// #7c818f
+// #5b9bd5
+// #ed7d31
+// #ffc000
+// #4472c4
+// #70ad47
+// #151c32
+
+// #0099cc
+// #ffb609
+// #ef5350
+// #00d156
+// #f431ba
 
 export const normal = {
-  node: {
-    // 节点形状
-    figure: 'Circle',
-    // 宽度，默认自适应
-    width: undefined,
-    // 高度，默认自适应
-    height: undefined,
-    // 背景颜色
-    fill: '#c6e5ff',
-    // 边框样式
-    stroke: '#8ecafd',
-    // 文本/icon颜色
-    color: '#599ad1',
-    // 形状外的文本颜色
-    textColor: '#ffffff',
+  // 背景颜色
+  fill: 'rgba(124,129,143,0.3)',
+  // 边框样式
+  stroke: '#7c818f',
+  // 文本/icon颜色
+  color: '#7c818f',
+  // 形状外的文本颜色
+  textColor: '#ffffff',
+  strokeWidth: 2,
+  opacity: 1,
+  hoverOpacity: 0.6,
+  // 边框厚度
+  disabledOpacity: 0.1,
+  // 默认图标
+  geometryString: defaultIcon,
+  // 默认图片
+  imageSource: defaultImage,
+  // 标签颜色
+  tags: ['#0099cc', '#ffb609', '#ef5350', '#00d156', '#f431ba'],
 
-    opacity: 1,
-
-    // 边框厚度
-    strokeWidth: 2,
-
-    // 鼠标经过时背景颜色
-    hoverFill: '#e7f3fc',
-    // 鼠标经过时边框颜色
-    hoverStroke: '#8ecafd',
-    // 鼠标经过时文本和icon颜色
-    hoverColor: '#599ad1',
-    hoverOpacity: 1,
-
-    // 选中时背景颜色
-    selectedFill: '#599ad1',
-    // 选中时边框颜色
-    selectedStroke: '#599ad1',
-    // 选中时文本和icon颜色
-    selectedColor: '#fff',
-    selectedOpacity: 1,
-
-    // 禁用时背景颜色
-    disabledFill: 'rgba(239,239,239,0.1)',
-    // 禁用时边框颜色
-    disabledStroke: 'rgba(223,223,223,0.1)',
-    // 禁用时文本和icon颜色
-    disabledColor: 'rgba(195,195,195,0.1)',
-    disabledOpacity: 0.1,
-    // 默认图标
-    geometryString: defaultIcon,
-    // 默认图片
-    imageSource: defaultImage
-  },
-  link: {
-    color: '#a3b1bf',
-    hoverColor: '#788694',
-    selectedColor: '#4d5761',
-    disabledColor: 'rgba(223,223,223,0.1)',
-    strokeWidth: 2
-  },
-  group: {
-    figure: 'RoundedRectangle',
-    fill: 'rgba(3,160,250,0.03)',
-    stroke: 'rgba(3,160,250,0.4)',
-    color: 'rgba(3,160,250)',
-    strokeWidth: 1
-  },
-  tooltip: {
-    // 形状
-    figure: 'RoundedRectangle',
-    // 背景颜色
-    fill: 'rgba(0,0,0,0.7)',
-    // 文本颜色
-    color: '#fff',
-    // 描边
-    stroke: 'rgba(0,0,0,0)'
-  }
+  selectedFill: 'rgba(64,158,255,0.1)',
+  selectedStrokeWidth: 2,
+  selectedStroke: '#409eff'
 }
 
-export const dark = merge({}, normal, {
-  node: {
-    textColor: '#fff'
-  }
-})
-
 export const color1 = {
-  node: {
-    fill: '#f8c7c5',
-    stroke: '#9f504d',
-    color: '#9f504d',
-
-    hoverFill: '#fbe8e7',
-    hoverStroke: '#9f504d',
-    hoverColor: '#9f504d',
-
-    selectedFill: '#9f504d',
-    selectedStroke: '#9f504d',
-    selectedColor: '#fff'
-  }
+  fill: 'rgba(91,155,213,0.3)',
+  stroke: '#5b9bd5',
+  color: '#5b9bd5'
 }
 
 export const color2 = {
-  node: {
-    fill: '#9ca7ae',
-    stroke: '#2f4554',
-    color: '#2f4554',
-
-    hoverFill: '#ced2d4',
-    hoverStroke: '#2f4554',
-    hoverColor: '#2f4554',
-
-    selectedFill: '#2f4554',
-    selectedStroke: '#2f4554',
-    selectedColor: '#fff'
-  }
+  fill: 'rgba(237,125,49,0.3)',
+  stroke: '#ed7d31',
+  color: '#ed7d31'
 }
 
 export const color3 = {
-  node: {
-    fill: '#b8d7db',
-    stroke: '#61a0a8',
-    color: '#61a0a8',
-
-    hoverFill: '#e7ebec',
-    hoverStroke: '#61a0a8',
-    hoverColor: '#61a0a8',
-
-    selectedFill: '#61a0a8',
-    selectedStroke: '#61a0a8',
-    selectedColor: '#fff'
-  }
+  fill: 'rgba(255,192,0,0.3)',
+  stroke: '#ffc000',
+  color: '#ffc000'
 }
 
 export const color4 = {
-  node: {
-    fill: '#e7dccb',
-    stroke: '#ca8622',
-    color: '#ca8622',
+  fill: 'rgba(68,114,196,0.3)',
+  stroke: '#4472c4',
+  color: '#4472c4'
+}
 
-    hoverFill: '#f5eee5',
-    hoverStroke: '#ca8622',
-    hoverColor: '#ca8622',
+export const color5 = {
+  fill: 'rgba(112,173,71,0.3)',
+  stroke: '#70ad47',
+  color: '#70ad47'
+}
 
-    selectedFill: '#ca8622',
-    selectedStroke: '#ca8622',
-    selectedColor: '#fff'
-  }
+export const color6 = {
+  fill: 'rgba(21,28,50,0.3)',
+  stroke: '#151c32',
+  color: '#151c32'
 }
