@@ -14,7 +14,7 @@ module.exports = {
   /**
    * 开启模拟数据
    */
-  mock: false,
+  mock: true,
   /**
    * 开启微应用服务
    */

@@ -34,8 +34,13 @@ const defaultStyleCreator = config => {
 export default {
   name: 'MyMapCluster',
   inject: ['myMap'],
-  render() {
-    return this.$slots.default
+  render(h) {
+    const children = this.$slots.default
+    if (children && children.length > 1) {
+      return h('div', children)
+    }
+    return children
+
   },
   /**
    * 属性参数

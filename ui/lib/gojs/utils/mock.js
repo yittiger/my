@@ -48,7 +48,56 @@ export function mockLinks(nodes, min, max) {
   return Object.freeze(links)
 }
 
-export function mockTree(minNodes, maxNodes, minChild, maxChild) {
+
+export function mockTree(minNodes, maxNodes, minChild, maxChild, hasRandomSizes) {
+  const nodeArray = [];
+  if (minNodes === undefined || isNaN(minNodes) || minNodes < 1) minNodes = 1
+  if (maxNodes === undefined || isNaN(maxNodes) || maxNodes < minNodes) maxNodes = minNodes
+
+  const numNodes = Math.floor(Math.random() * (maxNodes - minNodes + 1)) + minNodes;
+  for (let i = 0; i < numNodes; i++) {
+    nodeArray.push({
+      key: i,
+      text: i.toString(),
+      fill: go.Brush.randomColor(),
+      size: (hasRandomSizes) ? new go.Size(Math.random() * 50 + 20, Math.random() * 50 + 20) : new go.Size(30, 30)
+    });
+  }
+
+  for (let i = 0; i < nodeArray.length; i++) {
+    const swap = Math.floor(Math.random() * nodeArray.length);
+    const temp = nodeArray[swap];
+    nodeArray[swap] = nodeArray[i];
+    nodeArray[i] = temp;
+  }
+
+  if (nodeArray.length > 1) {
+    if (minChild === undefined || isNaN(minChild) || minChild < 0) minChild = 0;
+    if (maxChild === undefined || isNaN(maxChild) || maxChild < minChild) maxChild = minChild;
+
+    // keep the Set of node data that do not yet have a parent
+    const available = new go.Set();
+    available.addAll(nodeArray);
+    for (let i = 0; i < nodeArray.length; i++) {
+      const parent = nodeArray[i];
+      available.remove(parent);
+
+      // assign some number of node data as children of this parent node data
+      const children = Math.floor(Math.random() * (maxChild - minChild + 1)) + minChild;
+      for (let j = 0; j < children; j++) {
+        const child = available.first();
+        if (child === null) break;
+        available.remove(child);
+        // have the child node data refer to the parent node data by its key
+        child.parent = parent.key;
+      }
+      if (available.count === 0) break;
+    }
+  }
+  return nodeArray;
+}
+
+export function mockGraph(minNodes, maxNodes, minChild, maxChild) {
   const nodes = mockNodes(minNodes, maxNodes)
   const links = mockLinks(nodes, minChild, maxChild)
   return {
