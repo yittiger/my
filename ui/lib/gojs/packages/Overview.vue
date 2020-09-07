@@ -6,8 +6,10 @@
   import go from '../utils/lib'
   import creator from '../utils/creator'
 
-  const defaultOptions = {
-    contentAlignment: go.Spot.Center
+  const defaultOptions = function () {
+    return {
+      contentAlignment: go.Spot.Center
+    }
   }
 
   export default {
@@ -66,12 +68,12 @@
           this.overview = typeof this.options === 'function'
             ? this.options(creator({
               name: go.Overview,
-              props: defaultOptions
+              props: defaultOptions()
             }))
             : creator({
               name: go.Overview,
               props: {
-                ...defaultOptions,
+                ...defaultOptions(),
                 ...this.options
               }
             })

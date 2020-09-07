@@ -35,7 +35,7 @@ export function linkTemplate(options = {}, t) {
 
 /**
  * 通用连线模板
- * @param {object} options 配置项 {props, line, arrow, label, tooltip, $events, $bindings}
+ * @param {object} options 配置项 {props, line, toArrow, fromArrow, label, tooltip, $events, $bindings}
  * @param theme
  * @returns {GraphObject}
  */
@@ -129,22 +129,3 @@ export function corner(options, theme) {
   }, options), theme)
 }
 
-/**
- * 折线连线
- * @param options options 配置项 {props, line, arrow, label, tooltip, $events, $bindings}
- * @param theme
- * @returns {GraphObject}
- */
-export function cornerLink(options = {}, theme) {
-  const opts = {
-    props: {
-      routing: go.Link.Orthogonal,
-      curve: go.Link.JumpOver,
-      corner: 10
-    },
-    label: {
-      segmentIndex: 2
-    }
-  }
-  return link(merge(opts, options), theme)
-}

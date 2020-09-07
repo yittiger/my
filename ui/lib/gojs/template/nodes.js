@@ -126,7 +126,8 @@ function createNodeAdornment(t = {}) {
   return creator({
     name: go.Adornment,
     props: {
-      type: go.Panel.Auto
+      type: go.Panel.Auto,
+      zOrder: 1
     },
     children: [
       creator({
@@ -182,7 +183,8 @@ function createBadge(badge = {}) {
  * @returns {GraphObject}
  */
 export function nodeTemplate(options = {}, t) {
-  const {props, wrapper, tooltip, lock, tags, badge, children, $events, $bindings} = options
+
+  const {props, wrapper, tooltip, lock, tags, badge, children = [], $events, $bindings} = options
   return base({
     name: go.Node,
     props: {
@@ -192,7 +194,7 @@ export function nodeTemplate(options = {}, t) {
       minSize: new go.Size(20, 20),
       toolTip: tooltip ? defaultTooltip(tooltip) : null,
       selectionAdorned: true,
-      selectionAdornmentTemplate: createNodeAdornment(t),
+      selectionAdornmentTemplate: createNodeAdornment(t, $events),
       opacity: t.opacity,
       $hover: {
         opacity: t.hoverOpacity
@@ -205,14 +207,16 @@ export function nodeTemplate(options = {}, t) {
       ...(props || {})
     },
     children: [
-      creator({
-        name: go.Panel,
-        props: {
-          type: go.Panel.Auto,
-          ...(wrapper || {})
-        },
-        children: children || []
-      }),
+      children.length > 1
+        ? creator({
+          name: go.Panel,
+          props: {
+            type: go.Panel.Auto,
+            ...(wrapper || {})
+          },
+          children: children || []
+        })
+        : children[0],
       lock ? createLockIcon(lock) : null,
       tags ? createTags(tags, t.tags) : null,
       badge ? createBadge(badge) : null
@@ -253,14 +257,14 @@ export function node(options = {}, theme = {}) {
             stroke: t.color,
             margin: new go.Margin(2, 5, 2, 5),
             maxLines: 1,
-            alignment: go.Spot.Left,
+            alignment: go.Spot.Center,
             verticalAlignment: go.Spot.Center,
             overflow: go.TextBlock.OverflowEllipsis,
             ...label
           }
         })
         : null
-    ]
+    ].filter(n => !!n)
   }, t)
 }
 

@@ -2,7 +2,7 @@
   <div class="my-go-diagram"
        :class="classes"
        :style="styles">
-    <div ref="content" :style="styles" class="my-go-diagram__content"></div>
+    <div ref="content" class="my-go-diagram__content"></div>
     <div v-show="loading" class="my-go-diagram__loading">
       <div class="my-go-diagram__loading-inner">
         <MySpin loading></MySpin>
@@ -14,6 +14,8 @@
 </template>
 
 <script>
+  import {addResizeListener, removeResizeListener} from 'element-ui/lib/utils/resize-event'
+  import {debounce} from '$ui/utils/util'
   import {MySpin} from '$ui'
   import go from '../utils/lib'
   import creator from '../utils/creator'
@@ -24,25 +26,27 @@
   import finder from '../mixins/finder'
   import '../style/index.scss'
 
-  const defaultOptions = {
-    initialAutoScale: go.Diagram.Uniform,
-    initialContentAlignment: go.Spot.Center,
-    initialDocumentSpot: go.Spot.Center,
-    contentAlignment: go.Spot.Center,
-    autoScale: go.Diagram.None,
-    allowSelect: true,
-    'undoManager.isEnabled': true,
-    'toolManager.mouseWheelBehavior': go.ToolManager.WheelZoom,
-    'toolManager.hoverDelay': 200,
-    model: creator({
-      name: go.GraphLinksModel,
-      props: {
-        linkKeyProperty: 'key'
-      }
-    }),
-    nodeTemplate: circle(),
-    linkTemplate: link(),
-    layout: force()
+  const defaultOptions = function () {
+    return {
+      initialAutoScale: go.Diagram.Uniform,
+      initialContentAlignment: go.Spot.Center,
+      initialDocumentSpot: go.Spot.Center,
+      contentAlignment: go.Spot.Center,
+      autoScale: go.Diagram.None,
+      allowSelect: true,
+      'undoManager.isEnabled': true,
+      'toolManager.mouseWheelBehavior': go.ToolManager.WheelZoom,
+      'toolManager.hoverDelay': 200,
+      model: creator({
+        name: go.GraphLinksModel,
+        props: {
+          linkKeyProperty: 'key'
+        }
+      }),
+      nodeTemplate: circle(),
+      linkTemplate: link(),
+      layout: force()
+    }
   }
 
   export default {
@@ -69,6 +73,13 @@
           'is-dark': this.dark
         }
       }
+    },
+    mounted() {
+      this.proxyResize = debounce(this.resize, 100, false)
+      addResizeListener(this.$el, this.proxyResize)
+    },
+    beforeDestroy() {
+      this.proxyResize && removeResizeListener(this.$el, this.proxyResize)
     }
   }
 </script>

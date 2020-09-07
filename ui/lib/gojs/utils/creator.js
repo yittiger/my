@@ -130,7 +130,7 @@ function createDisabledBindings({$normal, $selected, $hover, $disabled}) {
 
 function transformBindings(bindings = []) {
   if (Array.isArray(bindings)) {
-    return bindings
+    return bindings.map(n => typeof n === 'string' ? new go.Binding(n, n) : n)
   }
   return Object.entries(bindings)
     .map(([key, src]) => new go.Binding(key, src))

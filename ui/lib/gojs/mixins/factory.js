@@ -11,8 +11,18 @@ export default function (ClassName, defaultOptions, ref) {
         type: String,
         default: '600px'
       },
-      nodes: Array,
-      links: Array,
+      nodes: {
+        type: Array,
+        default() {
+          return []
+        }
+      },
+      links: {
+        type: Array,
+        default() {
+          return []
+        }
+      },
       // modelData
       data: Object,
       onModelChange: Function,
@@ -51,12 +61,12 @@ export default function (ClassName, defaultOptions, ref) {
         const diagram = typeof this.options === 'function'
           ? this.options(creator({
             name: ClassName,
-            props: defaultOptions
+            props: defaultOptions()
           }))
           : creator({
             name: ClassName,
             props: {
-              ...defaultOptions,
+              ...defaultOptions(),
               ...this.options
             }
           })
@@ -140,7 +150,6 @@ export default function (ClassName, defaultOptions, ref) {
       this.unbind(this.diagram)
       this.diagram.div = null
       this.diagram = null
-
     }
   }
 }

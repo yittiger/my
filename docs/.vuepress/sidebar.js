@@ -229,7 +229,13 @@ module.exports = {
   ],
   '/ui/go/': [
     '',
-    'template'
+    'diagram',
+    'nodes',
+    'links',
+    'group',
+    'layout',
+    'overview',
+    'palette'
     // createMenus('组件', [
     //   'components/go',
     //   'components/circle-menu',
