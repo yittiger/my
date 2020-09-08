@@ -317,7 +317,6 @@ export default {
       if (!this.map) return
       Object.entries(this.$listeners)
         .forEach(([key, handler]) => this.map.on(key, handler))
-      this.map.on()
     },
     /**
      * 销毁透传Map事件
@@ -464,6 +463,20 @@ export default {
       if (viewport) {
         viewport.style.filter = this.filterStyle
       }
+    },
+    /**
+     * 清空所有覆盖物
+     */
+    clear() {
+      if (!this.map) return
+      const layers = this.map
+        .getLayers()
+        .getArray()
+        .filter(n => !n.__MY_LAYER__)
+
+      layers.forEach(n => {
+        n.getSource().clear()
+      })
     }
   },
   mounted() {
