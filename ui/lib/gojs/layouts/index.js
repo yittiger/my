@@ -12,7 +12,7 @@ export function grid(options = {}) {
     name: go.GridLayout,
     props: {
       cellSize: new go.Size(60, 60),
-      spacing: new go.Size(100, 100),
+      spacing: new go.Size(20, 20),
       ...options
     }
   })

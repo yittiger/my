@@ -1,5 +1,7 @@
+import {addResizeListener, removeResizeListener} from 'element-ui/lib/utils/resize-event'
 import creator from '../utils/creator'
 import go from '../utils/lib'
+import {debounce} from '$ui/utils/util'
 
 export default function (ClassName, defaultOptions, ref) {
   return {
@@ -75,8 +77,10 @@ export default function (ClassName, defaultOptions, ref) {
         diagram.delayInitialization(() => {
           this.commit(this.load, 'init')
           this.onReady && this.onReady(diagram)
-          this.$emit('ready', diagram)
+          this.$emit('_ready', diagram)
           this.loading = false
+          this.proxyResize = debounce(this.resize, 100, false)
+          addResizeListener(this.$el, this.proxyResize)
         })
         this.bind(diagram)
         this.diagram = diagram
@@ -84,6 +88,12 @@ export default function (ClassName, defaultOptions, ref) {
       delayInit() {
         clearTimeout(this._delayId)
         this._delayId = setTimeout(this.init, this.delay)
+      },
+      merge(options = {}) {
+        if (!this.diagram) return
+        Object.entries(options).forEach(([name, value]) => {
+          this.diagram[name] = value
+        })
       },
       bind(diagram) {
         this.handleModelChange = e => {
@@ -139,6 +149,14 @@ export default function (ClassName, defaultOptions, ref) {
         } else {
           model.commit(func, name)
         }
+      },
+
+      /**
+       * 更新图形
+       */
+      resize(alwaysQueueUpdate) {
+        if (!this.diagram) return
+        this.diagram.requestUpdate(alwaysQueueUpdate)
       }
     },
     mounted() {
@@ -147,6 +165,7 @@ export default function (ClassName, defaultOptions, ref) {
     beforeDestroy() {
       clearTimeout(this._delayId)
       if (!this.diagram) return
+      this.proxyResize && removeResizeListener(this.$el, this.proxyResize)
       this.unbind(this.diagram)
       this.diagram.div = null
       this.diagram = null

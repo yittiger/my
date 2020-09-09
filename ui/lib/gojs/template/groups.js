@@ -37,7 +37,7 @@ export function groupTemplate(options = {}) {
  */
 export function group(options = {}, theme) {
   const t = merge({}, normal, theme)
-  const {shape, title, button, layout, $events, $bindings} = options
+  const {props, shape, title, button, layout, $events, $bindings} = options
   const expandGraph = button
     ? creator({
       name: go.Panel,
@@ -159,7 +159,8 @@ export function group(options = {}, theme) {
     props: {
       layout,
       $events,
-      $bindings
+      $bindings,
+      ...(props || {})
     },
     children: [
       shapeGraph,

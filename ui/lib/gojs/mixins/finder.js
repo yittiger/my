@@ -195,14 +195,6 @@ export default {
      */
     clear() {
       this.diagram.clear()
-    },
-
-    /**
-     * 更新图形
-     */
-    resize(alwaysQueueUpdate) {
-      if (!this.diagram) return
-      this.diagram.requestUpdate(alwaysQueueUpdate)
     }
   }
 }

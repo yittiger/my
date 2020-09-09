@@ -81,11 +81,12 @@ export function link(options = {}, theme) {
         props: {
           name: 'label',
           text: '',
-          segmentOffset: new go.Point(0, -10),
+          segmentOffset: new go.Point(0, -12),
           segmentOrientation: go.Link.OrientUpright,
           segmentFraction: 0.5,
           segmentIndex: 0,
           stroke: t.color,
+          font: '14px sans-serif',
           ...label
         }
       }) : null

@@ -14,8 +14,6 @@
 </template>
 
 <script>
-  import {addResizeListener, removeResizeListener} from 'element-ui/lib/utils/resize-event'
-  import {debounce} from '$ui/utils/util'
   import {MySpin} from '$ui'
   import go from '../utils/lib'
   import creator from '../utils/creator'
@@ -73,13 +71,6 @@
           'is-dark': this.dark
         }
       }
-    },
-    mounted() {
-      this.proxyResize = debounce(this.resize, 100, false)
-      addResizeListener(this.$el, this.proxyResize)
-    },
-    beforeDestroy() {
-      this.proxyResize && removeResizeListener(this.$el, this.proxyResize)
     }
   }
 </script>

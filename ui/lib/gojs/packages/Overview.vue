@@ -64,7 +64,7 @@
     mounted() {
       const parent = this?.myDiagram
       if (parent) {
-        parent.$once('ready', diagram => {
+        parent.$once('_ready', diagram => {
           this.overview = typeof this.options === 'function'
             ? this.options(creator({
               name: go.Overview,

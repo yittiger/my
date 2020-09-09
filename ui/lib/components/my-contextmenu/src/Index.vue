@@ -3,7 +3,7 @@
        v-show="visible"
        :class="classes"
        :style="styles">
-    <Menu v-if="visible" v-clickoutside="hide" ref="menu" :items="data"></Menu>
+    <Menu v-if="visible" ref="menu" :items="data"></Menu>
   </div>
 </template>
 
@@ -13,7 +13,6 @@
    * @module $ui/components/my-contextmenu
    */
   import {on, off} from 'element-ui/lib/utils/dom'
-  import clickoutside from 'element-ui/lib/utils/clickoutside'
   import Menu from './Menu'
 
   /**
@@ -25,9 +24,6 @@
 
   export default {
     name: 'MyContextmenu',
-    directives: {
-      clickoutside
-    },
     components: {
       Menu
     },
@@ -50,6 +46,7 @@
      * @property {boolean} [disabled] 禁用菜单
      * @property {number} [zIndex=1000] 显示层级
      * @property {String|HTMLElement|Function} 触发菜单容器，支持选择器和函数，默认 document.body
+     * @property {boolean} [manual] 手动模式，需要自行调用show 、hide 方法
      */
     props: {
       // 主题风格
@@ -77,7 +74,9 @@
         default() {
           return document.body
         }
-      }
+      },
+      // 手动控制菜单显示
+      manual: Boolean
     },
     data() {
       return {
@@ -120,11 +119,10 @@
       },
       getPlacement(rect, x, y) {
         const targetRect = this.triggerTarget.getBoundingClientRect()
-        if (rect.height + y - targetRect.top >= targetRect.height) {
+        if (rect.height + y - Math.abs(targetRect.top) >= targetRect.height) {
           y -= rect.height
         }
-
-        if (rect.width + x - targetRect.left >= targetRect.width) {
+        if (rect.width + x - Math.abs(targetRect.left) >= targetRect.width) {
           x -= rect.width
         }
         return {
@@ -139,7 +137,6 @@
           this.x = placement.x
           this.y = placement.y
         })
-
       },
       hide() {
         this.visible = false
@@ -147,13 +144,17 @@
     },
     mounted() {
       this.triggerTarget = this.getTarget()
-      on(this.triggerTarget, 'contextmenu', this.handleContextMenu)
+      if (!this.manual) {
+        on(this.triggerTarget, 'contextmenu', this.handleContextMenu)
+      }
       on(document.body, 'click', this.hide)
       document.body.appendChild(this.$el)
 
     },
     beforeDestroy() {
-      off(this.triggerTarget, 'contextmenu', this.handleContextMenu)
+      if (!this.manual) {
+        off(this.triggerTarget, 'contextmenu', this.handleContextMenu)
+      }
       off(document.body, 'click', this.hide)
       if (this.$el && this.$el.parentNode) {
         this.$el.parentNode.removeChild(this.$el)
