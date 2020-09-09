@@ -81,7 +81,10 @@ module.exports = (md, d) => {
         return `<Demo>
                      <template v-slot="{fullscreen}">
                       ${descComponent}
+                      <MyLazy>
                          <DemoLoader id="${fileName}" :fullscreen="fullscreen" />
+                         <MySkeleton slot="skeleton" :title="false" loading active></MySkeleton>
+                      </MyLazy>
                       </template>
                       <div slot="code">`
       } else {
