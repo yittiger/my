@@ -4,14 +4,7 @@
  */
 import * as Sphere from 'ol/sphere'
 import * as Extent from 'ol/extent'
-// import {
-//   getCircleCenterOfThreePoints,
-//   MathDistance,
-//   getAzimuth,
-//   isClockWise,
-//   getArcPoints,
-//   Mid
-// } from 'ol-plot/src/Utils/utils'
+import {fromLonLat as toWGS84, toLonLat as toMercator} from 'ol/proj'
 
 /**
  * 从Vue实例提取参数构造参数集合
@@ -187,60 +180,6 @@ export function geoJsonDecode(json) {
   return json
 }
 
-/**
- * 简化版弧形点数生成函数
- * @param start 开头坐标
- * @param end 结尾坐标
- * @param inside 内部点坐标
- */
-// export const getArcLine = function (start, end, inside) {
-//   let [pnt1, pnt2, pnt3, startAngle, endAngle] = [start, end, inside, null, null]
-//
-//   const center = getCircleCenterOfThreePoints(pnt1, pnt2, pnt3)
-//   const radius = MathDistance(pnt1, center)
-//   const angle1 = getAzimuth(pnt1, center)
-//   const angle2 = getAzimuth(pnt2, center)
-//
-//   if (isClockWise(pnt1, pnt2, pnt3)) {
-//     startAngle = angle2
-//     endAngle = angle1
-//   } else {
-//     startAngle = angle1
-//     endAngle = angle2
-//   }
-//
-//   return getArcPoints(center, radius, startAngle, endAngle)
-// }
-
-/**
- * 抛物线生成曲线
- * @param start 开头坐标
- * @param end 结尾坐标
- * @param dir 弓玄距离（坐标单位距离）
- * @param isArch 默认为false ，是否生成圆弧，为false 时是贝塞尔曲线
- */
-// export const paraCurves = function (start, end, dir, isArch = false) {
-//   const center = Mid(start, end)
-//
-//   const h = Math.abs(end[1] - start[1])
-//   const w = Math.abs(end[0] - start[0])
-//   const lineDistance = MathDistance(start, end)
-//
-//   const sin = h / lineDistance
-//   const cos = w / lineDistance
-//
-//   const minX = sin * dir
-//   const minY = cos * dir
-//
-//   const archPoint = [center[0] - minX, center[1] + minY]
-//
-//   if (isArch) {
-//     return getArcLine(start, end, archPoint)
-//   } else {
-//     return createBezierCurvePoints([start, archPoint, end])
-//   }
-// }
-
 
 /**
  * 计算两经纬度坐标点距离，
@@ -324,4 +263,33 @@ export const decodePolygon = function (coordinate, encodeOffsets) {
   }
 
   return result;
+}
+
+
+//
+
+/**
+ * 墨卡托坐标转换成WGS84坐标，即 EPSG:4326 转换成  EPSG:3857
+ * @param {number[]|Array[]} coordinate
+ * @returns {Array}
+ */
+export function fromLonLat(coordinate) {
+  if (!Array.isArray(coordinate)) return null
+  if (coordinate.length === 0) return []
+  return Array.isArray(coordinate[0])
+    ? coordinate.map(n => toWGS84(n))
+    : toWGS84(coordinate)
+}
+
+/**
+ * WGS84坐标转换成墨卡托坐标，即 EPSG:3857 转换成  EPSG:4326
+ * @param {number[]|Array[]} coordinate
+ * @returns {Array}
+ */
+export function toLonLat(coordinate) {
+  if (!Array.isArray(coordinate)) return null
+  if (coordinate.length === 0) return []
+  return Array.isArray(coordinate[0])
+    ? coordinate.map(n => toMercator(n))
+    : toMercator(coordinate)
 }
