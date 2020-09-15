@@ -1,18 +1,10 @@
-import {addResizeListener, removeResizeListener} from 'element-ui/lib/utils/resize-event'
 import creator from '../utils/creator'
 import go from '../utils/lib'
-import {debounce} from '$ui/utils/util'
 
 export default function (ClassName, defaultOptions, ref) {
   return {
     props: {
       options: [Object, Function],
-      fit: Boolean,
-      width: String,
-      height: {
-        type: String,
-        default: '600px'
-      },
       nodes: {
         type: Array,
         default() {
@@ -37,14 +29,6 @@ export default function (ClassName, defaultOptions, ref) {
     data() {
       return {
         loading: true
-      }
-    },
-    computed: {
-      styles() {
-        return {
-          width: this.fit ? '100%' : this.width,
-          height: this.fit ? '100%' : this.height
-        }
       }
     },
     watch: {
@@ -79,8 +63,6 @@ export default function (ClassName, defaultOptions, ref) {
           this.onReady && this.onReady(diagram)
           this.$emit('_ready', diagram)
           this.loading = false
-          this.proxyResize = debounce(this.resize, 100, false)
-          addResizeListener(this.$el, this.proxyResize)
         })
         this.bind(diagram)
         this.diagram = diagram
@@ -165,7 +147,6 @@ export default function (ClassName, defaultOptions, ref) {
     beforeDestroy() {
       clearTimeout(this._delayId)
       if (!this.diagram) return
-      this.proxyResize && removeResizeListener(this.$el, this.proxyResize)
       this.unbind(this.diagram)
       this.diagram.div = null
       this.diagram = null

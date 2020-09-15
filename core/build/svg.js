@@ -22,6 +22,11 @@ try {
         n = n.replace(f, '')
       })
       n = n.replace(/\s*\/>/gi, '/>')
+        .replace(/<g>/gi, '')
+        .replace(/<\/g>/gi, '')
+        .replace(/\n/gi, ' ')
+        .replace(/\t/gi, ' ')
+        .replace(/\s\s/gi, ' ')
       return n
     })
     if (cleanPaths.length > 0) {
@@ -32,7 +37,7 @@ try {
       imports.push(importPath)
     }
   })
-  
+
   utils.writeFile(utils.join(saveDir, 'index.js'), imports.join('\n'))
   stopSpinner()
 } catch (e) {

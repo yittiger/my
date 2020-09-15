@@ -291,12 +291,13 @@
         delete this.items[vm.name]
       },
       getDefaultValue() {
-        const values = {}
-        Object.entries(this.items).forEach(([name, item]) => {
-          values[name] = item.getDefaultValue()
-          // _set(values, name, item.getDefaultValue())
-        })
-        return {...values, ...(this.model || {})}
+        // const values = {}
+        // Object.entries(this.items).forEach(([name, item]) => {
+        //   values[name] = item.getDefaultValue()
+        //   // _set(values, name, item.getDefaultValue())
+        // })
+        // return {...values, ...(this.model || {})}
+        return cloneDeep(this.model || {})
       },
       triggerChange(val) {
         clearTimeout(this.changeTimer)

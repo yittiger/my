@@ -37,9 +37,6 @@
       margin: {
         type: Number,
         default: 10
-      },
-      dark: {
-        type: Boolean
       }
     },
     data() {
@@ -50,14 +47,34 @@
       classes() {
         return {
           [`is-${this.placement}`]: !!this.placement,
-          'is-dark': this.dark
+          'is-dark': this.myDiagram?.dark
         }
       },
       styles() {
+        const {left, top, right, bottom} = this.myDiagram.rect
+        const map = {
+          'left-top': {
+            left: `${left}px`,
+            top: `${top}px`
+          },
+          'left-bottom': {
+            left: `${left}px`,
+            bottom: `${bottom}px`
+          },
+          'right-top': {
+            right: `${right}px`,
+            top: `${top}px`
+          },
+          'right-bottom': {
+            right: `${right}px`,
+            bottom: `${bottom}px`
+          }
+        }
         return {
           width: this.width,
           height: this.height,
-          margin: `${this.margin}px`
+          margin: `${this.margin}px`,
+          ...map[this.placement]
         }
       }
     },

@@ -122,27 +122,27 @@ function createTags(tags = {}, colors = []) {
   })
 }
 
-function createNodeAdornment(t = {}) {
-  return creator({
-    name: go.Adornment,
-    props: {
-      type: go.Panel.Auto,
-      zOrder: 1
-    },
-    children: [
-      creator({
-        name: go.Shape,
-        props: {
-          figure: 'RoundedRectangle',
-          fill: t.selectedFill,
-          strokeWidth: t.selectedStrokeWidth,
-          stroke: t.selectedStroke
-        }
-      }),
-      creator({name: go.Placeholder})
-    ]
-  })
-}
+// function createNodeAdornment(t = {}) {
+//   return creator({
+//     name: go.Adornment,
+//     props: {
+//       type: go.Panel.Auto,
+//       zOrder: 1
+//     },
+//     children: [
+//       creator({
+//         name: go.Shape,
+//         props: {
+//           figure: 'RoundedRectangle',
+//           fill: t.selectedFill,
+//           strokeWidth: t.selectedStrokeWidth,
+//           stroke: t.selectedStroke
+//         }
+//       }),
+//       creator({name: go.Placeholder})
+//     ]
+//   })
+// }
 
 function createBadge(badge = {}) {
   const {props, shape, label} = badge
@@ -194,7 +194,7 @@ export function nodeTemplate(options = {}, t) {
       minSize: new go.Size(20, 20),
       toolTip: tooltip ? defaultTooltip(tooltip) : null,
       selectionAdorned: true,
-      selectionAdornmentTemplate: createNodeAdornment(t, $events),
+      // selectionAdornmentTemplate: createNodeAdornment(t, $events),
       opacity: t.opacity,
       $hover: {
         opacity: t.hoverOpacity

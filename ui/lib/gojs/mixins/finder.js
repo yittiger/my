@@ -1,4 +1,5 @@
 import {go, toList} from '../utils/lib'
+import {download, downloadBlob} from '$ui/utils/download'
 
 export default {
   methods: {
@@ -195,6 +196,103 @@ export default {
      */
     clear() {
       this.diagram.clear()
+    },
+    undo() {
+      const manager = this.diagram?.undoManager
+      if (manager && manager.canUndo()) {
+        manager.undo()
+        return true
+      }
+      return false
+    },
+    redo() {
+      const manager = this.diagram?.undoManager
+      if (manager && manager.canRedo()) {
+        manager.redo()
+        return true
+      }
+      return false
+    },
+    select(parts) {
+      const diagram = this.diagram
+      if (!diagram) return
+      if (parts) {
+        diagram.selectCollection(parts)
+      } else {
+        const nodes = toList(diagram.nodes)
+        const links = toList(diagram.links)
+        const allParts = nodes.concat(links)
+        diagram.selectCollection(allParts)
+      }
+    },
+    unselect() {
+      const diagram = this.diagram
+      if (!diagram) return
+      diagram.clearSelection()
+    },
+    selectInvert() {
+      const diagram = this.diagram
+      if (!diagram) return
+      const parts = []
+      const nodes = diagram.nodes
+      const links = diagram.links
+      const selection = diagram.selection
+
+      nodes.each(n => {
+        if (!selection.has(n)) {
+          parts.push(n)
+        }
+      })
+      links.each(n => {
+        if (!selection.has(n)) {
+          parts.push(n)
+        }
+      })
+      this.select(parts)
+    },
+    hide(parts) {
+      if (!parts) return
+      const list = parts.iterator ? toList(parts) : parts
+      this.commit(() => {
+        list.forEach(n => {
+          n.visible = false
+        })
+      })
+    },
+    show(parts) {
+      const diagram = this.diagram
+      if (!diagram) return
+      if (parts) {
+        const list = parts.iterator ? toList(parts) : parts
+        this.commit(() => {
+          list.forEach(n => {
+            n.visible = true
+          })
+        })
+      } else {
+        const nodes = diagram.nodes
+        const links = diagram.links
+        this.commit(() => {
+          nodes.each(n => {
+            n.visible = true
+          })
+          links.each(n => {
+            n.visible = true
+          })
+        })
+      }
+    },
+    toImage(opts) {
+      if (!this.diagram) return
+      const image = this.diagram.makeImageData(opts)
+      download(image, Date.now().toString())
+    },
+    toJson() {
+      const model = this.diagram?.model
+      if (!model) return
+      const json = model.toJson()
+      const blob = new Blob([json], {type: 'application/octet-stream'})
+      downloadBlob(blob, Date.now().toString() + '.json')
     }
   }
 }

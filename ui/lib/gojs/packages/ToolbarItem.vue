@@ -9,9 +9,11 @@
 <script>
   import {MyIcon} from '$ui'
   import {Tooltip} from 'element-ui'
+  import '../utils/icons'
 
   export default {
     name: 'ToolbarItem',
+    inject: ['myDiagram'],
     components: {
       MyIcon,
       Tooltip
@@ -28,19 +30,23 @@
     computed: {
       classes() {
         return {
-          'is-disabled': this.disabled
+          'is-disabled': this.disabled,
+          'is-dark': this.myDiagram?.dark
         }
       },
       tooltipProps() {
+        const effect = this.myDiagram?.dark ? 'light' : 'dark'
         return typeof this.tooltip === 'string'
           ? {
             content: this.tooltip,
             disabled: this.disabled,
-            placement: this.vertical ? 'right' : 'top'
+            placement: this.vertical ? 'right' : 'top',
+            effect
           }
           : {
             placement: this.vertical ? 'right' : 'top',
             disabled: this.disabled,
+            effect,
             ...this.tooltip
           }
       },

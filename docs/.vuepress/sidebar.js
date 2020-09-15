@@ -235,20 +235,9 @@ module.exports = {
     'group',
     'layout',
     'overview',
-    'palette'
-    // createMenus('组件', [
-    //   'components/go',
-    //   'components/circle-menu',
-    //   'components/overview',
-    //   'components/draft',
-    //   'components/layout',
-    //   'components/search',
-    //   'components/select',
-    //   'components/snapshot',
-    //   'components/tool',
-    //   'components/tooltip',
-    //   'components/view'
-    // ])
+    'palette',
+    'app',
+    'api'
   ],
   '/ui/pages/': [
     'layout',

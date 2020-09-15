@@ -1,5 +1,5 @@
 <template>
-  <div class="my-go-palette" :style="styles">Palette</div>
+  <div class="my-go-palette" :class="classes" :style="styles"></div>
 </template>
 
 <script>
@@ -29,7 +29,35 @@
 
   export default {
     name: 'Palette',
-    mixins: [factory(go.Palette, defaultOptions)]
+    mixins: [factory(go.Palette, defaultOptions)],
+    inject: ['myDiagram'],
+    props: {
+      width: {
+        type: Number,
+        default: 100
+      }
+    },
+    computed: {
+      classes() {
+        return {
+          'is-dark': this.myDiagram?.dark
+        }
+      },
+      styles() {
+        const {top, bottom} = this.myDiagram?.rect
+        return {
+          width: `${this.width}px`,
+          top: `${top}px`,
+          bottom: `${bottom}px`
+        }
+      }
+    },
+    created() {
+      this.myDiagram.rect.left = this.width
+    },
+    beforeDestroy() {
+      this.myDiagram.rect.left = 0
+    }
   }
 </script>
 
