@@ -44,10 +44,25 @@ export default {
               vModel={this.fieldValue}>
       </Editor>
     )
-    
+
     return this.renderComponent(vnode)
+  },
+  methods: {
+    resetData() {
+      this.$nextTick(() => {
+        this.$refs.comp.setData(this.fieldValue)
+      })
+    }
   },
   mounted() {
     this.extendMethods(this.$refs.comp, ['setData', 'getData'])
+    if (this.myForm) {
+      this.myForm.$on('reset', this.resetData)
+    }
+  },
+  beforeDestroy() {
+    if (this.myForm) {
+      this.myForm.$off('reset', this.resetData)
+    }
   }
 }

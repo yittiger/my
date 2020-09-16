@@ -1,9 +1,12 @@
 <template>
-  <my-wrapper title="Hello MyUI"></my-wrapper>
+  <my-wrapper title="测试"></my-wrapper>
 </template>
 
 <script>
-  export default {}
+
+  export default {
+
+  }
 </script>
 
 <style lang="scss" scoped>

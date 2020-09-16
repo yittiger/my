@@ -36,14 +36,5 @@ module.exports = [
       style: false
     },
     '$ui/map'
-  ],
-  [
-    'component',
-    {
-      libraryName: '$ui/go',
-      libDir: 'packages',
-      style: false
-    },
-    '$ui/go'
   ]
 ]

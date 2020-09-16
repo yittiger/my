@@ -59,7 +59,7 @@ export default {
       this.load()
     },
     pagerLoaded(res) {
-      this.list = Object.freeze(res.list || [])
+      this.list = this.freeze ? Object.freeze(res.list || []) : (res.list || [])
     }
   }
 }

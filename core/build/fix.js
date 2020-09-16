@@ -80,7 +80,7 @@ function fixGojs(file) {
   try {
     let content = fs.readFileSync(file, 'utf-8')
     if (content.includes('/*flag*/')) {
-      console.log(`fix ${GOJS_FILE} ${chalk.yellow('fixed')}`)
+      console.log(`fix ${file} ${chalk.yellow('fixed')}`)
       return
     }
     // 破解gojs
@@ -90,6 +90,7 @@ function fixGojs(file) {
       const start = index - 8, end = index + 32 + flag.length
       const section = content.substring(start, end)
       content = content.replace(section, 'function(){return true;};/*flag*/')
+      content = content.replace('bfunction(){return true;}', 'function(){return true;}')
       fs.writeFileSync(file, content, 'utf-8')
 
       console.log(`fix ${file} ${chalk.green('success')}`)
@@ -106,6 +107,10 @@ fixElementUI(ELEMENT_UI_UPLOAD_AJAX)
 fixAxios()
 fixGojs(GOJS_FILE)
 fixGojs(GOJS_FILE.replace('go.js', 'go-module.js'))
+fixGojs(GOJS_FILE.replace('go.js', 'go-debug.js'))
+fixGojs(GOJS_FILE.replace('go.js', 'go-debug-module.js'))
+fixGojs(GOJS_FILE.replace('go.js', 'go.mjs'))
+fixGojs(GOJS_FILE.replace('go.js', 'go-debug.mjs'))
 
 
 

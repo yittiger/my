@@ -6,7 +6,7 @@
                 :cursor="cursor"
                 v-on="$listeners"
                 @ready="activePopup(activeIndex)">
-    <MyMapPopup v-if="$scopedSlots.default"
+    <MyMapPopup v-if="!multiple && $scopedSlots.default"
                 v-show="marker"
                 v-bind="popupProps"
                 @hide="handleHide">
@@ -15,6 +15,21 @@
       </template>
       <slot v-if="marker" :marker="marker"></slot>
     </MyMapPopup>
+
+    <template v-if="multiple && $scopedSlots.default">
+      <MyMapPopup v-for="(marker, index) in markers"
+                  :key="index"
+                  v-bind="multiplePopupProps"
+                  :position="marker.coordinate"
+                  @hide="handleHide(index)">
+        <template v-if="$scopedSlots.title" slot="title">
+          <slot v-if="marker" name="title" :marker="marker"></slot>
+        </template>
+        <slot v-if="marker" :marker="marker"></slot>
+      </MyMapPopup>
+    </template>
+
+
   </MyMapCluster>
 </template>
 
@@ -65,6 +80,7 @@
      * @property {string} [data.src] 批量生成marker的展示图片
      * @property {object} [keyMap] 数据属性映射
      * @property {object} [popup] 浮窗的配置参数
+     * @property {Boolean} [multiple] 支持同时显示多个popup, 只对trigger=click 有效
      * @property {string} [trigger] popup打开方式 'click', 'hover'
      * @property {boolean} [cluster] 开启聚合
      * @property {number} [distance] 集群距离，表示在这个像素距离内的是同一群marker
@@ -121,6 +137,8 @@
           return defaultPopupProps
         }
       },
+      multiple: Boolean,
+
       // 浮窗显示触发方式
       trigger: {
         type: String,
@@ -129,12 +147,13 @@
           return ['click', 'hover'].includes(val)
         }
       }
-
     },
     data() {
       return {
         // 激活时的数据
-        marker: null
+        marker: null,
+        // multiple 为true时，激活的数据
+        markers: []
       }
     },
     computed: {
@@ -161,12 +180,19 @@
       },
       // MyMapPopup配置参数
       popupProps() {
-        if (!this.marker) return null
+        if (!this.marker || this.multiple) return null
         const position = this.marker.coordinate
         return {
           ...defaultPopupProps,
           ...this.popup,
           position
+        }
+      },
+      multiplePopupProps() {
+        if (!this.multiple) return null
+        return {
+          ...defaultPopupProps,
+          ...this.popup
         }
       },
       cursor() {
@@ -222,14 +248,24 @@
         } else {
           marker.items = [feature.get('data')]
         }
-        this.marker = marker
-        this.$emit('show', this.marker, feature, e)
+
+
+        if (this.multiple) {
+          this.markers.push(marker)
+        } else {
+          this.marker = marker
+        }
+        this.$emit('show', marker, feature, e)
 
       },
-      handleHide() {
-        this.$emit('hide', this.marker)
-        this.marker = null
-
+      handleHide(index = 0) {
+        if (this.multiple) {
+          const marker = this.markers.splice(index, 1)
+          this.$emit('hide', marker)
+        } else {
+          this.$emit('hide', this.marker)
+          this.marker = null
+        }
       },
       bindEvents() {
         const cluster = this.$refs.cluster

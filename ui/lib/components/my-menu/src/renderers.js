@@ -21,7 +21,7 @@ export default {
     },
     iconRender({icon, badge}, isRoot) {
       if (!icon) return null
-      
+
       if (!isRoot || !badge || !this.collapsed) return this.getIcon(icon)
       if (this.collapsed) {
         const opt = this.getBadgeOptions(badge)
@@ -31,7 +31,7 @@ export default {
         )
       }
       return null
-      
+
     },
     titleRender(item, isRoot) {
       const {text, badge} = item
@@ -51,10 +51,10 @@ export default {
           </MenuItemGroup>
         )
       }
-      
+
       if (item.children && item.children.length > 0) {
         return (
-          <Submenu {...{props: this.submenuProps}} index={String(item.index)}>
+          <Submenu {...{props: this.submenuProps}} index={`submenu${item.index}`}>
             <template slot="title">
               {this.titleRender(item, isRoot)}
             </template>
@@ -67,7 +67,7 @@ export default {
         )
       }
       return (
-        <MenuItem index={String(item.index)} disabled={item.disabled}>
+        <MenuItem key={`item${item.index}`} index={String(item.index)} disabled={item.disabled}>
           {this.titleRender(item, isRoot)}
         </MenuItem>
       )
