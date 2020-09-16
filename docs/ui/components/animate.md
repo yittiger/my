@@ -38,7 +38,7 @@
           </el-option-group>
         </el-select>
         <el-button type="primary" @click="action">执行过渡动画</el-button>
-          enter: {{enterClass}} / leave: {{leaveClass}}
+          enter: {{enter}} / leave: {{leave}}
     </div>
     <transition :enter-active-class="enterClass" :leave-active-class="leaveClass">
       <div class="box" v-show="show"></div>
@@ -89,10 +89,10 @@
     },
     computed: {
       enterClass() {
-        return `animated ${this.enter}`
+        return `animate__animated animate__${this.enter}`
       },
       leaveClass() {
-        return `animated ${this.leave}`
+        return `animate__animated animate__${this.leave}`
       }
     },
     methods: {
@@ -104,7 +104,7 @@
         }, 2000)
       }
     },
-    beforeDestory() {
+    beforeDestroy() {
       clearTimeout(this.timer)
     }
   }
