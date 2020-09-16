@@ -137,6 +137,7 @@
      * @property {number} [itemHeight] 虚拟列表模式，行的高度
      * @property {Object | Boolean} [columnSortable = false] 是否启用列拖拽排序, 可以配置Sortable个性化参数
      * @property {Object | Boolean} [rowSortable = false] 是否启用行拖拽排序, 可以配置Sortable个性化参数
+     * @property {Boolean} [freeze=true] 冻结列表数据数组，如果需要对列表数据进行双向绑定，需要设置为false
      */
 
     props: {
@@ -232,7 +233,12 @@
         default: 0
       },
       // 行的高度， 虚拟列表专用，默认按表格size计算
-      itemHeight: Number
+      itemHeight: Number,
+      // 冻结列表数据数组
+      freeze: {
+        type: Boolean,
+        default: true
+      }
     },
     data() {
       return {
@@ -280,7 +286,7 @@
       data: {
         immediate: true,
         handler(val) {
-          this.list = Object.freeze(val.slice(0))
+          this.list = this.freeze ? Object.freeze(val.slice(0)) : val.slice(0)
         }
       },
       columns: {

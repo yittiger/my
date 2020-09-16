@@ -10,58 +10,42 @@
 ```html
 <template>
   <div>
-    <my-contextmenu ref="contextmenus1" :data="menu" @click="click1" theme="dark">
-    </my-contextmenu>
-    <div class="action-box" v-contextmenu:contextmenus1>
+    <div class="action-box">
       右键触发区域
     </div>
+    <my-contextmenu target=".action-box" :data="menu" @click="handleClick"></my-contextmenu>
+
   </div>
 </template>
 
 <script>
-  import contextmenu from '$ui/directives/contextmenu'
 
   export default {
-    components: {},
-    directives: {
-      contextmenu: contextmenu
-    },
     data() {
       return {
         menu: [
+          {icon: 'el-icon-view', label: '查看'},
+          {icon: 'el-icon-edit', label: '编辑'},
           {
-            title: '菜单A'
-          },
-          {
-            icon: 'iconfont el-icon-phone my-icon',
-            title: '菜单A',
-            divider: true,
+            icon: 'el-icon-finished',
+            label: '完成',
             children: [
-              {
-                icon: 'iconfont el-icon-platform-eleme my-icon',
-                title: '菜单菜单菜单B-1'
-              },
-              {
-                title: '菜单B-2',
-                disabled:true
-              },
-              {
-                icon: 'iconfont el-icon-platform-eleme my-icon',
-                title: '菜单B-3'
-              }
+              {label: '二级菜单1'},
+              {label: '二级菜单2'},
+              {label: '二级菜单3'},
+              {label: '二级菜单4'}
             ]
           },
-          {
-            icon: 'iconfont el-icon-platform-eleme my-icon',
-            title: '菜单C'
-          }
+          {icon: 'el-icon-delete', label: '删除'},
+          {divider: true},
+          {icon: 'el-icon-document', label: '属性'}
         ]
       }
     },
     methods: {
-      click1(item, vm, event) {
+      handleClick(item, vm) {
         // 处理点击菜单后的触发动作
-        this.$message.success(`点击了${item.title}`)
+        this.$message.success(`点击了${item.label}`)
       }
     }
 
@@ -69,7 +53,7 @@
 </script>
 <style lang="scss" scoped>
   .action-box {
-    height: 150px;
+    height: 400px;
     width: 100%;
     text-align: center;
     line-height: 150px;
@@ -85,3 +69,69 @@
 
 :::
 
+
+## 深色主题
+
+:::demo
+
+```html
+<template>
+  <div>
+    <div class="action-box" id="box2">
+      右键触发区域
+    </div>
+    <my-contextmenu target="#box2" :data="menu" theme="dark" @click="handleClick"></my-contextmenu>
+
+  </div>
+</template>
+
+<script>
+
+  export default {
+    data() {
+      return {
+        menu: [
+          {icon: 'el-icon-view', label: '查看'},
+          {icon: 'el-icon-edit', label: '编辑'},
+          {
+            icon: 'el-icon-finished',
+            label: '完成',
+            children: [
+              {label: '二级菜单1'},
+              {label: '二级菜单2'},
+              {label: '二级菜单3'},
+              {label: '二级菜单4'}
+            ]
+          },
+          {icon: 'el-icon-delete', label: '删除'},
+          {divider: true},
+          {icon: 'el-icon-document', label: '属性'}
+        ]
+      }
+    },
+    methods: {
+      handleClick(item, vm) {
+        // 处理点击菜单后的触发动作
+        this.$message.success(`点击了${item.label}`)
+      }
+    }
+
+  }
+</script>
+<style lang="scss" scoped>
+  .action-box {
+    height: 400px;
+    width: 100%;
+    text-align: center;
+    line-height: 150px;
+    font-size: 3rem;
+    background-color: #eee;
+    color: #fff;
+    font-weight: bold;
+  }
+</style>
+
+
+```
+
+:::

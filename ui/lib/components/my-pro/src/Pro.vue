@@ -17,7 +17,7 @@
     <template v-if="sidebarOptions" v-slot:west>
       <my-sidebar v-bind="sidebarOptions"
                   v-clickoutside="handleClickOutside"
-                  :menus="menus"
+                  :menus="sidebarMenus"
                   :menuProps="menuProps"
                   @select="handleMenuSelect"
                   :collapsed.sync="collapsed">
@@ -108,6 +108,9 @@
      * @property {string} [mode=sidebar] 导航模式: sidebar(侧边菜单布局)、navbar(顶部菜单布局)、both(侧边+顶部菜单布局)
      * @property {string} [sidebarTheme=light] 侧边栏主题，可选值：'light', 'dark', 'primary', 'gradual'
      * @property {string} [navbarTheme=light] 顶部导航主题，可选值：'light', 'dark', 'primary', 'gradual'
+     * @property {Object} [navbarProps] MyNavbar组件附加参数，mode=both 时有效
+     * @property {Boolean} [menusLevelSplit] 菜单数据第一层拆分放到navbar，与sidebar联动，mode=both 时有效
+     * @property {Boolean} [navbarActive] navbar 菜单激活函数，menusLevelSplit=true时有效
      * @property {boolean} [fixed=false] 固定菜单栏（包括侧边和顶部）
      * @property {boolean} [colorWeak=false] 色弱模式
      * @property {boolean} [collapsible=true] 开启折叠切换
@@ -147,6 +150,13 @@
       },
       sidebarTheme: String,
       navbarTheme: String,
+      // 顶部菜单，在 mode=both 有效
+      navbarProps: Object,
+      menusLevelSplit: Boolean,
+      // navbar 菜单激活函数，menusLevelSplit=true时有效
+      navbarActive: {
+        type: Function
+      },
       // 固定菜单栏（包括侧边和顶部）
       fixed: Boolean,
       // 色弱模式
@@ -195,6 +205,7 @@
           'is-rainbow': this.rainbow,
           [`my-pro--${this.sidebarTheme}`]: !!this.sidebarTheme,
           'is-fixed': this.fixed,
+          'is-menus-level-split': this.menusLevelSplit,
           ...screen
         }
       },
@@ -248,7 +259,13 @@
               href: this.href,
               collapsible: !!xs,
               theme: this.navbarTheme,
-              shadow: true
+              shadow: true,
+              menus: this.getTopLevelMenus(),
+              menuProps: {
+                router: true,
+                defaultActive: this.defaultNavbarActive()
+              },
+              ...(this.navbarProps || {})
             }
             break
         }
@@ -292,8 +309,17 @@
           'is-fixed': this.fixed,
           'has-tabs': !!this.tab
         }
+      },
+      sidebarMenus() {
+        if (!this.menus) return []
+        if (this.mode === 'both' && this.menusLevelSplit) {
+          const path = this.$route.path
+          const item = this.menus.find(n => path.startsWith(n.index))
+          return item?.children || []
+        } else {
+          return this.menus
+        }
       }
-
     },
     watch: {
       collapsed(val) {
@@ -524,6 +550,25 @@
             }
             break
         }
+      },
+      getTopLevelMenus() {
+        return this.menusLevelSplit
+          ? this.menus.map(n => {
+            const {icon, index, text} = n
+            return {
+              icon,
+              index,
+              text
+            }
+          })
+          : null
+      },
+      defaultNavbarActive() {
+        const paths = this.$route.path.split('/')
+        if (paths.length > 2) {
+          return paths.slice(0, 2).join('/')
+        }
+        return null
       }
     },
     created() {

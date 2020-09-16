@@ -132,7 +132,8 @@ module.exports = {
       'sidebar',
       'back-top',
       'contextmenu',
-      'anchor'
+      'anchor',
+      'radial-menu'
     ]),
     createMenus('数据录入', [
       'form',
@@ -228,19 +229,15 @@ module.exports = {
   ],
   '/ui/go/': [
     '',
-    createMenus('组件', [
-      'components/go',
-      'components/circle-menu',
-      'components/overview',
-      'components/draft',
-      'components/layout',
-      'components/search',
-      'components/select',
-      'components/snapshot',
-      'components/tool',
-      'components/tooltip',
-      'components/view'
-    ])
+    'diagram',
+    'nodes',
+    'links',
+    'group',
+    'layout',
+    'overview',
+    'palette',
+    'app',
+    'api'
   ],
   '/ui/pages/': [
     'layout',

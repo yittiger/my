@@ -74,7 +74,7 @@ export function mockForExampleGetMenus(Mock, url, query, options) {
     {
       icon: 'el-icon-s-home',
       text: 'Dashboard',
-      index: '/',
+      index: '/dashboard',
       children: [
         {
           icon: 'el-icon-document',

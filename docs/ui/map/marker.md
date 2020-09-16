@@ -108,3 +108,51 @@ export default {
 ```
 :::
 
+
+## 同时显示多个Popup
+
+:::demo
+```html
+<template>
+  <my-map adapter="TDT">
+    <my-map-marker v-if="markers" :data="markers" multiple>
+      <template v-slot="{marker}">
+        坐标：{{marker.coordinate}} <br>
+        数据项个数：{{marker.items.length}} <br>
+        集群: {{marker.cluster}} <br>
+      </template>
+    </my-map-marker>
+  </my-map>
+</template>
+<script>
+  export default {
+    data() {
+      return {
+        center: [113.261999, 23.130592],
+        markers: null
+      }
+    },
+    methods: {
+      createMarkers(count) {
+        const markers = []
+        const center = this.center
+        for (let i = 0; i < count; i++) {
+          markers.push({
+            coordinate: center.map(n => n + Math.random() - Math.random())
+          })
+        }
+        return markers
+      }
+    },
+    created() {
+      setTimeout(() => {
+        this.markers = this.createMarkers(5000)
+      }, 0)
+    }
+  }
+</script>
+
+```
+:::
+
+

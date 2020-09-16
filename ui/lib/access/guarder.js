@@ -140,16 +140,11 @@ export function queueTasks({instance, access, handleComplete, handleFail, next})
  * @param {Access} instance Access实例
  */
 export default function (instance) {
-  const {router, $router, progress, beforeEach, afterEach} = instance.options
+  const {router, $router, progress, beforeEach, afterEach, preprocess} = instance.options
   if (!router || !$router) return
 
-  $router.beforeEach((to, from, next) => {
-    progress && progress.start()
-    // 优先使用 beforeEach
-    if (beforeEach) {
-      beforeEach(to, from, next)
-      return
-    }
+  // 执行路由鉴权
+  const run = function (to, next) {
     const access = getAccess(to)
 
     // 路由没有配置中间件，即不用鉴权
@@ -164,7 +159,23 @@ export default function (instance) {
       handleFail,
       next
     })
+  }
 
+  $router.beforeEach((to, from, next) => {
+    progress && progress.start()
+    // 优先使用 beforeEach
+    if (beforeEach) {
+      beforeEach(to, from, next)
+      return
+    }
+    // 执行预处理
+    if (preprocess) {
+      preprocess({to, from, access: instance}).then(() => {
+        run(to, next)
+      })
+    } else {
+      run(to, next)
+    }
   })
 
   $router.afterEach((to, from) => {

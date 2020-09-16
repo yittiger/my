@@ -28,7 +28,7 @@ export default {
    * @property {number} [maxZoom=20] 最大支持的层级
    * @property {number[]} [center] 地图初始化中心经纬度
    * @property {String|Object|Function} [adapter=OSM] 图层适配器，类型：OSM|XYZ|Amap|Baidu|TDT|Founder|Ez|Super|Fc 对象时 {id, type, url, layers(天地图专用)}
-   * @property {String} [projection=EPSG:4326] 投影标准
+   * @property {String} [projection=EPSG:4326] 投影坐标系，支持 EPSG:4326 (WGS84) 或 EPSG:3857 (Pseudo-Mercator)
    * @property {String} [width=100%] 宽度，支持百分比
    * @property {String} [height=400px] 高度，支持百分比
    * @property {Boolean} [dragPan=true] 可拖拽移动图层
@@ -317,7 +317,6 @@ export default {
       if (!this.map) return
       Object.entries(this.$listeners)
         .forEach(([key, handler]) => this.map.on(key, handler))
-      this.map.on()
     },
     /**
      * 销毁透传Map事件
@@ -464,6 +463,20 @@ export default {
       if (viewport) {
         viewport.style.filter = this.filterStyle
       }
+    },
+    /**
+     * 清空所有覆盖物
+     */
+    clear() {
+      if (!this.map) return
+      const layers = this.map
+        .getLayers()
+        .getArray()
+        .filter(n => !n.__MY_LAYER__)
+
+      layers.forEach(n => {
+        n.getSource().clear()
+      })
     }
   },
   mounted() {
