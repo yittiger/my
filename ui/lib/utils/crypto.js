@@ -29,12 +29,11 @@ export function encryptByDES(message, key) {
 export function decryptByDES(cipherText, key) {
   const keyHex = CryptoJS.enc.Utf8.parse(key);
   const decrypted = CryptoJS.DES.decrypt({
-    ciphertext: CryptoJS.enc.Base64.parse(cipherText)
+    ciphertext: CryptoJS.enc.Hex.parse(cipherText)
   }, keyHex, {
     mode: CryptoJS.mode.ECB,
     padding: CryptoJS.pad.Pkcs7
   });
-
   return decrypted.toString(CryptoJS.enc.Utf8);
 }
 
