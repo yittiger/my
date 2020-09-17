@@ -129,16 +129,17 @@ export default {
       }
       this.feature.setStyle(styles)
     },
-    getRipple({color}) {
+    getRipple({color}, opts = {}) {
       return parseStyle({
         zIndex: this.zIndex,
         circle: {
           fill: color,
-          radius: this.radius
+          radius: this.radius,
+          ...opts
         }
       })
     },
-    getRippleStroke({strokeColor, strokeWidth}) {
+    getRippleStroke({strokeColor, strokeWidth}, opts = {}) {
       return parseStyle({
         zIndex: this.zIndex,
         circle: {
@@ -147,16 +148,17 @@ export default {
           stroke: {
             color: strokeColor,
             width: strokeWidth
-          }
+          },
+          ...opts
         }
       })
     },
     rippleEffect(styles, rippleOptions) {
       const {scale, period, type} = rippleOptions
-      const [stroke, ripple, center] = styles
-      const image = type === 'fill'
-        ? ripple.getImage()
-        : stroke.getImage()
+      let [stroke, ripple, center] = styles
+      // const image = type === 'fill'
+      //   ? ripple.getImage()
+      //   : stroke.getImage()
       const start = new Date().getTime()
       // eslint-disable-next-line no-unused-vars
       const animate = () => {
@@ -169,8 +171,17 @@ export default {
         const val = easeOut(ratio)
         const radius = this.radius * scale * val
         const opacity = 1 - val
-        image.setRadius(radius)
-        image.setOpacity(opacity)
+        if (type === 'fill') {
+          ripple = this.getRipple(this.rippleOptions, {
+            radius
+          })
+          ripple.getImage().setOpacity(opacity)
+        } else {
+          stroke = this.getRippleStroke(this.rippleOptions, {
+            radius
+          })
+          stroke.getImage().setOpacity(opacity)
+        }
         this.feature.setStyle([stroke, ripple, center])
         this.aId = window.requestAnimationFrame(animate)
       }
