@@ -103,6 +103,12 @@ export default {
     zIndex: Number,
     cursor: Boolean
   },
+  watch: {
+    data(val) {
+      this.clear()
+      this.draw(val)
+    }
+  },
   methods: {
     init(map) {
       if (this.layer) return
@@ -156,7 +162,7 @@ export default {
      * @method clear
      */
     clear() {
-      if (this.layer) return
+      if (!this.layer) return
       const source = this.getSource()
       source && source.clear()
     },

@@ -93,6 +93,9 @@ export default {
   watch: {
     visible(val) {
       val ? this.show() : this.hide()
+    },
+    data() {
+      this.modify()
     }
   },
   methods: {

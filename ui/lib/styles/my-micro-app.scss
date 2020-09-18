@@ -5,6 +5,10 @@
   min-height: 100%;
   @include e(content) {
     min-height: 100%;
+    height: 100%;
+    > div {
+      height: 100%;
+    }
   }
   @include e(loading) {
     text-align: center;
