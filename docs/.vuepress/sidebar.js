@@ -146,7 +146,8 @@ module.exports = {
       'tree-select',
       'edit-tags',
       'cron',
-      'login'
+      'login',
+      'search-box'
     ]),
     createMenus('数据展示', [
       'detail',
