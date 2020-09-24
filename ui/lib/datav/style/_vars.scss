@@ -1,0 +1,29 @@
+@import "../../styles/mixins/index";
+@import "../../styles/common/colors";
+
+$--dv-background: #000 !default;
+
+$-dv-shadow: 0 2px 4px rgba(11, 116, 210, 0.65), 0 0 6px rgba(148, 245, 233, 0.45) !default;
+
+$--dv-font-color: #fff !default;
+$--dv-primary: $blue-primary !default;
+$--dv-success: $green-primary !default;
+$--dv-warning: $gold-primary !default;
+$--dv-danger: $red-primary !default;
+
+$--dv-text-primary: rgba(255, 255, 255, 0.8) !default;
+$--dv-text-normal: rgba(255, 255, 255, 0.6) !default;
+$--dv-text-secondary: rgba(255, 255, 255, 0.4) !default;
+$--dv-text-placeholder: rgba(255, 255, 255, 0.2) !default;
+
+$--dv-font-level-1: 40px !default;
+$--dv-font-level-2: 36px !default;
+$--dv-font-level-3: 32px !default;
+$--dv-font-level-4: 28px !default;
+$--dv-font-level-5: 24px !default;
+$--dv-font-level-6: 20px !default;
+
+$--dv-font-level-7: 18px !default;
+$--dv-font-level-8: 16px !default;
+$--dv-font-level-9: 14px !default;
+$--dv-font-level-10: 12px !default;
