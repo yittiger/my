@@ -2,7 +2,6 @@
  * babel 配置
  * @author chenhuachun
  */
-
 module.exports = {
   presets: [
     '@vue/cli-plugin-babel/preset'
@@ -42,6 +41,15 @@ module.exports = {
         style: false
       },
       '$ui/map'
+    ],
+    [
+      'component',
+      {
+        libraryName: '$ui/dv',
+        libDir: 'packages',
+        style: false
+      },
+      '$ui/dv'
     ]
   ]
 }

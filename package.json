@@ -35,7 +35,7 @@
     "preview": "node bin/my preview",
     "demo": "node bin/my demo",
     "jsdoc": "node bin/my jsdoc",
-    "lint": "vue-cli-service lint && vue-cli-service lint ui/**/*.vue && vue-cli-service lint ui/**/*.js && vue-cli-service lint core/**/*.js",
+    "lint": "vue-cli-service lint ui/**/*.vue && vue-cli-service lint ui/**/*.js && vue-cli-service lint core/**/*.js",
     "test": "vue-cli-service test:unit",
     "dev:docs": "npm run demo && npm run jsdoc && node --max_old_space_size=8096 node_modules/vuepress/cli.js dev docs",
     "build:docs": "npm run demo && npm run jsdoc && node --max_old_space_size=8096 node_modules/vuepress/cli.js build docs",

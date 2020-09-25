@@ -34,42 +34,42 @@ function injectCode(code = null, elTags = [], myTags = [], theme) {
   const elImport = elTags.length
     ? `import {${elTags.map(t => t + ' as __' + t + '__').join(',')}} from 'element-ui';`
     : '';
-  
+
   const elUse = elTags.length
     ? `${elTags.map(t => '__vue__.use(__' + t + '__)').join(';\n')}`
     : '';
-  
+
   const myCharts = myTags.filter(tag => tag.includes('MyChart'))
   const myMaps = myTags.filter(tag => tag.includes('MyMap'))
-  const myGos = myTags.filter(tag => tag.includes('MyGo'))
-  const myComponents = myTags.filter(tag => !myCharts.includes(tag) && !myMaps.includes(tag) && !myGos.includes(tag))
-  
+  const myDv = myTags.filter(tag => tag.includes('MyDv'))
+  const myComponents = myTags.filter(tag => !myCharts.includes(tag) && !myMaps.includes(tag) && !myDv.includes(tag))
+
   const myComponentsImport = myComponents.length
     ? `import {${myComponents.map(t => t + ' as __' + t + '__').join(',')}} from '$ui';`
     : '';
   const myChartsImport = myCharts.length
     ? `import {${myCharts.map(t => t + ' as __' + t + '__').join(',')}} from '$ui/charts';`
     : '';
-  
+
   const myMapsImport = myMaps.length
     ? `import {${myMaps.map(t => t + ' as __' + t + '__').join(',')}} from '$ui/map';`
     : '';
-  
-  const myGosImport = myGos.length
-    ? `import {${myGos.map(t => t + ' as __' + t + '__').join(',')}} from '$ui/go';`
+
+  const myDvImport = myDv.length
+    ? `import {${myDv.map(t => t + ' as __' + t + '__').join(',')}} from '$ui/dv';`
     : '';
 
   const myUse = myTags.length
     ? `${myTags.map(t => '__vue__.use(__' + t + '__)').join(';\n')}`
     : '';
-  
+
   return `
      import __vue__ from 'vue';
      ${elImport}
      ${myComponentsImport}
      ${myChartsImport}
      ${myMapsImport}
-     ${myGosImport}
+     ${myDvImport}
      ${code || 'export default {};'}
      ${elUse}
      ${myUse}
@@ -96,37 +96,38 @@ function replaceScript(source, start, end, content) {
 
 module.exports = function (source) {
   const theme = process.env.THEME || 'default'
-  
+
   // 利用 vue-template-compiler 解析vue文件内容
   const vue = compiler.parseComponent(source)
-  
+
   // 没有模板，不处理
   if (!vue.template || !vue.template.content) return source
-  
+
   let elTags = vue.template.content.match(elTagRegex) || []
-  
+
   let myTags = vue.template.content.match(myTagRegex) || []
-  
+
+
+
   // 没有 my 和 el 组件，不需要处理
   if (elTags.length === 0 && myTags.length === 0) {
     return source
   }
-  
+
   if (elTags.length) {
     // 匹配到element-ui组件名称去掉el-前缀，并转换成大写开头的驼峰式
     elTags = elTags.map(item => item.replace('<el-', ''))
     // 去重 并 转换成大小开头的驼峰
     elTags = [...new Set(elTags)].map(tag => utils.upperFirst(utils.camelCase(tag)))
   }
-  
+
   if (myTags.length) {
     // 匹配到my组件名称去掉<符号，并转换成大写开头的驼峰式
     myTags = myTags.map(item => item.replace('<', ''))
     // 去重 并 转换成大小开头的驼峰
     myTags = [...new Set(myTags)].map(tag => utils.upperFirst(utils.camelCase(tag)))
   }
-  
-  
+
   // 源码有script块，注入的代码替换script的内容
   if (vue.script) {
     const code = source.substring(vue.script.start, vue.script.end).trim()
