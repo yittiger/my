@@ -1,5 +1,10 @@
 <template>
-  <Box class="my-dv-title" :class="classes" v-bind="$attrs" v-on="$listeners">
+  <Box class="my-dv-title"
+       :class="classes"
+       default-width="auto"
+       default-height="auto"
+       v-bind="$attrs"
+       v-on="$listeners">
     <MyIcon class="my-dv-title__icon" v-if="iconProps" v-bind="iconProps"></MyIcon>
     <slot></slot>
   </Box>

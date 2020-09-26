@@ -1,5 +1,11 @@
 <template>
-  <Box class="my-adorn-1" v-bind="$attrs">
+  <Box class="my-adorn-1"
+       :class="classes"
+       :style="styles"
+       default-width="300px"
+       default-height="50px"
+       v-bind="$attrs"
+       v-on="$listeners">
     <svg :width="`${width}px`" :height="`${height}px`">
       <template v-for="(point, i) in points">
         <rect
@@ -80,31 +86,19 @@
 </template>
 
 <script>
-  import Box from '../my-dv-box'
-  import Rect from '../../mixins/Rect'
+  import Adorn from '../../mixins/Adorn'
 
   export default {
     name: 'MyDvAdorn1',
-    mixins: [Rect],
-    components: {
-      Box
-    },
+    mixins: [Adorn],
     props: {
-      dark: {
-        type: String,
-        default: '#0de7c2'
-      },
-      light: {
-        type: String,
-        default: 'rgba(255,255,255,0.6)'
-      },
       size: {
         type: Number,
         default: 5
       },
       gap: {
         type: Number,
-        default: 10
+        default: 5
       }
     },
     data() {

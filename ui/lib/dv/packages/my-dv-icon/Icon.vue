@@ -1,6 +1,8 @@
 <template>
   <Box class="my-dv-icon"
        :class="textTypeClass"
+       default-width="auto"
+       default-height="auto"
        v-bind="$attrs"
        v-on="$listeners">
     <MyIcon v-if="iconProps" v-bind="iconProps" :style="styles"></MyIcon>

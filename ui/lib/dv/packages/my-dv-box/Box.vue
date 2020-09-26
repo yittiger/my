@@ -14,6 +14,14 @@
     props: {
       width: String,
       height: String,
+      defaultWidth: {
+        type: String,
+        default: '300px'
+      },
+      defaultHeight: {
+        type: String,
+        default: '200px'
+      },
       left: {
         type: [String, Number],
         default: 0
@@ -22,7 +30,7 @@
         type: [String, Number],
         default: 0
       },
-      zIndex: Number,
+      zIndex: [Number, String],
       xAlign: {
         type: String,
         validator(val) {
@@ -43,7 +51,7 @@
         }
       },
       zoom: Number,
-      // 如果设置 x-align 或 y-align ，scale将失效
+      // 如果设置 x-align 或 y-align ，scale将失效, 此时可以通过设置zoom实现缩放
       scale: Number,
       // 设置了 fit， width、height 、top、left 将失效
       fit: Boolean,
@@ -55,19 +63,26 @@
       position: {
         type: Boolean,
         default: true
-      }
+      },
+      margin: String,
+      inline: Boolean
     },
     computed: {
       styles() {
-        const {position, fit, width, height, left, top, zIndex, zoom, scale, xAlign, yAlign} = this
+        const {
+          inline, margin, position, fit, width, height, left,
+          top, zIndex, zoom, scale, xAlign, yAlign, defaultWidth, defaultHeight
+        } = this
         return {
           position: position ? 'absolute' : 'static',
-          width: fit ? '100%' : width,
-          height: fit ? '100%' : height,
+          width: fit ? '100%' : width || defaultWidth,
+          height: fit ? '100%' : height || defaultHeight,
           zoom,
           left: xAlign ? null : (fit ? 0 : left),
           top: yAlign ? null : (fit ? 0 : top),
           transform: scale ? `scale(${scale})` : null,
+          display: inline ? 'inline-block' : 'block',
+          margin,
           zIndex
         }
       },

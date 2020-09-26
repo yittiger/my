@@ -1,13 +1,10 @@
 import Box from '../packages/my-dv-box'
 import Rect from './Rect'
-import BoxContent from '../packages/my-dv-content'
-import '../style/border.scss'
 
 export default {
   mixins: [Rect],
   components: {
-    Box,
-    BoxContent
+    Box
   },
   props: {
     dark: {
@@ -24,12 +21,9 @@ export default {
         return globalConfig?.light || 'rgba(24,144,255,0.3)'
       }
     },
-    fill: {
-      type: String,
-      default() {
-        const {globalConfig} = this.page || {}
-        return globalConfig?.fill || 'transparent'
-      }
+    duration: {
+      type: Number,
+      default: 3
     },
     reverse: Boolean,
     opacity: {
@@ -40,7 +34,7 @@ export default {
   computed: {
     classes() {
       return {
-        'my-dv-border': true,
+        'my-dv-adorn': true,
         'is-reverse': this.reverse
       }
     },

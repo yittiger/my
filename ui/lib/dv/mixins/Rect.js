@@ -1,7 +1,9 @@
 import {addResizeListener, removeResizeListener} from 'element-ui/src/utils/resize-event'
 
 export default {
-  inject: ['page'],
+  inject: {
+    page: {default: null}
+  },
   data() {
     return {
       width: 0,
@@ -11,7 +13,7 @@ export default {
   methods: {
     updateSize() {
       const rect = this.$el.getBoundingClientRect()
-      const {widthScale, heightScale} = this.page
+      const {widthScale = 1, heightScale = 1} = this.page || {}
       this.width = rect.width / widthScale
       this.height = rect.height / heightScale
       this.$emit('resize', [this.width, this.height])

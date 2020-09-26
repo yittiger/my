@@ -242,6 +242,9 @@ module.exports = {
     'app',
     'api'
   ],
+  '/ui/dv/': [
+    ''
+  ],
   '/ui/pages/': [
     'layout',
     'login',

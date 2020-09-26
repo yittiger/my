@@ -128,16 +128,6 @@
 
   export default {
     name: 'MyDvBorder8',
-    mixins: [Border],
-    props: {
-      light: {
-        type: String,
-        default: 'rgba(17,238,253,0.6)'
-      },
-      dark: {
-        type: String,
-        default: 'rgba(0,120,210,0.2)'
-      }
-    }
+    mixins: [Border]
   }
 </script>

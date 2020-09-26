@@ -1,5 +1,7 @@
 <template>
   <Box class="my-dv-loading"
+       default-width="auto"
+       default-height="auto"
        v-bind="$attrs"
        x-align="center"
        y-align="middle">

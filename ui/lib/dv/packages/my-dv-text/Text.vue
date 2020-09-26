@@ -1,6 +1,8 @@
 <template>
   <Box class="my-dv-text"
        :class="classes"
+       default-width="auto"
+       default-height="auto"
        v-bind="$attrs"
        v-on="$listeners">
     <MyParagraph :ellipsis="ellipsis"

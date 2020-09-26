@@ -8,10 +8,12 @@
   import {addResizeListener, removeResizeListener} from 'element-ui/lib/utils/resize-event'
   import {addClass, removeClass} from 'element-ui/lib/utils/dom'
   import {debounce} from '$ui/utils/util';
+  import Config from '../../mixins/Config'
 
   const WRAPPER_CLASS_NAME = 'my-dv-page__wrapper'
   export default {
     name: 'MyDvPage',
+    mixins: [Config],
     provide() {
       return {
         page: this
@@ -81,17 +83,14 @@
         }
       }
     },
-    updated() {
-      addClass(document.body, WRAPPER_CLASS_NAME)
-    },
     created() {
-      addClass(document.body, WRAPPER_CLASS_NAME)
+      addClass(document.body, WRAPPER_CLASS_NAME + this._uid)
       this.proxyResize = debounce(this.resize, 100)
       addResizeListener(document.body, this.proxyResize)
     },
     beforeDestroy() {
       this.proxyResize && removeResizeListener(document.body, this.proxyResize)
-      removeClass(document.body, WRAPPER_CLASS_NAME)
+      removeClass(document.body, WRAPPER_CLASS_NAME + this._uid)
     }
 
   }
@@ -121,6 +120,19 @@
       .my-master-app {
         overflow: hidden;
       }
+    }
+  }
+
+  body[class^=my-dv-page__wrapper] {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: $--dv-background;
+
+    .my-master-app {
+      overflow: hidden;
     }
   }
 </style>
