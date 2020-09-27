@@ -1,26 +1,13 @@
 import Box from '../packages/my-dv-box'
 import Rect from './Rect'
+import Color from './Color'
 
 export default {
-  mixins: [Rect],
+  mixins: [Rect, Color],
   components: {
     Box
   },
   props: {
-    dark: {
-      type: String,
-      default() {
-        const {globalConfig} = this.page || {}
-        return globalConfig?.dark || 'rgba(24,144,255,0.6)'
-      }
-    },
-    light: {
-      type: String,
-      default() {
-        const {globalConfig} = this.page || {}
-        return globalConfig?.light || 'rgba(24,144,255,0.3)'
-      }
-    },
     duration: {
       type: Number,
       default: 3

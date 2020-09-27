@@ -11,7 +11,7 @@ export default {
     }
   },
   methods: {
-    updateSize() {
+    resize() {
       const rect = this.$el.getBoundingClientRect()
       const {widthScale = 1, heightScale = 1} = this.page || {}
       this.width = rect.width / widthScale
@@ -20,10 +20,10 @@ export default {
     }
   },
   mounted() {
-    this.updateSize()
-    addResizeListener(this.$el, this.updateSize)
+    this.resize()
+    addResizeListener(this.$el, this.resize)
   },
   beforeDestroy() {
-    removeResizeListener(this.$el, this.updateSize)
+    removeResizeListener(this.$el, this.resize)
   }
 }

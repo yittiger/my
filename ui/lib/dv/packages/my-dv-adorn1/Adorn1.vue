@@ -1,5 +1,5 @@
 <template>
-  <Box class="my-adorn-1"
+  <Box class="my-dv-adorn-1"
        :class="classes"
        :style="styles"
        default-width="300px"
