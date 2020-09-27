@@ -67,7 +67,7 @@
         :fill="dark"
       />
 
-      <g>
+      <g v-if="split">
         <polyline
           v-for="p in splitLinePoints"
           :key="p"
@@ -112,6 +112,10 @@
       haloDuration: {
         type: Number,
         default: 2
+      },
+      split: {
+        type: Boolean,
+        default: true
       }
     },
     data() {
@@ -151,7 +155,7 @@
         const colorGap = 100 / (segment - 1)
         return new Array(segment)
           .fill(dark)
-          .map((_, i) => fade(dark, 50 - i * colorGap))
+          .map((_, i) => fade(dark, (100 - i * colorGap) * 0.4))
       },
       circle() {
         const {ringNum, width, ringWidth} = this

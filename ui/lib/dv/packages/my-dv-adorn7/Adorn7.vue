@@ -7,33 +7,33 @@
        v-bind="$attrs"
        v-on="$listeners">
 
-    <svg width="21px" height="20px">
+    <svg width="21px" :height="`${height}px`">
       <polyline
         stroke-width="4"
         fill="transparent"
         :stroke="light"
-        points="10, 0 19, 10 10, 20"
+        :points="`10, 0 19, ${height/2} 10, ${height}`"
       />
       <polyline
         stroke-width="2"
         fill="transparent"
         :stroke="dark"
-        points="2, 0 11, 10 2, 20"
+        :points="`2, 0 11, ${height/2} 2, ${height}`"
       />
     </svg>
-    <span><slot></slot></span>
-    <svg width="21px" height="20px">
+    <span :style="spanStyle"><slot></slot></span>
+    <svg width="21px" :height="`${height}px`">
       <polyline
         stroke-width="4"
         fill="transparent"
         :stroke="light"
-        points="11, 0 2, 10 11, 20"
+        :points="`11, 0 2, ${height/2} 11, ${height}`"
       />
       <polyline
         stroke-width="2"
         fill="transparent"
         :stroke="dark"
-        points="19, 0 10, 10 19, 20"
+        :points="`19, 0 10, ${height/2} 19, ${height}`"
       />
     </svg>
 
@@ -53,6 +53,12 @@
           ...this.styles,
           'line-height': `${this.height}px`
         }
+      },
+      spanStyle() {
+        if (this.$slots.default) return null
+        return {
+          width: `${this.width - 60}px`
+        }
       }
     }
   }
@@ -63,11 +69,19 @@
 
   @include b(dv-adorn-7) {
     text-align: center;
+    svg {
+      display: inline-block;
+    }
     > span {
       padding: 0 10px;
       font-size: 20px;
       position: relative;
-      top: -3px
+      vertical-align: text-bottom;
+      display: inline-block;
+
+      .my-dv-box {
+        position: static !important;
+      }
     }
   }
 </style>

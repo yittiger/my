@@ -3,7 +3,7 @@
        :class="classes"
        :style="styles"
        default-width="300px"
-       default-height="300px"
+       default-height="20px"
        v-bind="$attrs"
        v-on="$listeners">
     <svg :width="`${width}px`" :height="`${height}px`">
