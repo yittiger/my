@@ -64,7 +64,6 @@
   }
 
   @include b(dv-title) {
-    padding: 5px 10px;
     font-weight: 400;
     color: $--dv-font-color;
 

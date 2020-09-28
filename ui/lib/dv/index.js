@@ -15,7 +15,21 @@ import Border8 from './packages/my-dv-border8'
 import Border9 from './packages/my-dv-border9'
 import Border10 from './packages/my-dv-border10'
 import Border11 from './packages/my-dv-border11'
+import Border12 from './packages/my-dv-border12'
 import Adorn1 from './packages/my-dv-adorn1'
+import Adorn2 from './packages/my-dv-adorn2'
+import Adorn3 from './packages/my-dv-adorn3'
+import Adorn4 from './packages/my-dv-adorn4'
+import Adorn5 from './packages/my-dv-adorn5'
+import Adorn6 from './packages/my-dv-adorn6'
+import Adorn7 from './packages/my-dv-adorn7'
+import Adorn8 from './packages/my-dv-adorn8'
+import Adorn9 from './packages/my-dv-adorn9'
+import Adorn10 from './packages/my-dv-adorn10'
+import Adorn11 from './packages/my-dv-adorn11'
+import Adorn12 from './packages/my-dv-adorn12'
+import Adorn13 from './packages/my-dv-adorn13'
+import Line1 from './packages/my-dv-line1'
 
 export {
   Page,
@@ -35,5 +49,19 @@ export {
   Border9,
   Border10,
   Border11,
-  Adorn1
+  Border12,
+  Adorn1,
+  Adorn2,
+  Adorn3,
+  Adorn4,
+  Adorn5,
+  Adorn6,
+  Adorn7,
+  Adorn8,
+  Adorn9,
+  Adorn10,
+  Adorn11,
+  Adorn12,
+  Adorn13,
+  Line1
 }
