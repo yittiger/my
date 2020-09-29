@@ -118,25 +118,25 @@ export default {
   },
   watch: {
     options: {
-      deep: true,
+      // deep: false,
       handler() {
         this.$nextTick(this.setOption)
       }
     },
     extend: {
-      deep: true,
+      // deep: true,
       handler() {
         this.$nextTick(this.setOption)
       }
     },
     settings: {
-      deep: true,
+      // deep: true,
       handler() {
         this.$nextTick(this.setOption)
       }
     },
     data: {
-      deep: true,
+      // deep: true,
       handler() {
         this.$nextTick(this.setOption)
       }

@@ -1,4 +1,4 @@
 import {install} from '$ui/utils/helper'
-import Module from './Line1'
+import Module from './Pie'
 
 export default install(Module)

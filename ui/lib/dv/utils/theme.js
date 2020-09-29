@@ -410,8 +410,7 @@ export default function ({colors, textColor, dark, light, fill}) {
       }
     },
     legend: {
-      align: 'right',
-      right: 0,
+      align: 'auto',
       textStyle: {
         color: textColor
       }

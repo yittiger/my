@@ -29,7 +29,10 @@ import Adorn10 from './packages/my-dv-adorn10'
 import Adorn11 from './packages/my-dv-adorn11'
 import Adorn12 from './packages/my-dv-adorn12'
 import Adorn13 from './packages/my-dv-adorn13'
-import Line1 from './packages/my-dv-line1'
+import Line from './packages/my-dv-line'
+import Bar from './packages/my-dv-bar'
+import Ranking from './packages/my-dv-ranking'
+import Pie from './packages/my-dv-Pie'
 
 export {
   Page,
@@ -63,5 +66,8 @@ export {
   Adorn11,
   Adorn12,
   Adorn13,
-  Line1
+  Line,
+  Bar,
+  Ranking,
+  Pie
 }
