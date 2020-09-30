@@ -129,7 +129,9 @@ module.exports = {
       'tag-select': '标签选择框',
       'tree-select': '下拉树选择',
       'edit-tags': 'EditTags',
-      login: '登录'
+      login: '登录',
+      'search-box': '搜索输入框',
+      'location-picker': '经纬度提取器'
     },
     '数据展示': {
       detail: '数据详情描述列表',

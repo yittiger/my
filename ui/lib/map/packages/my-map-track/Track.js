@@ -82,6 +82,7 @@ export default {
     effectRender() {
       const geometry = this.feature.getGeometry()
       const coordinates = geometry.getCoordinates()
+      if (!coordinates || coordinates.length === 0) return
       if (!this.effectFeature) {
         this.effectFeature = new Feature(new Point(coordinates[0]))
         this.myMap.addFeature(this.effectFeature)

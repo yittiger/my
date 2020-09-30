@@ -71,7 +71,11 @@ export default {
     },
     drawHandler() {
       const line = this.createLine()
-      return new LineString(line)
+      if (line && line.length > 0) {
+        return new LineString(line)
+      }
+      return null
+
     },
     modifyHandler(geometry) {
       const line = this.createLine()

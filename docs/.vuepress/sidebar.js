@@ -146,7 +146,9 @@ module.exports = {
       'tree-select',
       'edit-tags',
       'cron',
-      'login'
+      'login',
+      'search-box',
+      'location-picker'
     ]),
     createMenus('数据展示', [
       'detail',
@@ -187,6 +189,7 @@ module.exports = {
     'map',
     'geo',
     'palette',
+    'china-map',
     createMenus('覆盖物组件', [
       'text',
       'image',

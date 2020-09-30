@@ -239,11 +239,11 @@ export default {
      * @param {ol/Feature} feature
      * @param {Object} e
      */
-    clickTrigger(feature, e) {
+    clickTrigger(feature, e, eventName = 'click') {
       if (feature) {
         const vm = this.getFeatureVM(feature)
         if (vm) {
-          vm.$emit('click', e, feature)
+          vm.$emit(eventName, e, feature)
         }
       }
     },
@@ -305,6 +305,9 @@ export default {
           break
         case 'click':
           this.clickTrigger(feature, e)
+          break
+        default:
+          this.clickTrigger(feature, e, type)
           break
       }
 
