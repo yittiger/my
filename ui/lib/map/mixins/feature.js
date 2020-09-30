@@ -78,7 +78,10 @@ export default {
      * @method modify
      */
     modify() {
-      if (!this.feature) return
+      if (!this.feature) {
+        this.draw()
+        return
+      }
       const geometry = this.feature.getGeometry()
       this.modifyHandler(geometry)
       this.setStyle()
