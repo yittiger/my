@@ -3,7 +3,7 @@
     <svg class="my-dv-border__svg" :width="width" :height="height" :style="styles">
       <path
         :fill="fill"
-        :stroke="light"
+        :stroke="dark"
         :d="`
           M 5 20 L 5 10 L 12 3  L 60 3 L 68 10
           L ${width - 20} 10 L ${width - 5} 25
@@ -23,13 +23,13 @@
 
       <path
         fill="transparent"
-        :stroke="light"
+        :stroke="dark"
         :d="`M 5 20 L 5 10 L 12 3  L 60 3 L 68 10`"
       />
 
       <path
         fill="transparent"
-        :stroke="light"
+        :stroke="dark"
         :d="`M ${width - 5} ${height - 30} L ${width - 5} ${height - 5} L ${width - 30} ${height - 5}`"
       />
     </svg>

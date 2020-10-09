@@ -8,13 +8,13 @@
        v-on="$listeners">
     <svg :width="`${width}px`" :height="`${height}px`">
       <polyline
-        :stroke="light"
+        :stroke="dark"
         stroke-width="2"
         :points="`0, ${height / 2} ${width}, ${height / 2}`"
       />
 
       <polyline
-        :stroke="dark"
+        :stroke="light"
         stroke-width="2"
         :points="`5, ${height / 2} ${width * 0.2 - 3}, ${height / 2}`"
         :stroke-dasharray="`0, ${width * 0.2}`"
@@ -38,7 +38,7 @@
       </polyline>
 
       <polyline
-        :stroke="dark"
+        :stroke="light"
         stroke-width="2"
         :points="`${width * 0.2 + 3}, ${height / 2} ${width * 0.8 - 3}, ${height / 2}`"
         :stroke-dasharray="`0, ${width * 0.6}`"
@@ -61,7 +61,7 @@
       </polyline>
 
       <polyline
-        :stroke="dark"
+        :stroke="light"
         stroke-width="2"
         :points="`${width * 0.8 + 3}, ${height / 2} ${width - 5}, ${height / 2}`"
         :stroke-dasharray="`0, ${width * 0.2}`"
@@ -83,65 +83,65 @@
         />
       </polyline>
 
-      <circle cx="2" :cy="height / 2" r="2" :fill="light">
+      <circle cx="2" :cy="height / 2" r="2" :fill="dark">
         <animate
           :id="`a1${_uid}`"
           attributeName="fill"
-          :values="`${light};${dark}`"
+          :values="`${dark};${light}`"
           :begin="`0s;a7${_uid}.end`"
           dur="0.3s"
           fill="freeze"
         />
       </circle>
 
-      <circle :cx="width * 0.2" :cy="height / 2" r="2" :fill="light">
+      <circle :cx="width * 0.2" :cy="height / 2" r="2" :fill="dark">
         <animate
           :id="`a3${_uid}`"
           attributeName="fill"
-          :values="`${light};${dark}`"
+          :values="`${dark};${light}`"
           :begin="`a2${_uid}.end`"
           dur="0.3s"
           fill="freeze"
         />
         <animate
           attributeName="fill"
-          :values="`${light};${dark}`"
+          :values="`${dark};${light}`"
           dur="0.01s"
           :begin="`a2${_uid}.end`"
           fill="freeze"
         />
       </circle>
 
-      <circle :cx="width * 0.8" :cy="height / 2" r="2" :fill="light">
+      <circle :cx="width * 0.8" :cy="height / 2" r="2" :fill="dark">
         <animate
           :id="`a5${_uid}`"
           attributeName="fill"
-          :values="`${light};${dark}`"
+          :values="`${dark};${light}`"
           :begin="`a4${_uid}.end`"
           dur="0.3s"
           fill="freeze"
         />
         <animate
           attributeName="fill"
-          :values="`${light};${dark}`"
+          :values="`${dark};${light}`"
           dur="0.01s"
           :begin="`a7${_uid}.end`"
           fill="freeze"
         />
       </circle>
 
-      <circle :cx="width - 2" :cy="height / 2" r="2" :fill="light">
+      <circle :cx="width - 2" :cy="height / 2" r="2" :fill="dark">
         <animate
           :id="`a7${_uid}`"
           attributeName="fill"
-          :values="`${light};${dark}`"
+          :values="`${dark};${light}`"
           :begin="`a6${_uid}.end`"
           dur="0.3s"
           fill="freeze"
         />
         <animate
           attributeName="fill"
-          :values="`${light};${dark}`"
+          :values="`${dark};${light}`"
           dur="0.01s"
           :begin="`a7${_uid}.end`"
           fill="freeze"

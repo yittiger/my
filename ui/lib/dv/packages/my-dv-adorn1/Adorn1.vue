@@ -11,7 +11,7 @@
         <rect
           v-if="Math.random() > 0.6"
           :key="i"
-          :fill="light"
+          :fill="dark"
           :x="point[0]"
           :y="point[1]"
           :width="size"
@@ -20,7 +20,7 @@
           <animate
             v-if="Math.random() > 0.6"
             attributeName="fill"
-            :values="`${light};transparent`"
+            :values="`${dark};transparent`"
             dur="1s"
             :begin="Math.random() * 2"
             repeatCount="indefinite"
@@ -29,7 +29,7 @@
       </template>
       <rect
         v-if="rect[0]"
-        :fill="dark"
+        :fill="light"
         :x="rect[0][0] + halfSize"
         :y="rect[0][1] + halfSize"
         :width="size * 2"
@@ -62,7 +62,7 @@
       </rect>
       <rect
         v-if="rect[1]"
-        :fill="dark"
+        :fill="light"
         :x="rect[1][0] + size - length"
         :y="rect[1][1] + halfSize - size"
         :width="length"

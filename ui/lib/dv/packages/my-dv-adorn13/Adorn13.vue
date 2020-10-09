@@ -7,7 +7,7 @@
        v-bind="$attrs"
        v-on="$listeners">
     <svg :width="`${width}px`" :height="`${height}px`">
-      <path :d="path" fill="transparent" stroke-width="2" :stroke="light"></path>
+      <path :d="path" fill="transparent" stroke-width="2" :stroke="dark"></path>
     </svg>
     <div class="my-dv-adorn-13__content" :style="{lineHeight:`${height}px`}">
       <slot></slot>

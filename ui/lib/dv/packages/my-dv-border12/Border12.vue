@@ -1,16 +1,16 @@
 <template>
   <Box class="my-dv-border-12" :class="classes" v-bind="$attrs" :style="boxStyles">
     <svg class="my-dv-border-12__c1" width="20" height="20">
-      <polyline class="line1" points="0,20 0,0 20,0" fill="transparent" stroke-width="4" :stroke="dark"/>
+      <polyline class="line1" points="0,20 0,0 20,0" fill="transparent" stroke-width="4" :stroke="light"/>
     </svg>
     <svg class="my-dv-border-12__c2" width="20" height="20">
-      <polyline class="line1" points="0,20 0,0 20,0" fill="transparent" stroke-width="4" :stroke="dark"/>
+      <polyline class="line1" points="0,20 0,0 20,0" fill="transparent" stroke-width="4" :stroke="light"/>
     </svg>
     <svg class="my-dv-border-12__c3" width="20" height="20">
-      <polyline class="line1" points="0,20 0,0 20,0" fill="transparent" stroke-width="4" :stroke="dark"/>
+      <polyline class="line1" points="0,20 0,0 20,0" fill="transparent" stroke-width="4" :stroke="light"/>
     </svg>
     <svg class="my-dv-border-12__c4" width="20" height="20">
-      <polyline class="line1" points="0,20 0,0 20,0" fill="transparent" stroke-width="4" :stroke="dark"/>
+      <polyline class="line1" points="0,20 0,0 20,0" fill="transparent" stroke-width="4" :stroke="light"/>
     </svg>
     <BoxContent>
       <slot></slot>
@@ -27,7 +27,7 @@
     computed: {
       boxStyles() {
         return {
-          'border-color': this.light
+          'border-color': this.dark
         }
       }
     }

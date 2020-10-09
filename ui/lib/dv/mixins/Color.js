@@ -1,16 +1,26 @@
+import {getRgbaValue} from '../utils/color'
+
 export default {
   props: {
-    dark: {
+    color: {
       type: String,
       default() {
-        return this?.page?.settings?.dark || 'rgba(4,165,252,0.9)'
+        return this?.page?.settings?.color || '#1890FF'
       }
+    }
+  },
+  computed: {
+    dark() {
+      const color = this.color
+      const colorArray = getRgbaValue(color)
+      colorArray[3] = 0.3
+      return `rgba(${colorArray.join(',')})`
     },
-    light: {
-      type: String,
-      default() {
-        return this?.page?.settings?.light || 'rgba(24,144,255,0.3)'
-      }
+    light() {
+      const color = this.color
+      const colorArray = getRgbaValue(color)
+      colorArray[3] = 0.6
+      return `rgba(${colorArray.join(',')})`
     }
   }
 }

@@ -15,7 +15,7 @@
       :class="`my-dv-border-9__${item} my-dv-border-9__item`"
     >
       <polygon
-        :fill="dark"
+        :fill="light"
         points="40, 0 5, 0 0, 5 0, 16 3, 19 3, 7 7, 3 35, 3"
       />
     </svg>
@@ -40,7 +40,7 @@
       svgStyle() {
         return {
           ...this.styles,
-          'box-shadow': `inset 0 0 30px 3px ${this.light}`,
+          'box-shadow': `inset 0 0 30px 3px ${this.dark}`,
           'border-radius': '15px'
         }
       }

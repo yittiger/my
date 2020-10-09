@@ -11,13 +11,13 @@
       <polyline
         stroke-width="4"
         fill="transparent"
-        :stroke="light"
+        :stroke="dark"
         :points="`10, 0 19, ${height/2} 10, ${height}`"
       />
       <polyline
         stroke-width="2"
         fill="transparent"
-        :stroke="dark"
+        :stroke="light"
         :points="`2, 0 11, ${height/2} 2, ${height}`"
       />
     </svg>
@@ -26,13 +26,13 @@
       <polyline
         stroke-width="4"
         fill="transparent"
-        :stroke="light"
+        :stroke="dark"
         :points="`11, 0 2, ${height/2} 11, ${height}`"
       />
       <polyline
         stroke-width="2"
         fill="transparent"
-        :stroke="dark"
+        :stroke="light"
         :points="`19, 0 10, ${height/2} 19, ${height}`"
       />
     </svg>

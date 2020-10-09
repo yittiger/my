@@ -31,8 +31,8 @@ import Adorn12 from './packages/my-dv-adorn12'
 import Adorn13 from './packages/my-dv-adorn13'
 import Line from './packages/my-dv-line'
 import Bar from './packages/my-dv-bar'
-import Ranking from './packages/my-dv-ranking'
 import Pie from './packages/my-dv-Pie'
+import Ring from './packages/my-dv-ring'
 
 export {
   Page,
@@ -68,6 +68,6 @@ export {
   Adorn13,
   Line,
   Bar,
-  Ranking,
-  Pie
+  Pie,
+  Ring
 }

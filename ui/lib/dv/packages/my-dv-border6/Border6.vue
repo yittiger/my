@@ -1,17 +1,17 @@
 <template>
   <Box class="my-dv-border-6" :class="classes" v-bind="$attrs">
     <svg class="my-dv-border__svg" :width="width" :height="height" :style="svgStyle">
-      <polyline class="line-width-2" :stroke="light" :points="`0, 25 0, 0 25, 0`"/>
-      <polyline class="line-width-2" :stroke="light" :points="`${width - 25}, 0 ${width}, 0 ${width}, 25`"/>
-      <polyline class="line-width-2" :stroke="light"
+      <polyline class="line-width-2" :stroke="dark" :points="`0, 25 0, 0 25, 0`"/>
+      <polyline class="line-width-2" :stroke="dark" :points="`${width - 25}, 0 ${width}, 0 ${width}, 25`"/>
+      <polyline class="line-width-2" :stroke="dark"
                 :points="`${width - 25}, ${height} ${width}, ${height} ${width}, ${height - 25}`"/>
-      <polyline class="line-width-2" :stroke="light" :points="`0, ${height - 25} 0, ${height} 25, ${height}`"/>
+      <polyline class="line-width-2" :stroke="dark" :points="`0, ${height - 25} 0, ${height} 25, ${height}`"/>
 
-      <polyline class="line-width-5" :stroke="dark" :points="`0, 10 0, 0 10, 0`"/>
-      <polyline class="line-width-5" :stroke="dark" :points="`${width - 10}, 0 ${width}, 0 ${width}, 10`"/>
-      <polyline class="line-width-5" :stroke="dark"
+      <polyline class="line-width-5" :stroke="light" :points="`0, 10 0, 0 10, 0`"/>
+      <polyline class="line-width-5" :stroke="light" :points="`${width - 10}, 0 ${width}, 0 ${width}, 10`"/>
+      <polyline class="line-width-5" :stroke="light"
                 :points="`${width - 10}, ${height} ${width}, ${height} ${width}, ${height - 10}`"/>
-      <polyline class="line-width-5" :stroke="dark" :points="`0, ${height - 10} 0, ${height} 10, ${height}`"/>
+      <polyline class="line-width-5" :stroke="light" :points="`0, ${height - 10} 0, ${height} 10, ${height}`"/>
 
     </svg>
     <BoxContent>

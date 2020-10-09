@@ -212,7 +212,7 @@ export function lighten(color, percent = 0) {
 /**
  * @description Adjust color opacity
  * @param {String} color   Hex|Rgb|Rgba color or color keyword
- * @param {Number} Percent of opacity
+ * @param {Number} percent of opacity
  * @return {String|Boolean} Rgba color (Invalid input will return false)
  */
 export function fade(color, percent = 100) {

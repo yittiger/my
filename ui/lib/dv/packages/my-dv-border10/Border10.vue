@@ -5,7 +5,7 @@
         <filter :id="`filter-${_uid}`" height="150%" width="150%" x="-25%" y="-25%">
           <feMorphology operator="dilate" radius="2" in="SourceAlpha" result="thicken"/>
           <feGaussianBlur in="thicken" stdDeviation="3" result="blurred"/>
-          <feFlood :flood-color="dark" result="glowColor"/>
+          <feFlood :flood-color="light" result="glowColor"/>
           <feComposite in="glowColor" in2="blurred" operator="in" result="softGlowColored"/>
           <feMerge>
             <feMergeNode in="softGlowColored"/>
@@ -22,7 +22,7 @@
       `"/>
 
       <polyline
-        :stroke="light"
+        :stroke="dark"
         :filter="`url(#filter-${_uid})`"
         :points="`
           ${(width - titleWidth) / 2}, 30
@@ -40,7 +40,7 @@
       />
 
       <polygon
-        :stroke="light"
+        :stroke="dark"
         fill="transparent"
         :points="`
           ${(width + titleWidth) / 2 - 5}, 30 ${(width + titleWidth) / 2 - 21}, 11
@@ -49,7 +49,7 @@
       />
 
       <polygon
-        :stroke="light"
+        :stroke="dark"
         fill="transparent"
         :points="`
           ${(width - titleWidth) / 2 + 5}, 30 ${(width - titleWidth) / 2 + 22}, 49
@@ -58,8 +58,8 @@
       />
 
       <polygon
-        :stroke="light"
-        :fill="fade(dark, 30)"
+        :stroke="dark"
+        :fill="fade(light, 30)"
         :filter="`url(#filter-${_uid})`"
         :points="`
           ${(width + titleWidth) / 2 - 11}, 37 ${(width + titleWidth) / 2 - 32}, 11
@@ -70,7 +70,7 @@
 
       <polygon
         :filter="`url(#filter-${_uid})`"
-        :fill="light"
+        :fill="dark"
         opacity="1"
         :points="`
           ${(width - titleWidth) / 2 - 10}, 37 ${(width - titleWidth) / 2 - 31}, 37
@@ -89,7 +89,7 @@
 
       <polygon
         :filter="`url(#filter-${_uid})`"
-        :fill="light"
+        :fill="dark"
         opacity="0.7"
         :points="`
           ${(width - titleWidth) / 2 - 40}, 37 ${(width - titleWidth) / 2 - 61}, 37
@@ -107,7 +107,7 @@
 
       <polygon
         :filter="`url(#filter-${_uid})`"
-        :fill="light"
+        :fill="dark"
         opacity="0.5"
         :points="`
           ${(width - titleWidth) / 2 - 70}, 37 ${(width - titleWidth) / 2 - 91}, 37
@@ -125,7 +125,7 @@
 
       <polygon
         :filter="`url(#filter-${_uid})`"
-        :fill="light"
+        :fill="dark"
         opacity="1"
         :points="`
           ${(width + titleWidth) / 2 + 30}, 37 ${(width + titleWidth) / 2 + 9}, 37
@@ -143,7 +143,7 @@
 
       <polygon
         :filter="`url(#filter-${_uid})`"
-        :fill="light"
+        :fill="dark"
         opacity="0.7"
         :points="`
           ${(width + titleWidth) / 2 + 60}, 37 ${(width + titleWidth) / 2 + 39}, 37
@@ -161,7 +161,7 @@
 
       <polygon
         :filter="`url(#filter-${_uid})`"
-        :fill="light"
+        :fill="dark"
         opacity="0.5"
         :points="`
           ${(width + titleWidth) / 2 + 90}, 37 ${(width + titleWidth) / 2 + 69}, 37
@@ -190,7 +190,7 @@
       </text>
 
       <polygon
-        :fill="light"
+        :fill="dark"
         :filter="`url(#filter-${_uid})`"
         :points="`
           7, ${53 + (height - 167) / 2} 11, ${57 + (height - 167) / 2}
@@ -199,7 +199,7 @@
       />
 
       <polygon
-        :fill="light"
+        :fill="dark"
         :filter="`url(#filter-${_uid})`"
         :points="`
           ${width - 7}, ${53 + (height - 167) / 2} ${width - 11}, ${57 + (height - 167) / 2}

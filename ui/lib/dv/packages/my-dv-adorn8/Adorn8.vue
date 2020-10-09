@@ -15,14 +15,14 @@
       />
 
       <polyline
-        :stroke="light"
+        :stroke="dark"
         stroke-width="2"
         fill="transparent"
         :points="`${xPos(20)}, 0 ${xPos(50)}, ${height / 2} ${xPos(width)}, ${height / 2}`"
       />
 
       <polyline
-        :stroke="light"
+        :stroke="dark"
         fill="transparent"
         stroke-width="3"
         :points="`${xPos(0)}, ${height - 3}, ${xPos(200)}, ${height - 3}`"

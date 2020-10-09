@@ -9,7 +9,7 @@
     <svg :width="`${width}px`" :height="`${height}px`">
       <polyline
         fill="transparent"
-        :stroke="light"
+        :stroke="dark"
         stroke-width="3"
         :points="line1Points"
       >
@@ -28,7 +28,7 @@
       </polyline>
       <polyline
         fill="transparent"
-        :stroke="dark"
+        :stroke="light"
         stroke-width="2"
         :points="line2Points"
       >

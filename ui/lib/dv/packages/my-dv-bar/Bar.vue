@@ -34,32 +34,43 @@
     props: {
       rotate: Boolean,
       cross: Boolean,
-      gradient: Boolean
+      gradient: Boolean,
+      legend: Boolean
     },
     computed: {
       mergeExtend() {
         const extend = typeof this.extend === 'function' ? this.extend() : this.extend
+        const yAxis = this?.settings?.direction === 'y'
         return Object.freeze(merge({
           color: this.gradient ? this.createLinearGradient() : undefined,
-          legend: {
+          legend: this.legend ? {
             top: 20,
             right: 20,
             itemWidth: 10,
             itemHeight: 10,
             icon: 'rect'
+          } : {
+            show: false
           },
           grid: {
-            right: 20,
-            bottom: 40,
-            left: 50
+            top: this.legend ? 50 : 30,
+            right: 30,
+            bottom: 50,
+            left: 60
           },
           series: {
-            barCategoryGap: '40%'
+            barCategoryGap: '50%'
           },
           xAxis: {
             axisLabel: {
               interval: 0,
-              rotate: this.rotate ? 45 : 0
+              rotate: (this.rotate && !yAxis) ? 45 : 0
+            }
+          },
+          yAxis: {
+            axisLabel: {
+              interval: 0,
+              rotate: (this.rotate && yAxis) ? 45 : 0
             }
           },
           tooltip: {
@@ -73,9 +84,9 @@
     methods: {
       createLinearGradient() {
         const colors = this?.page.settings?.colors || []
-        const direction = this?.settings?.direction === 'x'
-          ? [0, 0, 0, 1]
-          : [1, 0, 0, 0]
+        const direction = this?.settings?.direction === 'y'
+          ? [1, 0, 0, 0]
+          : [0, 0, 0, 1]
         return colors.map((color, i) => {
           const target = colors[(i + 1) % colors.length]
           return new LinearGradient(...direction, [

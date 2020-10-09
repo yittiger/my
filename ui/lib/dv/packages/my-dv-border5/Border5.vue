@@ -5,22 +5,22 @@
         9, 7 ${width - 9}, 7 ${width - 9}, ${height - 7} 9, ${height - 7}
       `"/>
 
-      <circle :fill="dark" cx="5" cy="5" r="2"/>
-      <circle :fill="dark" :cx="width - 5" cy="5" r="2"/>
-      <circle :fill="dark" :cx="width - 5" :cy="height - 5" r="2"/>
-      <circle :fill="dark" cx="5" :cy="height - 5" r="2"/>
-      <polyline :stroke="light" :points="`10, 4 ${width - 10}, 4`"/>
-      <polyline :stroke="light" :points="`10, ${height - 4} ${width - 10}, ${height - 4}`"/>
-      <polyline :stroke="light" :points="`5, 70 5, ${height - 70}`"/>
-      <polyline :stroke="light" :points="`${width - 5}, 70 ${width - 5}, ${height - 70}`"/>
-      <polyline :stroke="light" :points="`3, 10, 3, 50`"/>
-      <polyline :stroke="light" :points="`7, 30 7, 80`"/>
-      <polyline :stroke="light" :points="`${width - 3}, 10 ${width - 3}, 50`"/>
-      <polyline :stroke="light" :points="`${width - 7}, 30 ${width - 7}, 80`"/>
-      <polyline :stroke="light" :points="`3, ${height - 10} 3, ${height - 50}`"/>
-      <polyline :stroke="light" :points="`7, ${height - 30} 7, ${height - 80}`"/>
-      <polyline :stroke="light" :points="`${width - 3}, ${height - 10} ${width - 3}, ${height - 50}`"/>
-      <polyline :stroke="light" :points="`${width - 7}, ${height - 30} ${width - 7}, ${height - 80}`"/>
+      <circle :fill="light" cx="5" cy="5" r="2"/>
+      <circle :fill="light" :cx="width - 5" cy="5" r="2"/>
+      <circle :fill="light" :cx="width - 5" :cy="height - 5" r="2"/>
+      <circle :fill="light" cx="5" :cy="height - 5" r="2"/>
+      <polyline :stroke="dark" :points="`10, 4 ${width - 10}, 4`"/>
+      <polyline :stroke="dark" :points="`10, ${height - 4} ${width - 10}, ${height - 4}`"/>
+      <polyline :stroke="dark" :points="`5, 70 5, ${height - 70}`"/>
+      <polyline :stroke="dark" :points="`${width - 5}, 70 ${width - 5}, ${height - 70}`"/>
+      <polyline :stroke="dark" :points="`3, 10, 3, 50`"/>
+      <polyline :stroke="dark" :points="`7, 30 7, 80`"/>
+      <polyline :stroke="dark" :points="`${width - 3}, 10 ${width - 3}, 50`"/>
+      <polyline :stroke="dark" :points="`${width - 7}, 30 ${width - 7}, 80`"/>
+      <polyline :stroke="dark" :points="`3, ${height - 10} 3, ${height - 50}`"/>
+      <polyline :stroke="dark" :points="`7, ${height - 30} 7, ${height - 80}`"/>
+      <polyline :stroke="dark" :points="`${width - 3}, ${height - 10} ${width - 3}, ${height - 50}`"/>
+      <polyline :stroke="dark" :points="`${width - 7}, ${height - 30} ${width - 7}, ${height - 80}`"/>
     </svg>
     <BoxContent>
       <slot></slot>

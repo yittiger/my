@@ -7,7 +7,7 @@
        v-bind="$attrs"
        v-on="$listeners">
     <svg :width="`${width}px`" :height="`${height}px`">
-      <rect :x="x" :y="y" :width="w" :height="h" :fill="light">
+      <rect :x="x" :y="y" :width="w" :height="h" :fill="dark">
         <animate
           :attributeName="reverse ? 'height' : 'width'"
           from="0"
@@ -20,7 +20,7 @@
         />
       </rect>
 
-      <rect :x="x" :y="y" :width="size" :height="size" :fill="dark">
+      <rect :x="x" :y="y" :width="size" :height="size" :fill="light">
         <animate
           :attributeName="reverse ? 'y' : 'x'"
           from="0"

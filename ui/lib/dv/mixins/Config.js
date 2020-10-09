@@ -1,6 +1,8 @@
+
 const config = {
-  dark: 'rgba(24,144,255,0.6)',
-  light: 'rgba(24,144,255,0.3)',
+  color: '#1890FF',
+  // dark: 'rgba(24,144,255,0.6)',
+  // light: 'rgba(24,144,255,0.3)',
   fill: 'transparent',
   textColor: '#b4e4ff',
   colors: [

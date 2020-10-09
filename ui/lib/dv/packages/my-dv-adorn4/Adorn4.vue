@@ -9,12 +9,12 @@
     <div class="my-dv-adorn-4__container" :style="svgStyle" :class="svgClass">
       <svg :width="`${width}px`" :height="`${height}px`">
         <polyline
-          :stroke="light"
+          :stroke="dark"
           :points="points"
         />
         <polyline
           class="bold-line"
-          :stroke="dark"
+          :stroke="light"
           :stroke-width="size"
           :stroke-dasharray="dashArray.join(',')"
           :stroke-dashoffset="dashOffset"

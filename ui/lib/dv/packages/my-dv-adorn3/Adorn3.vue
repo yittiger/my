@@ -12,7 +12,7 @@
       >
         <rect
           :key="i"
-          :fill="light"
+          :fill="dark"
           :x="point[0]"
           :y="point[1]"
           :width="size"
@@ -21,7 +21,7 @@
           <animate
             v-if="Math.random() > 0.6"
             attributeName="fill"
-            :values="`${[light, dark].join(';')}`"
+            :values="`${[dark, light].join(';')}`"
             :dur="Math.random() + 1 + 's'"
             :begin="Math.random() * 2"
             repeatCount="indefinite"
@@ -39,7 +39,7 @@
     name: 'MyDvAdorn3',
     mixins: [Adorn],
     props: {
-      dark: {
+      light: {
         type: String,
         default: 'transparent'
       },

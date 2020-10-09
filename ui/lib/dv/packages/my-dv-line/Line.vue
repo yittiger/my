@@ -32,23 +32,27 @@
     props: {
       area: Boolean,
       rotate: Boolean,
-      cross: Boolean
+      cross: Boolean,
+      legend: Boolean
     },
     computed: {
       mergeExtend() {
         const extend = typeof this.extend === 'function' ? this.extend() : this.extend
         return Object.freeze(merge({
-          legend: {
+          legend: this.legend ? {
             top: 20,
             right: 20,
             itemWidth: 10,
             itemHeight: 10,
             icon: 'rect'
+          } : {
+            show: false
           },
           grid: {
-            right: 20,
-            bottom: 40,
-            left: 50
+            top: this.legend ? 50 : 30,
+            right: 30,
+            bottom: 50,
+            left: 60
           },
           series: {
             barCategoryGap: '40%',

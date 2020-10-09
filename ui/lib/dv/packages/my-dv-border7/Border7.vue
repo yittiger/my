@@ -36,13 +36,13 @@
       <polygon :fill="fill" :points="`5, 5 ${width - 5}, 5 ${width - 5} ${height - 5} 5, ${height - 5}`"/>
 
       <use
-        :stroke="light"
+        :stroke="dark"
         stroke-width="1"
         :xlink:href="`#path-${_uid}`"
       />
 
       <use
-        :stroke="dark"
+        :stroke="light"
         stroke-width="3"
         :xlink:href="`#path-${_uid}`"
         :mask="`url(#mask-${_uid})`"

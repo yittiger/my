@@ -32,25 +32,55 @@
     props: {
       legend: {
         type: [String, Boolean],
-        default: 'v',
-        validator() {
-          return ['v', 'h']
+        default: 'h',
+        validator(val) {
+          return ['v', 'h', false].includes(val)
         }
+      },
+      rose: Boolean,
+      limit: {
+        type: Number,
+        default: 100
+      },
+      colorful: {
+        type: Boolean,
+        default: true
+      },
+      // 颜色索引，colorful=false 有效
+      colorIndex: {
+        type: Number,
+        default: 0
       }
     },
     computed: {
       mergeExtend() {
         const extend = typeof this.extend === 'function' ? this.extend() : this.extend
+        const colors = this.page?.settings?.colors || []
+        const isV = this.legend === 'v'
         return Object.freeze(merge({
           legend: {
             show: !!this.legend,
-            top: 10,
-            left: 10,
-            right: 10,
+            top: 20,
+            left: isV ? undefined : 20,
+            right: isV ? 20 : undefined,
             itemWidth: 10,
             itemHeight: 10,
             icon: 'rect',
-            align: 'left'
+            align: 'auto',
+            orient: isV ? 'vertical' : 'horizontal'
+          },
+          series: {
+            roseType: this.rose ? 'radius' : false,
+            labelLine: {
+              smooth: 0.2,
+              length: 10,
+              length2: 20
+            },
+            itemStyle: {
+              color: this.colorful ? undefined : colors[this.colorIndex],
+              shadowBlur: 200,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
           }
         }, extend))
       },
@@ -59,17 +89,16 @@
         let center = ['50%', '50%']
         switch (this.legend) {
           case 'v':
-            center = ['50%', '55%']
-            break
-          case 'h':
             center = ['45%', '50%']
             break
-
+          case 'h':
+            center = ['50%', '55%']
+            break
         }
         return {
           center,
-          radius: '60%',
-          legend: this.legend === 'v' ? 'vertical' : '',
+          radius: [0, '60%'],
+          limit: this.limit,
           ...settings
         }
       }
