@@ -4,6 +4,7 @@ import theme from '../utils/theme.js'
 
 export default {
   mixins: [Rect],
+  inheritAttrs: false,
   components: {
     Box
   },

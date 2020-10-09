@@ -12,7 +12,8 @@ export default {
   },
   methods: {
     resize() {
-      const rect = this.$el.getBoundingClientRect()
+      const rect = this.$el?.getBoundingClientRect()
+      if (!rect) return
       const {widthScale = 1, heightScale = 1} = this.page || {}
       this.width = rect.width / widthScale
       this.height = rect.height / heightScale

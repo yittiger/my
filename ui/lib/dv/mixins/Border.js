@@ -6,6 +6,7 @@ import '../style/border.scss'
 
 export default {
   mixins: [Rect, Color],
+  inheritAttrs: false,
   components: {
     Box,
     BoxContent

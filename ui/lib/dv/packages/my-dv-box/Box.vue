@@ -11,6 +11,7 @@
 <script>
   export default {
     name: 'MyDvBox',
+    inheritAttrs: false,
     props: {
       width: String,
       height: String,
@@ -65,7 +66,11 @@
         default: true
       },
       margin: String,
-      inline: Boolean
+      inline: Boolean,
+      opacity: {
+        type: Number,
+        default: 1
+      }
     },
     computed: {
       styles() {
@@ -82,6 +87,7 @@
           top: yAlign ? null : (fit ? 0 : top),
           transform: scale ? `scale(${scale})` : null,
           display: inline ? 'inline-block' : 'block',
+          opacity: this.opacity,
           margin,
           zIndex
         }

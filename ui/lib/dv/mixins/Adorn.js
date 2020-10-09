@@ -4,6 +4,7 @@ import Color from './Color'
 
 export default {
   mixins: [Rect, Color],
+  inheritAttrs: false,
   components: {
     Box
   },
