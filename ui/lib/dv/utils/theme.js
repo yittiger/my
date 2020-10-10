@@ -40,9 +40,10 @@ export default function ({colors, textColor, dark, light, fill}) {
     },
     radar: {
       itemStyle: {
-        normal: {
-          borderWidth: '1'
-        }
+        borderWidth: '1'
+      },
+      areaStyle: {
+        opacity: 0.5
       },
       lineStyle: {
         normal: {
