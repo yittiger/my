@@ -1,6 +1,6 @@
 <template>
   <Box class="my-dv-chart my-dv-ring"
-       default-width="600px"
+       default-width="400px"
        default-height="400px"
        v-bind="$attrs">
     <Loading v-if="loading" :zoom="0.6"></Loading>
