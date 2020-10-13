@@ -171,6 +171,7 @@ function createPromise({config, cache, socket}) {
         processData(res, cache, storage, resolve, reject)
       })
     }
+
     axios(config).then(res => {
       // 如果开启用websocket接收响应数据，http的响应结果可以忽略
       if (socket) return

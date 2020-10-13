@@ -20,7 +20,7 @@ export default {
   },
   data() {
     return {
-      chartData: {},
+      chartData: Object.create(null),
       loading: true
     }
   },
@@ -48,20 +48,19 @@ export default {
     load() {
       if (this.loader) {
         this.loading = true
-        this.loader().then(({columns, rows}) => {
-          this.chartData = Object.freeze({
-            columns,
-            rows
-          })
+        this.loader().then(data => {
+          this.chartData = Object.freeze(data)
         }).finally(() => {
           this.loading = false
         })
       } else {
         const {columns, rows} = this
-        this.chartData = Object.freeze({
-          columns,
-          rows
-        })
+        if (columns && rows) {
+          this.chartData = Object.freeze({
+            columns,
+            rows
+          })
+        }
         this.loading = false
       }
     }

@@ -65,6 +65,14 @@ class Access {
   }
 
   /**
+   * 写入缓存
+   */
+  save() {
+    const {cacheKey} = this.options
+    save(cacheKey, this.vm.access, this.storage)
+  }
+
+  /**
    * 获取权限数据
    * @return {null|*}
    */
@@ -79,8 +87,7 @@ class Access {
    */
   login(data = {}) {
     this.vm.access = Object.freeze({login: true, ...data})
-    const {cacheKey} = this.options
-    save(cacheKey, this.vm.access, this.storage)
+    this.save()
   }
 
   /**
@@ -89,8 +96,7 @@ class Access {
    */
   setRole(roles = []) {
     this.vm.access = Object.freeze(Object.assign({}, this.vm.access, {roles: roles}))
-    const {cacheKey} = this.options
-    save(cacheKey, this.vm.access, this.storage)
+    this.save()
   }
 
   /**
@@ -99,8 +105,7 @@ class Access {
    */
   setCan(can) {
     this.vm.access = Object.freeze(Object.assign({}, this.vm.access, {can: can}))
-    const {cacheKey} = this.options
-    save(cacheKey, this.vm.access, this.storage)
+    this.save()
   }
 
   /**
@@ -109,8 +114,7 @@ class Access {
    */
   setToken(token) {
     this.vm.access = Object.freeze(Object.assign({}, this.vm.access, {token: token}))
-    const {cacheKey} = this.options
-    save(cacheKey, this.vm.access, this.storage)
+    this.save()
   }
 
   /**

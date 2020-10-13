@@ -70,7 +70,8 @@
       opacity: {
         type: Number,
         default: 1
-      }
+      },
+      shadow: Boolean
     },
     computed: {
       styles() {
@@ -96,6 +97,7 @@
         return {
           [`is-${this.xAlign}`]: !!this.xAlign,
           [`is-${this.yAlign}`]: !!this.yAlign,
+          'is-shadow': this.shadow,
           'is-center-middle': !!this.xAlign && !!this.yAlign,
           [`is-content-align-${this.contentAlign}`]: !!this.contentAlign
         }
@@ -111,6 +113,10 @@
     position: absolute;
     text-align: left;
     display: inline-block;
+
+    @include when(shadow) {
+      box-shadow: $--dv-shadow-light;
+    }
     @include when(left) {
       left: 0;
     }

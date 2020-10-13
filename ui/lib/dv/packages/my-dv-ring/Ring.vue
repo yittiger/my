@@ -1,32 +1,16 @@
 <template>
-  <Box class="my-dv-chart my-dv-ring"
-       default-width="400px"
-       default-height="400px"
-       v-bind="$attrs">
-    <Loading v-if="loading" :zoom="0.6"></Loading>
-    <MyChart v-else
-             v-on="$listeners"
-             :debug="debug"
-             :theme="theme"
-             :extend="mergeExtend"
-             :width="`${width}px`"
-             :height="`${height}px`"
-             :data="chartData"></MyChart>
-  </Box>
+  <DvChart class="my-dv-ring" :options="optionsFunc" v-bind="{...$props,...$attrs}"></DvChart>
 </template>
 <script>
   import 'echarts/lib/chart/pie'
-  import {MyChart} from '$ui/charts'
+  import DvChart from '../my-dv-chart'
   import Chart from '../../mixins/Chart'
-  import Loading from '../my-dv-loading'
-  import merge from 'lodash/merge'
 
   export default {
     name: 'MyDvRing',
     mixins: [Chart],
     components: {
-      MyChart,
-      Loading
+      DvChart
     },
     props: {
       label: Boolean,
@@ -50,14 +34,15 @@
           name,
           value
         }))
-      },
-      mergeExtend() {
-        const extend = typeof this.extend === 'function' ? this.extend() : this.extend
+      }
+    },
+    methods: {
+      optionsFunc() {
         const isV = this.legend === 'v'
         const fontSize = 20
         const center = ['50%', '50%']
         const radius = this.radius
-        return Object.freeze(merge({
+        return {
           title: {
             text: this.title,
             x: 'center',
@@ -181,7 +166,7 @@
               data: [100]
             }
           ]
-        }, extend))
+        }
       }
     }
   }

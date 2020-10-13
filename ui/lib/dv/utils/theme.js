@@ -1,3 +1,5 @@
+import {LinearGradient} from 'echarts/lib/util/graphic'
+
 export default function ({colors, textColor, dark, light, fill}) {
   return {
     color: colors || [
@@ -200,52 +202,88 @@ export default function ({colors, textColor, dark, light, fill}) {
     },
     map: {
       itemStyle: {
-        normal: {
-          areaColor: '#eee',
-          borderColor: '#444',
-          borderWidth: 0.5
-        },
-        emphasis: {
-          areaColor: 'rgba(255,215,0,0.8)',
-          borderColor: '#444',
-          borderWidth: 1
+        borderColor: '#215495',
+        borderWidth: 1,
+        areaColor: {
+          type: 'radial',
+          x: 0.5,
+          y: 0.5,
+          r: 0.8,
+          colorStops: [{
+            offset: 0,
+            color: '#073684' // 0% 处的颜色
+          }, {
+            offset: 1,
+            color: '#061E3D' // 100% 处的颜色
+          }]
         }
       },
-      label: {
-        normal: {
-          textStyle: {
-            color: '#000'
-          }
+      emphasis: {
+        label: {
+          color: '#fff',
+          show: false
         },
-        emphasis: {
-          textStyle: {
-            color: 'rgb(100,0,0)'
-          }
+        itemStyle: {
+          areaColor: '#1890FF'
         }
       }
     },
     geo: {
+      show: true,
+      roam: false,
+      layoutSize: '100%',
+      z: 2,
       itemStyle: {
         normal: {
-          areaColor: '#eee',
-          borderColor: '#444',
-          borderWidth: 0.5
+          areaColor: {
+            type: 'radial',
+            x: 0.5,
+            y: 0.5,
+            r: 0.8,
+            colorStops: [{
+              offset: 0,
+              color: '#073684' // 0% 处的颜色
+            }, {
+              offset: 1,
+              color: '#061E3D' // 100% 处的颜色
+            }]
+          },
+          borderColor: new LinearGradient(0, 0, 0, 1, [{
+            offset: 0,
+            color: '#00F6FF'
+          }, {
+            offset: 1,
+            color: '#53D9FF'
+          }], false),
+          borderWidth: 3,
+          shadowBlur: 100,
+          shadowColor: 'rgba(10,76,139,0.8)',
+          shadowOffsetY: 0
+          // shadowColor: '#186c84'
+          // shadowOffsetX: 5,
+          // shadowOffsetY: 8,
+          // shadowBlur: 1
         },
         emphasis: {
-          areaColor: 'rgba(255,215,0,0.8)',
-          borderColor: '#444',
-          borderWidth: 1
+          label: {
+            show: false
+          },
+          areaColor: '#1890FF',
+          borderWidth: 1,
+          shadowOffsetX: 0,
+          shadowOffsetY: 0
         }
       },
       label: {
         normal: {
           textStyle: {
-            color: '#000'
+            color: '#fff'
           }
         },
         emphasis: {
+          show: false,
           textStyle: {
-            color: 'rgb(100,0,0)'
+            color: '#fff'
           }
         }
       }
@@ -477,11 +515,16 @@ export default function ({colors, textColor, dark, light, fill}) {
       }
     },
     visualMap: {
+      left: 40,
+      bottom: 10,
       color: [
-        '#bf444c',
-        '#d88273',
-        '#000000'
-      ]
+        '#f5222d',
+        '#fdaa09',
+        '#52c41a'
+      ],
+      textStyle: {
+        color: '#fff'
+      }
     },
     dataZoom: {
       backgroundColor: 'rgba(47,69,84,0)',
