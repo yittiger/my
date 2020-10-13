@@ -59,14 +59,14 @@
       boxProps() {
         const map = {
           horizontal: {
-            width: '200px',
-            height: '30px',
+            width: '100%',
+            height: '40px',
             xAlign: 'center',
             yAlign: 'bottom'
           },
           vertical: {
-            width: '30px',
-            height: '200px',
+            width: '40px',
+            height: '100%',
             xAlign: 'right',
             yAlign: 'middle'
           }
@@ -104,6 +104,7 @@
   @import "../../style/vars";
 
   @include b(dv-indicator) {
+    pointer-events: none;
     @include e(dots) {
       text-align: center;
       position: absolute;
@@ -112,13 +113,14 @@
       transform: translate(-50%, -50%);
     }
     @include e(item) {
+      pointer-events: auto;
       width: 14px;
       height: 14px;
       font-size: 0;
       display: inline-block;
       border-radius: 100%;
       background: rgba(255, 255, 255, 0.3);
-      margin: 4px 6px;
+      margin: 6px 8px;
       cursor: pointer;
       box-shadow: $--dv-shadow-light;
       &:hover {

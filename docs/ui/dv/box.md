@@ -1,7 +1,7 @@
 # Box 容器
 
 <api-link href="dv/my-dv-box">MyDvBox</api-link>
-是一个非常重要的基础组件，大部分组件都继承它。
+是一个非常重要的基础组件，除了MyDvPage组件外其他组件都继承它。
 
 ## 基础用法
 :::demo
@@ -20,13 +20,127 @@
 
 ## 自适应
 
+根据父节点的宽高和位置定位。
+:::demo
+```html
+<template>
+  <div style="height:600px">
+     <my-dv-page target="parent">
+       <my-dv-box fit style="background: rgba(255,0,0,0.2)"></my-dv-box> 
+    </my-dv-page>
+  </div>
+</template>
+```
+:::
+
+
+
 ## 对齐方式
+:::demo
+```html
+<template>
+  <div style="height:600px">
+     <my-dv-page target="parent" :lock="false">
+       <my-dv-box x-align="left" y-align="top">left top</my-dv-box> 
+       <my-dv-box x-align="center" y-align="top">center top</my-dv-box>
+       <my-dv-box x-align="right" y-align="top">right top</my-dv-box> 
+       <my-dv-box x-align="left" y-align="middle">left middle</my-dv-box> 
+       <my-dv-box x-align="center" y-align="middle">center middle</my-dv-box>
+       <my-dv-box x-align="right" y-align="middle">right middle</my-dv-box> 
+       <my-dv-box x-align="left" y-align="bottom">left bottom</my-dv-box> 
+       <my-dv-box x-align="center" y-align="bottom">center bottom</my-dv-box>
+       <my-dv-box x-align="right" y-align="bottom">right bottom</my-dv-box> 
+    </my-dv-page>
+  </div>
+</template>
+<style lang="scss" scoped>
+.my-dv-box {
+   background: royalblue;
+   padding:50px;
+   font-size:30px;
+   text-align: center;
+}
+</style>
+```
+:::
 
 ## 缩放
+:::demo
+```html
+<template>
+  <div style="height:600px">
+     <my-dv-page target="parent">
+       <my-dv-box width="100px"
+                  height="100px"
+                  x-align="center"
+                  y-align="middle"
+                  :zoom="4" 
+                  style="background: rgba(255,0,0,0.2)"></my-dv-box> 
+    </my-dv-page>
+  </div>
+</template>
+```
+:::
+
 
 ## 内联和边距
 
+:::demo
+```html
+<template>
+  <div style="height:600px">
+     <my-dv-page target="parent">
+       <my-dv-box v-for="n in 30"
+                  :key="n"
+                  :position="false"
+                  inline
+                  margin="20px"
+                  width="200px"
+                  height="200px"
+                  style="background: rgba(255,0,0,0.2)">{{n}}</my-dv-box> 
+    </my-dv-page>
+  </div>
+</template>
+```
+:::
+
+
 ## 透明度
+:::demo
+```html
+<template>
+  <div style="height:600px">
+     <my-dv-page target="parent">
+       <my-dv-box width="100px"
+                  height="100px"
+                  x-align="center"
+                  y-align="middle"
+                  :zoom="4" 
+                  :opacity="0.1"
+                  style="background: #ff0000"></my-dv-box> 
+    </my-dv-page>
+  </div>
+</template>
+```
+:::
+
 
 ## 阴影
+:::demo
+```html
+<template>
+  <div style="height:600px">
+     <my-dv-page target="parent">
+       <my-dv-box width="100px"
+                  height="100px"
+                  x-align="center"
+                  y-align="middle"
+                  :zoom="4" 
+                  shadow
+                  style="background: #2b7cd9;"></my-dv-box> 
+    </my-dv-page>
+  </div>
+</template>
+```
+:::
 

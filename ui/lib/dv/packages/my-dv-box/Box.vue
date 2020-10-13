@@ -27,7 +27,7 @@
      * @property {string} [xAlign] 水平对齐方式，可选值：'left', 'right', 'center'
      * @property {string} [yAlign] 垂直对齐方式，可选值：'top', 'bottom', 'middle'
      * @property {string} [contentAlign=left] 内容对齐方式，可选值：'left', 'right', 'center'
-     * @property {number} [zoom] 缩放
+     * @property {number} [zoom] 缩放，如何设置了xAlign或yAlign， scale的方式将失效，此时可以zoom实现缩放
      * @property {number} [scale] 缩放，与zoom功能一样
      * @property {boolean} [fit] 由父级适应宽高和位置，设置了 fit， width、height 、top、left 将失效
      * @property {boolean} [visible=true] 是否可见
@@ -123,7 +123,7 @@
           [`is-${this.xAlign}`]: !!this.xAlign,
           [`is-${this.yAlign}`]: !!this.yAlign,
           'is-shadow': this.shadow,
-          'is-center-middle': !!this.xAlign && !!this.yAlign,
+          'is-center-middle': this.xAlign === 'center' && this.yAlign === 'middle',
           [`is-content-align-${this.contentAlign}`]: !!this.contentAlign
         }
       }

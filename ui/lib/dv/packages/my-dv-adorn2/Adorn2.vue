@@ -37,11 +37,24 @@
 </template>
 
 <script>
+  /**
+   * 装饰组件
+   * @module $ui/dv/my-dv-adorn2
+   */
   import Adorn from '../../mixins/Adorn'
 
   export default {
     name: 'MyDvAdorn2',
     mixins: [Adorn],
+    /**
+     * 属性参数
+     * @member props
+     * @property {number} [duration] 动画持续时间，单位：秒
+     * @property {boolean} [reverse] 翻转 180度
+     * @property {number} [opacity=1] 透明度
+     * @property {string} [color=#1890FF] 颜色
+     * @property {number} [size=5] 线条的宽度，单位：px
+     */
     props: {
       // 线条的宽度
       size: {

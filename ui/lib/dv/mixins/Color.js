@@ -2,6 +2,7 @@ import {getRgbaValue} from '../utils/color'
 
 export default {
   props: {
+    // 主色
     color: {
       type: String,
       default() {

@@ -32,6 +32,7 @@
      * @property {Number} [height=1080] 原始高度
      * @property {Number} [activeIndex] 初始展示的场景索引，有MyDvScreen子组件才有效
      * @property {string|function} [target=body] 页面的参照目标元素，默认是body，支持css选择器，有一个特殊值parent取组件的父节点
+     * @property {object} [config] 页面配置对象 {color, textColor, fill, colors} ，提供给子组件调用
      */
     props: {
       lock: {
