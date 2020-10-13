@@ -1,7 +1,7 @@
 @import "../../styles/mixins/index";
 @import "../../styles/common/colors";
 
-$--dv-background: #000 !default;
+$--dv-background: rgba(0, 0, 0, 0.8) !default;
 
 $--dv-shadow: 0 2px 4px rgba(11, 116, 210, 0.45), 0 0 6px rgba(148, 245, 233, 0.35) !default;
 $--dv-shadow-light: 0 2px 4px rgba(11, 116, 210, 0.2), 0 0 6px rgba(148, 245, 233, 0.1) !default;

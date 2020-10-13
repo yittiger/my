@@ -243,7 +243,12 @@ module.exports = {
     'api'
   ],
   '/ui/dv/': [
-    ''
+    '',
+    createMenus('基础组件', [
+      'page',
+      'screen',
+      'box'
+    ])
   ],
   '/ui/pages/': [
     'layout',

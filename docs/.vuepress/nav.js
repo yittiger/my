@@ -56,7 +56,7 @@ module.exports = [
       },
       {
         text: '可视化大屏',
-        link: '/api/datav.html'
+        link: '/api/dv.html'
       }
     ]
   }

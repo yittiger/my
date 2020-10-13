@@ -9,19 +9,44 @@
 </template>
 
 <script>
+  /**
+   * 容器组件
+   * @module $ui/dv/my-dv-box
+   */
   export default {
     name: 'MyDvBox',
     inheritAttrs: false,
+    /**
+     * 属性参数
+     * @member props
+     * @property {string} [width] 宽度
+     * @property {string} [height] 高度
+     * @property {string} [left=0] 位置left
+     * @property {string} [top=0] 位置top
+     * @property {number} [zIndex] 层级
+     * @property {string} [xAlign] 水平对齐方式，可选值：'left', 'right', 'center'
+     * @property {string} [yAlign] 垂直对齐方式，可选值：'top', 'bottom', 'middle'
+     * @property {string} [contentAlign=left] 内容对齐方式，可选值：'left', 'right', 'center'
+     * @property {number} [zoom] 缩放
+     * @property {number} [scale] 缩放，与zoom功能一样
+     * @property {boolean} [fit] 由父级适应宽高和位置，设置了 fit， width、height 、top、left 将失效
+     * @property {boolean} [visible=true] 是否可见
+     * @property {boolean} [position=true] 开启定位，如果为false， left、top 参数失效
+     * @property {string} [margin] 外边距
+     * @property {boolean} [inline] 内联模式，position=false才有效
+     * @property {number} [opacity=1] 透明度
+     * @property {boolean} [shadow] 阴影
+     */
     props: {
       width: String,
       height: String,
       defaultWidth: {
         type: String,
-        default: '300px'
+        default: 'auto'
       },
       defaultHeight: {
         type: String,
-        default: '200px'
+        default: 'auto'
       },
       left: {
         type: [String, Number],

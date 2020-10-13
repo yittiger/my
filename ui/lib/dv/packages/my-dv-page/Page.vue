@@ -5,6 +5,10 @@
 </template>
 
 <script>
+  /**
+   * 页面组件
+   * @module $ui/dv/my-dv-page
+   */
   import {addResizeListener, removeResizeListener} from 'element-ui/lib/utils/resize-event'
   import {addClass, removeClass} from 'element-ui/lib/utils/dom'
   import {debounce} from '$ui/utils/util';
@@ -19,6 +23,16 @@
         page: this
       }
     },
+    /**
+     * 属性参数
+     * @member props
+     * @property {Boolean} [lock=true] 缩放锁定比例
+     * @property {Boolean}  [scale=true] 开启自动缩放
+     * @property {Number} [width=1920] 原始宽度
+     * @property {Number} [height=1080] 原始高度
+     * @property {Number} [activeIndex] 初始展示的场景索引，有MyDvScreen子组件才有效
+     * @property {string|function} [target=body] 页面的参照目标元素，默认是body，支持css选择器，有一个特殊值parent取组件的父节点
+     */
     props: {
       lock: {
         type: Boolean,
@@ -41,10 +55,22 @@
         validator(val) {
           return val > 0
         }
+      },
+      activeIndex: {
+        type: Number,
+        default: 0
+      },
+      target: {
+        type: [String, HTMLElement, Function],
+        default() {
+          return document.body
+        }
       }
     },
     data() {
       return {
+        screens: [],
+        screenActiveIndex: this.activeIndex,
         widthScale: 1,
         heightScale: 1
       }
@@ -55,6 +81,12 @@
         immediate: true,
         handler() {
           this.resize()
+        }
+      },
+      activeIndex: {
+        immediate: true,
+        handler(val) {
+          this.screenActiveIndex = val
         }
       }
     },
@@ -68,29 +100,50 @@
       }
     },
     methods: {
+      getTarget() {
+        let target
+        switch (typeof this.target) {
+          case 'string':
+            target = this.target === 'parent'
+              ? this.$el.parentNode
+              : document.querySelector(this.target)
+            break
+          case 'function':
+            target = this.target()
+            break
+          default:
+            target = this.target
+            break
+        }
+        return target || document.body
+      },
       resize() {
         if (!this.scale) {
           this.widthScale = 1
           this.heightScale = 1
           return
         }
-        const {clientWidth, clientHeight} = document.body
+        const {clientWidth, clientHeight} = this.warpper || {}
+        if (!clientWidth || !clientHeight) return
         if (this.lock) {
           this.heightScale = this.widthScale = clientWidth / this.width
         } else {
           this.widthScale = clientWidth / this.width
           this.heightScale = clientHeight / this.height
         }
+
       }
     },
-    created() {
-      addClass(document.body, WRAPPER_CLASS_NAME + this._uid)
+    mounted() {
+      this.warpper = this.getTarget()
+      addClass(this.warpper, WRAPPER_CLASS_NAME + this._uid)
       this.proxyResize = debounce(this.resize, 100)
-      addResizeListener(document.body, this.proxyResize)
+      addResizeListener(this.warpper, this.proxyResize)
+      this.resize()
     },
     beforeDestroy() {
-      this.proxyResize && removeResizeListener(document.body, this.proxyResize)
-      removeClass(document.body, WRAPPER_CLASS_NAME + this._uid)
+      this.proxyResize && removeResizeListener(this.warpper, this.proxyResize)
+      removeClass(this.warpper, WRAPPER_CLASS_NAME + this._uid)
     }
 
   }
