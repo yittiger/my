@@ -1,5 +1,9 @@
 <template>
-  <Box class="my-dv-border-1" :class="classes" v-bind="$attrs">
+  <Box class="my-dv-border-1"
+       default-width="400px"
+       default-height="300px"
+       :class="classes"
+       v-bind="$attrs">
     <svg class="my-dv-border__svg" :width="width" :height="height" :style="styles">
       <polygon :fill="fill" :points="`10, 27 10, ${height - 27} 13, ${height - 24} 13, ${height - 21} 24, ${height - 11}
       38, ${height - 11} 41, ${height - 8} 73, ${height - 8} 75, ${height - 10} 81, ${height - 10}
@@ -62,6 +66,7 @@
 </template>
 
 <script>
+
   import Border from '../../mixins/Border'
 
   export default {

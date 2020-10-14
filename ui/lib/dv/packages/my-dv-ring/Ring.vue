@@ -2,6 +2,10 @@
   <DvChart class="my-dv-ring" :options="optionsFunc" v-bind="{...$props,...$attrs}"></DvChart>
 </template>
 <script>
+  /**
+   * 圆环图
+   * @module $ui/dv/my-dv-ring
+   */
   import 'echarts/lib/chart/pie'
   import DvChart from '../my-dv-chart'
   import Chart from '../../mixins/Chart'
@@ -12,11 +16,25 @@
     components: {
       DvChart
     },
+    /**
+     * 属性参数
+     * @member props
+     * @property {Array} [columns] 数据列
+     * @property {Array} [rows] 数据行
+     * @property {Function} [loader] 数据加载函数，必须返回Promise
+     * @property {Object} [settings] 图表的私有设置
+     * @property {Object|Function} [extend] 扩展图表参数选项
+     * @property {boolean} [debug] 开启打印调试信息
+     * @property {boolean} [legend] 显示图例, 可选值：'v', 'h', false
+     * @property {boolean} [label] 显示标签
+     * @property {number} [radius=45] 半径，取值 0 ~ 100
+     * @property {string} [title] 标题文本，在圆中心
+     */
     props: {
       label: Boolean,
       legend: {
         type: [String, Boolean],
-        default: 'h',
+        default: false,
         validator(val) {
           return ['v', 'h', false].includes(val)
         }

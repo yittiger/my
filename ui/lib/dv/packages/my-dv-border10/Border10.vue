@@ -1,5 +1,9 @@
 <template>
-  <Box class="my-dv-border-10" :class="classes" v-bind="$attrs">
+  <Box class="my-dv-border-10"
+       default-width="400px"
+       default-height="300px"
+       :class="classes"
+       v-bind="$attrs">
     <svg class="my-dv-border__svg" :width="width" :height="height" :style="styles">
       <defs>
         <filter :id="`filter-${_uid}`" height="150%" width="150%" x="-25%" y="-25%">

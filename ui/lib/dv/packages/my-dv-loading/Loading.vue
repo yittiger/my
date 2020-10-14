@@ -63,8 +63,17 @@
 </template>
 
 <script>
+  /**
+   * 加载中提示，继承MyDvBox
+   * @module $ui/dv/my-dv-loading
+   */
   import Box from '../my-dv-box'
 
+  /**
+   * 插槽
+   * @member slots
+   * @property {string} default 定义提示文本
+   */
   export default {
     name: 'MyDvLoading',
     components: {

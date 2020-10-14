@@ -14,7 +14,7 @@
             :stroke-width="width / 2"
             fill="transparent"
             v-for="(d, i) in path"
-            :key="d"
+            :key="i"
             :d="d"
           />
         </g>
@@ -29,8 +29,8 @@
       </defs>
 
       <circle
-        v-for="r in circle"
-        :key="r"
+        v-for="(r,i) in circle"
+        :key="i"
         :r="r"
         :cx="x"
         :cy="y"
@@ -69,8 +69,8 @@
 
       <g v-if="split">
         <polyline
-          v-for="p in splitLinePoints"
-          :key="p"
+          v-for="(p,i) in splitLinePoints"
+          :key="i"
           :points="p"
           :stroke="dark"
           :stroke-width="0.5"
@@ -79,8 +79,8 @@
       </g>
 
       <path
-        v-for="d in arc"
-        :key="d"
+        v-for="(d,i) in arc"
+        :key="`p${i}`"
         :d="d"
         :stroke="dark"
         stroke-width="2"
@@ -162,7 +162,7 @@
         const radiusGap = (width / 2 - ringWidth / 2) / ringNum
         return new Array(ringNum)
           .fill(0)
-          .map((_, i) => radiusGap * (i + 1))
+          .map((_, i) => radiusGap * (i + 1)).filter(n => n >= 0)
       },
       splitLinePoints() {
         const {x, y, width} = this

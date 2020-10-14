@@ -10,6 +10,10 @@
 </template>
 
 <script>
+  /**
+   *  图标组件
+   * @module $ui/dv/my-dv-icon
+   */
   import Box from '../my-dv-box'
   import Icon from '../../mixins/Icon'
   import Text from '../../mixins/Text'
@@ -22,6 +26,12 @@
       Box,
       MyIcon
     },
+    /**
+     * 属性参数，继承MyDvBox
+     * @member props
+     * @property {string|object} [icon] 图标名称或svg配置，即MyIcon的参数对象
+     * @property {number} [size] 图标的尺寸
+     */
     props: {
       size: {
         type: Number,

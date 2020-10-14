@@ -35,7 +35,6 @@
 <script>
   /**
    * 装饰组件
-   * @module $ui/dv/my-dv-adorn3
    */
   import Adorn from '../../mixins/Adorn'
 

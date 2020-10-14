@@ -17,6 +17,10 @@
 </template>
 <script>
 
+  /**
+   * 柱状图
+   * @module $ui/dv/my-dv-bar
+   */
   import {MyChartBar} from '$ui/charts'
   import Chart from '../../mixins/Chart'
   import Loading from '../my-dv-loading'
@@ -31,6 +35,20 @@
       MyChartBar,
       Loading
     },
+    /**
+     * 属性参数
+     * @member props
+     * @property {Array} [columns] 数据列
+     * @property {Array} [rows] 数据行
+     * @property {Function} [loader] 数据加载函数，必须返回Promise
+     * @property {Object} [settings] 图表的私有设置
+     * @property {Object|Function} [extend] 扩展图表参数选项
+     * @property {boolean} [debug] 开启打印调试信息
+     * @property {boolean} [rotate] 旋转类目标签
+     * @property {boolean} [cross] 开启 cross tooltip
+     * @property {boolean} [gradient] 颜色渐变
+     * @property {boolean} [legend] 显示图例
+     */
     props: {
       rotate: Boolean,
       cross: Boolean,

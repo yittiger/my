@@ -1,56 +1,54 @@
 <template>
-  <Box class="my-dv-chart my-dv-rings"
-       default-width="600px"
-       default-height="400px"
-       v-bind="$attrs">
-    <Loading v-if="loading" :zoom="0.6"></Loading>
-    <MyChart v-else
-             v-on="$listeners"
-             :debug="debug"
-             :theme="theme"
-             :options="options"
-             :width="`${width}px`"
-             :height="`${height}px`"
-             :data="chartData"></MyChart>
-  </Box>
+  <DvChart class="my-dv-rings" :options="optionsFunc" v-bind="{...$props,...$attrs}"></DvChart>
 </template>
 <script>
+  /**
+   * 多环图
+   * @module $ui/dv/my-dv-ring
+   */
   import 'echarts/lib/chart/pie'
   import 'echarts/lib/component/grid'
-  import {MyChart} from '$ui/charts'
+  import DvChart from '../my-dv-chart'
   import Chart from '../../mixins/Chart'
-  import Loading from '../my-dv-loading'
   import merge from '$ui/charts/utils/extend'
 
   export default {
     name: 'MyDvRings',
     mixins: [Chart],
     components: {
-      MyChart,
-      Loading
+      DvChart
     },
+    /**
+     * 属性参数
+     * @member props
+     * @property {Array} [columns] 数据列
+     * @property {Array} [rows] 数据行
+     * @property {Function} [loader] 数据加载函数，必须返回Promise
+     * @property {Object} [settings] 图表的私有设置
+     * @property {Object|Function} [extend] 扩展图表参数选项
+     * @property {boolean} [debug] 开启打印调试信息
+     */
     props: {},
     data() {
       return {
         max: 80
       }
     },
-    computed: {
-      maxValue() {
-        const {rows = []} = this.chartData
+    methods: {
+      maxValue({rows = []}) {
+        if (rows.length === 0) return 0
         const values = rows.map(([name, value]) => value)
         return Math.max.apply(Math.max, values)
       },
-      itemSize() {
-        const {rows = []} = this.chartData
+      itemSize({rows = []}) {
         const count = rows.length
-        return this.max / count
+        return count > 0 ? this.max / count : this.max
       },
-      gap() {
-        return this.itemSize / 2
+      gap(data) {
+        return this.itemSize(data) / 2
       },
-      grid() {
-        const gap = this.gap
+      grid(data) {
+        const gap = this.gap(data)
         const [top, bottom] = [10 - gap / 4, 50 + gap / 4]
         return {
           top: `${top}%`,
@@ -59,17 +57,18 @@
           containLabel: false
         }
       },
-      total() {
-        const {rows = []} = this.chartData
+      total({rows = []}) {
         let sum = 0
         rows.forEach(n => {
           sum += n[1]
         })
         return sum
       },
-      series() {
-        const {itemSize, gap, max} = this
-        const {rows = []} = this.chartData
+      series(data) {
+        const itemSize = this.itemSize(data)
+        const gap = this.gap(data)
+        const max = this.max
+        const rows = (data.rows || []).slice()
         const pieSeries = []
         rows.sort(function (a, b) {
           return b[1] - a[1]
@@ -95,7 +94,7 @@
                 }
               }
             }, {
-              value: this.maxValue / 0.75 - value,
+              value: this.maxValue(data) / 0.75 - value,
               name: '',
               tooltip: {
                 show: false
@@ -135,8 +134,7 @@
         })
         return pieSeries
       },
-      lineYAxis() {
-        const {rows = []} = this.chartData
+      lineYAxis({rows = []}) {
         const colors = this?.page?.settings.colors || []
         const lineYAxis = []
         rows.forEach(([name, value], i) => {
@@ -155,12 +153,12 @@
         })
         return lineYAxis
       },
-      options() {
+      optionsFunc(data) {
         const extend = typeof this.extend === 'function' ? this.extend() : this.extend
-        const {rows = []} = this.chartData
+        const rows = data.rows || []
         const options = {
-          series: this.series,
-          grid: this.grid,
+          series: this.series(data),
+          grid: this.grid(data),
           tooltip: {},
           yAxis: [{
             type: 'category',
@@ -181,7 +179,7 @@
               inside: true,
               show: true
             },
-            data: this.lineYAxis
+            data: this.lineYAxis(data)
           }],
           xAxis: [{
             show: false

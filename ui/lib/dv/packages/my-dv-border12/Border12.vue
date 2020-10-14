@@ -1,5 +1,10 @@
 <template>
-  <Box class="my-dv-border-12" :class="classes" v-bind="$attrs" :style="boxStyles">
+  <Box class="my-dv-border-12"
+       default-width="400px"
+       default-height="300px"
+       :class="classes"
+       v-bind="$attrs"
+       :style="boxStyles">
     <svg class="my-dv-border-12__c1" width="20" height="20">
       <polyline class="line1" points="0,20 0,0 20,0" fill="transparent" stroke-width="4" :stroke="light"/>
     </svg>

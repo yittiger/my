@@ -5,11 +5,11 @@ function sort(array) {
   return array
 }
 
-function createMenus(title, children) {
+function createMenus(title, children, isSort = true) {
   return {
     title: title,
     collapsable: true,
-    children: sort(children)
+    children: isSort ? sort(children) : children
   }
 }
 
@@ -247,8 +247,20 @@ module.exports = {
     createMenus('基础组件', [
       'page',
       'screen',
-      'box'
-    ])
+      'box',
+      'loading',
+      'border',
+      'adorn',
+      'icon'
+    ], false),
+    createMenus('图表组件', [
+      'line',
+      'bar',
+      'pie',
+      'ring',
+      'rings',
+      'rank'
+    ], false)
   ],
   '/ui/pages/': [
     'layout',

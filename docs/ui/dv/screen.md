@@ -70,3 +70,19 @@ export default {
 </template>
 ```
 :::
+
+## 自定义过场动画
+:::demo
+```html
+<template>
+ <div style="height:600px">
+   <my-dv-page target="parent">
+     <my-dv-screen enter="zoomInLeft" leave="zoomOutRight">场景 一</my-dv-screen>
+     <my-dv-screen enter="zoomInLeft" leave="zoomOutRight">场景 二</my-dv-screen>
+     <my-dv-screen enter="zoomInLeft" leave="zoomOutRight">场景 三</my-dv-screen>
+     <my-dv-indicator></my-dv-indicator>
+   </my-dv-page>
+ </div>
+</template>
+```
+:::

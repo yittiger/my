@@ -1,6 +1,6 @@
 <template>
-  <Box class="my-dv-chart my-dv-line"
-       default-width="600px"
+  <Box class="my-dv-chart my-dv-pie"
+       default-width="400px"
        default-height="400px"
        v-bind="$attrs">
     <Loading v-if="loading" :zoom="0.6"></Loading>
@@ -17,6 +17,10 @@
 </template>
 <script>
 
+  /**
+   * 饼图
+   * @module $ui/dv/my-dv-pie
+   */
   import {MyChartPie} from '$ui/charts'
   import Chart from '../../mixins/Chart'
   import Loading from '../my-dv-loading'
@@ -29,10 +33,25 @@
       MyChartPie,
       Loading
     },
+    /**
+     * 属性参数
+     * @member props
+     * @property {Array} [columns] 数据列
+     * @property {Array} [rows] 数据行
+     * @property {Function} [loader] 数据加载函数，必须返回Promise
+     * @property {Object} [settings] 图表的私有设置
+     * @property {Object|Function} [extend] 扩展图表参数选项
+     * @property {boolean} [debug] 开启打印调试信息
+     * @property {boolean} [legend] 显示图例, 可选值：'v', 'h', false
+     * @property {boolean} [rose] 玫瑰图
+     * @property {number} [limit=100] 限制项数，超过的项合并到其他
+     * @property {boolean} [colorful=true] 多色彩，false时采用单色
+     * @property {number|string} [color] 单色时的颜色取色索引或色码，colorful=true才有效
+     */
     props: {
       legend: {
         type: [String, Boolean],
-        default: 'h',
+        default: false,
         validator(val) {
           return ['v', 'h', false].includes(val)
         }
@@ -46,9 +65,9 @@
         type: Boolean,
         default: true
       },
-      // 颜色索引，colorful=false 有效
-      colorIndex: {
-        type: Number,
+      // 颜色，colorful=false 有效
+      color: {
+        type: [Number, String],
         default: 0
       }
     },
@@ -77,7 +96,7 @@
               length2: 20
             },
             itemStyle: {
-              color: this.colorful ? undefined : colors[this.colorIndex],
+              color: this.colorful ? undefined : (typeof this.color === 'number' ? colors[this.color] : this.color),
               shadowBlur: 200,
               shadowColor: 'rgba(0, 0, 0, 0.5)'
             }

@@ -1,5 +1,9 @@
 <template>
-  <Box class="my-dv-border-4" :class="classes" v-bind="$attrs">
+  <Box class="my-dv-border-4"
+       default-width="400px"
+       default-height="300px"
+       :class="classes"
+       v-bind="$attrs">
     <svg class="my-dv-border__svg" :width="width" :height="height" :style="styles">
       <polygon :fill="fill" :points="`
         10, 22 ${width - 22}, 22 ${width - 22}, ${height - 86} ${width - 84}, ${height - 24} 10, ${height - 24}

@@ -37,6 +37,7 @@
     },
     watch: {
       chartData: {
+        immediate: true,
         handler(val) {
           this.mergeOptions(val)
         }
@@ -52,7 +53,7 @@
         const opts = typeof this.options === 'function'
           ? this.options(data)
           : (this.options || {})
-        this.currentOptions = Object.freeze(merge(this.currentOptions, opts))
+        this.currentOptions = Object.freeze(merge({}, this.currentOptions, opts))
       }
     }
   }

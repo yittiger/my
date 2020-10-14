@@ -1,5 +1,9 @@
 <template>
-  <Box class="my-dv-border-8" :class="classes" v-bind="$attrs">
+  <Box class="my-dv-border-8"
+       default-width="400px"
+       default-height="300px"
+       :class="classes"
+       v-bind="$attrs">
     <svg class="my-dv-border__svg" :width="width" :height="height" :style="styles">
       <defs>
         <linearGradient :id="`gradient-${_uid}`" x1="0%" y1="0%" x2="100%" y2="100%">
