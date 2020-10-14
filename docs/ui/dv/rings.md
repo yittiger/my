@@ -8,7 +8,7 @@
 继承 <api-link href="dv/my-dv-box">MyDvBox</api-link>
 :::
 
-## 效果演示
+# 效果演示
 :::demo
 ```html
 <template>
