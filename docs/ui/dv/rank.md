@@ -15,9 +15,9 @@
 ```html
 <template>
    <div style="height:600px">
-     <my-dv-page target="parent">
-      <my-dv-border2 width="800px" height="600px" x-align="center" y-align="middle">
-        <my-dv-rank left="5%" width="95%" height="100%" :columns="columns" :rows="rows"></my-dv-rank>
+     <my-dv-page target="parent" :lock="true" :width="1280" :height="800">
+       <my-dv-border2 width="80%" height="80%" x-align="center" y-align="middle">
+         <my-dv-rank left="5%" width="95%" height="100%" :columns="columns" :rows="rows"></my-dv-rank>
        </my-dv-border2>
      </my-dv-page>
    </div>

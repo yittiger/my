@@ -14,8 +14,8 @@
 ```html
 <template>
    <div style="height:600px">
-     <my-dv-page target="parent" :lock="false">
-        <my-dv-border2 width="600px" height="400px" left="100px" top="100px">
+     <my-dv-page target="parent" :lock="true" :width="1280" :height="800">
+        <my-dv-border2 width="80%" height="80%" x-align="center" y-align="middle">
            <my-dv-ring fit :columns="columns" :rows="rows" label title="渠道统计"></my-dv-ring>
         </my-dv-border2>
      </my-dv-page>

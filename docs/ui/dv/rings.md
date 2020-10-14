@@ -13,10 +13,10 @@
 ```html
 <template>
    <div style="height:600px">
-     <my-dv-page target="parent">
-      <my-dv-border1 width="600px" height="600px" x-align="center" y-align="middle">
-        <my-dv-rings fit :columns="columns" :rows="rows"></my-dv-rings>
-       </my-dv-border1>
+     <my-dv-page target="parent" :lock="true" :width="1280" :height="800">
+        <my-dv-border2 width="80%" height="80%" x-align="center" y-align="middle">
+          <my-dv-rings fit :columns="columns" :rows="rows"></my-dv-rings>
+       </my-dv-border2>
      </my-dv-page>
    </div>
 </template>

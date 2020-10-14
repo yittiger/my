@@ -165,7 +165,10 @@ export function createPieSeries({dimensions, source, settings}) {
       center: settings.center,
       roseType: settings.roseType,
       labelLine: PIE_LABEL_LINE,
-      itemStyle: settings.roseType ? PIE_ROSE_ITEM_STYLE : {}
+      itemStyle: settings.roseType ? PIE_ROSE_ITEM_STYLE : {},
+      label: {
+        formatter: '{b}: {d}%'
+      }
     };
   }
   const levelCount = level.length;
