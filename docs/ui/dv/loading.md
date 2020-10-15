@@ -12,7 +12,7 @@
 ```html
 <template>
  <div style="height:600px;">
-    <my-dv-page target="parent">
+    <my-dv-page target="parent" fit>
        <my-dv-loading></my-dv-loading>
     </my-dv-page>
  </div>
@@ -26,7 +26,7 @@
 ```html
 <template>
  <div style="height:600px;">
-    <my-dv-page target="parent">
+    <my-dv-page target="parent" fit>
        <my-dv-loading :zoom="2">正在拼命加载中...</my-dv-loading>
     </my-dv-page>
  </div>

@@ -4,6 +4,7 @@ import 'echarts/lib/component/legend'
 import 'echarts/lib/component/title'
 import {log, tip} from '$ui/utils/log'
 import {debounce} from '$ui/utils/util'
+import {arrayToMap} from '$ui/utils/dictionary'
 import {addResizeListener, removeResizeListener} from 'element-ui/lib/utils/resize-event'
 import setExtend from '$ui/charts/utils/extend'
 import {DEFAULT_THEME} from '$ui/charts/utils/constant'
@@ -27,6 +28,7 @@ export default {
    * @property {boolean} [debug] 打印构建的ECharts option内容
    * @property {object} [settings] 个性图表配置
    * @property {object} [data] 图表数据, {columns, rows, layout}
+   * @property {Object|Array} [coords] 注册经纬度  如：{'广州': [120.3234, 33.4329]}, 或 [{label:'广州',value: [120.3234, 33.4329]}]
    */
   props: {
     // 宽度
@@ -87,9 +89,9 @@ export default {
     // 地图geojson对象或构建函数，函数必须返回Promise
     register: [Object, Function],
 
-    // 坐标集合 如：{'广州': [120.3234, 33.4329]}
+    // 坐标集合 如：{'广州': [120.3234, 33.4329]}, 或 [{label:'广州',value: [120.3234, 33.4329]}]
     coords: {
-      type: Object,
+      type: [Object, Array],
       default() {
         return {}
       }
@@ -133,7 +135,8 @@ export default {
     },
     coords: {
       handler(val) {
-        this.coordinates = Object.assign(this.coordinates, val)
+        const coords = Array.isArray(val) ? arrayToMap(val) : val
+        this.coordinates = Object.assign(this.coordinates, coords)
       },
       immediate: true
     },

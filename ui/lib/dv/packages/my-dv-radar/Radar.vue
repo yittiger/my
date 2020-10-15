@@ -17,6 +17,10 @@
 </template>
 
 <script>
+  /**
+   * 雷达图
+   * @module $ui/dv/my-dv-radar
+   */
   import {MyChartRadar} from '$ui/charts'
   import Chart from '../../mixins/Chart'
   import {darken} from '../../utils/color'
@@ -30,6 +34,19 @@
       Loading,
       MyChartRadar
     },
+    /**
+     * 属性参数
+     * @member props
+     * @property {Array} [columns] 数据列
+     * @property {Array} [rows] 数据行
+     * @property {Function} [loader] 数据加载函数，必须返回Promise
+     * @property {Object} [settings] 图表的私有设置
+     * @property {Object|Function} [extend] 扩展图表参数选项
+     * @property {boolean} [debug] 开启打印调试信息
+     * @property {number|number[]} [indicator=100] 指示器最大值
+     * @property {boolean} [circle] 圆形状
+     * @property {string[]} [colors] 颜色
+     */
     props: {
       indicator: {
         type: [Array, Number],
@@ -37,6 +54,7 @@
           return 100
         }
       },
+      circle: Boolean,
       colors: Array
     },
     computed: {
@@ -49,6 +67,7 @@
         return Object.freeze(merge({
           color: this.colors,
           radar: {
+            shape: this.circle ? 'circle' : null,
             name: {
               textStyle: {
                 fontSize: 22,

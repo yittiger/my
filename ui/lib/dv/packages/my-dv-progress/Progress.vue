@@ -13,6 +13,10 @@
   </Box>
 </template>
 <script>
+  /**
+   * 进度
+   * @module $ui/dv/my-dv-progress
+   */
   import 'echarts/lib/chart/pie'
   import {MyChart} from '$ui/charts'
   import Chart from '../../mixins/Chart'
@@ -25,6 +29,19 @@
     components: {
       MyChart
     },
+    /**
+     * 属性参数
+     * @member props
+     * @property {Object|Function} [extend] 扩展图表参数选项
+     * @property {boolean} [debug] 开启打印调试信息
+     * @property {number} [radius=60] 半径
+     * @property {string} [title] 标题文本
+     * @property {number} [total=100] 总数
+     * @property {number} [value=0] 值
+     * @property {number} [fontSize] 字体大小
+     * @property {number} [precision=0] 保留几位小数
+     * @color {number|string} [color=0] 颜色索引或颜色码
+     */
     props: {
       radius: {
         type: Number,
@@ -122,7 +139,7 @@
           }, {
             text: this.title,
             x: 'center',
-            y: `${50 + radius / 2 + 2}%`,
+            y: `${50 + radius / 2 + 4}%`,
             textStyle: {
               fontSize
             }
@@ -141,7 +158,7 @@
               center: center,
               radius: [`${radius - 15}%`, `${radius}%`],
               hoverAnimation: false,
-              clockwise: true,
+              clockwise: false,
               avoidLabelOverlap: false,
               hoverOffset: 15,
               label: {

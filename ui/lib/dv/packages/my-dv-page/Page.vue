@@ -33,6 +33,7 @@
      * @property {Number} [activeIndex] 初始展示的场景索引，有MyDvScreen子组件才有效
      * @property {string|function} [target=body] 页面的参照目标元素，默认是body，支持css选择器，有一个特殊值parent取组件的父节点
      * @property {object} [config] 页面配置对象 {color, textColor, fill, colors} ，提供给子组件调用
+     * @property {boolean} [fit] 自动适应父容器尺寸，设置后 width height 的参数失效
      */
     props: {
       lock: {
@@ -66,7 +67,8 @@
         default() {
           return document.body
         }
-      }
+      },
+      fit: Boolean
     },
     data() {
       return {
@@ -93,11 +95,16 @@
     },
     computed: {
       styles() {
-        return {
-          width: `${this.width}px`,
-          height: `${this.height}px`,
-          transform: `scaleX(${this.widthScale}) scaleY(${this.heightScale})`
-        }
+        return this.fit
+          ? {
+            width: '100%',
+            height: '100%'
+          }
+          : {
+            width: `${this.width}px`,
+            height: `${this.height}px`,
+            transform: `scaleX(${this.widthScale}) scaleY(${this.heightScale})`
+          }
       }
     },
     methods: {
@@ -119,7 +126,7 @@
         return target || document.body
       },
       resize() {
-        if (!this.scale) {
+        if (!this.scale || this.fit) {
           this.widthScale = 1
           this.heightScale = 1
           return

@@ -13,7 +13,7 @@
 ```html
 <template>
    <div style="height:600px">
-     <my-dv-page target="parent" :lock="true" :width="1280" :height="800">
+     <my-dv-page target="parent" fit>
         <my-dv-border2 width="80%" height="80%" x-align="center" y-align="middle">
            <my-dv-pie fit :columns="columns" :rows="rows" rose></my-dv-pie>
         </my-dv-border2>
@@ -50,7 +50,7 @@ export default {
 ```html
 <template>
    <div style="height:600px">
-     <my-dv-page target="parent" :width="1024" :height="600" :lock="true">
+     <my-dv-page target="parent" fit>
         <my-dv-pie fit :columns="columns" :rows="rows"></my-dv-pie>
      </my-dv-page>
    </div>
@@ -80,7 +80,7 @@ export default {
 ```html
 <template>
    <div style="height:600px">
-     <my-dv-page target="parent" :width="1024" :height="600" :lock="true">
+     <my-dv-page target="parent" fit>
         <my-dv-pie x-align="left" y-align="middle" :columns="columns" :rows="rows" legend="h"></my-dv-pie>
         <my-dv-pie x-align="right" y-align="middle" :columns="columns" :rows="rows" legend="v"></my-dv-pie>
      </my-dv-page>
@@ -111,7 +111,7 @@ export default {
 ```html
 <template>
    <div style="height:600px">
-     <my-dv-page target="parent" :width="1024" :height="600" :lock="true">
+     <my-dv-page target="parent" fit>
         <my-dv-pie fit :columns="columns" :rows="rows" rose :colorful="false"></my-dv-pie>
      </my-dv-page>
    </div>
@@ -141,7 +141,7 @@ export default {
 ```html
 <template>
    <div style="height:600px">
-     <my-dv-page target="parent" :width="1024" :height="600" :lock="true">
+     <my-dv-page target="parent" fit>
         <my-dv-pie fit :columns="columns" :rows="rows" :limit="5"></my-dv-pie>
      </my-dv-page>
    </div>

@@ -12,7 +12,7 @@
 ```html
 <template>
  <div style="height:600px;">
-    <my-dv-page target="parent" :width="1024" :height="600" :lock="true">
+    <my-dv-page target="parent" fit>
         <my-dv-icon x-align="center"
                     y-align="middle" 
                     icon="el-icon-video-camera-solid"
@@ -28,7 +28,7 @@
 ```html
 <template>
  <div style="height:600px;">
-    <my-dv-page target="parent" :width="1024" :height="600" :lock="true">
+    <my-dv-page target="parent" fit>
         <my-dv-icon x-align="center"
                     y-align="middle" 
                     :icon="{name:'el-icon-video-camera-solid', theme:'primary'}"
@@ -47,7 +47,7 @@
 ```html
 <template>
  <div style="height:600px;">
-    <my-dv-page target="parent" :width="1024" :height="600" :lock="true">
+    <my-dv-page target="parent" fit>
         <my-dv-icon x-align="center"
                     y-align="middle" 
                     :icon="{name:'icon-balance', svg:true, theme:'warning'}"

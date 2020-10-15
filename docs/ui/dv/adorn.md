@@ -20,7 +20,7 @@
 ```html
 <template>
  <div style="height:600px;">
-    <my-dv-page target="parent" :width="1024" :height="800" :lock="false">
+    <my-dv-page target="parent" fit>
        <my-dv-adorn1 x-align="center"
                       y-align="middle"></my-dv-adorn1>
     </my-dv-page>
@@ -34,7 +34,7 @@
 ```html
 <template>
  <div style="height:600px;">
-    <my-dv-page target="parent" :width="1024" :height="800" :lock="false">
+    <my-dv-page target="parent" fit>
        <my-dv-adorn2 x-align="center"
                       y-align="middle"></my-dv-adorn2>
     </my-dv-page>
@@ -48,7 +48,7 @@
 ```html
 <template>
  <div style="height:600px;">
-    <my-dv-page target="parent" :width="1024" :height="800" :lock="false">
+    <my-dv-page target="parent" fit>
        <my-dv-adorn3 x-align="center"
                       y-align="middle"></my-dv-adorn3>
     </my-dv-page>
@@ -62,7 +62,7 @@
 ```html
 <template>
  <div style="height:600px;">
-    <my-dv-page target="parent" :width="1024" :height="800" :lock="false">
+    <my-dv-page target="parent" fit>
        <my-dv-adorn4 x-align="center"
                       y-align="middle"></my-dv-adorn4>
     </my-dv-page>
@@ -76,7 +76,7 @@
 ```html
 <template>
  <div style="height:600px;">
-    <my-dv-page target="parent" :width="1024" :height="800" :lock="false">
+    <my-dv-page target="parent" fit>
        <my-dv-adorn5 x-align="center"
                       y-align="middle"></my-dv-adorn5>
     </my-dv-page>
@@ -90,7 +90,7 @@
 ```html
 <template>
  <div style="height:600px;">
-    <my-dv-page target="parent" :width="1024" :height="800" :lock="false">
+    <my-dv-page target="parent" fit>
        <my-dv-adorn6 x-align="center"
                       y-align="middle"></my-dv-adorn6>
     </my-dv-page>
@@ -104,7 +104,7 @@
 ```html
 <template>
  <div style="height:600px;">
-    <my-dv-page target="parent" :width="1024" :height="600" :lock="true">
+    <my-dv-page target="parent" fit>
        <my-dv-adorn7 x-align="center"
                       y-align="middle">这里可以放文字</my-dv-adorn7>
     </my-dv-page>
@@ -118,7 +118,7 @@
 ```html
 <template>
  <div style="height:600px;">
-    <my-dv-page target="parent" :width="1024" :height="800" :lock="false">
+    <my-dv-page target="parent" fit>
        <my-dv-adorn8 x-align="center"
                       y-align="middle"></my-dv-adorn8>
     </my-dv-page>
@@ -133,7 +133,7 @@
 ```html
 <template>
  <div style="height:600px;">
-    <my-dv-page target="parent" :width="1024" :height="600" :lock="true">
+    <my-dv-page target="parent" fit>
        <my-dv-adorn9 x-align="center"
                       y-align="middle"></my-dv-adorn9>
     </my-dv-page>
@@ -147,7 +147,7 @@
 ```html
 <template>
  <div style="height:600px;">
-    <my-dv-page target="parent" :width="1024" :height="800" :lock="false">
+    <my-dv-page target="parent" fit>
        <my-dv-adorn10 x-align="center"
                       y-align="middle"></my-dv-adorn10>
     </my-dv-page>
@@ -162,7 +162,7 @@
 ```html
 <template>
  <div style="height:600px;">
-    <my-dv-page target="parent" :width="1024" :height="800" :lock="false">
+    <my-dv-page target="parent" fit>
        <my-dv-adorn11 x-align="center"
                       y-align="middle"></my-dv-adorn11>
     </my-dv-page>
@@ -176,7 +176,7 @@
 ```html
 <template>
  <div style="height:600px;">
-    <my-dv-page target="parent" :width="1024" :height="600" :lock="true">
+    <my-dv-page target="parent" fit>
        <my-dv-adorn12 x-align="center"
                       y-align="middle"></my-dv-adorn12>
     </my-dv-page>
@@ -190,7 +190,7 @@
 ```html
 <template>
  <div style="height:600px;">
-    <my-dv-page target="parent" :width="1024" :height="800" :lock="false">
+    <my-dv-page target="parent" fit>
        <my-dv-adorn13 x-align="center"
                       y-align="middle"></my-dv-adorn13>
     </my-dv-page>

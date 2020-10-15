@@ -167,7 +167,7 @@ export default function ({data, settings, map, coordinates}) {
     geo: settingsValue.geo ? {
       map: map
     } : undefined,
-    visualMap: createVisualMap(firstDataset, settingsValue),
+    visualMap: firstDataset ? createVisualMap(firstDataset, settingsValue) : null,
     series: series
   }
 }

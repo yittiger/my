@@ -8,7 +8,7 @@
 ```html
 <template>
   <div style="height:600px">
-     <my-dv-page target="parent">
+     <my-dv-page target="parent" fit>
        <my-dv-box width="400px" height="200px" left="100px" top="100px">
           <my-panel title="标题" fit>内容</my-panel>
        </my-dv-box> 
@@ -25,7 +25,7 @@
 ```html
 <template>
   <div style="height:600px">
-     <my-dv-page target="parent">
+     <my-dv-page target="parent" fit>
        <my-dv-box fit style="background: rgba(255,0,0,0.2)"></my-dv-box> 
     </my-dv-page>
   </div>
@@ -40,7 +40,7 @@
 ```html
 <template>
   <div style="height:600px">
-     <my-dv-page target="parent" :lock="false">
+     <my-dv-page target="parent" fit>
        <my-dv-box x-align="left" y-align="top">left top</my-dv-box> 
        <my-dv-box x-align="center" y-align="top">center top</my-dv-box>
        <my-dv-box x-align="right" y-align="top">right top</my-dv-box> 
@@ -56,8 +56,8 @@
 <style lang="scss" scoped>
 .my-dv-box {
    background: royalblue;
-   padding:50px;
-   font-size:30px;
+   padding:20px;
+   font-size:20px;
    text-align: center;
 }
 </style>
@@ -69,7 +69,7 @@
 ```html
 <template>
   <div style="height:600px">
-     <my-dv-page target="parent">
+     <my-dv-page target="parent" fit>
        <my-dv-box width="100px"
                   height="100px"
                   x-align="center"
@@ -89,14 +89,14 @@
 ```html
 <template>
   <div style="height:600px">
-     <my-dv-page target="parent">
-       <my-dv-box v-for="n in 30"
+     <my-dv-page target="parent" fit>
+       <my-dv-box v-for="n in 20"
                   :key="n"
                   :position="false"
                   inline
                   margin="20px"
-                  width="200px"
-                  height="200px"
+                  width="100px"
+                  height="100px"
                   style="background: rgba(255,0,0,0.2)">{{n}}</my-dv-box> 
     </my-dv-page>
   </div>
@@ -110,7 +110,7 @@
 ```html
 <template>
   <div style="height:600px">
-     <my-dv-page target="parent">
+     <my-dv-page target="parent" fit>
        <my-dv-box width="100px"
                   height="100px"
                   x-align="center"
@@ -130,7 +130,7 @@
 ```html
 <template>
   <div style="height:600px">
-     <my-dv-page target="parent">
+     <my-dv-page target="parent" fit>
        <my-dv-box width="100px"
                   height="100px"
                   x-align="center"

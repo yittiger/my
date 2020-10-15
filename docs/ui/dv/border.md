@@ -22,7 +22,7 @@
 ```html
 <template>
  <div style="height:600px;">
-    <my-dv-page target="parent" :width="1024" :height="800" :lock="false">
+    <my-dv-page target="parent" fit>
        <my-dv-border1 x-align="center"
                       y-align="middle"
                       width="80%"
@@ -39,7 +39,7 @@
 ```html
 <template>
  <div style="height:600px;">
-     <my-dv-page target="parent" :width="1024" :height="800" :lock="false">
+     <my-dv-page target="parent" fit>
        <my-dv-border2 x-align="center"
                       y-align="middle"
                       width="80%"
@@ -56,7 +56,7 @@
 ```html
 <template>
  <div style="height:600px;">
-     <my-dv-page target="parent" :width="1024" :height="800" :lock="false">
+     <my-dv-page target="parent" fit>
        <my-dv-border3 x-align="center"
                       y-align="middle"
                       width="80%"
@@ -73,7 +73,7 @@
 ```html
 <template>
  <div style="height:600px;">
-     <my-dv-page target="parent" :width="1024" :height="800" :lock="false">
+     <my-dv-page target="parent" fit>
        <my-dv-border4 x-align="center"
                       y-align="middle"
                       width="80%"
@@ -89,7 +89,7 @@
 ```html
 <template>
  <div style="height:600px;">
-     <my-dv-page target="parent" :width="1024" :height="800" :lock="false">
+     <my-dv-page target="parent" fit>
        <my-dv-border5 x-align="center"
                       y-align="middle"
                       width="80%"
@@ -105,7 +105,7 @@
 ```html
 <template>
  <div style="height:600px;">
-     <my-dv-page target="parent" :width="1024" :height="800" :lock="false">
+     <my-dv-page target="parent" fit>
        <my-dv-border6 x-align="center"
                       y-align="middle"
                       width="80%"
@@ -121,7 +121,7 @@
 ```html
 <template>
  <div style="height:600px;">
-     <my-dv-page target="parent" :width="1024" :height="800" :lock="false">
+     <my-dv-page target="parent" fit>
        <my-dv-border7 x-align="center"
                       y-align="middle"
                       width="80%"
@@ -137,7 +137,7 @@
 ```html
 <template>
  <div style="height:600px;">
-     <my-dv-page target="parent" :width="1024" :height="800" :lock="false">
+     <my-dv-page target="parent" fit>
        <my-dv-border8 x-align="center"
                       y-align="middle"
                       width="80%"
@@ -153,7 +153,7 @@
 ```html
 <template>
  <div style="height:600px;">
-     <my-dv-page target="parent" :width="1024" :height="800" :lock="false">
+     <my-dv-page target="parent" fit>
        <my-dv-border9 x-align="center"
                       y-align="middle"
                       width="80%"
@@ -169,7 +169,7 @@
 ```html
 <template>
  <div style="height:600px;">
-     <my-dv-page target="parent" :width="1024" :height="800" :lock="false">
+     <my-dv-page target="parent" fit>
        <my-dv-border10 x-align="center"
                       y-align="middle"
                       width="80%"
@@ -185,7 +185,7 @@
 ```html
 <template>
  <div style="height:600px;">
-     <my-dv-page target="parent" :width="1024" :height="800" :lock="false">
+     <my-dv-page target="parent" fit>
        <my-dv-border11 x-align="center"
                       y-align="middle"
                       width="80%"
@@ -201,7 +201,7 @@
 ```html
 <template>
  <div style="height:600px;">
-     <my-dv-page target="parent" :width="1024" :height="800" :lock="false">
+     <my-dv-page target="parent" fit>
        <my-dv-border12 x-align="center"
                       y-align="middle"
                       width="80%"

@@ -55,7 +55,8 @@
     Element: '/element/',
     '自研组件': '/ui/components/',
     '图表': '/ui/charts/',
-    '地图': '/ui/map/'
+    '地图': '/ui/map/',
+    '可视化大屏': '/ui/dv/'
   }
   export default {
     name: 'ComponentList',

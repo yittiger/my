@@ -225,7 +225,10 @@ module.exports = {
       pie: '饼图',
       ring: '圆环',
       rings: '多环图',
-      rank: '排名'
+      rank: '排名',
+      progress: '进度',
+      radar: '雷达',
+      geo: '地图'
     },
     '数据': {}
   }

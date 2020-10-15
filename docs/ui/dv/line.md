@@ -13,7 +13,7 @@
 ```html
 <template>
    <div style="height:600px">
-     <my-dv-page target="parent" :lock="false" :width="1280" :height="800">
+     <my-dv-page target="parent" fit>
         <my-dv-border2 width="80%" height="80%" x-align="center" y-align="middle">
           <my-dv-line fit
                       :columns="columns"
@@ -64,7 +64,7 @@
 ```html
 <template>
    <div style="height:600px">
-     <my-dv-page target="parent" :width="1024" :height="600" :lock="false">
+     <my-dv-page target="parent" fit>
         <my-dv-line fit :columns="columns" :rows="rows"></my-dv-line>
      </my-dv-page>
    </div>
@@ -102,7 +102,7 @@ export default {
 ```html
 <template>
    <div style="height:600px">
-     <my-dv-page target="parent" :width="1024" :height="600" :lock="false">
+     <my-dv-page target="parent" fit>
         <my-dv-line fit :columns="columns" :rows="rows" area rotate cross legend></my-dv-line>
      </my-dv-page>
    </div>
@@ -140,7 +140,7 @@ export default {
 ```html
 <template>
    <div style="height:600px">
-     <my-dv-page target="parent" :width="1024" :height="600" :lock="false">
+     <my-dv-page target="parent" fit>
         <my-dv-line fit :columns="columns" :rows="rows" legend></my-dv-line>
      </my-dv-page>
    </div>
@@ -178,7 +178,7 @@ export default {
 ```html
 <template>
    <div style="height:600px">
-     <my-dv-page target="parent" :width="1024" :height="600" :lock="false">
+     <my-dv-page target="parent" fit>
         <my-dv-line fit :columns="columns" :rows="rows" legend :settings="settings"></my-dv-line>
      </my-dv-page>
    </div>
@@ -218,7 +218,7 @@ export default {
 ```html
 <template>
    <div style="height:600px">
-     <my-dv-page target="parent" :width="1024" :height="600" :lock="false">
+     <my-dv-page target="parent" fit>
         <my-dv-line fit :columns="columns" :rows="rows" legend :settings="settings" :extend="extend"></my-dv-line>
      </my-dv-page>
    </div>

@@ -11,7 +11,7 @@
 ```html
 <template>
  <div style="height:600px">
-   <my-dv-page target="parent" :active-index="index">
+   <my-dv-page target="parent" fit :active-index="index">
      <my-dv-screen>场景 一</my-dv-screen>
      <my-dv-screen>场景 二</my-dv-screen>
      <my-dv-screen>场景 三</my-dv-screen>
@@ -44,7 +44,7 @@ export default {
 ```html
 <template>
  <div style="height:600px">
-   <my-dv-page target="parent">
+   <my-dv-page target="parent" fit>
      <my-dv-screen>场景 一</my-dv-screen>
      <my-dv-screen>场景 二</my-dv-screen>
      <my-dv-screen>场景 三</my-dv-screen>
@@ -60,7 +60,7 @@ export default {
 ```html
 <template>
  <div style="height:600px">
-   <my-dv-page target="parent">
+   <my-dv-page target="parent" fit>
      <my-dv-screen>场景 一</my-dv-screen>
      <my-dv-screen>场景 二</my-dv-screen>
      <my-dv-screen>场景 三</my-dv-screen>
@@ -76,7 +76,7 @@ export default {
 ```html
 <template>
  <div style="height:600px">
-   <my-dv-page target="parent">
+   <my-dv-page target="parent" fit>
      <my-dv-screen enter="zoomInLeft" leave="zoomOutRight">场景 一</my-dv-screen>
      <my-dv-screen enter="zoomInLeft" leave="zoomOutRight">场景 二</my-dv-screen>
      <my-dv-screen enter="zoomInLeft" leave="zoomOutRight">场景 三</my-dv-screen>

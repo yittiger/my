@@ -259,7 +259,10 @@ module.exports = {
       'pie',
       'ring',
       'rings',
-      'rank'
+      'rank',
+      'progress',
+      'radar',
+      'geo'
     ], false)
   ],
   '/ui/pages/': [

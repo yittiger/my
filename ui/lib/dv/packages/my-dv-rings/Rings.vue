@@ -172,7 +172,7 @@
             },
             axisLabel: {
               formatter: function (params) {
-                const [name,value] = rows[params];
+                const [name, value] = rows[params];
                 return `{font|●}{font|${name}: }${value}`
               },
               interval: 0,
