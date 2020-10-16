@@ -369,21 +369,22 @@
       dispose() {
         if (this.$el && this.$el.parentNode) {
           removeResizeListener(this.$el.parentNode, this.updateView)
-
-          if (!this.draggable && !this.resizable) {
-            removeResizeListener(this.$el, this.updateView)
-          }
           if (this.target) {
             this.$el.parentNode.removeChild(this.$el)
           }
-          this.setBodyHidden(false)
-          this.dialogWidth = null
-          this.dialogHeight = null
-          this.currentMinimized = this.minimized
-          this.currentMaximized = this.maximized
-          this.targetDOM = null
-          this.$emit('dispose')
         }
+        if (!this.draggable && !this.resizable) {
+          removeResizeListener(this.$el, this.updateView)
+        }
+
+        this.setBodyHidden(false)
+        this.dialogWidth = null
+        this.dialogHeight = null
+        this.currentMinimized = this.minimized
+        this.currentMaximized = this.maximized
+        this.targetDOM = null
+        this.$emit('dispose')
+
       },
       updateView() {
         if (!this.$el || !this.$refs.dialog) return
