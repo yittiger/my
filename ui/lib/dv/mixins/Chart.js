@@ -48,7 +48,7 @@ export default {
     load() {
       if (this.loader) {
         this.loading = true
-        this.loader().then(data => {
+        this.loader(this).then(data => {
           this.chartData = Object.freeze(data || {})
         }).finally(() => {
           this.loading = false

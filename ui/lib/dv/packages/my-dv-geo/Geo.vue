@@ -106,6 +106,11 @@
         }, extend))
       }
     },
+    watch: {
+      name() {
+        this.load()
+      }
+    },
     methods: {
       tooltipFormatter(res) {
         const {seriesName, name, value} = res

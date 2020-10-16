@@ -317,3 +317,102 @@ export default {
 
 ```
 :::
+
+## 下钻
+
+:::demo
+```html
+<template>
+<div style="height:600px">
+  <my-dv-page target="parent" fit>
+    <my-dv-geo fit
+               ref="geo"
+               :json="json"
+               :name="mapName"
+               :type="type"
+               :visual="null"
+               @click="handleClick"
+               :on-register="handleMapRegister"
+               :loader="loader"
+               debug></my-dv-geo>
+    <my-dv-box left="10%"
+               top="10%">
+      <my-breadcrumb :data="breadcrumb"
+                     theme="arrow"
+                     :active="activeIndex"
+                     @click="handleMenuClick"></my-breadcrumb>
+    </my-dv-box>
+  </my-dv-page>
+</div>
+</template>
+<script>
+  import geoArray from '$ui/charts/geo/index.json'
+
+
+  export default {
+    data() {
+      return {
+        breadcrumb: [
+          {label: '全国', geo: 'china.json'}
+        ],
+        mapName: 'china.json',
+        type: {
+          人口数量: 'effectScatter'
+        }
+      }
+    },
+    computed: {
+      activeIndex() {
+        return this.breadcrumb.length - 1
+      }
+    },
+    methods: {
+      json({map}) {
+        this.$refs.geo.loading = true
+        const [path, file] = map.split('/')
+        if (!file) return import('$ui/charts/geo/china.json')
+        return path === 'province'
+          ? import('$ui/charts/geo/province/' + file)
+          : import('$ui/charts/geo/city/' + file)
+      },
+      handleClick(params) {
+        const name = params.name.replace('市', '')
+        const geoItem = geoArray.find(item => item.name === name)
+        if (geoItem) {
+          this.mapName = geoItem.geo
+          this.breadcrumb.push({
+            label: params.name,
+            ...geoItem
+          })
+        }
+      },
+      handleMapRegister() {
+        this.$refs.geo.loading = false
+      },
+      handleMenuClick(item, index) {
+        this.breadcrumb.splice(index + 1)
+        this.mapName = item.geo
+      },
+      loader({name}) {
+        // 可以根据name重新请求加载数据
+        return Promise.resolve({
+          columns: ['省份', '人口数量'],
+          rows: [
+            ['广东', 225344],
+            ['广州市', 1323]
+          ]
+        })
+      }
+    }
+  }
+</script>
+<style lang="scss" scoped>
+  .my-dv-page {
+    background: #fff;
+    background: url("~$ui/assets/bg/02.png") no-repeat center center;
+  }
+</style>
+
+```
+:::
+
