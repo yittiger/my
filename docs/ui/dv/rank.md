@@ -38,6 +38,21 @@ export default {
               ['搜索引擎3', 180]
           ]
     }
+  },
+  methods: {
+     randomData() {
+      this.timer = setInterval(()=>{
+        this.rows = this.rows.map(n => {
+          return [n[0], Math.floor(Math.random() * 1000)]
+        })
+      }, 2000)
+     }
+  },
+  mounted() {
+     this.randomData()
+  },
+  beforeDestroy() {
+    clearInterval(this.timer)
   }
 }
 </script>
