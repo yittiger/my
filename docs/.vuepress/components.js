@@ -117,7 +117,8 @@ module.exports = {
       'back-top': '返回顶部',
       contextmenu: '右键菜单',
       anchor: '锚菜单',
-      'radial-menu': '圆形菜单'
+      'radial-menu': '圆形菜单',
+      'breadcrumb': '面包屑菜单'
     },
     '数据录入': {
       form: '表单',

@@ -118,7 +118,7 @@ function createSeries(map, dataset, standardColumns, {type, dataHelper, typeHelp
       geoIndex: chartType !== 'map' ? 0 : undefined,
       coordinateSystem: 'geo',
       z: 2 + dataIndex,
-      zlevel: 1 + dataIndex,
+      zlevel: dataIndex,
       data,
       ...props
     }

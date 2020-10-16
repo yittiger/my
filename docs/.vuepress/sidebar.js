@@ -133,7 +133,8 @@ module.exports = {
       'back-top',
       'contextmenu',
       'anchor',
-      'radial-menu'
+      'radial-menu',
+      'breadcrumb'
     ]),
     createMenus('数据录入', [
       'form',

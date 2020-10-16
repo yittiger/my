@@ -7,6 +7,7 @@
     <MyChartMap v-else
                 ref="chart"
                 v-on="$listeners"
+                :on-register="onRegister"
                 :debug="debug"
                 :theme="theme"
                 :extend="options"
@@ -47,6 +48,7 @@
    * @property {Object|Function} [dataHelper] 系列数据构造回调函数，参数：row, i, {type, name, index}
    * @property {Object} [visual] visualMap 配置
    * @property {Object|Array} [coords] 经纬度配置
+   * @property {Function} [onRegister] 地图注册完成回调
    */
   export default {
     name: 'MyDvGeo',
@@ -63,7 +65,8 @@
       typeHelper: [Object, Function],
       dataHelper: [Object, Function],
       visual: Object,
-      coords: [Object, Array]
+      coords: [Object, Array],
+      onRegister: Function
     },
     data() {
       return {}

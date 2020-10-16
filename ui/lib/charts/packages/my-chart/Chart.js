@@ -29,6 +29,8 @@ export default {
    * @property {object} [settings] 个性图表配置
    * @property {object} [data] 图表数据, {columns, rows, layout}
    * @property {Object|Array} [coords] 注册经纬度  如：{'广州': [120.3234, 33.4329]}, 或 [{label:'广州',value: [120.3234, 33.4329]}]
+   * @param {Object|Function} [register] geo地图JSON或函数，函数必须返回 Promies
+   * @param {Function} [onRegister] 地图注册完成时回调
    */
   props: {
     // 宽度
@@ -88,6 +90,9 @@ export default {
 
     // 地图geojson对象或构建函数，函数必须返回Promise
     register: [Object, Function],
+
+    // 地图注册成功回调
+    onRegister: Function,
 
     // 坐标集合 如：{'广州': [120.3234, 33.4329]}, 或 [{label:'广州',value: [120.3234, 33.4329]}]
     coords: {
@@ -223,11 +228,14 @@ export default {
         return register(this).then(geo => {
           echarts.registerMap(map, geo)
           this.recordCoords(geo)
+          this.onRegister && this.onRegister(map, geo)
+          this.$emit('register', map, geo)
           return geo
         })
       } else {
         echarts.registerMap(map, register)
         this.recordCoords(register)
+        this.onRegister && this.onRegister(map, register)
         return Promise.resolve()
       }
     }
