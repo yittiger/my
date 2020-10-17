@@ -115,8 +115,12 @@ export default {
         element: this.$el
       }
       this.overlay = new Overlay(opts)
-      this.myMap.map.addOverlay(this.overlay)
-      this.setPosition(this.position)
+      try {
+        this.myMap.map.addOverlay(this.overlay)
+        this.setPosition(this.position)
+      } catch (e) {
+      }
+
     },
     setPosition(position) {
       if (!this.overlay) return

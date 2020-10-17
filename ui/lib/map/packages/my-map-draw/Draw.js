@@ -2,7 +2,7 @@
  * Draw 绘画组件
  * @module $ui/map/my-map-draw
  */
-import {Vector as VectorLayer} from 'ol/layer'
+import VectorLayer from 'ol/layer/Vector'
 import {Vector as VectorSource} from 'ol/source'
 import {Draw, Snap, Modify} from 'ol/interaction'
 import GeoJSON from 'ol/format/GeoJSON'
