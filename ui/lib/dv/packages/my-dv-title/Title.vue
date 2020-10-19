@@ -11,6 +11,10 @@
 </template>
 
 <script>
+  /**
+   *  标题组件
+   *  @module $ui/dv/my-dv-title
+   */
   import Box from '../my-dv-box'
   import Icon from '../../mixins/Icon'
   import Text from '../../mixins/Text'
@@ -23,6 +27,14 @@
       Box,
       MyIcon
     },
+    /**
+     * 属性参数，继承 MyDvBox
+     * @member props
+     * @property {string|object} [icon] 图标
+     * @property {string} [type] 主题风格，可选值：'default', 'primary', 'normal', 'secondary', 'success'，'placeholder', 'warning', 'danger'
+     * @property {number} [level=1] 标题大小，可选 1 ~ 6
+     * @property {boolean} [shadow] 开启阴影
+     */
     props: {
       level: {
         type: Number,
@@ -36,7 +48,7 @@
     computed: {
       classes() {
         return {
-          'is-shadow': this.shadow,
+          'is-text-shadow': this.shadow,
           [`is-level-${this.level}`]: !!this.level,
           ...this.textTypeClass
         }
@@ -51,9 +63,6 @@
   @mixin level($value, $var) {
     @include when($value) {
       font-size: $var;
-      @include e(icon) {
-        margin-right: $var / 4;
-      }
     }
   }
 
@@ -67,8 +76,8 @@
     font-weight: 400;
     color: $--dv-font-color;
 
-    @include when(shadow) {
-      text-shadow: $-dv-shadow;
+    @include when(text-shadow) {
+      text-shadow: $--dv-shadow;
     }
     @include when(pointer) {
       cursor: pointer;

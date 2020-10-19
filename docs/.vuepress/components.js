@@ -231,6 +231,12 @@ module.exports = {
       radar: '雷达',
       geo: '地图'
     },
-    '数据': {}
+    '数据展示': {
+      title: '标题',
+      text: '文本',
+      number: '数字',
+      date: '日期时间',
+      timer: '计时器'
+    }
   }
 }

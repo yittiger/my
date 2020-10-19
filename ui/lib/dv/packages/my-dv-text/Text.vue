@@ -14,6 +14,10 @@
 </template>
 
 <script>
+  /**
+   * 文本组件
+   * @module $ui/dv/my-dv-text
+   */
   import Box from '../my-dv-box'
   import Text from '../../mixins/Text'
   import {MyParagraph} from '$ui'
@@ -25,6 +29,16 @@
       Box,
       MyParagraph
     },
+    /**
+     * 属性参数
+     * @member props
+     * @property {string} [type] 主题风格，可选值：'default', 'primary', 'normal', 'secondary', 'success'，'placeholder', 'warning', 'danger'
+     * @property {number} [level=1] 文字大小，可选 1 ~ 4
+     * @property {boolean} [ellipsis] 开启省略号
+     * @property {number} [rows] 超过几行出现省略号，ellipsis=true时有效
+     * @property {boolean} [underline] 下划线
+     * @property {boolean} [indent] 段落缩进
+     */
     props: {
       level: {
         type: Number,
@@ -74,6 +88,9 @@
     line-height: 1.3;
     .my-paragraph {
       margin-bottom: 0;
+    }
+    & + .my-dv-text {
+      margin-top: 12px;
     }
 
     @include when(pointer) {

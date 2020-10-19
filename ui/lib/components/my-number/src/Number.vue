@@ -1,10 +1,10 @@
 <template>
   <div :class="classes" v-on="$listeners">
-    <span v-if="prefix||$slots.prefix" :class="supClass"><slot name="prefix">{{prefix}}</slot></span>
+    <span v-if="prefix||$slots.prefix" class="my-number__prefix"><slot name="prefix">{{prefix}}</slot></span>
     <span class="my-number__value" ref="container">
       <slot :value="value" :displayValue="displayValue">{{displayValue}}</slot>
     </span>
-    <span v-if="suffix||$slots.suffix" :class="supClass"><slot name="suffix">{{suffix}}</slot></span>
+    <span v-if="suffix||$slots.suffix" class="my-number__suffix"><slot name="suffix">{{suffix}}</slot></span>
     <span v-if="trend||$slots.trend"
           class="my-number__trend"
           :class="trendClasses">
@@ -149,7 +149,7 @@
       },
       supClass() {
         return {
-          'my-number__sup': this.sup
+          'my-number__sup': !!this.sup
         }
       },
       countUpOptions() {

@@ -264,6 +264,13 @@ module.exports = {
       'progress',
       'radar',
       'geo'
+    ], false),
+    createMenus('数据展示', [
+      'title',
+      'text',
+      'number',
+      'date',
+      'timer'
     ], false)
   ],
   '/ui/pages/': [
