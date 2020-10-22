@@ -133,6 +133,7 @@
         // 内容必须要撑开高度宽度
         this.contentHeight = rect.height
         this.contentWidth = rect.width
+        this.$emit('resize', rect, this)
       },
       /**
        * 开始滚动
@@ -231,7 +232,8 @@
         })
       },
       resume() {
-        const match = (Math.floor(this.scrollPosition) % this.scrollLength) === 0
+        const value = Math.floor(this.scrollPosition) % this.scrollLength
+        const match = value === 0
         if (match) {
           this.resumeId && clearTimeout(this.resumeId)
           this.resumeId = setTimeout(this.start, this.waitTime)
@@ -240,6 +242,7 @@
 
       },
       handleMouseEnter() {
+        this.stop()
         this.isPause = true
       },
       handleMouseLeave() {

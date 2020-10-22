@@ -1,5 +1,5 @@
 <template>
-  <Box class="my-dv-list" :class="classes" v-bind="$attrs">
+  <Box class="my-dv-list" :class="classes" :default-height="contentHeight" v-bind="$attrs">
     <table v-if="header"
            ref="header"
            class="my-dv-list__header"
@@ -21,6 +21,7 @@
                ref="marquee"
                :data="rows"
                :style="bodyStyle"
+               @resize="marqueeResize"
                v-bind="scrollProps">
       <table class="my-dv-list__body"
              cellspacing="0"
@@ -28,7 +29,7 @@
         <ListColGroup :columns="tableColumns" :default-width="cellWidth"></ListColGroup>
         <tr v-for="(row, rowIndex) in rows" :key="`row_${rowIndex}`">
           <td v-for="(item, itemIndex) in getRow(row)" :key="`item_${itemIndex}`">
-            <slot :name="tableColumns[itemIndex].prop" :row="row" :item="item" :index="itemIndex" :rowIndex="rowIndex">
+            <slot :name="getSlotName(itemIndex)" :row="row" :item="item" :index="itemIndex" :rowIndex="rowIndex">
               {{item}}
             </slot>
           </td>
@@ -39,6 +40,10 @@
 </template>
 
 <script>
+  /**
+   * 列表
+   * @module: $ui/dv/my-dv-list
+   */
   import Box from '../my-dv-box'
   import ListColGroup from './ColGroup'
   import {MyMarquee} from '$ui'
@@ -50,6 +55,19 @@
       ListColGroup,
       MyMarquee
     },
+    /**
+     * 属性参数
+     * @member props
+     * @property {String[]|Object[]} [columns] 数据列
+     * @property {string} [columns.label] 列头文本
+     * @property {string} [columns.prop] 列名称，如果行是对象格式，必须要设置
+     * @property {number} [columns.width] 列宽度
+     * @property {Array} [rows] 数据行
+     * @property {boolean} [header=true] 显示列头
+     * @property {boolean} [border] 显示边框
+     * @property {boolean} [radius] 显示圆角
+     * @property {Boolean|Object} [scroll] 滚动配置
+     */
     props: {
       // [{label, prop, width}]
       columns: {
@@ -75,7 +93,8 @@
     data() {
       return {
         headerHeight: 0,
-        headerWidth: 0
+        headerWidth: 0,
+        contentHeight: 'auto'
       }
     },
     computed: {
@@ -88,7 +107,8 @@
         return {
           'is-border': this.border,
           'is-radius': this.radius,
-          'is-no-header': !this.header
+          'is-no-header': !this.header,
+          'is-odd': this.rows.length % 2 === 0
         }
       },
       bodyStyle() {
@@ -128,15 +148,27 @@
         }
         return this.tableColumns.map(col => row[col.prop])
       },
+      getSlotName(itemIndex) {
+        const col = this.tableColumns[itemIndex]
+        return col?.prop
+      },
       updateHeaderHeight() {
         const rect = this.$refs?.header?.getBoundingClientRect()
         this.headerHeight = rect ? rect.height : 0
         this.headerWidth = rect ? rect.width : 0
         this.$nextTick(this.$refs.marquee.renderCopyHtml)
+      },
+      marqueeResize({height}) {
+        if (this.$attrs.height) {
+          this.contentHeight = this.$attrs.height
+        } else {
+          this.contentHeight = height ? `${height}px` : 'auto'
+        }
       }
     },
     mounted() {
       this.updateHeaderHeight()
+      this.marqueeResize({})
     }
   }
 </script>
@@ -175,7 +207,6 @@
       tr:hover {
         background: $--dv-color-table-hover;
       }
-
     }
 
     @include when(border) {
@@ -196,6 +227,18 @@
       @include when(no-header) {
         @include e(body-wrapper) {
           border-radius: 4px 4px 4px 4px;
+        }
+      }
+    }
+
+    @include when(odd) {
+      .my-marquee__copy-content {
+        tr:nth-child(odd) {
+          background: transparent;
+        }
+
+        tr:nth-child(even) {
+          background: $--dv-color-table-stripe;
         }
       }
     }
