@@ -23,7 +23,7 @@
                :style="bodyStyle"
                @resize="marqueeResize"
                v-bind="scrollProps">
-      <table class="my-dv-list__body"
+      <table v-if="rows.length" class="my-dv-list__body"
              cellspacing="0"
              cellpadding="0">
         <ListColGroup :columns="tableColumns" :default-width="cellWidth"></ListColGroup>
@@ -35,7 +35,11 @@
           </td>
         </tr>
       </table>
+      <div v-else class="my-dv-list__empty">
+        <slot name="empty">暂无数据</slot>
+      </div>
     </MyMarquee>
+
   </Box>
 </template>
 
@@ -156,7 +160,9 @@
         const rect = this.$refs?.header?.getBoundingClientRect()
         this.headerHeight = rect ? rect.height : 0
         this.headerWidth = rect ? rect.width : 0
-        this.$nextTick(this.$refs.marquee.renderCopyHtml)
+        if (this.$refs.marquee) {
+          this.$nextTick(this.$refs.marquee.renderCopyHtml)
+        }
       },
       marqueeResize({height}) {
         if (this.$attrs.height) {
@@ -198,6 +204,7 @@
 
     @include e(body-wrapper) {
       background: $--dv-color-background;
+      color: $--dv-text-normal;
     }
 
     @include e(body) {
@@ -207,6 +214,12 @@
       tr:hover {
         background: $--dv-color-table-hover;
       }
+    }
+
+    @include e(empty) {
+      padding: 20px;
+      text-align: center;
+      color: $--dv-text-secondary;
     }
 
     @include when(border) {

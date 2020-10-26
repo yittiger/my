@@ -236,7 +236,8 @@ module.exports = {
       text: '文本',
       number: '数字',
       date: '日期时间',
-      timer: '计时器'
+      timer: '计时器',
+      list: '列表'
     }
   }
 }

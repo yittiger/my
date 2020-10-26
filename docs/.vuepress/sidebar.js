@@ -270,7 +270,8 @@ module.exports = {
       'text',
       'number',
       'date',
-      'timer'
+      'timer',
+      'list'
     ], false)
   ],
   '/ui/pages/': [
