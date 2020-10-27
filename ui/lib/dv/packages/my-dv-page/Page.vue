@@ -1,5 +1,9 @@
 <template>
   <div class="my-dv-page" :style="styles">
+    <div v-if="fullscreen" class="my-dv-page__fullscreen">
+      <i v-if="isFullScreen" class="el-icon-switch-button" title="取消全屏" @click="exitFullScreen"></i>
+      <i v-else class="el-icon-full-screen" title="全屏" @click="fullScreen"></i>
+    </div>
     <slot></slot>
   </div>
 </template>
@@ -13,6 +17,7 @@
   import {addClass, removeClass} from 'element-ui/lib/utils/dom'
   import {debounce} from '$ui/utils/util';
   import Config from '../../mixins/Config'
+  import {fullScreen, exitFullScreen, isFullScreen} from '$ui/utils/bom'
 
   const WRAPPER_CLASS_NAME = 'my-dv-page__wrapper'
   export default {
@@ -34,6 +39,7 @@
      * @property {string|function} [target=body] 页面的参照目标元素，默认是body，支持css选择器，有一个特殊值parent取组件的父节点
      * @property {object} [config] 页面配置对象 {color, textColor, fill, colors} ，提供给子组件调用
      * @property {boolean} [fit] 自动适应父容器尺寸，设置后 width height 的参数失效
+     * @property {boolean} [fullscreen] 显示全屏切换按钮
      */
     props: {
       lock: {
@@ -68,14 +74,16 @@
           return document.body
         }
       },
-      fit: Boolean
+      fit: Boolean,
+      fullscreen: Boolean
     },
     data() {
       return {
         screens: [],
         screenActiveIndex: this.activeIndex,
         widthScale: 1,
-        heightScale: 1
+        heightScale: 1,
+        isFullScreen: false
       }
     },
     watch: {
@@ -140,6 +148,15 @@
           this.heightScale = clientHeight / this.height
         }
 
+      },
+      fullScreen() {
+        const el = this.getTarget()
+        fullScreen(el)
+        this.isFullScreen = true
+      },
+      exitFullScreen() {
+        exitFullScreen()
+        this.isFullScreen = false
       }
     },
     mounted() {
@@ -148,6 +165,7 @@
       this.proxyResize = debounce(this.resize, 100)
       addResizeListener(this.warpper, this.proxyResize)
       this.resize()
+      this.isFullScreen = this.fullscreen ? isFullScreen() : false
     },
     beforeDestroy() {
       this.proxyResize && removeResizeListener(this.warpper, this.proxyResize)
@@ -180,6 +198,21 @@
 
       .my-master-app {
         overflow: hidden;
+      }
+    }
+
+    @include e(fullscreen) {
+      position: absolute;
+      top: 5px;
+      right: 6px;
+      background: $--dv-text-placeholder;
+      padding: 1px 4px;
+      border-radius: 3px;
+      color: $--dv-text-secondary;
+      opacity: 0.4;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.8;
       }
     }
   }

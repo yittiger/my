@@ -257,11 +257,13 @@ module.exports = {
     createMenus('图表组件', [
       'line',
       'bar',
+      'pictorial',
       'pie',
       'ring',
       'rings',
       'rank',
       'progress',
+      'fill',
       'radar',
       'geo'
     ], false),

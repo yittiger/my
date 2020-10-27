@@ -223,11 +223,13 @@ module.exports = {
     '图表': {
       line: '折线图',
       bar: '柱状图',
+      pictorial: '象形柱状图',
       pie: '饼图',
       ring: '圆环',
       rings: '多环图',
       rank: '排名',
       progress: '进度',
+      fill:'水位图',
       radar: '雷达',
       geo: '地图'
     },
