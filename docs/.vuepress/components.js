@@ -229,9 +229,10 @@ module.exports = {
       rings: '多环图',
       rank: '排名',
       progress: '进度',
-      fill:'水位图',
+      fill: '水位图',
       radar: '雷达',
-      geo: '地图'
+      geo: '地图',
+      tags: '标签云'
     },
     '数据展示': {
       title: '标题',

@@ -265,7 +265,8 @@ module.exports = {
       'progress',
       'fill',
       'radar',
-      'geo'
+      'geo',
+      'tags'
     ], false),
     createMenus('数据展示', [
       'title',

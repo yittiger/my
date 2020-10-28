@@ -1,10 +1,10 @@
 <template>
   <div class="my-dv-page" :style="styles">
+    <slot></slot>
     <div v-if="fullscreen" class="my-dv-page__fullscreen">
       <i v-if="isFullScreen" class="el-icon-switch-button" title="取消全屏" @click="exitFullScreen"></i>
       <i v-else class="el-icon-full-screen" title="全屏" @click="fullScreen"></i>
     </div>
-    <slot></slot>
   </div>
 </template>
 
@@ -203,6 +203,7 @@
 
     @include e(fullscreen) {
       position: absolute;
+      z-index: 9999;
       top: 5px;
       right: 6px;
       background: $--dv-text-placeholder;
