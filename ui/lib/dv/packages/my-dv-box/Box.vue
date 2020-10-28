@@ -29,7 +29,7 @@
      * @property {string} [contentAlign=left] 内容对齐方式，可选值：'left', 'right', 'center'
      * @property {number} [zoom] 缩放，如何设置了xAlign或yAlign， scale的方式将失效，此时可以zoom实现缩放
      * @property {number} [scale] 缩放，与zoom功能一样
-     * @property {boolean} [fit] 由父级适应宽高和位置，设置了 fit， width、height 、top、left 将失效
+     * @property {boolean} [fit] 由父级适应宽高和位置，设置了 fit， width、height 将失效
      * @property {boolean} [visible=true] 是否可见
      * @property {boolean} [position=true] 开启定位，如果为false， left、top 参数失效
      * @property {string} [margin] 外边距
@@ -109,8 +109,8 @@
           width: fit ? '100%' : width || defaultWidth,
           height: fit ? '100%' : height || defaultHeight,
           zoom,
-          left: xAlign ? null : (fit ? 0 : left),
-          top: yAlign ? null : (fit ? 0 : top),
+          left: xAlign ? null : left,
+          top: yAlign ? null : top,
           transform: scale ? `scale(${scale})` : null,
           display: inline ? 'inline-block' : 'block',
           opacity: this.opacity,

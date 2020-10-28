@@ -7,9 +7,11 @@
        v-bind="$attrs"
        v-on="$listeners">
     <svg :width="`${width}px`" :height="`${height}px`">
-      <path :d="path" fill="transparent" stroke-width="2" :stroke="dark"></path>
+      <path :d="path" fill="transparent" stroke-width="1" :stroke="dark"></path>
+      <circle cx="16" :cy="`${height/2}`" r="4" :fill="light"></circle>
+      <circle cx="16" :cy="`${height/2}`" r="7" fill="transparent" stroke-width="2" :stroke="light"></circle>
     </svg>
-    <div class="my-dv-adorn-13__content" :style="{lineHeight:`${height}px`}">
+    <div class="my-dv-adorn-13__content" :style="{lineHeight:`${height}px`,color:light}">
       <slot></slot>
     </div>
   </Box>
@@ -26,7 +28,7 @@
       path() {
         const {width, height} = this
         const r = height / 2
-        return `M0 0 L${width - 1 - r} 0 A ${r} ${r} 0 0 1 ${width - 1 - r} ${height} L0 ${height}`
+        return `M0 1 L${width - r} 1 A ${r} ${r} 0 0 1 ${width - r} ${height - 1} L0 ${height - 1}`
       }
     }
   }
@@ -45,7 +47,12 @@
       position: absolute;
       left: 0;
       top: 0;
-      padding: 0 10px;
+      width: 100%;
+      height: 100%;
+      padding-left: 30px;
+      font-size: 18px;
+      font-weight: 600;
+      margin-top: -2px;
       .my-dv-box {
         position: static !important;
       }
