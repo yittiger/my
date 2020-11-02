@@ -114,7 +114,9 @@
       handleContextMenu(e) {
         if (this.disabled) return
         e.preventDefault()
-        this.show({x: e.pageX, y: e.pageY})
+        if(!this.manual) {
+          this.show({x: e.pageX, y: e.pageY})
+        }
         return false
       },
       getPlacement(rect, x, y) {
@@ -144,17 +146,13 @@
     },
     mounted() {
       this.triggerTarget = this.getTarget()
-      if (!this.manual) {
-        on(this.triggerTarget, 'contextmenu', this.handleContextMenu)
-      }
+      on(this.triggerTarget, 'contextmenu', this.handleContextMenu)
       on(document.body, 'click', this.hide)
       document.body.appendChild(this.$el)
 
     },
     beforeDestroy() {
-      if (!this.manual) {
-        off(this.triggerTarget, 'contextmenu', this.handleContextMenu)
-      }
+      off(this.triggerTarget, 'contextmenu', this.handleContextMenu)
       off(document.body, 'click', this.hide)
       if (this.$el && this.$el.parentNode) {
         this.$el.parentNode.removeChild(this.$el)
