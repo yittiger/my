@@ -189,6 +189,7 @@ export function nodeTemplate(options = {}, t) {
     name: go.Node,
     props: {
       name: 'node',
+      locationSpot: go.Spot.Center,
       zOrder: 2,
       type: go.Panel.Spot,
       minSize: new go.Size(20, 20),
@@ -196,11 +197,17 @@ export function nodeTemplate(options = {}, t) {
       selectionAdorned: true,
       // selectionAdornmentTemplate: createNodeAdornment(t, $events),
       opacity: t.opacity,
+      $gray: { 
+        opacity: t.grayOpacity
+      },
       $hover: {
         opacity: t.hoverOpacity
       },
       $disabled: {
         opacity: t.disabledOpacity
+      },
+      $selected: {
+        opacity: t.selectedOpacity
       },
       $events,
       $bindings,

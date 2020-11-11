@@ -25,6 +25,12 @@ export function linkTemplate(options = {}, t) {
       $disabled: {
         opacity: t.disabledOpacity
       },
+      $gray: {
+        opacity: t.grayOpacity
+      },
+      $selected: {
+        opacity: t.selectedOpacity
+      },
       $events,
       $bindings,
       ...(props || {})

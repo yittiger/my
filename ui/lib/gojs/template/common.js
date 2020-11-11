@@ -15,6 +15,21 @@ export function base({name, props, children} = {}) {
   props.$events = {
     ...$events,
     mouseEnter: (e, obj) => {
+      const model = obj.diagram.model
+      const highlightMode = model.modelData.myGoHighlightMode
+      model.set(model.modelData, 'myGoIsHighlighting', true)
+      if(highlightMode === 'adjoin') {
+        if(obj.part instanceof go.Node) {
+          const connectedNodes = obj.part.findNodesConnected()
+          const connectedLinks = obj.part.findLinksConnected()
+          connectedNodes.each(N => {
+            N.isHighlighted = true
+          })
+          connectedLinks.each(L => {
+            L.isHighlighted = true
+          })
+        }
+      }
       obj.part.isHighlighted = true
       if (obj instanceof go.Group) {
         const parts = obj.findSubGraphParts()
@@ -27,6 +42,21 @@ export function base({name, props, children} = {}) {
       mouseEnter && mouseEnter(e, obj)
     },
     mouseLeave: (e, obj) => {
+      const model = obj.diagram.model
+      const highlightMode = model.modelData.myGoHighlightMode
+      model.set(model.modelData, 'myGoIsHighlighting', false)
+      if(highlightMode === 'adjoin') {
+        if(obj.part instanceof go.Node) {
+          const connectedNodes = obj.part.findNodesConnected()
+          const connectedLinks = obj.part.findLinksConnected()
+          connectedNodes.each(N => {
+            N.isHighlighted = false
+          })
+          connectedLinks.each(L => {
+            L.isHighlighted = false
+          })
+        }
+      }
       obj.part.isHighlighted = false
       if (obj instanceof go.Group) {
         const parts = obj.findSubGraphParts()

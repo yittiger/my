@@ -19,7 +19,7 @@
   import {Divider} from 'element-ui'
   import ToolbarItem from './ToolbarItem'
   import tools from '../utils/tools'
-  // import go from '../utils/lib'
+  import { getShortestPath, getChain, toList } from '../utils/lib'
 
   const defaultItems = [
     'json',
@@ -40,7 +40,9 @@
     'invert',
     '|',
     'zoomIn',
-    'zoomOut'
+    'zoomOut',
+    '|',
+    'shortestPath'
   ]
 
   export default {
@@ -112,6 +114,9 @@
           case 'export':
             this.exportFile(name)
             break
+          case 'shortestPath':
+            this.findShortestPath(vm)
+            break
         }
         this.$emit('click', vm)
       },
@@ -146,6 +151,22 @@
           case 'excel':
             break
         }
+      },
+      findShortestPath({options}) {
+         const diagram = this.myDiagram.diagram
+         const selection = toList(diagram.selection)
+         const minPath = getShortestPath(diagram, selection[0].key, selection[1].key)
+         const { chain } = getChain(diagram, minPath)
+         const model = diagram.model
+        model.set(model.modelData, 'myGoIsHighlighting', true)
+         switch(options.resultMode) {
+           case 'highlight': 
+           diagram.highlightCollection(chain);
+           break;
+           case 'select': 
+           diagram.selectCollection(chain); 
+           break;
+         }
       }
     },
     created() {

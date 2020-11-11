@@ -14,6 +14,7 @@ import view from '$ui/icons/go-view'
 import visible from '$ui/icons/go-visible'
 import zoomIn from '$ui/icons/go-zoom-in'
 import zoomOut from '$ui/icons/go-zoom-out'
+import shortestPath from '$ui/icons/orbit'
 
 // import connect from '$ui/icons/go-connect'
 // import unlock from '$ui/icons/go-unlock'
@@ -152,5 +153,15 @@ export default {
     icon: {name: 'icon-go-visible', svg: true},
     svg: visible,
     options: {}
+  },
+  shortestPath: {
+    name: 'shortestPath',
+    type: 'shortestPath',
+    tooltip: '最短路径',
+    icon: {name: 'icon-orbit', svg: true},
+    svg: shortestPath,
+    options: {
+      resultMode: 'select' // highlight or select
+    }
   }
 }

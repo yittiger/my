@@ -48,7 +48,9 @@ export const normal = {
   textColor: '#ffffff',
   strokeWidth: 2,
   opacity: 1,
-  hoverOpacity: 0.6,
+  hoverOpacity: 1,
+  grayOpacity: 0.25,
+  selectedOpacity: 1,
   // 边框厚度
   disabledOpacity: 0.1,
   // 默认图标

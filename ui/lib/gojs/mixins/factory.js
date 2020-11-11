@@ -18,7 +18,17 @@ export default function (ClassName, defaultOptions, ref) {
         }
       },
       // modelData
-      data: Object,
+      data: {
+        type: Object,
+        default() {
+          return {}
+        }
+      },
+      // highlightMode 高亮模式， 单节点(single)或包含临接节点(adjoin)
+      highlightMode: {
+        type: String,
+        default: 'single'
+      },
       onModelChange: Function,
       onReady: Function,
       delay: {
@@ -33,7 +43,7 @@ export default function (ClassName, defaultOptions, ref) {
     },
     watch: {
       nodes(val) {
-        this.loadNode(val)
+        this.loadNodes(val)
       },
       links(val) {
         this.loadLinks(val)
@@ -64,6 +74,17 @@ export default function (ClassName, defaultOptions, ref) {
           this.$emit('_ready', diagram)
           this.loading = false
         })
+        diagram.addDiagramListener('SelectionDeleting', function(e) {
+          e.subject.each(function(part) {
+            if (!(part instanceof go.Node)) return; 
+            const animation = new go.Animation();
+            const deletePart = part.copy();
+            animation.add(deletePart, 'scale', deletePart.scale, 0.01);
+            animation.add(deletePart, 'angle', deletePart.angle, 360);
+            animation.addTemporaryPart(deletePart, diagram);
+            animation.start();
+          });
+        });
         this.bind(diagram)
         this.diagram = diagram
       },
@@ -82,6 +103,21 @@ export default function (ClassName, defaultOptions, ref) {
           if (e.isTransactionFinished) {
             const data = e.model.toIncrementalData(e);
             if (data !== null) {
+              if(data.insertedNodeKeys && data.insertedNodeKeys.length !== 0) {
+                const animation = new go.Animation()
+                animation.duration = 1000
+                animation.easing = go.Animation.EaseInQuad;
+                 data.insertedNodeKeys.forEach(key => {
+                   const node = diagram.findNodeForKey(key)
+                   animation.add(node, 'opacity', 0, node.opacity);
+                  //  animation.add(node, 'scale', 0.01, node.scale);
+                 })
+                 data.modifiedLinkData && data.modifiedLinkData.forEach(l => {
+                   const link = diagram.findLinkForKey(l.key)
+                   animation.add(link.elt(0), 'opacity', 0, link.elt(0).opacity)
+                  })
+                animation.start()
+              }
               this.onModelChange && this.onModelChange(data, e)
             }
           }
@@ -113,7 +149,15 @@ export default function (ClassName, defaultOptions, ref) {
         const model = this.diagram?.model
         if (!model) return
         if (data) {
-          model.assignAllDataProperties(model.modelData, this.data)
+          const myModelData = {
+            myGoHighlightMode: this.highlightMode,
+            myGoIsHighlighting: false,
+            ...this.data
+          }
+          if(ClassName === go.Palette) {
+            myModelData.myGoHighlightDisabled = true
+          }
+          model.assignAllDataProperties(model.modelData, myModelData)
         }
       },
       load() {
