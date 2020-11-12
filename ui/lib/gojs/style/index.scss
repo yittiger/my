@@ -125,7 +125,7 @@
       margin-top: 9px;
     }
 
-    &:hover {
+    &:hover, &.is-active {
       background: $blue-10;
       border: 1px solid $blue-9;
       color: $blue-5
@@ -144,7 +144,7 @@
 
     @include e(item) {
       color: $neutral-white-3;
-      &:hover {
+      &:hover, &.is-active {
         background: $blue-5;
         border: 1px solid $blue-6;
         color: $blue-10

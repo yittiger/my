@@ -6,6 +6,12 @@ const go = process.env.NODE_ENV === 'production'
 
 const $ = go.GraphObject.make
 
+// 对segmentFraction 设置自定义动画
+go.AnimationManager.defineAnimationEffect('fraction',
+function(obj, startValue, endValue, easing, currentTime, duration, animation) {
+  obj.segmentFraction = easing(currentTime, startValue, endValue - startValue, duration);
+});
+
 go.Shape.defineFigureGenerator('Terminator', function (shape, w, h) {
   console.log(w, h)
   const geo = new go.Geometry();
@@ -27,7 +33,6 @@ export function toList(collection) {
   }
   return items
 }
-
 
 export default go
 export {
@@ -63,12 +68,10 @@ export function findRouteProxy(diag) {
       finding[found.start] = [found.start]
     }
     const starts = []
-    console.log('startNodes', startNodes);
     startNodes.forEach(n1 => {
       const node1 = diag.findNodeForKey(n1)
       const cNodes = node1.findNodesConnected()
       cNodes.each(N => {
-        console.log('N.key', N.key);
         // 如果finding[N.key]不为空，则说明这个节点之前已经找过，不再二次查找
         if(!finding[N.key] && found.start !== N.key) {
           if(N.key === endNode) {
@@ -106,4 +109,67 @@ export function getChain(diag, path) {
     chain.push(node2)
   }
   return { nodes, links, chain }
+}
+
+ // 多条link线上加动画
+ export function linksTrack(links, diagram, animation) {
+  let _links = []
+  if (links.toString && links.toString() === 'SetIterator') {
+    _links = toList(links)
+  } else {
+    _links = links
+  }
+   diagram.startTransaction('addLinkTrackPoint')
+    animation.duration = 3000
+    animation.runCount = Infinity
+  _links.forEach(L => {
+    L.add($(go.Shape, 'Circle', {
+      name: 'trackPoint',
+      fill: 'red',
+      strokeWidth: 0,
+      width: 20,
+      height: 20,
+      segmentIndex: 0
+    }))
+    animation.add(L.findObject('trackPoint'),
+     'fraction', 0, 1)
+     let fromColor = '#ed7d31', toColor = '#ed7d31', fromObj = null, toObj = null
+     fromObj = L.fromNode.findObject('shape') || L.fromNode.findObject('icon')
+     if(fromObj) {
+       fromColor = fromObj.fill
+     }
+     toObj = L.toNode.findObject('shape') || L.toNode.findObject('icon')
+     if(toObj) {
+       toColor = toObj.fill
+     }
+    animation.add(L.findObject('trackPoint'), 
+    'fill', 
+    fromColor, 
+    toColor)
+  })
+  animation.start()
+  diagram.commitTransaction('addLinkTrackPoint')
+}
+// 单条link线上动画
+export function linkTrack(link, diagram, animation) {
+  diagram.startTransaction('addLinkTrackPoint')
+  animation.duration = 3000
+  animation.runCount = Infinity
+  link.add($(go.Shape, 'Circle', {
+    name: 'trackPoint',
+    fill: 'red',
+    strokeWidth: 0,
+    width: 20,
+    height: 20,
+    segmentIndex: 0
+  }))
+  
+  animation.add(link.findObject('trackPoint'),
+    'fraction', 0, 1)
+  animation.add(link.findObject('trackPoint'), 
+  'fill', 
+  link.fromNode.findObject('shape').fill, 
+  link.toNode.findObject('shape').fill)
+  diagram.commitTransaction('addLinkTrackPoint')
+  animation.start()
 }

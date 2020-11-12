@@ -15,6 +15,7 @@ import visible from '$ui/icons/go-visible'
 import zoomIn from '$ui/icons/go-zoom-in'
 import zoomOut from '$ui/icons/go-zoom-out'
 import shortestPath from '$ui/icons/orbit'
+import search from '$ui/icons/search'
 
 // import connect from '$ui/icons/go-connect'
 // import unlock from '$ui/icons/go-unlock'
@@ -162,6 +163,15 @@ export default {
     svg: shortestPath,
     options: {
       resultMode: 'select' // highlight or select
+    }
+  },
+  search: {
+    name: 'search',
+    type: 'search',
+    tooltip: '查找节点',
+    icon: {name: 'icon-search', svg: true},
+    svg: search,
+    options: {
     }
   }
 }

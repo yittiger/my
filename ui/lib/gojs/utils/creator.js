@@ -99,7 +99,7 @@ function createGrayBindings({$normal, $gray, $hover, $selected, $disabled}) {
       if (isSelected && selectedValue !== undefined) {
         return selectedValue
       }
-      if(modelData.myGoHighlightDisabled) {
+      if(modelData.myGoHighlightMode === 'none') {
         return $normal[name]
       } else {
         return modelData.myGoIsHighlighting ? $gray[name] : $normal[name]

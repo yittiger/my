@@ -19,7 +19,7 @@
   import {Divider} from 'element-ui'
   import ToolbarItem from './ToolbarItem'
   import tools from '../utils/tools'
-  import { getShortestPath, getChain, toList } from '../utils/lib'
+  import { getShortestPath, getChain, toList, linksTrack, go } from '../utils/lib'
 
   const defaultItems = [
     'json',
@@ -42,7 +42,8 @@
     'zoomIn',
     'zoomOut',
     '|',
-    'shortestPath'
+    'shortestPath',
+    'search'
   ]
 
   export default {
@@ -117,6 +118,8 @@
           case 'shortestPath':
             this.findShortestPath(vm)
             break
+          case 'search':
+            this.searchNode(vm)
         }
         this.$emit('click', vm)
       },
@@ -155,8 +158,15 @@
       findShortestPath({options}) {
          const diagram = this.myDiagram.diagram
          const selection = toList(diagram.selection)
+         if(selection.length !== 2) {
+           this.$message({
+             type: 'warning',
+             message: '请选择两个节点'
+           })
+           return
+         }
          const minPath = getShortestPath(diagram, selection[0].key, selection[1].key)
-         const { chain } = getChain(diagram, minPath)
+         const { chain, links } = getChain(diagram, minPath)
          const model = diagram.model
         model.set(model.modelData, 'myGoIsHighlighting', true)
          switch(options.resultMode) {
@@ -167,6 +177,15 @@
            diagram.selectCollection(chain); 
            break;
          }
+         // 如果每次新建一个animation，有可能会造成内存泄漏
+         console.log(diagram._linkTrackAnimation);
+         if(!diagram._linkTrackAnimation) {
+           diagram._linkTrackAnimation = new go.Animation()
+         }
+         linksTrack(links, diagram, diagram._linkTrackAnimation)
+      },
+      searchNode(vm) {
+        vm.isActive = !vm.isActive
       }
     },
     created() {

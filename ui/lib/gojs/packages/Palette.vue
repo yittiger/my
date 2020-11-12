@@ -35,6 +35,10 @@
       width: {
         type: Number,
         default: 100
+      },
+      highlightMode: {
+        type: String,
+        default: 'none'
       }
     },
     computed: {

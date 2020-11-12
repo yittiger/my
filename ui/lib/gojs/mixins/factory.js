@@ -24,7 +24,7 @@ export default function (ClassName, defaultOptions, ref) {
           return {}
         }
       },
-      // highlightMode 高亮模式， 单节点(single)或包含临接节点(adjoin)
+      // highlightMode 高亮模式， 单节点(single)或包含临接节点(adjoin), 不高亮(none)
       highlightMode: {
         type: String,
         default: 'single'
@@ -123,12 +123,29 @@ export default function (ClassName, defaultOptions, ref) {
           }
         }
         diagram.addModelChangedListener(this.handleModelChange)
+        diagram.addDiagramListener('BackgroundSingleClicked', this.handleDiagramClick)
         Object.entries(this.$listeners).forEach(([name, listener]) => {
           diagram.addDiagramListener(name, listener)
         })
       },
+      handleDiagramClick({diagram}) {
+        if(diagram._linkTrackAnimation) {
+          diagram._linkTrackAnimation.stop()
+          diagram.startTransaction('removeLinkTrackPoint')
+          diagram.links.each(L => {
+            const trackpoint = L.findObject('trackPoint')
+            if(trackpoint) {
+              L.remove(trackpoint)
+            }
+          })
+          diagram.commitTransaction('removeLinkTrackPoint')
+        }
+        // const model = diagram.model
+        // model.set(model.modelData, 'myGoIsHighlighting', false)
+      },
       unbind(diagram) {
         this.handleModelChange && diagram.removeModelChangedListener(this.handleModelChange)
+        diagram.removeDiagramListener('BackgroundSingleClicked', this.handleDiagramClick)
         Object.entries(this.$listeners).forEach(([name, listener]) => {
           diagram.removeDiagramListener(name, listener)
         })
@@ -153,9 +170,6 @@ export default function (ClassName, defaultOptions, ref) {
             myGoHighlightMode: this.highlightMode,
             myGoIsHighlighting: false,
             ...this.data
-          }
-          if(ClassName === go.Palette) {
-            myModelData.myGoHighlightDisabled = true
           }
           model.assignAllDataProperties(model.modelData, myModelData)
         }
