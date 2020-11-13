@@ -1,46 +1,42 @@
 <template>
-  <div style="height:500px">
-    <my-dv-page target="parent" fit>
-      <my-dv-list width="80%"
-                  x-align="center"
-                  y-align="middle"
-                  radius
-                  :columns="columns"
-                  :rows="rows">
-        <template v-slot:one="{rowIndex}">
-          <el-tag size="small" type="success">{{rowIndex}}</el-tag>
-        </template>
-      </my-dv-list>
-    </my-dv-page>
-  </div>
+  <my-dv-page target="parent" fit>
+    <!--    <my-dv-border11 top="20px" left="20px" width="800px" height="500px" fill="rgba(0,0,0,0.2)">-->
+    <!--      <my-dv-title :level="6" top="20px" left="20px">数据统计</my-dv-title>-->
+    <!--      <my-dv-bar :columns="columns" :rows="rows" legend fit top="16px"></my-dv-bar>-->
+    <!--    </my-dv-border11>-->
+    <!--    <my-dv-starry :opacity="0.4" fit></my-dv-starry>-->
+    <my-dv-globe fit debug width="600px" height="600px"
+                 shading="color"
+                 autoRotate
+                 :opacity="1"></my-dv-globe>
+
+  </my-dv-page>
+
 </template>
 <script>
+
   export default {
     data() {
       return {
-        columns: [
-          {label: '列一', width: 100, prop: 'one'},
-          {label: '列二', width: 200, prop: 'two'},
-          {label: '列三', width: 100, prop: 'three'}
-        ],
+        columns: ['星期', '直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎'],
         rows: [
-          ['行1列1', '行1列2', '行1列3'],
-          ['行2列1', '行2列2', '行2列3'],
-          ['行3列1', '行3列2', '行3列3'],
-          ['行4列1', '行4列2', '行4列3'],
-          ['行5列1', '行5列2', '行5列3'],
-          ['行6列1', '行6列2', '行6列3'],
-          ['行7列1', '行7列2', '行7列3'],
-          ['行8列1', '行8列2', '行8列3'],
-          ['行9列1', '行9列2', '行9列3'],
-          ['行10列1', '行10列2', '行10列3']
+          ['周一', 320, 302, 301, 334, 390, 330, 320],
+          ['周二', 120, 132, 101, 134, 90, 230, 210],
+          ['周三', 220, 182, 191, 234, 290, 330, 310],
+          ['周四', 150, 212, 201, 154, 190, 330, 410],
+          ['周五', 320, 132, 401, 334, 290, 330, 320]
         ]
       }
+    },
+    created() {
+      this.$store.commit('increment')
     }
+
   }
 </script>
 <style lang="scss" scoped>
   .my-dv-page {
     background: url("~$ui/assets/bg/02.png") no-repeat center center;
+    /*background-image: radial-gradient(ellipse farthest-corner at center center, #1b44e4 0%, #020f3a 100%);*/
   }
 </style>

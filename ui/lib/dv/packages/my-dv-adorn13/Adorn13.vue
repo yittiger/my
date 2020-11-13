@@ -8,8 +8,12 @@
        v-on="$listeners">
     <svg :width="`${width}px`" :height="`${height}px`">
       <path :d="path" fill="transparent" stroke-width="1" :stroke="dark"></path>
-      <circle cx="16" :cy="`${height/2}`" r="4" :fill="light"></circle>
-      <circle cx="16" :cy="`${height/2}`" r="7" fill="transparent" stroke-width="2" :stroke="light"></circle>
+      <circle cx="16" :cy="`${height/2}`" r="4" :fill="light">
+        <animate attributeName="opacity" values="1;0;1"  :dur="`${duration}s`" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="16" :cy="`${height/2}`" r="7" fill="transparent" stroke-width="2" :stroke="light">
+        <animate attributeName="opacity" values="0;1;0"  :dur="`${duration}s`" repeatCount="indefinite"/>
+      </circle>
     </svg>
     <div class="my-dv-adorn-13__content" :style="{lineHeight:`${height}px`,color:light}">
       <slot></slot>

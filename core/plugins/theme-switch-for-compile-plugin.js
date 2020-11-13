@@ -19,7 +19,7 @@ class ThemeSwitchForCompilePlugin {
   constructor(opt = {}) {
     const o = this.options = {
       // 主题名称
-      theme: '',
+      theme: 'default',
 
       // 主题scss引入文件路径，即 _theme.scss 的路径
       src: '',

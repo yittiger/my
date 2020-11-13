@@ -275,6 +275,9 @@ module.exports = {
       'date',
       'timer',
       'list'
+    ], false),
+    createMenus('动效组件', [
+      'starry'
     ], false)
   ],
   '/ui/pages/': [

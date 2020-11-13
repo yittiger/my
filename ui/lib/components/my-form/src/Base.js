@@ -7,6 +7,7 @@ import {FormItem} from 'element-ui'
 import {setStyle} from 'element-ui/lib/utils/dom'
 import {addResizeListener, removeResizeListener} from 'element-ui/lib/utils/resize-event'
 import {cloneDeep, isEqual} from '$ui/utils/util'
+
 const _get = require('lodash/get')
 const _set = require('lodash/set')
 
@@ -72,33 +73,33 @@ export default {
     },
     // 可折叠
     collapsible: Boolean,
-    
+
     // 阻止回车事件冒泡
     stopEnterEvent: Boolean,
-    
+
     // 依赖字段名称
     depend: String,
-    
+
     // 依赖字段的值，即依赖字段的值等于该值才会显示
     dependValue: [String, Number, Boolean, Object, Array, Function],
-    
+
     // 级联的上级字段名称，需要与loader配合加载数据
     cascade: String,
-    
+
     // 加载数据函数,必须返回Promise
     loader: Function,
-    
+
     // 字典名称，只是标识，需要与loader配合 或 表单的dictMap加载数据
     dict: String,
-    
+
     // 禁用
     disabled: Boolean,
     // 只读
     readonly: Boolean,
-    
+
     // 占位文本
     placeholder: String,
-    
+
     // 尺寸
     size: String
   },
@@ -108,7 +109,7 @@ export default {
       cascadeValue: null,
       // 当前选项数据
       currentOptions: [],
-      
+
       // 正在调用loader
       loading: false
     }
@@ -121,20 +122,18 @@ export default {
         if (this.name && this.myForm) {
           const {currentModel} = this.myForm
           return _get(currentModel, this.name, this.getDefaultValue())
-          // return (this.name in currentModel)
-          //   ? currentModel[this.name]
-          //   : this.getDefaultValue()
         } else {
           return this.value || this.getDefaultValue()
         }
       },
       set(val) {
         if (this.name && this.myForm) {
-          const model = cloneDeep(this.myForm.currentModel)
+          const {currentModel} = this.myForm
+          const model = cloneDeep(currentModel)
           _set(model, this.name, val)
-          this.myForm.currentModel = model
-          // this.$set(this.myForm, 'currentModel', model)
-          // this.$set(this.myForm.currentModel, this.name, val)
+          if (!isEqual(currentModel, model)) {
+            this.myForm.currentModel = model
+          }
         } else {
           this.$emit('input', val)
         }
@@ -227,7 +226,7 @@ export default {
     },
     isCollapsed() {
       if (!this.myForm) return false
-      
+
       const {collapsible, currentCollapsed} = this.myForm
       // 是否已收起
       return (collapsible && currentCollapsed && this.collapsible)
@@ -246,13 +245,12 @@ export default {
         // 以上都不符合，即检验 dependValue 与 currentModel中的依赖属性是否一致
         isMatch = isEqual(this.dependValue, value)
       }
-      
+
       // 清除依赖不符合字段的值
       if (!isMatch && this.name && model[this.name]) {
         this.fieldValue = this.getDefaultValue()
         delete model[this.name]
       }
-      
       return isMatch
     },
     // 传递给输入组件的插槽
@@ -277,12 +275,12 @@ export default {
           )
         }
         : null;
-      
+
       // 是否已收起
       const collapsed = this.isCollapsed()
       // 是否符合依赖项
       const isMatched = this.isMatchDepend()
-      
+
       return (
         <transition name={this.myForm.collapseEffect}>
           {
@@ -294,7 +292,7 @@ export default {
                           vOn:keyup_native_enter={this.stopEvent}
                 // el-form-item 的prop用name代替
                           prop={this.name}>
-                
+
                 {
                   // label 插槽
                   this.$slots.label
@@ -308,21 +306,21 @@ export default {
               // Vue组件必须要有一个根DOM，创建一个隐藏占位元素
               : <div style={{display: 'none'}}>{this.name}</div>
           }
-        
+
         </transition>
       )
     },
     // 继承输入组件暴露的方法
     extendMethods(ref, names = []) {
       if (!ref) return
-      
+
       names.forEach(name => {
         // 子组件的方法加到实例
         this[name] = (...args) => {
           ref[name].apply(ref, args)
         }
       })
-      
+
     },
     // 设置el-form-item内部的内容区宽度
     setContentWidth() {
@@ -347,16 +345,16 @@ export default {
     loadOptions(model) {
       // 已收起的，不需要处理
       if (this.isCollapsed()) return
-      
+
       // 如果不符合依赖，不处理
       if (!this.isMatchDepend()) return
-      
+
       // 数据优先顺序，options > loader > form.dictMap > form.loader
       if (this.options) {
         this.currentOptions = cloneDeep(this.options)
         return
       }
-      
+
       if (this.loader) {
         this.loading = true
         this.loader(model, this).then(res => {
@@ -366,10 +364,10 @@ export default {
         })
         return
       }
-      
+
       // 无form容器，终止
       if (!this.myForm) return
-      
+
       if (this.dict) {
         const {dictMap} = this.myForm
         const options = (dictMap || {})[this.dict]
@@ -378,9 +376,9 @@ export default {
           this.currentOptions = options
           return
         }
-        
+
       }
-      
+
       if (this.myForm.loader) {
         this.loading = true
         this.myForm.loader(model, this).then(res => {
@@ -389,7 +387,7 @@ export default {
           this.loading = false
         })
       }
-      
+
     },
     // 响应currentModel改变处理级联加载数据
     handleWatch(model) {
@@ -424,7 +422,7 @@ export default {
       this.myForm.addItem(this)
       model = this.myForm.currentModel
     }
-    
+
     this.loadOptions(model, this)
     this.bindCascade()
   },
@@ -435,5 +433,5 @@ export default {
       this.myForm.removeItem(this)
     }
   }
-  
+
 }

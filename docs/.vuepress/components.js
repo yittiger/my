@@ -241,6 +241,9 @@ module.exports = {
       date: '日期时间',
       timer: '计时器',
       list: '列表'
+    },
+    '动效组件': {
+      starry: '星空动效'
     }
   }
 }
