@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>packages/my-dv-box/Box.vue - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-$ui_dv_my-dv-bar.html">$ui/dv/my-dv-bar</a></li><li><a href="module-$ui_dv_my-dv-box.html">$ui/dv/my-dv-box</a></li><li><a href="module-$ui_dv_my-dv-fill.html">$ui/dv/my-dv-fill</a></li><li><a href="module-$ui_dv_my-dv-geo.html">$ui/dv/my-dv-geo</a></li><li><a href="module-$ui_dv_my-dv-icon.html">$ui/dv/my-dv-icon</a></li><li><a href="module-$ui_dv_my-dv-indicator.html">$ui/dv/my-dv-indicator</a></li><li><a href="module-$ui_dv_my-dv-line.html">$ui/dv/my-dv-line</a></li><li><a href="module-$ui_dv_my-dv-loading.html">$ui/dv/my-dv-loading</a></li><li><a href="module-$ui_dv_my-dv-page.html">$ui/dv/my-dv-page</a></li><li><a href="module-$ui_dv_my-dv-pictorial.html">$ui/dv/my-dv-pictorial</a></li><li><a href="module-$ui_dv_my-dv-pie.html">$ui/dv/my-dv-pie</a></li><li><a href="module-$ui_dv_my-dv-progress.html">$ui/dv/my-dv-progress</a></li><li><a href="module-$ui_dv_my-dv-radar.html">$ui/dv/my-dv-radar</a></li><li><a href="module-$ui_dv_my-dv-rank.html">$ui/dv/my-dv-rank</a></li><li><a href="module-$ui_dv_my-dv-ring.html">$ui/dv/my-dv-ring</a></li><li></li><li><a href="module-$ui_dv_my-dv-screen.html">$ui/dv/my-dv-screen</a></li><li><a href="module-$ui_dv_my-dv-starry.html">$ui/dv/my-dv-starry</a></li><li><a href="module-$ui_dv_my-dv-text.html">$ui/dv/my-dv-text</a></li><li><a href="module-$ui_dv_my-dv-title.html">$ui/dv/my-dv-title</a></li></ul><h3>Global</h3><ul><li><a href="global.html#darken">darken</a></li><li><a href="global.html#fade">fade</a></li><li><a href="global.html#getCircleRadianPoint">getCircleRadianPoint</a></li><li><a href="global.html#getColorByKeyword">getColorByKeyword</a></li><li><a href="global.html#getColorFromRgbValue">getColorFromRgbValue</a></li><li><a href="global.html#getOpacity">getOpacity</a></li><li><a href="global.html#getRgbaValue">getRgbaValue</a></li><li><a href="global.html#getRgbValue">getRgbValue</a></li><li><a href="global.html#getRgbValueFromHex">getRgbValueFromHex</a></li><li><a href="global.html#getRgbValueFromRgb">getRgbValueFromRgb</a></li><li><a href="global.html#lighten">lighten</a></li><li><a href="global.html#props">props</a></li><li><a href="global.html#toHex">toHex</a></li><li><a href="global.html#toRgb">toRgb</a></li><li><a href="global.html#validator">validator</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">packages/my-dv-box/Box.vue</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template>
+  &lt;div v-if="visible"
+       class="my-dv-box"
+       :class="classes"
+       :style="styles"
+       v-on="$listeners">
+    &lt;slot>&lt;/slot>
+  &lt;/div>
+&lt;/template>
+
+&lt;script>
+  /**
+   * 容器组件
+   * @module $ui/dv/my-dv-box
+   */
+  export default {
+    name: 'MyDvBox',
+    inheritAttrs: false,
+    /**
+     * 属性参数
+     * @member props
+     * @property {string} [width] 宽度
+     * @property {string} [height] 高度
+     * @property {string} [left=0] 位置left
+     * @property {string} [top=0] 位置top
+     * @property {number} [zIndex] 层级
+     * @property {string} [xAlign] 水平对齐方式，可选值：'left', 'right', 'center'
+     * @property {string} [yAlign] 垂直对齐方式，可选值：'top', 'bottom', 'middle'
+     * @property {string} [contentAlign=left] 内容对齐方式，可选值：'left', 'right', 'center'
+     * @property {number} [zoom] 缩放，如何设置了xAlign或yAlign， scale的方式将失效，此时可以zoom实现缩放
+     * @property {number} [scale] 缩放，与zoom功能一样
+     * @property {boolean} [fit] 由父级适应宽高和位置，设置了 fit， width、height 将失效
+     * @property {boolean} [visible=true] 是否可见
+     * @property {boolean} [position=true] 开启定位，如果为false， left、top 参数失效
+     * @property {string} [margin] 外边距
+     * @property {boolean} [inline] 内联模式，position=false才有效
+     * @property {number} [opacity=1] 透明度
+     * @property {boolean} [shadow] 阴影
+     */
+    props: {
+      width: String,
+      height: String,
+      defaultWidth: {
+        type: String,
+        default: 'auto'
+      },
+      defaultHeight: {
+        type: String,
+        default: 'auto'
+      },
+      left: {
+        type: [String, Number],
+        default: 0
+      },
+      top: {
+        type: [String, Number],
+        default: 0
+      },
+      zIndex: [Number, String],
+      xAlign: {
+        type: String,
+        validator(val) {
+          return ['left', 'right', 'center'].includes(val)
+        }
+      },
+      yAlign: {
+        type: String,
+        validator(val) {
+          return ['top', 'bottom', 'middle'].includes(val)
+        }
+      },
+      contentAlign: {
+        type: String,
+        default: 'left',
+        validator(val) {
+          return ['left', 'right', 'center'].includes(val)
+        }
+      },
+      zoom: Number,
+      // 如果设置 x-align 或 y-align ，scale将失效, 此时可以通过设置zoom实现缩放
+      scale: Number,
+      // 设置了 fit， width、height 、top、left 将失效
+      fit: Boolean,
+      visible: {
+        type: Boolean,
+        default: true
+      },
+      // 启用定位
+      position: {
+        type: Boolean,
+        default: true
+      },
+      margin: String,
+      inline: Boolean,
+      opacity: {
+        type: Number,
+        default: 1
+      },
+      shadow: Boolean
+    },
+    computed: {
+      styles() {
+        const {
+          inline, margin, position, fit, width, height, left,
+          top, zIndex, zoom, scale, xAlign, yAlign, defaultWidth, defaultHeight
+        } = this
+        return {
+          position: position ? 'absolute' : 'static',
+          width: fit ? '100%' : width || defaultWidth,
+          height: fit ? '100%' : height || defaultHeight,
+          zoom,
+          left: xAlign ? null : left,
+          top: yAlign ? null : top,
+          transform: scale ? `scale(${scale})` : null,
+          display: inline ? 'inline-block' : 'block',
+          opacity: this.opacity,
+          margin,
+          zIndex
+        }
+      },
+      classes() {
+        return {
+          [`is-${this.xAlign}`]: !!this.xAlign,
+          [`is-${this.yAlign}`]: !!this.yAlign,
+          'is-shadow': this.shadow,
+          'is-center-middle': this.xAlign === 'center' &amp;&amp; this.yAlign === 'middle',
+          [`is-content-align-${this.contentAlign}`]: !!this.contentAlign
+        }
+      }
+    }
+  }
+&lt;/script>
+
+&lt;style lang="scss">
+  @import "../../style/vars";
+
+  @include b(dv-box) {
+    position: absolute;
+    text-align: left;
+    display: inline-block;
+
+    @include when(shadow) {
+      box-shadow: $--dv-shadow-light;
+    }
+    @include when(left) {
+      left: 0;
+    }
+    @include when(right) {
+      right: 0;
+    }
+    @include when(center) {
+      transform: translateX(-50%);
+      left: 50%;
+    }
+    @include when(top) {
+      top: 0;
+    }
+    @include when(bottom) {
+      bottom: 0;
+    }
+    @include when(middle) {
+      transform: translateY(-50%);
+      top: 50%;
+    }
+    @include when(center-middle) {
+      transform: translate(-50%, -50%) !important;
+    }
+
+    @include when(content-align-right) {
+      text-align: right;
+    }
+    @include when(content-align-center) {
+      text-align: center;
+    }
+  }
+&lt;/style>
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.5</a> on Tue Nov 10 2020 16:32:13 GMT+0800 (GMT+08:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?c4e5f73318b5cb0c389e3d9a05f831cc";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</body>
+</html>
