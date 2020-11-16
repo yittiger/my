@@ -16,9 +16,9 @@
   import 'echarts-gl'
   import {MyChart} from '$ui/charts'
   import Chart from '../../mixins/Chart'
-  import baseTexture from './assets/world.topo.bathy.200401.jpg'
+  import baseTexture from './assets/1920.png'
   // import baseTexture from './assets/base.png'
-  // import outline from './assets/outline_4096.png'
+  import outline from './assets/outline.png'
   // import heightTexture from './assets/bathymetry_bw_composite_4k.jpg'
   import flights from '@/mock/flights.json'
 
@@ -60,7 +60,7 @@
           backgroundColor: 'transparent',
           globe: {
             baseTexture,
-            // heightTexture,
+            // heightTexture: outline,
             shading: this.shading,
             viewControl: {
               autoRotate: this.autoRotate
@@ -73,14 +73,13 @@
                 intensity: 1,
                 shadow: false
               }
-            }
-            // ,
-            // layers: [
-            //   {
-            //     type: 'blend',
-            //     texture: outline
-            //   }
-            // ]
+            },
+            layers: [
+              {
+                type: 'blend',
+                texture: outline
+              }
+            ]
           },
           series: {
             type: 'lines3D',

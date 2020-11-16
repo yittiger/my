@@ -31,7 +31,7 @@
     /**
      * 属性参数
      * @member props
-     * @property {Boolean} [lock=true] 缩放锁定比例
+     * @property {Boolean} [lock] 缩放锁定比例
      * @property {Boolean}  [scale=true] 开启自动缩放
      * @property {Number} [width=1920] 原始宽度
      * @property {Number} [height=1080] 原始高度
@@ -43,8 +43,7 @@
      */
     props: {
       lock: {
-        type: Boolean,
-        default: true
+        type: Boolean
       },
       scale: {
         type: Boolean,
