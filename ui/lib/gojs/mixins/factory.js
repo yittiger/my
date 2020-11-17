@@ -1,5 +1,5 @@
 import creator from '../utils/creator'
-import go from '../utils/lib'
+import { go } from '../utils/lib'
 
 export default function (ClassName, defaultOptions, ref) {
   return {
@@ -74,17 +74,6 @@ export default function (ClassName, defaultOptions, ref) {
           this.$emit('_ready', diagram)
           this.loading = false
         })
-        diagram.addDiagramListener('SelectionDeleting', function(e) {
-          e.subject.each(function(part) {
-            if (!(part instanceof go.Node)) return; 
-            const animation = new go.Animation();
-            const deletePart = part.copy();
-            animation.add(deletePart, 'scale', deletePart.scale, 0.01);
-            animation.add(deletePart, 'angle', deletePart.angle, 360);
-            animation.addTemporaryPart(deletePart, diagram);
-            animation.start();
-          });
-        });
         this.bind(diagram)
         this.diagram = diagram
       },
@@ -123,10 +112,23 @@ export default function (ClassName, defaultOptions, ref) {
           }
         }
         diagram.addModelChangedListener(this.handleModelChange)
+        diagram.addDiagramListener('SelectionDeleting', this.handleNodeDelete);
         diagram.addDiagramListener('BackgroundSingleClicked', this.handleDiagramClick)
         Object.entries(this.$listeners).forEach(([name, listener]) => {
           diagram.addDiagramListener(name, listener)
         })
+      },
+      handleNodeDelete(e) {
+          e.subject.each(function(part) {
+            if (!(part instanceof go.Node)) return; 
+            const animation = new go.Animation();
+            const deletePart = part.copy();
+            animation.duration = 1000
+            animation.add(deletePart, 'scale', deletePart.scale, 0.01);
+            animation.add(deletePart, 'angle', deletePart.angle, 360);
+            animation.addTemporaryPart(deletePart, e.diagram);
+            animation.start();
+          });
       },
       handleDiagramClick({diagram}) {
         if(diagram._linkTrackAnimation) {
@@ -140,12 +142,17 @@ export default function (ClassName, defaultOptions, ref) {
           })
           diagram.commitTransaction('removeLinkTrackPoint')
         }
+        if(diagram._focusNode) {
+          diagram._focusNode.position = new go.Point(0, 0)
+          diagram._focusNode.visible = false
+        }
         // const model = diagram.model
         // model.set(model.modelData, 'myGoIsHighlighting', false)
       },
       unbind(diagram) {
         this.handleModelChange && diagram.removeModelChangedListener(this.handleModelChange)
         diagram.removeDiagramListener('BackgroundSingleClicked', this.handleDiagramClick)
+        diagram.removeDiagramListener('SelectionDeleting', this.handleNodeDelete);
         Object.entries(this.$listeners).forEach(([name, listener]) => {
           diagram.removeDiagramListener(name, listener)
         })

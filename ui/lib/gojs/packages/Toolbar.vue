@@ -10,7 +10,7 @@
                    :key="index"
                    @click="handleClick"></ToolbarItem>
     </template>
-
+    <search-result ref="searchResult" v-if="searchActive" v-bind="searchProp"></search-result>
   </div>
 </template>
 
@@ -18,6 +18,7 @@
 
   import {Divider} from 'element-ui'
   import ToolbarItem from './ToolbarItem'
+  import SearchResult from './SearchResult'
   import tools from '../utils/tools'
   import { getShortestPath, getChain, toList, linksTrack, go } from '../utils/lib'
 
@@ -51,7 +52,8 @@
     inject: ['myDiagram'],
     components: {
       Divider,
-      ToolbarItem
+      ToolbarItem,
+      SearchResult
     },
     props: {
       items: {
@@ -59,6 +61,17 @@
         default() {
           return defaultItems
         }
+      },
+      searchProp: {
+        type: Object,
+        default() {
+          return {}
+        }
+      }
+    },
+    data() {
+      return {
+        searchActive: false
       }
     },
     computed: {
@@ -168,7 +181,9 @@
          const minPath = getShortestPath(diagram, selection[0].key, selection[1].key)
          const { chain, links } = getChain(diagram, minPath)
          const model = diagram.model
-        model.set(model.modelData, 'myGoIsHighlighting', true)
+         diagram.startTransaction('highlightNodeAndLink')
+         model.set(model.modelData, 'myGoIsHighlighting', true)
+         diagram.commitTransaction('highlightNodeAndLink')
          switch(options.resultMode) {
            case 'highlight': 
            diagram.highlightCollection(chain);
@@ -178,7 +193,6 @@
            break;
          }
          // 如果每次新建一个animation，有可能会造成内存泄漏
-         console.log(diagram._linkTrackAnimation);
          if(!diagram._linkTrackAnimation) {
            diagram._linkTrackAnimation = new go.Animation()
          }
@@ -186,6 +200,13 @@
       },
       searchNode(vm) {
         vm.isActive = !vm.isActive
+        this.searchActive = vm.isActive
+        if(this.searchActive) {
+          this.$nextTick(() => {
+              const searchResultEl = this.$refs.searchResult.$el
+              this.myDiagram.$el.append(searchResultEl)
+          })
+        }
       }
     },
     created() {

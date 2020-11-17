@@ -9,7 +9,7 @@
            :links="links"
            :options="init"
            :on-model-change="handleModelChange">
-    <Toolbar></Toolbar>
+    <Toolbar :search-prop="searchProp"></Toolbar>
     <StatusBar></StatusBar>
     <Palette :nodes="palettes" :options="init"></Palette>
     <Overview></Overview>
@@ -35,6 +35,13 @@
         collapsed: true,
         nodes: nodes,
         links: links,
+        searchProp: {
+          nodeKeys: ['text', 'key'],
+          linkKeys: ['text', 'key'],
+          ignoreCase: true,
+          mode: 'node,link',
+          focusAnimation: true
+        },
         palettes: [
           {text: 'default'},
           {category: 'color1', text: 'color1'},
@@ -92,7 +99,7 @@
            :links="links"
            :options="init"
            :on-model-change="handleModelChange">
-    <Toolbar></Toolbar>
+    <Toolbar :search-prop="searchProp"></Toolbar>
     <StatusBar></StatusBar>
     <Palette :nodes="palettes" :options="init"></Palette>
     <Overview></Overview>
@@ -118,6 +125,13 @@
         collapsed: true,
         nodes: nodes,
         links: links,
+        searchProp: {
+          nodeKeys: ['text', 'key'],
+          linkKeys: ['text', 'key'],
+          ignoreCase: true,
+          mode: 'node,link',
+          focusAnimation: true
+        },
         palettes: [
           {text: 'default'},
           {category: 'color1', text: 'color1'},

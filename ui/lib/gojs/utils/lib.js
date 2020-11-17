@@ -25,6 +25,7 @@ go.Shape.defineFigureGenerator('Terminator', function (shape, w, h) {
   return geo;
 })
 
+
 export function toList(collection) {
   const items = []
   const it = collection.iterator
@@ -45,7 +46,6 @@ export {
 export function getShortestPath(diag, startNode, endNode) {
   const findRouteFun = findRouteProxy(diag)
   const paths = findRouteFun([startNode], endNode)
-  console.log('paths', paths);
   let minPath, minLength
   if (paths.length === 0) {
     return []
