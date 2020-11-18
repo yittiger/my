@@ -179,7 +179,7 @@
 
   @include b(dv-page) {
     position: relative;
-    background: $--dv-background;
+    background-image: $--dv-background-image;
     width: 100%;
     height: 100vh;
     overflow: hidden;
@@ -217,7 +217,9 @@
     }
   }
 
-  body[class^=my-dv-page__wrapper] {
+
+  body[class*="my-dv-page__wrapper"],
+  div[class*="my-dv-page__wrapper"] {
     margin: 0;
     padding: 0;
     width: 100%;

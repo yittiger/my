@@ -250,6 +250,7 @@ module.exports = {
       'screen',
       'box',
       'loading',
+      'header',
       'border',
       'adorn',
       'icon'

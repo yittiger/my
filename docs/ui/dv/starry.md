@@ -17,10 +17,5 @@
     </my-dv-page>
 </div>
 </template>
-<style lang="scss">
-.my-dv-page {
-    background-image: radial-gradient(ellipse farthest-corner at center center, #1b44e4 0%, #020f3a 100%);
-}
-</style>
 ```
 :::

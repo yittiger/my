@@ -216,6 +216,7 @@ module.exports = {
       screen: '场景',
       box: '容器',
       loading: '加载',
+      header: '页头',
       border: '边框',
       adorn: '装饰',
       icon: '图标'

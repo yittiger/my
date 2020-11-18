@@ -1,5 +1,5 @@
 <template>
-  <Box class="my-dv-header"
+  <Box class="my-dv-header1"
        default-width="100%"
        default-height="auto"
        top="0px"
@@ -270,7 +270,7 @@
 
 
     </svg>
-    <div class="my-dv-header__content">
+    <div class="my-dv-header1__content" :style="svgStyle">
       <slot></slot>
     </div>
   </Box>
@@ -290,19 +290,17 @@
   @import "../../style/vars";
 
 
-  @include b(dv-header) {
+  @include b(dv-header1) {
     @include e(content) {
       position: absolute;
       width: 100%;
-      top: 32%;
+      top: 0;
+      height: 147px;
+      line-height: 120px;
       text-align: center;
-      > .my-dv-box {
-        position: static !important;
-        width: auto;
-        text-align: center;
-        font-size: 50px !important;
-        font-weight: 600;
-      }
+      font-size: 50px;
+      font-weight: 600;
+      text-shadow: $--dv-shadow;
     }
   }
 </style>

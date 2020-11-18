@@ -1,7 +1,9 @@
 @import "../../styles/mixins/index";
 @import "../../styles/common/colors";
 
-$--dv-background: rgba(0, 0, 0, 0.8) !default;
+$--dv-background: #080542 !default;
+
+$--dv-background-image: radial-gradient(ellipse farthest-corner at center center, #033958 0%, #080542 70%) !default;
 
 $--dv-shadow: 0 2px 4px rgba(11, 116, 210, 0.45), 0 0 6px rgba(148, 245, 233, 0.35) !default;
 $--dv-shadow-light: 0 2px 4px rgba(11, 116, 210, 0.2), 0 0 6px rgba(148, 245, 233, 0.1) !default;
@@ -23,14 +25,14 @@ $--dv-color-table-header: rgba(0, 186, 255, 0.4) !default;
 $--dv-color-table-stripe: rgba(23, 96, 123, 0.2) !default;
 $--dv-color-table-hover: rgba(0, 186, 255, 0.6) !default;
 
-$--dv-font-level-1: 40px !default;
-$--dv-font-level-2: 36px !default;
-$--dv-font-level-3: 32px !default;
-$--dv-font-level-4: 28px !default;
-$--dv-font-level-5: 24px !default;
-$--dv-font-level-6: 20px !default;
+$--dv-font-level-1: 48px !default;
+$--dv-font-level-2: 40px !default;
+$--dv-font-level-3: 36px !default;
+$--dv-font-level-4: 32px !default;
+$--dv-font-level-5: 28px !default;
+$--dv-font-level-6: 24px !default;
 
-$--dv-font-level-7: 18px !default;
-$--dv-font-level-8: 16px !default;
-$--dv-font-level-9: 14px !default;
-$--dv-font-level-10: 12px !default;
+$--dv-font-level-7: 20px !default;
+$--dv-font-level-8: 18px !default;
+$--dv-font-level-9: 16px !default;
+$--dv-font-level-10: 14px !default;

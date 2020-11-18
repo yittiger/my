@@ -34,6 +34,7 @@
      * @property {string} [type] 主题风格，可选值：'default', 'primary', 'normal', 'secondary', 'success'，'placeholder', 'warning', 'danger'
      * @property {number} [level=1] 标题大小，可选 1 ~ 6
      * @property {boolean} [shadow] 开启阴影
+     * @property {boolean} [strong] 字体加粗
      */
     props: {
       level: {
@@ -43,12 +44,14 @@
           return val > 0 && val < 7
         }
       },
-      shadow: Boolean
+      shadow: Boolean,
+      strong: Boolean
     },
     computed: {
       classes() {
         return {
           'is-text-shadow': this.shadow,
+          'is-strong': this.strong,
           [`is-level-${this.level}`]: !!this.level,
           ...this.textTypeClass
         }
@@ -78,6 +81,9 @@
 
     @include when(text-shadow) {
       text-shadow: $--dv-shadow;
+    }
+    @include when(strong) {
+      font-weight: 600;
     }
     @include when(pointer) {
       cursor: pointer;
