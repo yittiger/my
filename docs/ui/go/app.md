@@ -40,7 +40,8 @@
           linkKeys: ['text', 'key'],
           ignoreCase: true,
           mode: 'node,link',
-          focusAnimation: true
+          focusAnimation: true,
+          focusScale: 1.2
         },
         palettes: [
           {text: 'default'},
@@ -130,7 +131,8 @@
           linkKeys: ['text', 'key'],
           ignoreCase: true,
           mode: 'node,link',
-          focusAnimation: true
+          focusAnimation: true,
+          focusScale: 1.5
         },
         palettes: [
           {text: 'default'},

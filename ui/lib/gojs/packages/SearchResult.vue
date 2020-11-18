@@ -26,9 +26,9 @@ import {MyIcon} from '$ui'
 import { go, $, linkTrack } from '$ui/gojs'
 import Palette from './Diagram'
 // 焦点动画
-const focusNode = function(go, vm) {
+const focusNode = function(go, vm, scale) {
     return $(go.Node, 'Spot', 
-       {name: 'focusShape', locationSpot: go.Spot.Center, visible: false}, 
+       {name: 'focusShape', movable: false, scale: scale, locationSpot: go.Spot.Center, visible: false}, 
         $(go.Shape, 'Circle', {
             name: 'circle1',
             fill: 'transparent',
@@ -88,6 +88,10 @@ export default {
         focusAnimation: {
            type: Boolean,
            default: true
+        },
+        focusScale: {
+            type: Number,
+            default: 1
         }
     },
     data() {
@@ -142,7 +146,7 @@ export default {
         if(this.focusAnimation) {
             diagram.startTransaction('setFocusNode')
             if(!diagram._focusNode) {
-                diagram._focusNode = focusNode(go, this.myDiagram)
+                diagram._focusNode = focusNode(go, this.myDiagram, this.focusScale)
                 const animation = new go.Animation()
                 animation.runCount = Infinity
                 animation.duration = 4000
