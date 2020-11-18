@@ -23,4 +23,5 @@
 !core/babel.config.js
 /vue.config.js
 !core/vue.config.js
+/debug.log
 

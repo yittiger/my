@@ -292,6 +292,8 @@ module.exports = {
   ],
   '/guide/': [
     createMenus('开发指南', [
+      '/changelog',
+      'browser',
       'config',
       'constant',
       'cmd',
@@ -300,17 +302,17 @@ module.exports = {
       'coder',
       'route',
       'app'
-    ]),
+    ], false),
     createMenus('内置资源', [
       'color',
       'theme',
       'vars'
-    ]),
+    ], false),
     createMenus('进阶教程', [
       'messager'
-    ]),
+    ], false),
     createMenus('第三方类库', [
       'axios'
-    ])
+    ], false)
   ]
 }
