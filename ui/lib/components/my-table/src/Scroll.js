@@ -1,4 +1,4 @@
-import {getScrollContainer, on, off} from 'element-ui/src/utils/dom'
+import {getScrollContainer, on, off} from 'element-ui/lib/utils/dom'
 import {debounce} from '$ui/utils/util'
 
 export default {
