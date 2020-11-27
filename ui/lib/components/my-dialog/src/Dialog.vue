@@ -47,7 +47,7 @@
             <template v-if="$slots.footer" v-slot:footer>
               <slot name="footer"></slot>
             </template>
-            <MySpin fit :tip="loadingTip" :loading="loading">
+            <MySpin fit :tip="loadingTip" :loading="loading" ref="mySpin">
               <SrcFrame v-if="src" :src="src" @load="handleSrcLoad"></SrcFrame>
               <slot v-else></slot>
             </MySpin>
@@ -363,7 +363,7 @@
          * @event open
          */
         this.$emit('open')
-
+        this._findInnerHight()
         this.setBodyHidden(true)
       },
       dispose() {
@@ -401,6 +401,14 @@
           this.originalHeight = this.dialogHeight = getLength(this.viewHeight, this.height) || dialogRect.height
         }
 
+      },
+      _findInnerHight() {
+        console.log('slot', this.$slots.default)
+        const innerNodes = this.$slots.default
+        console.log(innerNodes.map((node) => {
+          return node.elm.offsetHeight
+        }))
+        console.log(this.dialogHeight)
       },
       handleResizeStart(e) {
         /**
