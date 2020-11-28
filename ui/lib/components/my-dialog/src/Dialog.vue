@@ -17,6 +17,7 @@
                   @stop="handleResizeStop"
                   @resize="handleResize">
           <Panel ref="panel"
+                 v-bind="$attrs"
                  :title="title"
                  :icon="iconOptions"
                  :width="dialogWidth"
@@ -362,8 +363,7 @@
          * 窗体打开时触发
          * @event open
          */
-        this.$emit('open')
-        this._findInnerHight()
+        this.$emit('open') 
         this.setBodyHidden(true)
       },
       dispose() {
@@ -404,11 +404,22 @@
       },
       _findInnerHight() {
         console.log('slot', this.$slots.default)
+        const hHeight = this.$refs.panel.headerHeight
+        const fHeight = this.$refs.panel.footerHeight
         const innerNodes = this.$slots.default
         console.log(innerNodes.map((node) => {
           return node.elm.offsetHeight
         }))
-        console.log(this.dialogHeight)
+        const innerNodeHeight = this.$slots.default.reduce((total, node) => {
+          const nodeHeight = node.elm.offsetHeight || 0
+          total += nodeHeight 
+          return total
+        }, 0)
+        const newDialogHeight = innerNodeHeight + hHeight + fHeight + 24
+        this.$nextTick(() => {
+          this.handleResize({height: newDialogHeight})
+        })
+        // console.log(this.dialogHeight  - hHeight - fHeight - 24)
       },
       handleResizeStart(e) {
         /**
