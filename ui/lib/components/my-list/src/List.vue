@@ -374,6 +374,10 @@
        */
       refresh(page) {
         this.currentPage = page || this.currentPage
+        if (this.mode === 'scroll') {
+          this.list = []
+          this.scrollTop(0)
+        }
         this.load()
       },
       /**

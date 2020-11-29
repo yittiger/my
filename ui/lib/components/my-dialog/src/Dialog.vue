@@ -400,26 +400,28 @@
           this.originalWidth = this.dialogWidth = getLength(this.viewWidth, this.width) || dialogRect.width
           this.originalHeight = this.dialogHeight = getLength(this.viewHeight, this.height) || dialogRect.height
         }
-
       },
-      _findInnerHight() {
-        console.log('slot', this.$slots.default)
+      // 重置窗体宽高方法：参数为
+      redoLayout(opt = {width: null, height: null}) {
         const hHeight = this.$refs.panel.headerHeight
         const fHeight = this.$refs.panel.footerHeight
-        const innerNodes = this.$slots.default
-        console.log(innerNodes.map((node) => {
-          return node.elm.offsetHeight
-        }))
-        const innerNodeHeight = this.$slots.default.reduce((total, node) => {
+        const innerNodes = this.$slots.default 
+        const innerNodeHeight = innerNodes.reduce((total, node) => {
           const nodeHeight = node.elm.offsetHeight || 0
           total += nodeHeight 
           return total
         }, 0)
         const newDialogHeight = innerNodeHeight + hHeight + fHeight + 24
+        
+        const resizeObj = {
+          height: opt.h || newDialogHeight,
+          width: opt.w
+        }
         this.$nextTick(() => {
-          this.handleResize({height: newDialogHeight})
+          this.originalHeight = resizeObj.height || this.dialogHeight
+          this.originalWidth = resizeObj.width || this.dialogWidth
+          this.handleResize(resizeObj)
         })
-        // console.log(this.dialogHeight  - hHeight - fHeight - 24)
       },
       handleResizeStart(e) {
         /**
