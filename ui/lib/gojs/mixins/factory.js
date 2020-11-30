@@ -24,16 +24,16 @@ export default function (ClassName, defaultOptions, ref) {
           return {}
         }
       },
-      // highlightMode 高亮模式， 单节点(single)或包含临接节点(adjoin), 不高亮(none)
-      highlightMode: {
-        type: String,
-        default: 'single'
-      },
       onModelChange: Function,
       onReady: Function,
       delay: {
         type: Number,
         default: 100
+      },
+      // highlightMode 高亮模式， 单节点(single)或包含临接节点(adjoin), 不高亮(none)
+      highlightMode: {
+        type: String,
+        default: 'adjoin'
       }
     },
     data() {

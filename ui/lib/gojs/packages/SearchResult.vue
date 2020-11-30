@@ -27,7 +27,7 @@ import { go, $, linkTrack } from '$ui/gojs'
 import Palette from './Diagram'
 // 焦点动画
 const focusNode = function(go, vm, scale) {
-    return $(go.Node, 'Spot', 
+    return $(go.Part, 'Spot', 
        {name: 'focusShape', movable: false, scale: scale, locationSpot: go.Spot.Center, visible: false}, 
         $(go.Shape, 'Circle', {
             name: 'circle1',
