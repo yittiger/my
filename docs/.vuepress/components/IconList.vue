@@ -72,7 +72,8 @@
     name: 'IconList',
     components: {
       MyIcon,
-      MyAnchor
+      MyAnchor,
+      MyLazy
     },
     data() {
       this.icons = icons
