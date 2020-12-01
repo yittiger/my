@@ -1,17 +1,21 @@
 <template>
-  <my-dv-page lock>
+  <my-pro fixed ref="pro">
 
+    <my-icon name="icon-accurate-search" svg></my-icon>
 
-    <my-dv-header1>
-      数据可视化大屏
-    </my-dv-header1>
-
-  </my-dv-page>
+  </my-pro>
 </template>
 <script>
+  import '$ui/icons/accurate-search'
 
-  export default {}
+  export default {
+    mounted() {
+
+      this.$refs.pro.collapsed = true
+    }
+  }
 </script>
+
 <style lang="scss" scoped>
 
 </style>

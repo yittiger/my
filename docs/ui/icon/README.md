@@ -1,1 +1,3 @@
-<Icons></Icons>
+<ClientOnly>
+  <IconList></IconList>
+</ClientOnly>
