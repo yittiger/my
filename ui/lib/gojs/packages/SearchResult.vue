@@ -277,29 +277,30 @@ export default {
             }
             if (this.mode.includes('link')) {
                 diagram.links.each(n => {
-                let hit = false
-                const hitKeywords = []
-                const hitText = []
-                this.linkKeys.forEach(k => {
-                    const keywords = k.split('.')
-                    if(!n.data) return
-                    const d = this.getData(n.data, keywords)
-                    if (typeof d === 'string') {
-                    if (this.ignoreCase) {
-                        if (d.toLowerCase().includes(this.keyword.toLowerCase())) {
-                        hit = true
-                        hitKeywords.push(k)
-                        hitText.push(`${d}`)
+                    let hit = false
+                    const hitKeywords = []
+                    const hitText = []
+                    this.linkKeys.forEach(k => {
+                        const keywords = k.split('.')
+                        if(!n.data) return
+                        const d = this.getData(n.data, keywords)
+                        if (typeof d === 'string') {
+                        if (this.ignoreCase) {
+                            if (d.toLowerCase().includes(this.keyword.toLowerCase())) {
+                            hit = true
+                            hitKeywords.push(k)
+                            hitText.push(`${d}`)
+                            }
+                        } else {
+                            if (d.includes(this.keyword)) {
+                            hit = true
+                            hitKeywords.push(k)
+                            hitText.push(`${d}`)
+                            }
                         }
-                    } else {
-                        if (d.includes(this.keyword)) {
-                        hit = true
-                        hitKeywords.push(k)
-                        hitText.push(`${d}`)
                         }
-                    }
-                    }
-                    if (hit) {
+                    })
+                  if (hit) {
                         links.push({
                             type: 'link',
                             keyword: hitKeywords.join(','),
@@ -307,7 +308,6 @@ export default {
                             link: n
                         })
                     }
-                })
                 })
                 const linkPalette = this.$refs.linkPalette.diagram
                 linkPalette.clear()
