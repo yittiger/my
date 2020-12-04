@@ -1,5 +1,5 @@
 import {addResizeListener, removeResizeListener} from 'element-ui/lib/utils/resize-event'
-import {on, off, setStyle} from 'element-ui/src/utils/dom'
+import {on, off, setStyle} from 'element-ui/lib/utils/dom'
 
 // 表格尺寸对应行的高度
 const SizeHeight = {

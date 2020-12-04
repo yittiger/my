@@ -106,6 +106,7 @@
      * @property {string} [menus.title] 分组标题
      * @property {Object} [menuProps] 菜单组件配置，参考MyMenu
      * @property {string} [mode=sidebar] 导航模式: sidebar(侧边菜单布局)、navbar(顶部菜单布局)、both(侧边+顶部菜单布局)
+     * @property {Boolean} [sidebarCollaps=false] 默认sidebar是否收起（默认为否）
      * @property {string} [sidebarTheme=light] 侧边栏主题，可选值：'light', 'dark', 'primary', 'gradual'
      * @property {string} [navbarTheme=light] 顶部导航主题，可选值：'light', 'dark', 'primary', 'gradual'
      * @property {Object} [navbarProps] MyNavbar组件附加参数，mode=both 时有效
@@ -148,6 +149,10 @@
           return ['sidebar', 'navbar', 'both'].includes(val)
         }
       },
+      sidebarCollaps: {
+        type: Boolean,
+        default: false
+      },
       sidebarTheme: String,
       navbarTheme: String,
       // 顶部菜单，在 mode=both 有效
@@ -184,7 +189,7 @@
     },
     data() {
       return {
-        collapsed: false,
+        collapsed: this.sidebarCollaps,
         screen: {},
         breadcrumbList: [],
         tabs: [],

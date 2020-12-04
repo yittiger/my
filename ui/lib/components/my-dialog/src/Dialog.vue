@@ -17,6 +17,7 @@
                   @stop="handleResizeStop"
                   @resize="handleResize">
           <Panel ref="panel"
+                 v-bind="$attrs"
                  :title="title"
                  :icon="iconOptions"
                  :width="dialogWidth"
@@ -47,7 +48,7 @@
             <template v-if="$slots.footer" v-slot:footer>
               <slot name="footer"></slot>
             </template>
-            <MySpin fit :tip="loadingTip" :loading="loading">
+            <MySpin fit :tip="loadingTip" :loading="loading" ref="mySpin">
               <SrcFrame v-if="src" :src="src" @load="handleSrcLoad"></SrcFrame>
               <slot v-else></slot>
             </MySpin>
@@ -362,8 +363,7 @@
          * 窗体打开时触发
          * @event open
          */
-        this.$emit('open')
-
+        this.$emit('open') 
         this.setBodyHidden(true)
       },
       dispose() {
@@ -400,7 +400,28 @@
           this.originalWidth = this.dialogWidth = getLength(this.viewWidth, this.width) || dialogRect.width
           this.originalHeight = this.dialogHeight = getLength(this.viewHeight, this.height) || dialogRect.height
         }
-
+      },
+      // 重置窗体宽高方法：参数为
+      redoLayout(opt = {width: null, height: null}) {
+        const hHeight = this.$refs.panel.headerHeight
+        const fHeight = this.$refs.panel.footerHeight
+        const innerNodes = this.$slots.default 
+        const innerNodeHeight = innerNodes.reduce((total, node) => {
+          const nodeHeight = node.elm.offsetHeight || 0
+          total += nodeHeight 
+          return total
+        }, 0)
+        const newDialogHeight = innerNodeHeight + hHeight + fHeight + 24
+        
+        const resizeObj = {
+          height: opt.h || newDialogHeight,
+          width: opt.w
+        }
+        this.$nextTick(() => {
+          this.originalHeight = resizeObj.height || this.dialogHeight
+          this.originalWidth = resizeObj.width || this.dialogWidth
+          this.handleResize(resizeObj)
+        })
       },
       handleResizeStart(e) {
         /**
