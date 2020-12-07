@@ -48,7 +48,7 @@
               },
               tags: {
                 itemArray: [
-                  {label: '男'},
+                  {label: '男', color: '#ff6600', background: '#f0f0f0'},
                   {label: '本科'},
                   {label: '程序员'}
                 ]

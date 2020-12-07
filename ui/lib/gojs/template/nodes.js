@@ -97,8 +97,9 @@ function createTags(tags = {}, colors = []) {
               strokeWidth: 0,
               $bindings: [
                 new go.Binding('fill', 'itemIndex', (v, obj) => {
+                  const itemData = obj.panel.panel.itemArray[v]
                   const index = v % colors.length
-                  return colors[index] || '#ecebeb'
+                  return itemData.background || colors[index] || '#ecebeb'
                 }).ofObject()
               ]
             }

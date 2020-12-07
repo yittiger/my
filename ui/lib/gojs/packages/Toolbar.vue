@@ -11,6 +11,7 @@
                    @click="handleClick"></ToolbarItem>
     </template>
     <search-result ref="searchResult" v-if="searchActive" v-bind="searchProp"></search-result>
+    <Inspector ref="inspector"  v-if="inspectorActive" v-bind="inspectorProp"></Inspector>
   </div>
 </template>
 
@@ -19,6 +20,7 @@
   import {Divider} from 'element-ui'
   import ToolbarItem from './ToolbarItem'
   import SearchResult from './SearchResult'
+  import Inspector from './Inspector'
   import tools from '../utils/tools'
   import { getShortestPath, getChain, toList, linksTrack, go } from '../utils/lib'
 
@@ -44,7 +46,8 @@
     'zoomOut',
     '|',
     'shortestPath',
-    'search'
+    'search',
+    'inspector'
   ]
 
   export default {
@@ -53,7 +56,8 @@
     components: {
       Divider,
       ToolbarItem,
-      SearchResult
+      SearchResult,
+      Inspector
     },
     props: {
       items: {
@@ -67,11 +71,18 @@
         default() {
           return {}
         }
+      },
+      inspectorProp: {
+        type: Object,
+        default() {
+          return {}
+        }
       }
     },
     data() {
       return {
-        searchActive: false
+        searchActive: false,
+        inspectorActive: false
       }
     },
     computed: {
@@ -133,6 +144,9 @@
             break
           case 'search':
             this.searchNode(vm)
+            break
+          case 'inspector':
+            this.showInspector(vm)
         }
         this.$emit('click', vm)
       },
@@ -205,6 +219,16 @@
           this.$nextTick(() => {
               const searchResultEl = this.$refs.searchResult.$el
               this.myDiagram.$el.append(searchResultEl)
+          })
+        }
+      },
+      showInspector(vm) {
+        vm.isActive = !vm.isActive
+        this.inspectorActive = vm.isActive
+        if(this.inspectorActive) {
+          this.$nextTick(() => {
+              const inspectorEl = this.$refs.inspector.$el
+              this.myDiagram.$el.append(inspectorEl)
           })
         }
       }

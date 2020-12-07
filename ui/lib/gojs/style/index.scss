@@ -316,3 +316,116 @@
     }
   }
 }
+
+$light-border: 1px solid $neutral-black-6;
+$dark-border: 1px solid $neutral-white-6;
+@include b(go-inspector) {
+  @include e(popper){
+    &.el-popper{
+      padding: 0 0 10px;
+      .el-popover__title{
+        margin-bottom: 0;
+        text-align: center;
+        font-size: 14px;
+        border-bottom: 1px solid $neutral-black-6;
+        line-height: 30px;
+      }
+      @include when(dark) {
+        background-color: $--go-background-dark;
+        color: $--go-color-dark;
+        border: 1px solid $neutral-white-6;
+        box-shadow: $--go-shadow-dark;
+        .el-popover__title{
+          color: $--go-color-dark;
+          border-bottom: 1px solid $neutral-white-6;
+        }
+        .my-go-inspector__add-keyitem {
+          &:hover{
+            background: $neutral-white-6;
+          } 
+        }
+        .el-select-dropdown__item{
+          color: $--go-color-dark;
+          &:hover, &.hover{
+            background-color: $neutral-white-7;
+          }
+          &.selected{
+            background-color: $neutral-white-6;
+          }
+        }
+        &[x-placement^=bottom] .popper__arrow{
+            border-bottom-color: $neutral-white-6;
+            &:after{
+              border-bottom-color: $--go-background-dark;
+            }
+        }
+        &[x-placement^=right] .popper__arrow{
+            border-right-color: $neutral-white-6;
+            &:after{
+              border-right-color: $--go-background-dark;
+            }
+        }
+      }
+    }
+  }
+  @include e(add){
+    padding-left: 15px;
+  }
+  @include e(add-key) {
+
+  }
+  @include e(add-keyitem){
+    padding: 5px;
+    cursor: pointer;
+    text-align: center;
+    &:hover{
+      background: $neutral-black-8;
+    }
+  }
+  & /deep/ .el-button--mini.is-circle{
+    padding: 4px;
+    border-radius: 3px;
+  }
+  @include e(title) {
+    line-height: 30px;
+    padding: 0 5px;
+    display: inline-block;
+    vertical-align: top;
+    text-align: right;
+  }
+  @include e(item) {
+    position: relative;
+    width: 100%;
+    margin-bottom: 5px;
+    padding: 5px;
+    @include when(array-item) {
+      padding: 10px;
+      border: $light-border;
+    }
+    & /deep/ .el-color-picker__trigger{
+      border: $light-border !important;
+    }
+  }
+  @include e(input) {
+    display: inline-block;
+    vertical-align: top;
+  }
+  @include e(row) {
+    padding: 5px;
+  }
+  @include when(dark) {
+    @include e(item) {
+      @include when(array-item) {
+        border: $dark-border;
+      }
+      & /deep/ .el-color-picker__trigger{
+        border: $dark-border !important;
+      }
+    }
+    & /deep/ .el-input__inner{
+      background-color: $--go-background-dark;
+      color: $--go-color-dark;
+      border: 1px solid $neutral-white-6;
+    }
+  }
+}
