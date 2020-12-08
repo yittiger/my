@@ -304,9 +304,9 @@
   </Diagram>
 </template>
 <script>
-  import {Diagram, StatusBar, grid, Toolbar, templateMap, circle, image, icon, link, theme} from '$ui/gojs'
+  import {Diagram, StatusBar, grid, Toolbar, templateMap, circle, image, icon, link, theme, group, force} from '$ui/gojs'
    const home = 'F M32 18.451l-16-12.42-16 12.42v-5.064l16-12.42 16 12.42zM28 18v12h-8v-8h-8v8h-8v-12l12-9z'
-   const categorys = [
+   const nodeCategorys = [
             {
               name: '默认',
               category: '',
@@ -384,7 +384,40 @@
                   name: '图片路径',
                   key: 'source',
                   type: 'string',
-                  labelWidth: 80
+                  labelWidth: 100
+                }
+              ]
+            }
+          ]
+const linkCategorys = [
+   {
+    name: '默认',
+    category: '',
+    keyArray: [
+      {
+        name: '链接颜色',
+        key: 'stroke',
+        type: 'color',
+        labelWidth: 100
+      }
+    ]
+  }
+]
+const groupCategorys = [
+            {
+              name: '默认',
+              category: '',
+              keyArray: [
+                {
+                  name: '标题',
+                  key: 'title',
+                  type: 'string'
+                },
+                {
+                  name: '是否展开',
+                  key: 'expand',
+                  type: 'boolean',
+                  labelWidth: 100
                 }
               ]
             }
@@ -398,15 +431,17 @@
     data() {
       return {
         nodes: [
+          {key: 1, isGroup: true, title: '相同兴趣圈子', expand: true},
           {
-            key: 1,
+            key: 2,
             category: '',
             fill: go.Brush.randomColor(),
             color: '#fff',
             text: '默认节点'
           },
           {
-            key: 2,
+            key: 3,
+            group: 1,
             category: 'icon',
             text: '图标节点',
             tags: [
@@ -418,7 +453,8 @@
             ]
           },
           {
-            key: 3,
+            key: 4,
+            group: 1,
             category: 'image',
             text: '图片节点',
             count: 10,
@@ -426,18 +462,43 @@
           }
         ],
         links: [
-          {from: 1, to: 2},
-          {from: 2, to: 3}
+          {from: 2, to: 3, stroke: go.Brush.randomColor()},
+          {from: 3, to: 4, stroke: go.Brush.randomColor()}
         ],
         inspectorProp: {
-          categorys
+          nodeCategorys,
+          linkCategorys,
+          groupCategorys
         }
       }
     },
     methods: {
       init(diagram) {
         diagram.nodeTemplateMap = this.createNodeMap()
-        diagram.linkTemplate = link({toArrow: true})
+        diagram.groupTemplate = group({
+            title: {
+              $bindings: {
+                text: 'title'
+              }
+            },
+            button: true,
+            layout: force(),
+            $bindings: {
+              isSubGraphExpanded: 'expand'
+            }
+          })
+        diagram.linkTemplate = link({
+          toArrow: { 
+            $bindings: [
+              'stroke',
+               new go.Binding('fill', 'stroke')
+               ] 
+            }, 
+          label: { 
+            $bindings: ['text']
+            },
+           line: { $bindings: ['stroke'] }
+           })
         setTimeout(() => {
          this.$refs.toolbar.$refs.inspector.handleClick()
       }, 1000)
@@ -488,9 +549,6 @@
       handleModelChange(e) {
         console.log('model change:', e)
       }
-    },
-    mounted() {
-    
     }
 
   }

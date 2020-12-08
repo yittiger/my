@@ -409,6 +409,9 @@ $dark-border: 1px solid $neutral-white-6;
   @include e(input) {
     display: inline-block;
     vertical-align: top;
+    & /deep/ .el-radio-group{
+      padding-top: 7px;
+    }
   }
   @include e(row) {
     padding: 5px;
@@ -426,6 +429,11 @@ $dark-border: 1px solid $neutral-white-6;
       background-color: $--go-background-dark;
       color: $--go-color-dark;
       border: 1px solid $neutral-white-6;
+    }
+    @include e(input) {
+      .el-radio{
+        color:  $--go-color-dark;
+      }
     }
   }
 }

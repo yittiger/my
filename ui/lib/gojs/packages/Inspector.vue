@@ -3,7 +3,7 @@
         <div class="test-inspector">
             <div class="my-go-inspector__row">
                 <div class="my-go-inspector__title" :style="`width: 80px;`">
-                    节点类型: 
+                    {{objectName}}类型: 
                 </div>
                 <span  class="my-go-inspector__input" :style="`width: calc(100% - 90px);`" >
                      <el-select v-model="currentCategory" @change="categoryChange"
@@ -25,6 +25,14 @@
 <script>
 import { cloneDeep } from '$ui/utils/util'
 import InspectorItem from './InspectorItem'
+import { go } from '$ui/gojs'
+const defaultCategoryConfig = [
+                            {
+                                name: '默认',
+                                category: '',
+                                keyArray: []
+                             }
+                         ]
 export default {
     name: 'Inspector',
     inject: ['myDiagram'],
@@ -32,22 +40,22 @@ export default {
         InspectorItem
     },
     props: {
-        categorys: {
+        nodeCategorys: {
             type: Array,
             default() {
-                return [
-                    {
-                    name: '默认',
-                    category: '',
-                    keyArray: [
-                          {
-                            name: '文本',
-                            key: 'text',
-                            type: 'string'
-                        }
-                    ]
-                  }
-                ]
+                return cloneDeep(defaultCategoryConfig)
+            }
+        },
+        linkCategorys: {
+            type: Array,
+            default() {
+                return cloneDeep(defaultCategoryConfig)
+            } 
+        },
+        groupCategorys: {
+            type: Array,
+            default() {
+                return cloneDeep(defaultCategoryConfig)
             }
         }
     },
@@ -58,147 +66,31 @@ export default {
             currentNode: null,
             currentNodeData: {},
             currentCategory: '',
-            // categorys: [
-            //     {
-            //         name: '默认',
-            //         category: '',
-            //         keyArray: [
-            //               {
-            //                 name: '文本',
-            //                 key: 'text',
-            //                 type: 'string'
-            //             },
-            //             {
-            //                 name: '颜色',
-            //                 key: 'fill',
-            //                 type: 'color'
-            //             }
-            //         ]
-            //     },
-            //     {
-            //         name: '图标',
-            //         category: 'icon',
-            //         keyArray: [
-            //             {
-            //                 name: '图标文本',
-            //                 key: 'text',
-            //                 type: 'string',
-            //                 labelWidth: 80
-            //             },
-            //             {
-            //                 name: '颜色',
-            //                 key: 'fill',
-            //                 type: 'color'
-            //             },
-            //              {
-            //                 name: '统计',
-            //                 key: 'count',
-            //                 type: 'number'
-            //             },
-            //               {
-            //                 name: '标签',
-            //                 key: 'tags',
-            //                 type: 'objectArray',
-            //                 children: [
-            //                     {
-            //                         name: '文本',
-            //                         key: 'label',
-            //                         type: 'select',
-            //                         options: [
-            //                             {
-            //                                 label: '男士',
-            //                                 value: '男士'
-            //                             }, {
-            //                                 label: '女士',
-            //                                 value: '女士'
-            //                             }
-            //                         ]
-            //                     },
-            //                     {
-            //                         name: '文字颜色',
-            //                         key: 'color',
-            //                         type: 'color',
-            //                         labelWidth: 80
-            //                     },
-            //                     {
-            //                         name: '背景色',
-            //                         key: 'background',
-            //                         type: 'color',
-            //                         labelWidth: 80
-            //                     }
-            //                 ]
-            //             }
-            //         ]
-            //     },
-            //     {
-            //         name: '图片',
-            //         category: 'image',
-            //         keyArray: [
-            //             {
-            //                 name: '图片路径',
-            //                 key: 'source',
-            //                 type: 'string',
-            //                 labelWidth: 80
-            //             },
-            //             {
-            //                 name: '图片文本',
-            //                 key: 'text',
-            //                 type: 'string'
-            //             },
-            //             {
-            //                 name: '颜色',
-            //                 key: 'fill',
-            //                 type: 'color'
-            //             },
-            //             {
-            //                 name: '统计',
-            //                 key: 'count',
-            //                 type: 'number'
-            //             },
-            //             {
-            //                 name: '标签',
-            //                 key: 'tags',
-            //                 type: 'objectArray',
-            //                 children: [
-            //                     {
-            //                         name: '文本',
-            //                         key: 'label',
-            //                         type: 'select',
-            //                         options: [
-            //                             {
-            //                                 label: '男士',
-            //                                 value: '男士'
-            //                             }, {
-            //                                 label: '女士',
-            //                                 value: '女士'
-            //                             }
-            //                         ]
-            //                     },
-            //                     {
-            //                         name: '文字颜色',
-            //                         key: 'color',
-            //                         type: 'color',
-            //                         labelWidth: 80
-            //                     },
-            //                     {
-            //                         name: '背景色',
-            //                         key: 'background',
-            //                         type: 'color',
-            //                         labelWidth: 80
-            //                     }
-            //                 ]
-            //             }
-            //         ]
-            //     }
-            // ],
+            currentNodeType: 'node',
             keyArray: []
         }
     },
     computed: {
+        categorys() {
+          if(this.currentNode instanceof go.Link) {
+                  return this.linkCategorys
+           } else if(this.currentNode instanceof go.Group) {
+                return this.groupCategorys
+           }
+            return this.nodeCategorys
+        },
         categoryOptions() {
-          return this.categorys.map(r => {
-              return { label: r.name, value: r.category}
-          })
+            return this.categorys.map(r => {
+                return { label: r.name, value: r.category}
+            })
+        },
+        objectName() {
+            if(this.currentNode instanceof go.Link) {
+                return '链接'
+            } else if(this.currentNode instanceof go.Group) {
+                return '分组'
+            }
+            return '节点'
         },
         classes() {
             return {
@@ -225,24 +117,26 @@ export default {
         if(selectNode) {
             this.currentNode = selectNode
             this.currentNodeData = cloneDeep(selectNode?.data)
-            this.setCategory(this.currentCategory)
+            this.setCategory()
         }
       },
       dataChange() {
           const model = this.myDiagram.diagram.model
           this.myDiagram.diagram.startTransaction('changeData')
           for(const name in this.currentNodeData) {
-              model.set(this.currentNode.data, name, cloneDeep(this.currentNodeData[name]))
+              if(!['isGroup', '__gohashid', 'key'].includes(name)) {
+                  model.set(this.currentNode.data, name, cloneDeep(this.currentNodeData[name]))
+              }
           }
           this.myDiagram.diagram.commitTransaction('changeData')
       },
       categoryChange(val) {
-          const model = this.myDiagram.diagram.model
-          this.myDiagram.diagram.startTransaction('changeCategory')
+            const model = this.myDiagram.diagram.model
+            this.myDiagram.diagram.startTransaction('changeCategory')
             this.$set(this.currentNodeData, 'category', val)
-            this.setCategory(this.currentNodeData)
+            this.setCategory()
             model.set(this.currentNode.data, 'category', val)
-          this.myDiagram.diagram.commitTransaction('changeCategory')
+            this.myDiagram.diagram.commitTransaction('changeCategory')
       },
       setCategory() {
           this.currentCategory = this.currentNodeData.category || ''
@@ -259,6 +153,7 @@ export default {
             this.currentNode = selection.first()
         } else {
             this.currentNode = this.myDiagram.diagram.nodes.first()
+            this.myDiagram.diagram.select(this.currentNode)
         }
         this.currentNodeData = cloneDeep(this.currentNode.data)
         this.setCategory()

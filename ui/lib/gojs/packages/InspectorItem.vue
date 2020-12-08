@@ -42,6 +42,12 @@
                             </el-option>
                     </el-select>
                 </template>
+                <template v-else-if="item.type === 'boolean'"  >
+                    <el-radio-group v-model="data[item.key]" @change="dataChange">
+                        <el-radio :label="true">是</el-radio>
+                        <el-radio :label="false">否</el-radio>
+                    </el-radio-group>
+                </template>
                 <template v-else-if="item.type === 'array'">
                     <div v-for="(it, idx) in data[item.key]" :key="idx">
                         <el-input v-model="data[item.key][idx]" size="mini" @change="dataChange"></el-input>
