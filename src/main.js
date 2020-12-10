@@ -77,6 +77,7 @@ const router = new Router({
 const access = new Access(Vue, {
   ...globalConfig.access,
   $router: router,
+  $store: store,
   progress
 })
 

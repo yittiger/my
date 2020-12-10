@@ -104,5 +104,10 @@
 </script>
 
 <style lang="scss">
+  @import "../../style/vars";
+
+  @include b(dv-menu) {
+    white-space: nowrap;
+  }
 
 </style>

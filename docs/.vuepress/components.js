@@ -219,7 +219,8 @@ module.exports = {
       header: '页头',
       border: '边框',
       adorn: '装饰',
-      icon: '图标'
+      icon: '图标',
+      menu: '菜单'
     },
     '图表': {
       line: '折线图',

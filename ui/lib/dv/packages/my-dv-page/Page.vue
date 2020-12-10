@@ -105,12 +105,13 @@
         return this.fit
           ? {
             width: '100%',
-            height: '100%'
+            height: '100%',
+            transform: 'translateX(-50%) translateY(-50%)'
           }
           : {
             width: `${this.width}px`,
             height: `${this.height}px`,
-            transform: `scaleX(${this.widthScale}) scaleY(${this.heightScale})`
+            transform: `scaleX(${this.widthScale}) scaleY(${this.heightScale}) translateX(-50%) translateY(-50%)`
           }
       }
     },
@@ -186,6 +187,8 @@
     transform-origin: 0 0;
     color: $--dv-font-color;
     font-size: 16px;
+    top: 50%;
+    left: 50%;
 
     @include e(wrapper) {
       margin: 0;
@@ -225,7 +228,7 @@
     width: 100%;
     height: 100vh;
     overflow: hidden;
-    background: $--dv-background;
+    background: #000;
 
     .my-master-app {
       overflow: hidden;

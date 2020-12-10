@@ -76,8 +76,9 @@
       padding: 0 10px;
       font-size: 20px;
       position: relative;
-      vertical-align: text-bottom;
+      vertical-align: top;
       display: inline-block;
+      font-weight: 600;
 
       .my-dv-box {
         position: static !important;

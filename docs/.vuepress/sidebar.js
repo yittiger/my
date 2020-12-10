@@ -253,7 +253,8 @@ module.exports = {
       'header',
       'border',
       'adorn',
-      'icon'
+      'icon',
+      'menu'
     ], false),
     createMenus('图表组件', [
       'line',

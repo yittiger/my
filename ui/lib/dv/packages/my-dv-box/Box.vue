@@ -23,6 +23,8 @@
      * @property {string} [height] 高度
      * @property {string} [left=0] 位置left
      * @property {string} [top=0] 位置top
+     * @property {string} [right=0] 位置right
+     * @property {string} [bottom=0] 位置bottom
      * @property {number} [zIndex] 层级
      * @property {string} [xAlign] 水平对齐方式，可选值：'left', 'right', 'center'
      * @property {string} [yAlign] 垂直对齐方式，可选值：'top', 'bottom', 'middle'
@@ -49,13 +51,13 @@
         default: 'auto'
       },
       left: {
-        type: [String, Number],
-        default: 0
+        type: [String, Number]
       },
       top: {
-        type: [String, Number],
-        default: 0
+        type: [String, Number]
       },
+      right: [String, Number],
+      bottom: [String, Number],
       zIndex: [Number, String],
       xAlign: {
         type: String,
@@ -102,7 +104,7 @@
       styles() {
         const {
           inline, margin, position, fit, width, height, left,
-          top, zIndex, zoom, scale, xAlign, yAlign, defaultWidth, defaultHeight
+          top, right, bottom, zIndex, zoom, scale, xAlign, yAlign, defaultWidth, defaultHeight
         } = this
         return {
           position: position ? 'absolute' : 'static',
@@ -111,6 +113,8 @@
           zoom,
           left: xAlign ? null : left,
           top: yAlign ? null : top,
+          right: xAlign ? null : right,
+          bottom: yAlign ? null : bottom,
           transform: scale ? `scale(${scale})` : null,
           display: inline ? 'inline-block' : 'block',
           opacity: this.opacity,
