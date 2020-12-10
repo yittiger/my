@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>packages/my-dv-indicator/Indicator.vue - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-$ui_dv_my-dv-bar.html">$ui/dv/my-dv-bar</a></li><li><a href="module-$ui_dv_my-dv-box.html">$ui/dv/my-dv-box</a></li><li><a href="module-$ui_dv_my-dv-fill.html">$ui/dv/my-dv-fill</a></li><li><a href="module-$ui_dv_my-dv-geo.html">$ui/dv/my-dv-geo</a></li><li><a href="module-$ui_dv_my-dv-icon.html">$ui/dv/my-dv-icon</a></li><li><a href="module-$ui_dv_my-dv-indicator.html">$ui/dv/my-dv-indicator</a></li><li><a href="module-$ui_dv_my-dv-line.html">$ui/dv/my-dv-line</a></li><li><a href="module-$ui_dv_my-dv-loading.html">$ui/dv/my-dv-loading</a></li><li><a href="module-$ui_dv_my-dv-page.html">$ui/dv/my-dv-page</a></li><li><a href="module-$ui_dv_my-dv-pictorial.html">$ui/dv/my-dv-pictorial</a></li><li><a href="module-$ui_dv_my-dv-pie.html">$ui/dv/my-dv-pie</a></li><li><a href="module-$ui_dv_my-dv-progress.html">$ui/dv/my-dv-progress</a></li><li><a href="module-$ui_dv_my-dv-radar.html">$ui/dv/my-dv-radar</a></li><li><a href="module-$ui_dv_my-dv-rank.html">$ui/dv/my-dv-rank</a></li><li><a href="module-$ui_dv_my-dv-ring.html">$ui/dv/my-dv-ring</a></li><li></li><li><a href="module-$ui_dv_my-dv-screen.html">$ui/dv/my-dv-screen</a></li><li><a href="module-$ui_dv_my-dv-starry.html">$ui/dv/my-dv-starry</a></li><li><a href="module-$ui_dv_my-dv-text.html">$ui/dv/my-dv-text</a></li><li><a href="module-$ui_dv_my-dv-title.html">$ui/dv/my-dv-title</a></li></ul><h3>Global</h3><ul><li><a href="global.html#darken">darken</a></li><li><a href="global.html#fade">fade</a></li><li><a href="global.html#getCircleRadianPoint">getCircleRadianPoint</a></li><li><a href="global.html#getColorByKeyword">getColorByKeyword</a></li><li><a href="global.html#getColorFromRgbValue">getColorFromRgbValue</a></li><li><a href="global.html#getOpacity">getOpacity</a></li><li><a href="global.html#getRgbaValue">getRgbaValue</a></li><li><a href="global.html#getRgbValue">getRgbValue</a></li><li><a href="global.html#getRgbValueFromHex">getRgbValueFromHex</a></li><li><a href="global.html#getRgbValueFromRgb">getRgbValueFromRgb</a></li><li><a href="global.html#lighten">lighten</a></li><li><a href="global.html#props">props</a></li><li><a href="global.html#toHex">toHex</a></li><li><a href="global.html#toRgb">toRgb</a></li><li><a href="global.html#validator">validator</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">packages/my-dv-indicator/Indicator.vue</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template>
+  &lt;Box class="my-dv-indicator"
+       v-bind="boxProps">
+    &lt;div class="my-dv-indicator__dots">
+      &lt;div v-for="(item,index) in screens"
+           :key="item._uid"
+           @click="change(index)"
+           class="my-dv-indicator__item"
+           :class="{'is-active':activeIndex===index}">&lt;/div>
+    &lt;/div>
+
+  &lt;/Box>
+&lt;/template>
+
+&lt;script>
+  /**
+   * 场景指示器组件
+   * @module $ui/dv/my-dv-indicator
+   */
+  import Box from '../my-dv-box'
+
+  export default {
+    name: 'MyDvIndicator',
+    components: {
+      Box
+    },
+    inheritAttrs: false,
+    inject: {
+      page: {default: null}
+    },
+    /**
+     * 属性参数
+     * @member props
+     * @property {string} [type=horizontal] 类型，可选 'horizontal', 'vertical'
+     * @property {number} [interval=10000] 自动切换间隔时间，单位毫秒
+     * @property {boolean} [auto] 开启自动切换
+     */
+    props: {
+      type: {
+        type: String,
+        default: 'horizontal',
+        validator() {
+          return ['horizontal', 'vertical']
+        }
+      },
+      interval: {
+        type: Number,
+        default: 10 * 1000
+      },
+      auto: Boolean
+    },
+    computed: {
+      screens() {
+        return this.page?.screens || []
+      },
+      activeIndex() {
+        return this.page?.screenActiveIndex
+      },
+      boxProps() {
+        const map = {
+          horizontal: {
+            width: '100%',
+            height: '40px',
+            xAlign: 'center',
+            yAlign: 'bottom'
+          },
+          vertical: {
+            width: '40px',
+            height: '100%',
+            xAlign: 'right',
+            yAlign: 'middle'
+          }
+        }
+        return {
+          ...map[this.type],
+          ...this.$attrs
+        }
+      }
+    },
+    methods: {
+      change(index) {
+        if (this.page) {
+          this.page.screenActiveIndex = Math.abs(index % this.screens.length)
+        }
+      },
+      autoChange() {
+        clearInterval(this.timer)
+        let index = this.activeIndex
+        this.timer = setInterval(() => {
+          this.change(++index)
+        }, this.interval)
+      }
+    },
+    mounted() {
+      this.auto &amp;&amp; this.autoChange()
+    },
+    beforeDestroy() {
+      clearInterval(this.timer)
+    }
+  }
+&lt;/script>
+
+&lt;style lang="scss">
+  @import "../../style/vars";
+
+  @include b(dv-indicator) {
+    pointer-events: none;
+    @include e(dots) {
+      text-align: center;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+    @include e(item) {
+      pointer-events: auto;
+      width: 14px;
+      height: 14px;
+      font-size: 0;
+      display: inline-block;
+      border-radius: 100%;
+      background: rgba(255, 255, 255, 0.3);
+      margin: 6px 8px;
+      cursor: pointer;
+      box-shadow: $--dv-shadow-light;
+      &amp;:hover {
+        background: rgba(255, 255, 255, 0.6);
+      }
+      @include when(active) {
+        background: $--dv-primary;
+        opacity: 0.8;
+      }
+    }
+  }
+&lt;/style>
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Tue Nov 17 2020 17:07:28 GMT+0800 (GMT+08:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?c4e5f73318b5cb0c389e3d9a05f831cc";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</body>
+</html>
