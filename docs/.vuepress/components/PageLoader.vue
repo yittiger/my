@@ -2,7 +2,7 @@
   <Demo toggleText="安装命令">
     <div class="page-loader">
       <ClientOnly>
-        <component v-if="component" :is="component"></component>
+        <component v-if="component" :is="component" v-bind="options"></component>
         <div class="page-loader__loading" v-if="!component">正在努力加载中...</div>
       </ClientOnly>
     </div>
@@ -17,7 +17,8 @@
     name: 'PageLoader',
     props: {
       page: String,
-      local: String
+      local: String,
+      options: Object
     },
     data() {
       return {

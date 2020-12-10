@@ -16,7 +16,9 @@ export default function ({colors, textColor, dark, light, fill}) {
       '#722ed1'
     ],
     backgroundColor: 'transparent',
-    textStyle: {},
+    textStyle: {
+      fontSize: 16
+    },
     title: {
       textStyle: {
         color: textColor
@@ -33,11 +35,11 @@ export default function ({colors, textColor, dark, light, fill}) {
       },
       lineStyle: {
         normal: {
-          width: 2
+          width: 4
         }
       },
-      symbolSize: 5,
-      symbol: 'emptyCircle',
+      symbolSize: 8,
+      symbol: 'circle',
       smooth: true
     },
     radar: {

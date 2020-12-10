@@ -194,7 +194,7 @@ c242.8,0,554.3,0,554.3,0S641.6,21.6,641.6,24.3z"/>
       width: 100%;
       top: 0;
       text-align: left;
-      font-size: 56px;
+      font-size: 46px;
       line-height: 90px;
       font-weight: 600;
       margin-left: 40px;

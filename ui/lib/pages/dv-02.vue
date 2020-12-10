@@ -1,5 +1,5 @@
 <template>
-  <my-dv-page>
+  <my-dv-page v-bind="$attrs">
     <my-dv-header6>
       <my-dv-title type="primary" strong shadow>数据可视化大屏页面</my-dv-title>
     </my-dv-header6>

@@ -289,7 +289,8 @@ module.exports = {
     'form',
     'search-list',
     'list',
-    'profile'
+    'profile',
+    'dv'
   ],
   '/guide/': [
     createMenus('开发指南', [
