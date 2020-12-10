@@ -154,13 +154,19 @@ export default {
      * @method modify
      * @param {function} [callback] 编辑结束时回调函数
      */
-    modify(callback) {
+    modify(callback, target) {
       if (!this.layer) return
       const map = this.myMap.map
-      const source = this.layer.getSource()
+      let source = this.layer.getSource()
       const style = this.getStyle(this.brush)
+      let features
+      if (target) {
+        source = null
+        features = target
+      }
       const modify = new Modify({
         ...this.options,
+        features,
         source,
         style
       });
