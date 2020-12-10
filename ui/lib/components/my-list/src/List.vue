@@ -377,6 +377,7 @@
         if (this.mode === 'scroll') {
           this.list = []
           this.scrollTop(0)
+          this.currentPage = 1
         }
         this.load()
       },
