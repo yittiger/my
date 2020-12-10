@@ -3,7 +3,7 @@
     <my-dv-header6>
       <my-dv-title type="primary" strong shadow>数据可视化大屏页面</my-dv-title>
     </my-dv-header6>
-    <my-dv-menu :data="menus" :defaultActive="defaultMenuActive" right="20px" top="15px"></my-dv-menu>
+    <my-dv-menu :data="menus" :defaultActive="defaultMenuActive" right="0" top="15px"></my-dv-menu>
     <my-dv-border6 v-for="(item,index) in stats"
                    :key="index"
                    top="120px"
@@ -20,14 +20,14 @@
                    top="260px"
                    left="40px"
                    height="calc((100% - 340px)/2)">
-      <my-dv-title :level="6" :opacity="0.8" strong left="20px" top="20px">接入机型占比</my-dv-title>
+      <my-dv-title :level="6" :opacity="0.8" strong left="20px" top="10px">接入机型占比</my-dv-title>
       <my-dv-ring fit :columns="pie.columns" :rows="pie.rows" legend="v" :radius="60" label></my-dv-ring>
     </my-dv-border6>
     <my-dv-border6 width="calc((100% - 120px)/2)"
                    top="260px"
                    right="40px"
                    height="calc((100% - 340px)/2)">
-      <my-dv-title :level="6" :opacity="0.8" strong left="20px" top="20px">存储</my-dv-title>
+      <my-dv-title :level="6" :opacity="0.8" strong left="20px" top="10px">存储</my-dv-title>
       <my-dv-progress width="33%"
                       height="100%"
                       title="Hdfs"
@@ -58,7 +58,7 @@
                    bottom="40px"
                    left="40px"
                    height="calc((100% - 340px)/2)">
-      <my-dv-title :level="6" :opacity="0.8" strong left="20px" top="20px">30天日均线流量趋势</my-dv-title>
+      <my-dv-title :level="6" :opacity="0.8" strong left="20px" top="10px">30天日均线流量趋势</my-dv-title>
       <my-dv-line top="40px" height="calc(100% - 40px)" width="100%" :loader="daysLoader" :extend="lineExtend" area
                   rotate></my-dv-line>
     </my-dv-border6>
@@ -66,7 +66,7 @@
                    bottom="40px"
                    right="40px"
                    height="calc((100% - 340px)/2)">
-      <my-dv-title :level="6" :opacity="0.8" strong left="20px" top="20px">集群性能</my-dv-title>
+      <my-dv-title :level="6" :opacity="0.8" strong left="20px" top="10px">集群性能</my-dv-title>
       <my-dv-line top="20px" height="calc(100% - 20px)" width="100%" :loader="hourLoader" :extend="lineExtend"
                   legend rotate></my-dv-line>
     </my-dv-border6>
