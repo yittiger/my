@@ -87,7 +87,7 @@
     },
     methods: {
       show(position) {
-        const coordinate = position || this.position
+        const coordinate = position || this.$refs.html.position
         this.$refs.html.setPosition(coordinate)
         this.$emit('show', coordinate)
       },
