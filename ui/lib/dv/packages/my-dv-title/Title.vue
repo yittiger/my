@@ -107,6 +107,10 @@
     @include type(secondary, $--dv-text-normal);
     @include type(placeholder, $--dv-text-secondary);
 
+    @include e(icon) {
+      margin-right: 0.5em;
+      vertical-align: bottom !important;
+    }
 
   }
 

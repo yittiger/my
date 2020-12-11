@@ -40,3 +40,23 @@
 </script>
 ```
 :::
+
+### 模板三
+:::demo
+```html
+<template>
+  <div style="height:600px">
+    <Dv03 target="parent" lock></Dv03>
+ </div>
+</template>
+<script>
+  import Dv03 from '$ui/pages/dv-03'
+  export default {
+    components: {
+      Dv03
+    }
+  }
+</script>
+```
+:::
+

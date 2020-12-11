@@ -46,7 +46,7 @@
 <script>
   /**
    * 列表
-   * @module: $ui/dv/my-dv-list
+   * @module $ui/dv/my-dv-list
    */
   import Box from '../my-dv-box'
   import ListColGroup from './ColGroup'
@@ -92,6 +92,7 @@
       },
       border: Boolean,
       radius: Boolean,
+      background: Boolean,
       scroll: [Boolean, Object]
     },
     data() {
@@ -112,7 +113,8 @@
           'is-border': this.border,
           'is-radius': this.radius,
           'is-no-header': !this.header,
-          'is-odd': this.rows.length % 2 === 0
+          'is-odd': this.rows.length % 2 === 0,
+          'is-no-background': !this.background
         }
       },
       bodyStyle() {
@@ -123,7 +125,7 @@
       scrollProps() {
         return {
           disabled: !this.scroll,
-          speed: 1,
+          speed: 0.5,
           ...this.scroll
         }
       },
@@ -253,6 +255,15 @@
         tr:nth-child(even) {
           background: $--dv-color-table-stripe;
         }
+      }
+    }
+
+    @include when(no-background) {
+      @include e(body-wrapper) {
+        background: transparent;
+      }
+      @include e(header) {
+        background: transparent;
       }
     }
 

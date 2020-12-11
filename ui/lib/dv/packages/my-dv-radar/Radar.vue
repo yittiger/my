@@ -68,9 +68,10 @@
           color: this.colors,
           radar: {
             shape: this.circle ? 'circle' : null,
+            radius: '60%',
             name: {
               textStyle: {
-                fontSize: 22,
+                fontSize: 16,
                 color: textColor,
                 padding: [3, 5]
               }

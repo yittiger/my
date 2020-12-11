@@ -6,3 +6,6 @@
 
 ## 模板 02
 <PageLoader page="dv-02" local="dv-02" :options="{target:'parent', lock:true}"></PageLoader>
+
+## 模板 03
+<PageLoader page="dv-03" local="dv-03" :options="{target:'parent', lock:true}"></PageLoader>
