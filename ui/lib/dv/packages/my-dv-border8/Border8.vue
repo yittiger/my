@@ -2,6 +2,7 @@
   <Box class="my-dv-border-8"
        default-width="400px"
        default-height="300px"
+       padding="0"
        :class="classes"
        v-bind="$attrs">
     <svg class="my-dv-border__svg" :width="width" :height="height" :style="styles">
@@ -121,7 +122,7 @@
       <rect x="0" y="0" :width="width" :height="height" :fill="`url(#gradient-${_uid})`" :mask="`url(#mask-${_uid})`"/>
 
     </svg>
-    <BoxContent>
+    <BoxContent :padding="$attrs.padding">
       <slot></slot>
     </BoxContent>
   </Box>

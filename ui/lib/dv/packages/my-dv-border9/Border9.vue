@@ -2,6 +2,7 @@
   <Box class="my-dv-border-9"
        default-width="400px"
        default-height="300px"
+       padding="0"
        :class="classes"
        v-bind="$attrs">
     <svg class="my-dv-border__svg" :width="width" :height="height" :style="svgStyle">
@@ -23,7 +24,7 @@
         points="40, 0 5, 0 0, 5 0, 16 3, 19 3, 7 7, 3 35, 3"
       />
     </svg>
-    <BoxContent>
+    <BoxContent :padding="$attrs.padding">
       <slot></slot>
     </BoxContent>
   </Box>

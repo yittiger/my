@@ -16,6 +16,14 @@
   export default {
     name: 'MyDvBox',
     inheritAttrs: false,
+    provide() {
+      return {
+        layoutVm: this.layout ? this : null
+      }
+    },
+    inject: {
+      layoutVm: {default: null}
+    },
     /**
      * 属性参数
      * @member props
@@ -35,9 +43,15 @@
      * @property {boolean} [visible=true] 是否可见
      * @property {boolean} [position=true] 开启定位，如果为false， left、top 参数失效
      * @property {string} [margin] 外边距
+     * @property {string} [padding] 内边距, 子组件需要position=false才有效
      * @property {boolean} [inline] 内联模式，position=false才有效
      * @property {number} [opacity=1] 透明度
      * @property {boolean} [shadow] 阴影
+     * @property {boolean} [layout] 开启布局
+     * @property {number} [weight=1] 排版占比，layout=true有效
+     * @property {number} [gap=0] 间距，layout=true有效
+     * @property {string} [direction=row] 排版方向，可选 'row', 'column'， layout=true有效
+     * @property {boolean} [free] 不受父布局控制
      */
     props: {
       width: String,
@@ -93,21 +107,67 @@
         default: true
       },
       margin: String,
+      padding: String,
       inline: Boolean,
       opacity: {
         type: Number,
         default: 1
       },
-      shadow: Boolean
+      shadow: Boolean,
+      layout: Boolean,
+      weight: {
+        type: Number,
+        default: 1
+      },
+      gap: {
+        type: Number,
+        default: 0
+      },
+      direction: {
+        type: String,
+        default: 'row',
+        validator(v) {
+          return ['row', 'column'].includes(v)
+        }
+      },
+      free: Boolean
+    },
+    data() {
+      return {
+        boxes: []
+      }
     },
     computed: {
+      layoutSize() {
+        const {weight, layoutVm, free} = this
+        if (layoutVm && !free) {
+          const {gap, direction, total, boxCount, boxes} = layoutVm
+          const index = boxes.findIndex(n => n === this)
+          const gapCount = boxCount - 1
+          const size = `(100% - ${gap * gapCount}px) * ${weight} / ${total}`
+          const diffWeight = boxes.filter((n, i) => i < index).reduce((t, n) => (t + n.weight), 0)
+          const diffLen = `(100% - ${gap * gapCount}px) * ${diffWeight} / ${total} +  ${index * gap}px`
+          if (direction === 'row') {
+            return {
+              height: `calc(${size})`,
+              top: `calc(${diffLen})`
+            }
+          } else {
+            return {
+              width: `calc(${size})`,
+              left: `calc(${diffLen})`
+            }
+          }
+        }
+        return null
+      },
       styles() {
         const {
-          inline, margin, position, fit, width, height, left,
+          inline, margin, padding, position, fit, width, height, left,
           top, right, bottom, zIndex, zoom, scale, xAlign, yAlign, defaultWidth, defaultHeight
         } = this
         return {
-          position: position ? 'absolute' : 'static',
+          position: position ? 'absolute' : 'relative',
           width: fit ? '100%' : width || defaultWidth,
           height: fit ? '100%' : height || defaultHeight,
           zoom,
@@ -119,7 +179,9 @@
           display: inline ? 'inline-block' : 'block',
           opacity: this.opacity,
           margin,
-          zIndex
+          padding,
+          zIndex,
+          ...this.layoutSize
         }
       },
       classes() {
@@ -130,6 +192,30 @@
           'is-center-middle': this.xAlign === 'center' && this.yAlign === 'middle',
           [`is-content-align-${this.contentAlign}`]: !!this.contentAlign
         }
+      },
+      total() {
+        return this.boxes.reduce((t, n) => (t + n.weight), 0)
+      },
+      boxCount() {
+        return this.boxes.length
+      }
+    },
+    methods: {
+      registerBox(box) {
+        this.boxes.push(box)
+      },
+      unregisterBox(box) {
+        this.boxes = this.boxes.filter(n => n !== box)
+      }
+    },
+    created() {
+      if (this.layoutVm && !this.free) {
+        this.layoutVm.registerBox(this)
+      }
+    },
+    beforeDestroy() {
+      if (this.layoutVm && !this.free) {
+        this.layoutVm.unregisterBox(this)
       }
     }
   }
@@ -140,7 +226,7 @@
 
   @include b(dv-box) {
     position: absolute;
-    text-align: left;
+    text-align: inherit;
     display: inline-block;
 
     @include when(shadow) {

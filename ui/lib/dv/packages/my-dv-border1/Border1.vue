@@ -3,6 +3,7 @@
        default-width="400px"
        default-height="300px"
        :class="classes"
+       padding="0"
        v-bind="$attrs">
     <svg class="my-dv-border__svg" :width="width" :height="height" :style="styles">
       <polygon :fill="fill" :points="`10, 27 10, ${height - 27} 13, ${height - 24} 13, ${height - 21} 24, ${height - 11}
@@ -59,7 +60,7 @@
         />
       </polygon>
     </svg>
-    <BoxContent>
+    <BoxContent :padding="$attrs.padding">
       <slot></slot>
     </BoxContent>
   </Box>

@@ -1,12 +1,22 @@
-<template functional>
-  <div class="my-dv-content">
+<template>
+  <div class="my-dv-content" :style="styles">
     <slot></slot>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'MyDvContent'
+    name: 'MyDvContent',
+    props: {
+      padding: String
+    },
+    computed: {
+      styles() {
+        return {
+          padding: this.padding
+        }
+      }
+    }
   }
 </script>
 

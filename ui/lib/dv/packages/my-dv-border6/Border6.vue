@@ -2,6 +2,7 @@
   <Box class="my-dv-border-6"
        default-width="400px"
        default-height="300px"
+       padding="0"
        :class="classes"
        v-bind="$attrs">
     <svg class="my-dv-border__svg" :width="width" :height="height" :style="svgStyle">
@@ -18,7 +19,7 @@
       <polyline class="line-width-5" :stroke="light" :points="`0, ${height - 10} 0, ${height} 10, ${height}`"/>
 
     </svg>
-    <BoxContent>
+    <BoxContent :padding="$attrs.padding">
       <slot></slot>
     </BoxContent>
   </Box>

@@ -2,7 +2,9 @@
   <Box class="my-dv-border-2"
        default-width="400px"
        default-height="300px"
-       :class="classes" v-bind="$attrs">
+       padding="0"
+       :class="classes"
+       v-bind="$attrs">
     <svg class="my-dv-border__svg" :width="width" :height="height" :style="styles">
       <polygon :fill="fill" :points="`
         7, 7 ${width - 7}, 7 ${width - 7}, ${height - 7} 7, ${height - 7}
@@ -22,7 +24,7 @@
       <circle :fill="light" :cx="width - 11" :cy="height - 11" r="1"/>
       <circle :fill="light" cx="11" :cy="height - 11" r="1"/>
     </svg>
-    <BoxContent>
+    <BoxContent :padding="$attrs.padding">
       <slot></slot>
     </BoxContent>
   </Box>

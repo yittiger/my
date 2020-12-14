@@ -371,7 +371,7 @@
     mixins: [Header]
   }
 </script>
-s
+
 <style lang="scss">
   @import "../../style/vars";
 
