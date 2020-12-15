@@ -2,7 +2,7 @@
   <Dv></Dv>
 </template>
 <script>
-  import Dv from '$ui/pages/dv-03'
+  import Dv from '$ui/pages/dv-05'
 
   export default {
     components: {

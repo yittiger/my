@@ -1,8 +1,9 @@
 <template>
   <my-dv-page v-bind="$attrs">
-    <my-dv-header2>
-      <my-dv-title type="primary" strong shadow x-align="center">数据可视化大屏页面</my-dv-title>
-    </my-dv-header2>
+    <my-dv-adorn5 top="50px" width="800px" x-align="center"></my-dv-adorn5>
+    <my-dv-adorn8 left="0px" height="60px"></my-dv-adorn8>
+    <my-dv-adorn8 right="0px" height="60px" reverse></my-dv-adorn8>
+    <my-dv-title :level="2" top="20px" type="primary" strong shadow x-align="center">数据可视化大屏页面</my-dv-title>
 
     <my-dv-box layout :gap="10" top="100px" width="calc(100% - 20px)" height="calc(100% - 110px)" x-align="center">
       <my-dv-box layout direction="column" :gap="10" :weight="3" width="100%">

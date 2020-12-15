@@ -79,3 +79,22 @@
 </script>
 ```
 :::
+
+### 模板五
+:::demo
+```html
+<template>
+  <div style="height:600px">
+    <Dv05 target="parent" lock></Dv05>
+ </div>
+</template>
+<script>
+  import Dv05 from '$ui/pages/dv-05'
+  export default {
+    components: {
+      Dv05
+    }
+  }
+</script>
+```
+:::
