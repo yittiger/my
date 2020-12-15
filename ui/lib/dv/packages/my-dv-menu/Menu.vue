@@ -9,7 +9,7 @@
                   :text="item.text"
                   :width="item.width"
                   :height="svgHeight"
-                  @click.native="handleClick(item, index)"
+                  @click.native.stop="handleClick(item, index)"
                   :active="(item.key && item.key ===defaultActive) || index ===defaultActive"
                   :light="light"
                   :dark="dark"

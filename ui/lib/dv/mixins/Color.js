@@ -6,7 +6,7 @@ export default {
     color: {
       type: String,
       default() {
-        return this?.page?.settings?.color || '#1890FF'
+        return this?.page?.settings?.color || '#1de2ff'
       }
     }
   },

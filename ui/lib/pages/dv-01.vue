@@ -1,81 +1,75 @@
 <template>
   <my-dv-page v-bind="$attrs">
     <my-dv-starry :opacity="0.4"></my-dv-starry>
-    <my-dv-header4>数据可视化大屏</my-dv-header4>
-    <my-dv-date tick :level="5" right="20px" top="15px" type="primary"></my-dv-date>
-    <my-dv-border12 left="10px"
-                    top="100px"
-                    width="25%"
-                    height="calc((100% - 130px)/3)"
-                    fill="rgba(255,255,255,0.05)">
-      <my-dv-adorn7 :level="6" :zoom="0.9" x-align="center" top="15px">数据模块标题</my-dv-adorn7>
-      <my-dv-bar top="15px" fit :columns="barChart.columns" :rows="barChart.rows"></my-dv-bar>
-    </my-dv-border12>
-    <my-dv-border12 left="10px"
-                    top="calc((100% - 130px)/3 + 110px)"
-                    width="25%"
-                    fill="rgba(255,255,255,0.05)"
-                    height="calc((100% - 130px)/3)">
-      <my-dv-adorn7 :level="6" :zoom="0.9" x-align="center" top="15px">数据模块标题</my-dv-adorn7>
-      <my-dv-bar top="20px" fit :columns="stackBar.columns" :rows="stackBar.rows" :settings="stackBar.settings"
-                 legend></my-dv-bar>
-    </my-dv-border12>
-    <my-dv-border12 left="10px"
-                    top="calc((100% - 130px) * 2 /3 + 120px)"
-                    width="25%"
-                    fill="rgba(255,255,255,0.05)"
-                    height="calc((100% - 130px)/3)">
-      <my-dv-adorn7 :level="6" :zoom="0.9" x-align="center" top="15px">数据模块标题</my-dv-adorn7>
-      <my-dv-pie top="20px" fit :columns="rosePie.columns" :rows="rosePie.rows" rose></my-dv-pie>
-    </my-dv-border12>
+    <my-dv-header4>
+      <my-dv-title type="primary" strong shadow x-align="center">数据可视化大屏</my-dv-title>
+    </my-dv-header4>
 
-    <my-dv-border12 right="10px"
-                    top="100px"
-                    width="25%"
-                    fill="rgba(255,255,255,0.05)"
-                    height="calc((100% - 130px)/3)">
-      <my-dv-adorn7 :level="6" :zoom="0.9" x-align="center" top="15px">数据模块标题</my-dv-adorn7>
-      <my-dv-ring top="20px" fit :columns="ringPie.columns" :rows="ringPie.rows" label></my-dv-ring>
-    </my-dv-border12>
-    <my-dv-border12 right="10px"
-                    top="calc((100% - 130px)/3 + 110px)"
-                    width="25%"
-                    fill="rgba(255,255,255,0.05)"
-                    height="calc((100% - 130px)/3)">
-      <my-dv-adorn7 :level="6" :zoom="0.9" x-align="center" top="15px">数据模块标题</my-dv-adorn7>
-
-      <my-dv-line top="20px" fit :columns="stackLine.columns" :rows="stackLine.rows" legend
-                  :settings="stackLine.settings"></my-dv-line>
-    </my-dv-border12>
-    <my-dv-border12 right="10px"
-                    top="calc((100% - 130px) * 2 /3 + 120px)"
-                    width="25%"
-                    fill="rgba(255,255,255,0.05)"
-                    height="calc((100% - 130px)/3)">
-      <my-dv-adorn7 :level="6" :zoom="0.9" x-align="center" top="15px">数据模块标题</my-dv-adorn7>
-      <my-dv-pictorial top="20px" fit :loader="pictorialLoader" :symbol="pictorialSymbol"></my-dv-pictorial>
-    </my-dv-border12>
-    <my-dv-border12 x-align="center" width="calc(50% - 40px)" top="100px" height="calc(100% - 110px)"
-                    fill="rgba(255,255,255,0.05)">
-      <my-dv-geo fit
-                 ref="geo"
-                 :extend="map.extend"
-                 :visual="null"
-                 :json="map.json"
-                 :coords="map.coords"
-                 :loader="mapLoader"
-                 :type="map.type"
-                 :typeHelper="mapTypeHelper"
-                 :dataHelper="mapDataHelper"></my-dv-geo>
-      <my-dv-box width="50%" top="20px">
-        <my-dv-number :value="1322333" background :zoom="1.2" x-align="center" suffix="元"></my-dv-number>
-        <my-dv-title :level="6" type="secondary" x-align="center" top="80px">总收入情况</my-dv-title>
+    <my-dv-box layout direction="column" :gap="10" top="90px" width="calc(100% - 20px)"
+               height="calc(100% - 100px)"
+               x-align="center">
+      <my-dv-box layout :gap="10" height="100%">
+        <my-dv-border12 width="100%" fill="rgba(255,255,255,0.05)">
+          <my-dv-adorn7 :level="6" x-align="center" top="10px">数据模块标题</my-dv-adorn7>
+          <my-dv-loading v-if="loading"></my-dv-loading>
+          <my-dv-bar v-else top="15px" fit :columns="barChart.columns" :rows="barChart.rows"></my-dv-bar>
+        </my-dv-border12>
+        <my-dv-border12 width="100%" fill="rgba(255,255,255,0.05)">
+          <my-dv-adorn7 :level="6" x-align="center" top="10px">数据模块标题</my-dv-adorn7>
+          <my-dv-loading v-if="loading"></my-dv-loading>
+          <my-dv-bar v-else top="20px" fit :columns="stackBar.columns" :rows="stackBar.rows"
+                     :settings="stackBar.settings"
+                     legend></my-dv-bar>
+        </my-dv-border12>
+        <my-dv-border12 width="100%" fill="rgba(255,255,255,0.05)">
+          <my-dv-adorn7 :level="6" x-align="center" top="10px">数据模块标题</my-dv-adorn7>
+          <my-dv-loading v-if="loading"></my-dv-loading>
+          <my-dv-pie v-else top="20px" fit :columns="rosePie.columns" :rows="rosePie.rows" rose></my-dv-pie>
+        </my-dv-border12>
       </my-dv-box>
-      <my-dv-box width="50%" right="0" top="20px">
-        <my-dv-number :value="102342" background :zoom="1.2" x-align="center" suffix="元"></my-dv-number>
-        <my-dv-title :level="6" type="secondary" x-align="center" top="80px">总支出情况</my-dv-title>
+      <my-dv-border12 height="100%" :weight="2" fill="rgba(255,255,255,0.05)">
+        <my-dv-box layout direction="column" top="20px" width="100%">
+          <my-dv-box height="100px">
+            <my-dv-number :value="1322333" background :zoom="1.2" x-align="center" suffix="元"></my-dv-number>
+            <my-dv-title :level="6" type="secondary" x-align="center" top="70px">总收入情况</my-dv-title>
+          </my-dv-box>
+          <my-dv-box height="100px">
+            <my-dv-number :value="102342" background :zoom="1.2" x-align="center" suffix="元"></my-dv-number>
+            <my-dv-title :level="6" type="secondary" x-align="center" top="70px">总支出情况</my-dv-title>
+          </my-dv-box>
+        </my-dv-box>
+        <my-dv-loading v-if="loading"></my-dv-loading>
+        <my-dv-geo v-else
+                   fit
+                   ref="geo"
+                   :extend="map.extend"
+                   :visual="null"
+                   :json="map.json"
+                   :coords="map.coords"
+                   :loader="mapLoader"
+                   :type="map.type"
+                   :typeHelper="mapTypeHelper"
+                   :dataHelper="mapDataHelper"></my-dv-geo>
+      </my-dv-border12>
+      <my-dv-box layout :gap="10" height="100%">
+        <my-dv-border12 width="100%" fill="rgba(255,255,255,0.05)">
+          <my-dv-adorn7 :level="6" x-align="center" top="10px">数据模块标题</my-dv-adorn7>
+          <my-dv-loading v-if="loading"></my-dv-loading>
+          <my-dv-ring v-else top="20px" fit :columns="ringPie.columns" :rows="ringPie.rows" label></my-dv-ring>
+        </my-dv-border12>
+        <my-dv-border12 width="100%" fill="rgba(255,255,255,0.05)">
+          <my-dv-adorn7 :level="6" x-align="center" top="10px">数据模块标题</my-dv-adorn7>
+          <my-dv-loading v-if="loading"></my-dv-loading>
+          <my-dv-line v-else top="20px" fit :columns="stackLine.columns" :rows="stackLine.rows" legend
+                      :settings="stackLine.settings"></my-dv-line>
+        </my-dv-border12>
+        <my-dv-border12 width="100%" fill="rgba(255,255,255,0.05)">
+          <my-dv-adorn7 :level="6" x-align="center" top="10px">数据模块标题</my-dv-adorn7>
+          <my-dv-loading v-if="loading"></my-dv-loading>
+          <my-dv-pictorial v-else top="20px" fit :loader="pictorialLoader" :symbol="pictorialSymbol"></my-dv-pictorial>
+        </my-dv-border12>
       </my-dv-box>
-    </my-dv-border12>
+    </my-dv-box>
   </my-dv-page>
 </template>
 <script>
@@ -168,7 +162,8 @@
             tooltip: null
           },
           type: {size: 'effectScatter', line: 'lines'}
-        }
+        },
+        loading: true
       }
     },
     methods: {
@@ -260,6 +255,11 @@
           }
         }
       }
+    },
+    mounted() {
+      setTimeout(() => {
+        this.loading = false
+      }, 500)
     }
   }
 </script>

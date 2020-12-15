@@ -60,3 +60,22 @@
 ```
 :::
 
+
+### 模板四
+:::demo
+```html
+<template>
+  <div style="height:600px">
+    <Dv04 target="parent" lock></Dv04>
+ </div>
+</template>
+<script>
+  import Dv04 from '$ui/pages/dv-04'
+  export default {
+    components: {
+      Dv04
+    }
+  }
+</script>
+```
+:::

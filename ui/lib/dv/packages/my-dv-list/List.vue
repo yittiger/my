@@ -194,11 +194,12 @@
 
     td, th {
       padding: 8px 10px;
+      text-align: left;
     }
 
     @include e(header) {
       background: $--dv-color-table-header;
-
+      color: $--dv-text-normal;
       th {
         border-bottom: transparent !important;
       }

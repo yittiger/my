@@ -4,72 +4,72 @@
       <my-dv-title type="primary" strong shadow>数据可视化大屏页面</my-dv-title>
     </my-dv-header6>
     <my-dv-menu :data="menus" :defaultActive="defaultMenuActive" right="0" top="15px"></my-dv-menu>
-    <my-dv-border6 v-for="(item,index) in stats"
-                   :key="index"
-                   top="120px"
-                   width="calc((100% - 240px)/5)"
-                   height="100px"
-                   :left="`calc((100% - 240px) * ${index}/5 + (${index} + 1) * 40px)`">
-      <my-dv-icon :icon="{name:item.icon,svg:true}" :size="65" :opacity="0.4" left="20px" type="primary"
-                  top="15px"></my-dv-icon>
-      <my-dv-number :value="item.value" left="100px" top="10px"></my-dv-number>
-      <my-dv-text :level="3" left="100px" top="60px" :opacity="0.7">{{item.label}}</my-dv-text>
-    </my-dv-border6>
 
-    <my-dv-border6 width="calc((100% - 120px)/2)"
-                   top="260px"
-                   left="40px"
-                   height="calc((100% - 340px)/2)">
-      <my-dv-title :level="6" :opacity="0.8" strong left="20px" top="10px">接入机型占比</my-dv-title>
-      <my-dv-ring fit :columns="pie.columns" :rows="pie.rows" legend="v" :radius="60" label></my-dv-ring>
-    </my-dv-border6>
-    <my-dv-border6 width="calc((100% - 120px)/2)"
-                   top="260px"
-                   right="40px"
-                   height="calc((100% - 340px)/2)">
-      <my-dv-title :level="6" :opacity="0.8" strong left="20px" top="10px">存储</my-dv-title>
-      <my-dv-progress width="33%"
-                      height="100%"
-                      title="Hdfs"
-                      x-align="left"
-                      :font-size="20"
-                      :radius="60"
-                      y-align="middle"
-                      :value="10"
-                      :color="1"></my-dv-progress>
-      <my-dv-progress width="33%"
-                      height="100%"
-                      title="Rdbms"
-                      x-align="center"
-                      y-align="middle"
-                      :font-size="20"
-                      :value="30"
-                      :color="2"></my-dv-progress>
-      <my-dv-progress width="33%"
-                      height="100%"
-                      title="Rdies"
-                      x-align="right"
-                      y-align="middle"
-                      :font-size="20"
-                      :value="87"
-                      :color="3"></my-dv-progress>
-    </my-dv-border6>
-    <my-dv-border6 width="calc((100% - 120px)/2)"
-                   bottom="40px"
-                   left="40px"
-                   height="calc((100% - 340px)/2)">
-      <my-dv-title :level="6" :opacity="0.8" strong left="20px" top="10px">30天日均线流量趋势</my-dv-title>
-      <my-dv-line top="40px" height="calc(100% - 40px)" width="100%" :loader="daysLoader" :extend="lineExtend" area
-                  rotate></my-dv-line>
-    </my-dv-border6>
-    <my-dv-border6 width="calc((100% - 120px)/2)"
-                   bottom="40px"
-                   right="40px"
-                   height="calc((100% - 340px)/2)">
-      <my-dv-title :level="6" :opacity="0.8" strong left="20px" top="10px">集群性能</my-dv-title>
-      <my-dv-line top="20px" height="calc(100% - 20px)" width="100%" :loader="hourLoader" :extend="lineExtend"
-                  legend rotate></my-dv-line>
-    </my-dv-border6>
+    <my-dv-box layout :gap="40" top="120px" width="calc(100% - 80px)" height="calc(100% - 160px)"
+               x-align="center">
+      <my-dv-box layout direction="column" :gap="40" :weight="1" width="100%">
+        <my-dv-border6 v-for="(item,index) in stats"
+                       :key="index"
+                       height="100%">
+          <my-dv-icon :icon="{name:item.icon,svg:true}" :size="65" :opacity="0.7" left="20px" type="primary"
+                      top="15px"></my-dv-icon>
+          <my-dv-number :value="item.value" left="100px" top="10px"></my-dv-number>
+          <my-dv-text :level="3" left="100px" top="60px" :opacity="0.7">{{item.label}}</my-dv-text>
+        </my-dv-border6>
+      </my-dv-box>
+      <my-dv-box layout direction="column" :gap="40" :weight="4" width="100%">
+        <my-dv-border6 height="100%">
+          <my-dv-title :level="6" strong left="20px" top="10px">接入机型占比</my-dv-title>
+          <my-dv-loading v-if="loading"></my-dv-loading>
+          <my-dv-ring v-else fit :columns="pie.columns" :rows="pie.rows" legend="v" :radius="60" label></my-dv-ring>
+        </my-dv-border6>
+        <my-dv-border6 height="100%">
+          <my-dv-title :level="6" strong left="20px" top="10px">存储</my-dv-title>
+          <my-dv-loading v-if="loading"></my-dv-loading>
+          <my-dv-progress v-if="!loading" width="33%"
+                          height="100%"
+                          title="Hdfs"
+                          x-align="left"
+                          :font-size="20"
+                          :radius="60"
+                          y-align="middle"
+                          :value="10"
+                          :color="1"></my-dv-progress>
+          <my-dv-progress v-if="!loading" width="33%"
+                          height="100%"
+                          title="Rdbms"
+                          x-align="center"
+                          y-align="middle"
+                          :font-size="20"
+                          :value="30"
+                          :color="2"></my-dv-progress>
+          <my-dv-progress v-if="!loading" width="33%"
+                          height="100%"
+                          title="Rdies"
+                          x-align="right"
+                          y-align="middle"
+                          :font-size="20"
+                          :value="87"
+                          :color="3"></my-dv-progress>
+        </my-dv-border6>
+      </my-dv-box>
+      <my-dv-box layout direction="column" :gap="40" :weight="4" width="100%">
+        <my-dv-border6 height="100%">
+          <my-dv-title :level="6" strong left="20px" top="10px">30天日均线流量趋势</my-dv-title>
+          <my-dv-loading v-if="loading"></my-dv-loading>
+          <my-dv-line v-else top="40px" height="calc(100% - 40px)" width="100%" :loader="daysLoader"
+                      :extend="lineExtend" area
+                      rotate></my-dv-line>
+        </my-dv-border6>
+        <my-dv-border6 height="100%">
+          <my-dv-title :level="6" strong left="20px" top="10px">集群性能</my-dv-title>
+          <my-dv-loading v-if="loading"></my-dv-loading>
+          <my-dv-line v-else top="20px" height="calc(100% - 20px)" width="100%" :loader="hourLoader"
+                      :extend="lineExtend"
+                      legend rotate></my-dv-line>
+        </my-dv-border6>
+      </my-dv-box>
+    </my-dv-box>
   </my-dv-page>
 </template>
 <script>
@@ -138,7 +138,8 @@
           series: {
             showSymbol: false
           }
-        }
+        },
+        loading: true
       }
     },
     methods: {
@@ -174,6 +175,11 @@
           rows
         })
       }
+    },
+    mounted() {
+      setTimeout(() => {
+        this.loading = false
+      }, 500)
     }
   }
 </script>

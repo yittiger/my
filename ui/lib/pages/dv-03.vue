@@ -1,142 +1,117 @@
 <template>
   <my-dv-page v-bind="$attrs">
     <my-dv-header2>
-      数据可视化大屏页面
+      <my-dv-title type="primary" strong shadow x-align="center">数据可视化大屏页面</my-dv-title>
     </my-dv-header2>
-    <my-dv-geo top="100px"
-               width="65%"
-               height="65%"
-               x-align="left"
-               :json="geoJson"
-               :extend="geoExtend"
-               :columns="map.columns"
-               :rows="map.rows"
-               :type="map.type"
-               :coords="map.coords"
-               debug></my-dv-geo>
-    <my-dv-box top="150px" width="15%" left="65%">
-      <my-dv-text :level="2">考核总次数</my-dv-text>
-      <my-dv-number :value="8329" top="20px" :zoom="1.5" type="warning"></my-dv-number>
-      <my-dv-adorn2 width="60%" top="100px"></my-dv-adorn2>
-    </my-dv-box>
 
-    <my-dv-box top="300px" width="15%" left="65%">
-      <my-dv-text :level="2">考核总次数</my-dv-text>
-      <my-dv-number :value="8329" top="20px" :zoom="1.5" type="warning"></my-dv-number>
-      <my-dv-adorn2 width="60%" top="100px"></my-dv-adorn2>
-    </my-dv-box>
+    <my-dv-box layout :gap="10" top="100px" width="calc(100% - 20px)" height="calc(100% - 110px)" x-align="center">
+      <my-dv-box layout direction="column" :gap="10" :weight="3" width="100%">
+        <my-dv-box :weight="6" height="100%">
+          <my-dv-loading v-if="loading"></my-dv-loading>
+          <my-dv-geo v-else
+                     fit
+                     :json="geoJson"
+                     :extend="geoExtend"
+                     :columns="map.columns"
+                     :rows="map.rows"
+                     :type="map.type"
+                     :coords="map.coords"></my-dv-geo>
+        </my-dv-box>
+        <my-dv-box layout :gap="10" :weight="1" height="100%">
+          <my-dv-box></my-dv-box>
+          <my-dv-box v-for="(item,index) in stat" :key="index" width="100%" :weight="2">
+            <my-dv-text :level="2" top="0px">{{item.label}}</my-dv-text>
+            <my-dv-number :value="item.value" top="20px" :zoom="1.5" type="warning"
+                          :percentage="item.percentage"></my-dv-number>
+            <my-dv-adorn2 width="100%" top="100px"></my-dv-adorn2>
+          </my-dv-box>
+          <my-dv-box></my-dv-box>
+        </my-dv-box>
+        <my-dv-box layout :gap="10" :weight="2" height="100%">
+          <my-dv-box width="100%">
+            <my-dv-title :icon="{name:'icon-aims', svg:true}"
+                         :level="6"
+                         :zoom="0.8"
+                         strong
+                         shadow>KPI考核标准
+            </my-dv-title>
+            <my-dv-ring height="100%" width="33%" :columns="pieChart.columns" :rows="pieChart.rows"
+                        :radius="75"></my-dv-ring>
+            <my-dv-ring height="100%" width="33%" x-align="center" :columns="pieChart.columns"
+                        :rows="pieChart.rows" :radius="75"></my-dv-ring>
+            <my-dv-ring height="100%" width="33%" right="0px" :columns="pieChart.columns" :rows="pieChart.rows"
+                        :radius="75"></my-dv-ring>
+          </my-dv-box>
+          <my-dv-box width="100%">
+            <my-dv-title :icon="{name:'icon-aims', svg:true}"
+                         :level="6"
+                         :zoom="0.8"
+                         strong
+                         shadow>KPI考核标准
+            </my-dv-title>
+            <my-dv-line fit :columns="lineChart.columns" :rows="lineChart.rows" legend :settings="lineChart.settings"
+                        :extend="lineChart.extend"></my-dv-line>
+          </my-dv-box>
+          <my-dv-box width="100%">
+            <my-dv-title :icon="{name:'icon-aims', svg:true}"
+                         :level="6"
+                         :zoom="0.8"
+                         strong
+                         shadow>KPI考核标准
+            </my-dv-title>
 
-    <my-dv-box top="450px" width="15%" left="65%">
-      <my-dv-text :level="2">考核总次数</my-dv-text>
-      <my-dv-number :value="0.6" top="20px" :zoom="1.5" type="warning" percentage></my-dv-number>
-      <my-dv-adorn2 width="60%" top="100px"></my-dv-adorn2>
-    </my-dv-box>
+            <my-dv-line fit :columns="lineBar.columns" :rows="lineBar.rows" :settings="lineBar.settings"
+                        :extend="lineBar.extend"></my-dv-line>
+          </my-dv-box>
+        </my-dv-box>
+      </my-dv-box>
+      <my-dv-box layout :gap="10" direction="column" :weight="1" width="100%">
+        <my-dv-box layout :gap="10" direction="column" :weight="7" height="100%">
 
-    <my-dv-box top="600px" width="15%" left="65%">
-      <my-dv-text :level="2">考核总次数</my-dv-text>
-      <my-dv-number :value="0.8" top="20px" :zoom="1.5" type="warning" percentage></my-dv-number>
-      <my-dv-adorn2 width="60%" top="100px"></my-dv-adorn2>
-    </my-dv-box>
+          <my-dv-box height="100%">
+            <my-dv-title :icon="{name:'icon-aims', svg:true}"
+                         :level="6" :zoom="0.8" strong shadow>KPI考核标准
+            </my-dv-title>
+            <my-dv-loading v-if="loading"></my-dv-loading>
+            <my-dv-bar v-else fit top="20px" :columns="stack.columns" :rows="stack.rows"
+                       :settings="stack.settings"></my-dv-bar>
+          </my-dv-box>
+          <my-dv-box height="100%">
+            <my-dv-title :icon="{name:'icon-aims', svg:true}"
+                         :level="6" :zoom="0.8" strong shadow>KPI考核标准
+            </my-dv-title>
+            <my-dv-loading v-if="loading"></my-dv-loading>
+            <my-dv-rank v-else fit top="20px" :columns="rank.columns" :rows="rank.rows"></my-dv-rank>
+          </my-dv-box>
+          <my-dv-box height="100%">
+            <my-dv-title :icon="{name:'icon-aims', svg:true}"
+                         :level="6" :zoom="0.8" strong shadow>KPI考核标准
+            </my-dv-title>
+            <my-dv-loading v-if="loading"></my-dv-loading>
+            <my-dv-radar v-else fit top="20px" :columns="radar.columns" :rows="radar.rows"></my-dv-radar>
+          </my-dv-box>
+          <my-dv-box height="100%">
+            <my-dv-title :icon="{name:'icon-aims', svg:true}"
+                         :level="6" :zoom="0.8" strong shadow>KPI考核标准
+            </my-dv-title>
+            <my-dv-loading v-if="loading"></my-dv-loading>
+            <my-dv-list v-else
+                        scroll
+                        top="20px"
+                        width="100%"
+                        height="220px"
+                        :columns="list.columns"
+                        :rows="list.rows"></my-dv-list>
+          </my-dv-box>
+        </my-dv-box>
+        <my-dv-box :gap="10" direction="column" :weight="2" height="100%">
+          <my-dv-title :icon="{name:'icon-aims', svg:true}"
+                       :level="6" :zoom="0.8" strong shadow>KPI考核标准
+          </my-dv-title>
 
-    <my-dv-box width="24%" height="200px" top="90px" right="20px">
-      <my-dv-title :icon="{name:'icon-aims', svg:true}"
-                   :level="6"
-                   :zoom="0.8"
-                   strong
-                   shadow>KPI考核标准
-      </my-dv-title>
-      <my-dv-ring top="10px" height="100%" width="33%" :columns="pieChart.columns" :rows="pieChart.rows"
-                  :radius="60"></my-dv-ring>
-      <my-dv-ring top="10px" height="100%" width="33%" x-align="center" :columns="pieChart.columns"
-                  :rows="pieChart.rows" :radius="60"></my-dv-ring>
-      <my-dv-ring top="10px" height="100%" width="33%" right="0px" :columns="pieChart.columns" :rows="pieChart.rows"
-                  :radius="60"></my-dv-ring>
-    </my-dv-box>
-
-    <my-dv-box width="24%" height="calc((100% - 330px)/3)" top="300px" right="20px">
-      <my-dv-title :icon="{name:'icon-aims', svg:true}"
-                   :level="6"
-                   :zoom="0.8"
-                   strong
-                   shadow>KPI考核标准
-      </my-dv-title>
-      <my-dv-line fit :columns="lineChart.columns" :rows="lineChart.rows" legend :settings="lineChart.settings"
-                  :extend="lineChart.extend"></my-dv-line>
-    </my-dv-box>
-
-    <my-dv-box width="24%" height="calc((100% - 330px)/3)" top="calc((100% - 300px)/3 + 300px)" right="20px">
-      <my-dv-title :icon="{name:'icon-aims', svg:true}"
-                   :level="6"
-                   :zoom="0.8"
-                   strong
-                   shadow>KPI考核标准
-      </my-dv-title>
-
-      <my-dv-line fit :columns="lineBar.columns" :rows="lineBar.rows" :settings="lineBar.settings"
-                  :extend="lineBar.extend"></my-dv-line>
-    </my-dv-box>
-
-
-    <my-dv-box width="24%" height="calc((100% - 330px)/3)" top="calc((100% - 300px)/3 + 300px)" right="20px">
-      <my-dv-title :icon="{name:'icon-aims', svg:true}"
-                   :level="6"
-                   :zoom="0.8"
-                   strong
-                   shadow>KPI考核标准
-      </my-dv-title>
-
-      <my-dv-line fit :columns="lineBar.columns" :rows="lineBar.rows" :settings="lineBar.settings"
-                  :extend="lineBar.extend"></my-dv-line>
-    </my-dv-box>
-
-    <my-dv-box width="24%" height="calc((100% - 330px)/3)" bottom="20px"
-               right="20px">
-      <my-dv-title :icon="{name:'icon-aims', svg:true}"
-                   :level="6" :zoom="0.8" strong shadow>KPI考核标准
-      </my-dv-title>
-
-      <my-chart-cloud :data="cloud" height="100%" width="100%"></my-chart-cloud>
-    </my-dv-box>
-
-
-    <my-dv-box width="calc((74% - 100px)/4)" height="calc((100% - 330px)/3)" left="20px" bottom="20px">
-      <my-dv-title :icon="{name:'icon-aims', svg:true}"
-                   :level="6" :zoom="0.8" strong shadow>KPI考核标准
-      </my-dv-title>
-
-      <my-dv-list scroll
-                  top="30px"
-                  width="100%"
-                  height="220px"
-                  :columns="list.columns"
-                  :rows="list.rows"></my-dv-list>
-    </my-dv-box>
-
-    <my-dv-box width="calc((74% - 100px)/4)" height="calc((100% - 330px)/3)" bottom="20px"
-               left="calc((74% - 100px)*1/4 + 40px)">
-      <my-dv-title :icon="{name:'icon-aims', svg:true}"
-                   :level="6" :zoom="0.8" strong shadow>KPI考核标准
-      </my-dv-title>
-
-      <my-dv-bar fit top="20px" :columns="stack.columns" :rows="stack.rows" :settings="stack.settings"></my-dv-bar>
-    </my-dv-box>
-
-    <my-dv-box width="calc((74% - 100px)/4)" height="calc((100% - 330px)/3)" bottom="20px"
-               left="calc((74% - 100px)*2/4 + 60px)">
-      <my-dv-title :icon="{name:'icon-aims', svg:true}"
-                   :level="6" :zoom="0.8" strong shadow>KPI考核标准
-      </my-dv-title>
-
-      <my-dv-rank fit top="20px" :columns="rank.columns" :rows="rank.rows"></my-dv-rank>
-    </my-dv-box>
-
-    <my-dv-box width="calc((74% - 100px)/4)" height="calc((100% - 330px)/3)" bottom="20px"
-               left="calc((74% - 100px)*3/4 + 80px)">
-      <my-dv-title :icon="{name:'icon-aims', svg:true}"
-                   :level="6" :zoom="0.8" strong shadow>KPI考核标准
-      </my-dv-title>
-
-      <my-dv-radar fit top="20px" :columns="radar.columns" :rows="radar.rows"></my-dv-radar>
+          <my-chart-cloud :data="cloud" height="100%" width="100%"></my-chart-cloud>
+        </my-dv-box>
+      </my-dv-box>
     </my-dv-box>
 
   </my-dv-page>
@@ -188,6 +163,12 @@
             ['巴黎', 60]
           ]
         },
+        stat: [
+          {label: '考核总次数', value: 83239},
+          {label: '考核总次数', value: 83239},
+          {label: '考核总次数', value: 0.8, percentage: true},
+          {label: '考核总次数', value: 0.69, percentage: true}
+        ],
         pieChart: {
           columns: ['渠道', '访问量'],
           rows: [
@@ -328,8 +309,14 @@
             ['预算分配', 20, 50, 80, 29, 55, 60],
             ['实际开销', 30, 60, 30, 79, 45, 80]
           ]
-        }
+        },
+        loading: true
       }
+    },
+    mounted() {
+      setTimeout(() => {
+        this.loading = false
+      }, 500)
     }
   }
 </script>

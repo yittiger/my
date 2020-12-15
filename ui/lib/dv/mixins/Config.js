@@ -1,5 +1,5 @@
 const config = {
-  color: '#1890FF',
+  color: '#1de2ff',
   fill: 'transparent',
   textColor: '#b4e4ff',
   colors: [
