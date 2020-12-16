@@ -61,15 +61,17 @@
         const yAxis = this?.settings?.direction === 'y'
         return Object.freeze(merge({
           color: this.gradient ? this.createLinearGradient() : undefined,
-          legend: this.legend ? {
-            top: 20,
-            right: 20,
-            itemWidth: 10,
-            itemHeight: 10,
-            icon: 'rect'
-          } : {
-            show: false
-          },
+          legend: this.legend
+            ? {
+              top: 20,
+              right: 20,
+              itemWidth: 10,
+              itemHeight: 10,
+              icon: 'rect'
+            }
+            : {
+              show: false
+            },
           grid: {
             top: this.legend ? 50 : 30,
             right: 30,

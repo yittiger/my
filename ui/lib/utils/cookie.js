@@ -71,7 +71,7 @@ export function remove(sKey, sPath, sDomain) {
  * @returns {string[]}
  */
 export function keys() {
-  const aKeys = document.cookie.replace(/((?:^|\s*;)[^=]+)(?=;|$)|^\s*|\s*(?:=[^;]*)?(?:\1|$)/g, '').split(/\s*(?:=[^;]*)?;\s*/);
+  const aKeys = document.cookie.replace(/((?:^|\s*;)[^=]+)(?=;|$)|^\s*|\s*(?:=[^;]*)?(?:$)/g, '').split(/\s*(?:=[^;]*)?;\s*/);
   for (let nIdx = 0; nIdx < aKeys.length; nIdx++) {
     aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]);
   }

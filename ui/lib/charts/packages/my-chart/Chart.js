@@ -201,7 +201,8 @@ export default {
     },
     resize() {
       if (!this.chart) return
-      this.$nextTick(this.chart.resize)
+      this.chart.resize()
+      // this.$nextTick(this.chart.resize)
     },
     recordCoords(geo) {
       if (!geo || !geo.features) return

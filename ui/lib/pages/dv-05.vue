@@ -1,7 +1,7 @@
 <template>
   <my-dv-page v-bind="$attrs">
     <my-dv-box fit>
-      <my-map height="100%" width="80%" :zoom="9" :filter="filter">
+      <my-map height="100%" width="100%" :zoom="9" :filter="filter">
         <my-map-scatter :coordinate="[113.361999, 23.130592]"
                         :ripple="ripple"
                         fill="red"></my-map-scatter>
@@ -13,7 +13,7 @@
     <my-dv-border1 class="none-events" fit :opacity="0.7"></my-dv-border1>
     <my-dv-adorn5 top="50px" width="800px" x-align="center" :opacity="0.8"></my-dv-adorn5>
     <my-dv-title :level="2" top="20px" type="primary" strong shadow
-                 x-align="center" opacity="0.8">数据可视化大屏页面
+                 x-align="center" :opacity="0.8">数据可视化大屏页面
     </my-dv-title>
     <my-dv-box layout :gap="20" right="20px" top="100px" width="25%" height="calc(100% - 140px)">
       <my-dv-box width="100%">

@@ -54,42 +54,48 @@ export function link(options = {}, theme) {
           ...line
         }
       }),
-      toArrow ? creator({
-        name: go.Shape,
-        props: {
-          name: 'toArrow',
-          toArrow: 'Standard',
-          fill: t.color,
-          stroke: t.color,
-          strokeWidth: t.strokeWidth,
-          ...toArrow
-        }
-      }) : null,
-      fromArrow ? creator({
-        name: go.Shape,
-        props: {
-          name: 'fromArrow',
-          fromArrow: 'Backward',
-          fill: t.color,
-          stroke: t.color,
-          strokeWidth: t.strokeWidth,
-          ...fromArrow
-        }
-      }) : null,
-      label ? creator({
-        name: go.TextBlock,
-        props: {
-          name: 'label',
-          text: '',
-          segmentOffset: new go.Point(0, -12),
-          segmentOrientation: go.Link.OrientUpright,
-          segmentFraction: 0.5,
-          segmentIndex: 0,
-          stroke: t.color,
-          font: '14px sans-serif',
-          ...label
-        }
-      }) : null
+      toArrow
+        ? creator({
+          name: go.Shape,
+          props: {
+            name: 'toArrow',
+            toArrow: 'Standard',
+            fill: t.color,
+            stroke: t.color,
+            strokeWidth: t.strokeWidth,
+            ...toArrow
+          }
+        })
+        : null,
+      fromArrow
+        ? creator({
+          name: go.Shape,
+          props: {
+            name: 'fromArrow',
+            fromArrow: 'Backward',
+            fill: t.color,
+            stroke: t.color,
+            strokeWidth: t.strokeWidth,
+            ...fromArrow
+          }
+        })
+        : null,
+      label
+        ? creator({
+          name: go.TextBlock,
+          props: {
+            name: 'label',
+            text: '',
+            segmentOffset: new go.Point(0, -12),
+            segmentOrientation: go.Link.OrientUpright,
+            segmentFraction: 0.5,
+            segmentIndex: 0,
+            stroke: t.color,
+            font: '14px sans-serif',
+            ...label
+          }
+        })
+        : null
     ]
   }, t)
 }

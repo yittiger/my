@@ -144,3 +144,25 @@
 ```
 :::
 
+## 排版
+
+:::demo
+```html
+<template>
+  <div style="height:600px">
+     <my-dv-page target="parent" fit>
+       <my-dv-box layout :gap="20" left="20px" top="20px" height="calc(100% - 40px)" width="30%">
+          <my-dv-border2 width="100%" :weight="1"></my-dv-border2>
+          <my-dv-border2 width="100%" :weight="2"></my-dv-border2>
+          <my-dv-border2 width="100%" :weight="1"></my-dv-border2>
+       </my-dv-box>
+       <my-dv-box layout direction="column" :gap="20" right="20px" top="20px" height="calc(100% - 40px)" width="50%">
+          <my-dv-border2 height="100%" :weight="1"></my-dv-border2>
+          <my-dv-border2 height="100%" :weight="2"></my-dv-border2>
+          <my-dv-border2 height="100%" :weight="1"></my-dv-border2>
+       </my-dv-box>
+    </my-dv-page>
+  </div>
+</template>
+```
+:::

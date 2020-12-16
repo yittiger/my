@@ -82,15 +82,19 @@ export function parseOptions(opts = {}) {
   const params = ['get', 'head', 'delete'].includes(method)
     ? Object.assign({}, config.data, config.query)
     : config.query
-  const cache = config.cache ? {
-    key: createCacheKey(url, method, params, config.data),
-    ...config.cache
-  } : null
+  const cache = config.cache
+    ? {
+      key: createCacheKey(url, method, params, config.data),
+      ...config.cache
+    }
+    : null
 
-  const socket = config.socket ? {
-    channel: guid(),
-    name: config.socket.name || '__async__'
-  } : null
+  const socket = config.socket
+    ? {
+      channel: guid(),
+      name: config.socket.name || '__async__'
+    }
+    : null
 
 
   clean(config, ['method', 'type', 'query', 'params', 'cache', 'socket'])

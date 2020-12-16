@@ -88,7 +88,7 @@ const responsiveObserve = {
     }
   },
   register() {
-    Object.keys(responsiveMap).map(screen => {
+    Object.keys(responsiveMap).forEach(screen => {
       enquire.register(responsiveMap[screen], {
         match: () => {
           const ponitMap = {

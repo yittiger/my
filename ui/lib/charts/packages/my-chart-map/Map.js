@@ -164,9 +164,11 @@ export default function ({data, settings, map, coordinates}) {
 
   return {
     tooltip: createTooltip(),
-    geo: settingsValue.geo ? {
-      map: map
-    } : undefined,
+    geo: settingsValue.geo
+      ? {
+        map: map
+      }
+      : undefined,
     visualMap: firstDataset ? createVisualMap(firstDataset, settingsValue) : null,
     series: series
   }

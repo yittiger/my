@@ -64,12 +64,14 @@
         return rows.map(row => row[1])
       },
       itemLabel() {
-        return this.label ? {
-          show: true,
-          position: 'top',
-          fontSize: 16,
-          ...this.label
-        } : null
+        return this.label
+          ? {
+            show: true,
+            position: 'top',
+            fontSize: 16,
+            ...this.label
+          }
+          : null
       },
       colors() {
         const colors = this?.page?.settings?.colors || []

@@ -222,7 +222,9 @@
         return {
           height: ((this.mode === 'both' && this.rainbow) ||
             this.mode === 'sidebar' ||
-            (this.mode === 'navbar' && this.rainbow)) ? 61 : 60
+            (this.mode === 'navbar' && this.rainbow))
+            ? 61
+            : 60
         }
       },
       navbarOptions() {
@@ -441,10 +443,12 @@
             icon: icon,
             path: matched.path,
             closable: true,
-            ...(isDefault ? {
-              ...this.tab,
-              closable: false
-            } : null)
+            ...(isDefault
+              ? {
+                ...this.tab,
+                closable: false
+              }
+              : null)
           }
         }
 
