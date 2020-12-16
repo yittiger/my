@@ -35,17 +35,22 @@ export default {
   render() {
     const vnode = (
       <Editor ref="comp"
-              {...{
-                props: {...this.innerProps, height: this.height, toolbar: this.toolbar},
-                on: {
-                  ...this.$listeners
-                }
-              }}
-              vModel={this.fieldValue}>
+    {...{
+      props: {...this.innerProps, height: this.height, toolbar: this.toolbar},
+      on: {
+      ...this.$listeners
+      }
+    }}
+    vModel={this.fieldValue}>
       </Editor>
-    )
+  )
 
     return this.renderComponent(vnode)
+  },
+  watch: {
+    'myForm.model'() {
+      this.resetData()
+    }
   },
   methods: {
     resetData() {
