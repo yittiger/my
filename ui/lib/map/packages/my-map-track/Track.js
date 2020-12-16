@@ -24,6 +24,7 @@ export default {
    * @property {boolean} [loop=true] 动画循环
    * @property {string|object|function} [effect] 动画样式配置，字符串配置图片，object配置样式描述对象，function返回Style
    * @property {number} [period=10] 动画周期，单位：秒
+   * @property {boolean} [pause] 暂停
    */
   props: {
     // 自动播放
@@ -47,6 +48,13 @@ export default {
     period: {
       type: Number,
       default: 10
+    },
+    // 暂停
+    pause: Boolean
+  },
+  data() {
+    return {
+      fraction: 0
     }
   },
   methods: {
@@ -88,12 +96,13 @@ export default {
         this.myMap.addFeature(this.effectFeature)
       }
       const {effectFeature, period} = this
-
       const start = new Date().getTime()
       const animate = () => {
         const tick = new Date().getTime()
-        const fraction = (tick - start) / (period * 1000)
+        let fraction = (tick - start) / (period * 1000)
+        fraction += this.fraction
         if (fraction > 1) {
+          this.fraction = 0
           this.loop && this.effectRender()
           return
         }
@@ -102,21 +111,33 @@ export default {
         const rotation = this.getRotation(coordinate, nextCoordinate)
         effectFeature.getGeometry().setCoordinates(coordinate)
         effectFeature.setStyle(this.createEffectStyle(rotation))
-        this.$emit('move', coordinate, rotation)
-        this.aId = window.requestAnimationFrame(animate)
+        if (this.pause) {
+          this.fraction = fraction
+        } else {
+          this.$emit('move', coordinate, rotation)
+          this.aId = window.requestAnimationFrame(animate)
+        }
       }
       animate()
     },
     start() {
+      this.fraction = 0
       this.effectRender()
     },
     stop() {
       this.aId && window.cancelAnimationFrame(this.aId)
     }
   },
+  watch: {
+    pause(val) {
+      if (!val) {
+        this.effectRender()
+      }
+    }
+  },
   created() {
-    if (this.auto) {
-      this.$on('featureDraw', this.effectRender)
+    if (this.auto && !this.pause) {
+      this.$on('feature-draw', this.effectRender)
     }
   },
   beforeDestroy() {
@@ -124,6 +145,6 @@ export default {
       this.myMap.removeFeature(this.effectFeature)
     }
     this.aId && window.cancelAnimationFrame(this.aId)
-    this.$off('featureDraw', this.effectRender)
+    this.$off('feature-draw', this.effectRender)
   }
 }
