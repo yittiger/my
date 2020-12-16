@@ -3,7 +3,7 @@
     <my-dv-box fit>
       <my-map height="100%" width="80%" :zoom="9" :filter="filter">
         <my-map-scatter :coordinate="[113.361999, 23.130592]"
-                        :ripple="ripple2"
+                        :ripple="ripple"
                         fill="red"></my-map-scatter>
       </my-map>
     </my-dv-box>
@@ -17,7 +17,8 @@
     </my-dv-title>
     <my-dv-box layout :gap="20" right="20px" top="100px" width="25%" height="calc(100% - 140px)">
       <my-dv-box width="100%">
-        <my-dv-title :level="6" strong shadow :icon="{name:'icon-star-fill',svg:true}" type="primary" top="10px" left="10px">
+        <my-dv-title :level="6" strong shadow :icon="{name:'icon-star-fill',svg:true}" type="primary" top="10px"
+                     left="10px">
           数据模块名称
         </my-dv-title>
         <my-dv-progress width="33%" height="100%" x-align="left" y-align="middle" :value="10" :color="1"
@@ -28,14 +29,16 @@
                         :radius="80"></my-dv-progress>
       </my-dv-box>
       <my-dv-box width="100%">
-        <my-dv-title :level="6" strong shadow :icon="{name:'icon-star-fill',svg:true}" type="primary" top="10px" left="10px">
+        <my-dv-title :level="6" strong shadow :icon="{name:'icon-star-fill',svg:true}" type="primary" top="10px"
+                     left="10px">
           数据模块名称
         </my-dv-title>
 
         <my-dv-line fit :columns="line.columns" :rows="line.rows" legend :settings="line.settings" rotate></my-dv-line>
       </my-dv-box>
       <my-dv-box width="100%">
-        <my-dv-title :level="6" strong shadow :icon="{name:'icon-star-fill',svg:true}" type="primary" top="10px" left="10px">
+        <my-dv-title :level="6" strong shadow :icon="{name:'icon-star-fill',svg:true}" type="primary" top="10px"
+                     left="10px">
           数据模块名称
         </my-dv-title>
         <my-dv-bar top="20px" fit :columns="bar.columns" :rows="bar.rows" legend></my-dv-bar>
@@ -52,13 +55,7 @@
     data() {
       return {
         filter: deepBlue,
-        ripple1: {
-          color: 'red', // 默认与 fill 参数一致
-          period: 2, //  动画周期，秒数
-          scale: 5, // 动画中波纹的最大缩放比
-          type: 'fill' // 渲染类型 fill 或 stroke
-        },
-        ripple2: {
+        ripple: {
           period: 1, //  动画周期，秒数
           scale: 8, // 动画中波纹的最大缩放比
           strokeColor: 'red',
@@ -123,11 +120,12 @@
   .top-mask {
     pointer-events: none;
     width: 100%;
-    height: 150px;
+    height: 100px;
     position: absolute;
     top: 0;
     left: 0;
     background: linear-gradient(to bottom, #0d1b35 50%, rgba(0, 0, 0, 0) 100%);
+    opacity: 0.8;
   }
 
   .left-mask {
@@ -148,5 +146,6 @@
     right: 0;
     height: 100%;
     background: linear-gradient(to left, #0d1b35 80%, rgba(0, 0, 0, 0) 100%);
+    opacity: 0.8;
   }
 </style>
