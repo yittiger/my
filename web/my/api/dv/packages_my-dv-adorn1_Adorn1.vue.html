@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>packages/my-dv-adorn1/Adorn1.vue - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-$ui_dv_my-dv-bar.html">$ui/dv/my-dv-bar</a></li><li><a href="module-$ui_dv_my-dv-box.html">$ui/dv/my-dv-box</a></li><li><a href="module-$ui_dv_my-dv-fill.html">$ui/dv/my-dv-fill</a></li><li><a href="module-$ui_dv_my-dv-geo.html">$ui/dv/my-dv-geo</a></li><li><a href="module-$ui_dv_my-dv-icon.html">$ui/dv/my-dv-icon</a></li><li><a href="module-$ui_dv_my-dv-indicator.html">$ui/dv/my-dv-indicator</a></li><li><a href="module-$ui_dv_my-dv-line.html">$ui/dv/my-dv-line</a></li><li><a href="module-$ui_dv_my-dv-list.html">$ui/dv/my-dv-list</a></li><li><a href="module-$ui_dv_my-dv-loading.html">$ui/dv/my-dv-loading</a></li><li><a href="module-$ui_dv_my-dv-menu.html">$ui/dv/my-dv-menu</a></li><li><a href="module-$ui_dv_my-dv-page.html">$ui/dv/my-dv-page</a></li><li><a href="module-$ui_dv_my-dv-pictorial.html">$ui/dv/my-dv-pictorial</a></li><li><a href="module-$ui_dv_my-dv-pie.html">$ui/dv/my-dv-pie</a></li><li><a href="module-$ui_dv_my-dv-progress.html">$ui/dv/my-dv-progress</a></li><li><a href="module-$ui_dv_my-dv-radar.html">$ui/dv/my-dv-radar</a></li><li><a href="module-$ui_dv_my-dv-rank.html">$ui/dv/my-dv-rank</a></li><li><a href="module-$ui_dv_my-dv-ring.html">$ui/dv/my-dv-ring</a></li><li></li><li><a href="module-$ui_dv_my-dv-screen.html">$ui/dv/my-dv-screen</a></li><li><a href="module-$ui_dv_my-dv-starry.html">$ui/dv/my-dv-starry</a></li><li><a href="module-$ui_dv_my-dv-text.html">$ui/dv/my-dv-text</a></li><li><a href="module-$ui_dv_my-dv-title.html">$ui/dv/my-dv-title</a></li></ul><h3>Events</h3><ul><li><a href="module-$ui_dv_my-dv-menu.html#~event:click">click</a></li></ul><h3>Global</h3><ul><li><a href="global.html#darken">darken</a></li><li><a href="global.html#fade">fade</a></li><li><a href="global.html#getCircleRadianPoint">getCircleRadianPoint</a></li><li><a href="global.html#getColorByKeyword">getColorByKeyword</a></li><li><a href="global.html#getColorFromRgbValue">getColorFromRgbValue</a></li><li><a href="global.html#getOpacity">getOpacity</a></li><li><a href="global.html#getRgbaValue">getRgbaValue</a></li><li><a href="global.html#getRgbValue">getRgbValue</a></li><li><a href="global.html#getRgbValueFromHex">getRgbValueFromHex</a></li><li><a href="global.html#getRgbValueFromRgb">getRgbValueFromRgb</a></li><li><a href="global.html#lighten">lighten</a></li><li><a href="global.html#props">props</a></li><li><a href="global.html#toHex">toHex</a></li><li><a href="global.html#toRgb">toRgb</a></li><li><a href="global.html#validator">validator</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">packages/my-dv-adorn1/Adorn1.vue</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template>
+  &lt;Box class="my-dv-adorn-1"
+       :class="classes"
+       :style="styles"
+       default-width="300px"
+       default-height="50px"
+       v-bind="$attrs"
+       v-on="$listeners">
+    &lt;svg :width="`${width}px`" :height="`${height}px`">
+      &lt;template v-for="(point, i) in points">
+        &lt;rect
+          v-if="Math.random() > 0.6"
+          :key="i"
+          :fill="dark"
+          :x="point[0]"
+          :y="point[1]"
+          :width="size"
+          :height="size"
+        >
+          &lt;animate
+            v-if="Math.random() > 0.6"
+            attributeName="fill"
+            :values="`${dark};transparent`"
+            dur="1s"
+            :begin="Math.random() * 2"
+            repeatCount="indefinite"
+          />
+        &lt;/rect>
+      &lt;/template>
+      &lt;rect
+        v-if="rect[0]"
+        :fill="light"
+        :x="rect[0][0] + halfSize"
+        :y="rect[0][1] + halfSize"
+        :width="size * 2"
+        :height="size * 2"
+      >
+        &lt;animate
+          attributeName="width"
+          :values="`0;${size * 2}`"
+          dur="2s"
+          repeatCount="indefinite"
+        />
+        &lt;animate
+          attributeName="height"
+          :values="`0;${size * 2}`"
+          dur="2s"
+          repeatCount="indefinite"
+        />
+        &lt;animate
+          attributeName="x"
+          :values="`${rect[0][0]+halfSize};${rect[0][0]+halfSize - size}`"
+          dur="2s"
+          repeatCount="indefinite"
+        />
+        &lt;animate
+          attributeName="y"
+          :values="`${rect[0][1]+halfSize};${rect[0][1]+halfSize - size}`"
+          dur="2s"
+          repeatCount="indefinite"
+        />
+      &lt;/rect>
+      &lt;rect
+        v-if="rect[1]"
+        :fill="light"
+        :x="rect[1][0] + size - length"
+        :y="rect[1][1] + halfSize - size"
+        :width="length"
+        :height="size * 2"
+      >
+        &lt;animate
+          attributeName="width"
+          :values="`0;${length};0`"
+          dur="2s"
+          repeatCount="indefinite"
+        />
+        &lt;animate
+          attributeName="x"
+          :values="`${rect[1][0] + size};${rect[1][0] + size - length};${rect[1][0] + size}`"
+          dur="2s"
+          repeatCount="indefinite"
+        />
+      &lt;/rect>
+    &lt;/svg>
+  &lt;/Box>
+&lt;/template>
+
+&lt;script>
+  /**
+   * 装饰组件
+   */
+  import Adorn from '../../mixins/Adorn'
+
+  export default {
+    name: 'MyDvAdorn1',
+    mixins: [Adorn],
+    /**
+     * 属性参数
+     * @member props
+     * @property {number} [duration] 动画持续时间，单位：秒
+     * @property {boolean} [reverse] 翻转 180度
+     * @property {number} [opacity=1] 透明度
+     * @property {string} [color=#1890FF] 颜色
+     * @property {number} [size=5] 格子尺寸，单位：px
+     * @property {number} [gap=5] 格子间距，单位: px
+     */
+    props: {
+      size: {
+        type: Number,
+        default: 5
+      },
+      gap: {
+        type: Number,
+        default: 5
+      }
+    },
+    data() {
+      return {
+        points: [],
+        rect: []
+      }
+    },
+    computed: {
+      rows() {
+        return Math.floor(this.height / (this.size + this.gap))
+      },
+      columns() {
+        return Math.floor(this.width / (this.size + this.gap))
+      },
+      length() {
+        return this.width / 4
+      },
+      halfSize() {
+        return this.size / 2
+      }
+    },
+    watch: {
+      $props: {
+        deep: true,
+        handler() {
+          this.setData()
+        }
+      }
+    },
+    methods: {
+      createPoints() {
+        const {rows, columns, gap, size} = this
+        const grid = gap + size
+        const points = new Array(rows)
+          .fill(0)
+          .map((foo, i) =>
+            new Array(columns)
+              .fill(0)
+              .map((foo, j) => [
+                grid * j, grid * i
+              ]))
+
+        return points.reduce((all, item) => [...all, ...item], [])
+      },
+      createRect(points) {
+        const {rows, columns} = this
+        const mid = Math.floor(rows / 2)
+        const rect1 = points[mid * columns - 1]
+        const rect2 = points[mid * columns - 3]
+        return [rect1, rect2]
+      },
+      setData() {
+        this.points = this.createPoints()
+        this.rect = this.createRect(this.points)
+      }
+    },
+    mounted() {
+      this.setData()
+      this.$on('resize', this.setData)
+    },
+    beforeDestroy() {
+      this.$off('resize', this.setData)
+    }
+  }
+&lt;/script>
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Thu Dec 17 2020 10:05:50 GMT+0800 (GMT+08:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?c4e5f73318b5cb0c389e3d9a05f831cc";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</body>
+</html>

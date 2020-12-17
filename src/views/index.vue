@@ -1,5 +1,5 @@
 <template>
-  <my-chart-cloud :data="data"></my-chart-cloud>
+  <my-chart-cloud height="100%" :data="data"></my-chart-cloud>
 </template>
 
 <script>
