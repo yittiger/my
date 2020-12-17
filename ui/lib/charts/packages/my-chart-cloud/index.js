@@ -1,5 +1,5 @@
 import MyChart from '$ui/charts/packages/my-chart'
-import './plugin/index'
+import 'echarts-wordcloud'
 import {install} from '$ui/utils/helper'
 import Cloud from './Cloud'
 
