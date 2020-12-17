@@ -4,5 +4,5 @@ module.exports = function () {
   builder('components')
   builder('map')
   builder('charts')
-  
+  builder('dv')
 }

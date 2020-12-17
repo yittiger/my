@@ -6,7 +6,7 @@ node_modules
 /apps
 /docs/.vuepress/public/api
 /src/views/josephtest/
-
+/debug.log
 # local env files
 .env.local
 .env.*.local

@@ -56,7 +56,7 @@ export default function date (dateStr, format, options) {
       format = format.replace(RegExp.$1,
         RegExp.$1.length === 4 ? obj.getFullYear() : (obj.getFullYear() + '').substr(4 - RegExp.$1.length))
     }
-    for (var k in o) {
+    for (const k in o) {
       if (new RegExp('(' + k + ')').test(format)) {
         format = format.replace(RegExp.$1, RegExp.$1.length === 1 ? o[k] : ('00' + o[k]).substr(('' + o[k]).length))
       }

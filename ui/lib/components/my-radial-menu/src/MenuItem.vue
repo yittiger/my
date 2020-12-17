@@ -83,23 +83,27 @@
         const {x, y} = this.centerPoint
         const text = this.item?.label
         const icon = this.item?.icon
-        return text ? {
-          x: numberToString(x),
-          y: numberToString(y),
-          text,
-          transform: icon ? 'translate(0,8)' : 'translate(0,2)'
-        } : null
+        return text
+          ? {
+            x: numberToString(x),
+            y: numberToString(y),
+            text,
+            transform: icon ? 'translate(0,8)' : 'translate(0,2)'
+          }
+          : null
       },
       icon() {
         const {x, y} = this.centerPoint
         const text = this.item?.label
         const icon = this.item?.icon
-        return icon ? {
-          x: numberToString(x),
-          y: numberToString(y),
-          name: icon,
-          transform: text ? 'translate(-5,-8)' : 'translate(-5,-5)'
-        } : null
+        return icon
+          ? {
+            x: numberToString(x),
+            y: numberToString(y),
+            name: icon,
+            transform: text ? 'translate(-5,-8)' : 'translate(-5,-5)'
+          }
+          : null
       }
     },
     methods: {

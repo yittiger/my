@@ -30,25 +30,29 @@ export default {
   },
   computed: {
     rowSortableOptions() {
-      return this.rowSortable ? {
-        ...defaultSortableOptions,
-        ...this.rowSortable,
-        onStart: this.onRowStart,
-        onUpdate: this.onRowUpdate,
-        onAdd: this.onRowAdd,
-        onRemove: this.onRowRemove
-      } : null
+      return this.rowSortable
+        ? {
+          ...defaultSortableOptions,
+          ...this.rowSortable,
+          onStart: this.onRowStart,
+          onUpdate: this.onRowUpdate,
+          onAdd: this.onRowAdd,
+          onRemove: this.onRowRemove
+        }
+        : null
     },
     columnSortableOptions() {
-      return this.columnSortable ? {
-        ...defaultSortableOptions,
-        ...this.columnSortable,
-        filter: '.my-table__col-ignore',
-        onStart: this.onColumnStart,
-        onUpdate: this.onColumnUpdate,
-        onAdd: this.onColumnAdd,
-        onRemove: this.onColumnRemove
-      } : null
+      return this.columnSortable
+        ? {
+          ...defaultSortableOptions,
+          ...this.columnSortable,
+          filter: '.my-table__col-ignore',
+          onStart: this.onColumnStart,
+          onUpdate: this.onColumnUpdate,
+          onAdd: this.onColumnAdd,
+          onRemove: this.onColumnRemove
+        }
+        : null
     }
   },
   methods: {

@@ -4,8 +4,8 @@ import 'echarts/lib/component/legend'
 import 'echarts/lib/component/title'
 import {log, tip} from '$ui/utils/log'
 import {debounce} from '$ui/utils/util'
+import {arrayToMap} from '$ui/utils/dictionary'
 import {addResizeListener, removeResizeListener} from 'element-ui/lib/utils/resize-event'
-import merge from 'lodash/merge'
 import setExtend from '$ui/charts/utils/extend'
 import {DEFAULT_THEME} from '$ui/charts/utils/constant'
 
@@ -28,6 +28,9 @@ export default {
    * @property {boolean} [debug] 打印构建的ECharts option内容
    * @property {object} [settings] 个性图表配置
    * @property {object} [data] 图表数据, {columns, rows, layout}
+   * @property {Object|Array} [coords] 注册经纬度  如：{'广州': [120.3234, 33.4329]}, 或 [{label:'广州',value: [120.3234, 33.4329]}]
+   * @param {Object|Function} [register] geo地图JSON或函数，函数必须返回 Promies
+   * @param {Function} [onRegister] 地图注册完成时回调
    */
   props: {
     // 宽度
@@ -88,19 +91,21 @@ export default {
     // 地图geojson对象或构建函数，函数必须返回Promise
     register: [Object, Function],
 
-    // 坐标集合 如：{'广州': [120.3234, 33.4329]}
+    // 地图注册成功回调
+    onRegister: Function,
+
+    // 坐标集合 如：{'广州': [120.3234, 33.4329]}, 或 [{label:'广州',value: [120.3234, 33.4329]}]
     coords: {
-      type: Object,
+      type: [Object, Array],
       default() {
         return {}
       }
     }
   },
   data() {
-    return {
-      // 地图region坐标集合
-      coordinates: {}
-    }
+    // 地图region坐标集合
+    this.coordinates = Object.create(null)
+    return {}
   },
   computed: {
     classes() {
@@ -117,55 +122,43 @@ export default {
     }
   },
   watch: {
-    options: {
-      deep: true,
-      handler() {
-        this.$nextTick(this.setOption)
-      }
+    options() {
+      this.$nextTick(this.proxySetOption)
     },
-    extend: {
-      deep: true,
-      handler() {
-        this.$nextTick(this.setOption)
-      }
+    extend() {
+      this.$nextTick(this.proxySetOption)
     },
-    settings: {
-      deep: true,
-      handler() {
-        this.$nextTick(this.setOption)
-      }
+    settings() {
+      this.$nextTick(this.proxySetOption)
     },
-    data: {
-      deep: true,
-      handler() {
-        this.$nextTick(this.setOption)
-      }
+    data() {
+      this.$nextTick(this.proxySetOption)
     },
     loading(val) {
       if (!this.chart) return
       val ? this.chart.showLoading() : this.chart.hideLoading()
     },
-    map() {
-      this.registerMap()
-        .then(this.setOption)
-        .catch(e => e)
-    },
     coords: {
       handler(val) {
-        this.coordinates = Object.assign(this.coordinates, val)
+        const coords = Array.isArray(val) ? arrayToMap(val) : val
+        this.coordinates = Object.assign(this.coordinates, coords)
       },
       immediate: true
+    },
+    map() {
+      this.registerMap().then(this.proxySetOption)
     }
   },
   methods: {
     init() {
       this.chart = echarts.init(this.$el, this.theme)
       // 绑定echarts事件
-      Object.entries(this.$listeners).forEach(([name, handler]) => {
-        this.chart.on(name, handler)
-      })
+      Object.entries(this.$listeners)
+        .forEach(([name, handler]) => {
+          this.chart.on(name, handler)
+        })
       this.loading && this.chart.showLoading()
-      this.setOption()
+      this.proxySetOption()
 
       addResizeListener(this.$el, this.proxyResize)
     },
@@ -188,14 +181,11 @@ export default {
         return
       }
       // adapter 由子类实现, 解析私有图表的配置
-      const settings = this.$options.adapter ? this.$options.adapter(this) : {}
-
-      // 构造原生echarts option
-      const options = merge({}, this.options || {}, settings)
+      const options = this.$options.adapter ? this.$options.adapter(this) : {}
 
       // 扩展 options
       if (this.extend) {
-        setExtend(options, typeof this.extend === 'function' ? this.extend() : this.extend)
+        setExtend(options, typeof this.extend === 'function' ? this.extend(options) : this.extend)
       }
 
       this.nativeSetOption(options)
@@ -211,7 +201,8 @@ export default {
     },
     resize() {
       if (!this.chart) return
-      this.$nextTick(this.chart.resize)
+      this.chart.resize()
+      // this.$nextTick(this.chart.resize)
     },
     recordCoords(geo) {
       if (!geo || !geo.features) return
@@ -224,10 +215,10 @@ export default {
       const {register, map} = this
 
       // 必须 register 和 map都存在才能注册
-      if (!register || !map) return Promise.reject(new Error(null))
+      if (!register || !map) return Promise.resolve()
 
       // 如果地图已经注册，不做处理
-      const registerGeo = this.echarts.getMap(map)
+      const registerGeo = echarts.getMap(map)
       if (registerGeo) {
         this.recordCoords(registerGeo.geoJson)
         return Promise.resolve()
@@ -236,13 +227,16 @@ export default {
       // 如果是函数，执行函数，返回geojson注册
       if (typeof register === 'function') {
         return register(this).then(geo => {
-          this.echarts.registerMap(map, geo)
+          echarts.registerMap(map, geo)
           this.recordCoords(geo)
+          this.onRegister && this.onRegister(map, geo)
+          this.$emit('register', map, geo)
           return geo
         })
       } else {
-        this.echarts.registerMap(map, register)
+        echarts.registerMap(map, register)
         this.recordCoords(register)
+        this.onRegister && this.onRegister(map, register)
         return Promise.resolve()
       }
     }
@@ -252,17 +246,12 @@ export default {
       <div class={this.classes} style={this.styles}>my-chart</div>
     )
   },
-  beforeCreate() {
-    this.echarts = echarts
-  },
   created() {
-    this.registerMap()
-      .then(this.setOption)
-      .catch(e => e)
-    this.proxyResize = debounce(this.resize, 100)
+    this.proxyResize = debounce(this.resize, 50)
+    this.proxySetOption = debounce(this.setOption, 50)
   },
   mounted() {
-    this.init()
+    this.registerMap().then(this.init)
   },
   beforeDestroy() {
     this.dispose()

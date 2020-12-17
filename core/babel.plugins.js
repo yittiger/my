@@ -36,5 +36,14 @@ module.exports = [
       style: false
     },
     '$ui/map'
+  ],
+  [
+    'component',
+    {
+      libraryName: '$ui/dv',
+      libDir: 'packages',
+      style: false
+    },
+    '$ui/dv'
   ]
 ]

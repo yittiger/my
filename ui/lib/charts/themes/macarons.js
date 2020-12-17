@@ -7,22 +7,21 @@ var colorPalette = [
   '#59678c', '#c9ab00', '#7eb00a', '#6f5553', '#c14089'
 ];
 
-
 var theme = {
   color: colorPalette,
-  
+
   title: {
     textStyle: {
       fontWeight: 'normal',
       color: '#008acd'
     }
   },
-  
+
   visualMap: {
     itemWidth: 15,
     color: ['#5ab1ef', '#e0ffff']
   },
-  
+
   toolbox: {
     iconStyle: {
       normal: {
@@ -30,7 +29,7 @@ var theme = {
       }
     }
   },
-  
+
   tooltip: {
     backgroundColor: 'rgba(50,50,50,0.5)',
     axisPointer: {
@@ -46,17 +45,17 @@ var theme = {
       }
     }
   },
-  
+
   dataZoom: {
     dataBackgroundColor: '#efefff',
     fillerColor: 'rgba(182,162,222,0.2)',
     handleColor: '#008acd'
   },
-  
+
   grid: {
     borderColor: '#eee'
   },
-  
+
   categoryAxis: {
     axisLine: {
       lineStyle: {
@@ -69,7 +68,7 @@ var theme = {
       }
     }
   },
-  
+
   valueAxis: {
     axisLine: {
       lineStyle: {
@@ -88,7 +87,7 @@ var theme = {
       }
     }
   },
-  
+
   timeline: {
     lineStyle: {
       color: '#008acd'
@@ -100,13 +99,13 @@ var theme = {
     symbol: 'emptyCircle',
     symbolSize: 3
   },
-  
+
   line: {
     smooth: true,
     symbol: 'emptyCircle',
     symbolSize: 3
   },
-  
+
   candlestick: {
     itemStyle: {
       normal: {
@@ -119,12 +118,12 @@ var theme = {
       }
     }
   },
-  
+
   scatter: {
     symbol: 'circle',
     symbolSize: 4
   },
-  
+
   map: {
     label: {
       normal: {
@@ -143,11 +142,11 @@ var theme = {
       }
     }
   },
-  
+
   graph: {
     color: colorPalette
   },
-  
+
   gauge: {
     axisLine: {
       lineStyle: {

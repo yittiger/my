@@ -165,12 +165,12 @@ export default function (instance) {
     progress && progress.start()
     // 优先使用 beforeEach
     if (beforeEach) {
-      beforeEach(to, from, next)
+      beforeEach.call(instance, to, from, next)
       return
     }
     // 执行预处理
     if (preprocess) {
-      preprocess({to, from, access: instance}).then(() => {
+      preprocess.call(instance, {to, from, access: instance}).then(() => {
         run(to, next)
       })
     } else {
@@ -181,7 +181,7 @@ export default function (instance) {
   $router.afterEach((to, from) => {
     progress && progress.done()
     if (afterEach) {
-      afterEach(to, from)
+      afterEach.call(instance, to, from)
     }
   })
 }

@@ -5,11 +5,11 @@ function sort(array) {
   return array
 }
 
-function createMenus(title, children) {
+function createMenus(title, children, isSort = true) {
   return {
     title: title,
     collapsable: true,
-    children: sort(children)
+    children: isSort ? sort(children) : children
   }
 }
 
@@ -133,7 +133,8 @@ module.exports = {
       'back-top',
       'contextmenu',
       'anchor',
-      'radial-menu'
+      'radial-menu',
+      'breadcrumb'
     ]),
     createMenus('数据录入', [
       'form',
@@ -242,6 +243,45 @@ module.exports = {
     'app',
     'api'
   ],
+  '/ui/dv/': [
+    '',
+    createMenus('基础组件', [
+      'page',
+      'screen',
+      'box',
+      'loading',
+      'header',
+      'border',
+      'adorn',
+      'icon',
+      'menu'
+    ], false),
+    createMenus('图表组件', [
+      'line',
+      'bar',
+      'pictorial',
+      'pie',
+      'ring',
+      'rings',
+      'rank',
+      'progress',
+      'fill',
+      'radar',
+      'geo',
+      'tags'
+    ], false),
+    createMenus('数据展示', [
+      'title',
+      'text',
+      'number',
+      'date',
+      'timer',
+      'list'
+    ], false),
+    createMenus('动效组件', [
+      'starry'
+    ], false)
+  ],
   '/ui/pages/': [
     'layout',
     'login',
@@ -249,10 +289,13 @@ module.exports = {
     'form',
     'search-list',
     'list',
-    'profile'
+    'profile',
+    'dv'
   ],
   '/guide/': [
     createMenus('开发指南', [
+      '/changelog',
+      'browser',
       'config',
       'constant',
       'cmd',
@@ -261,17 +304,17 @@ module.exports = {
       'coder',
       'route',
       'app'
-    ]),
+    ], false),
     createMenus('内置资源', [
       'color',
       'theme',
       'vars'
-    ]),
+    ], false),
     createMenus('进阶教程', [
       'messager'
-    ]),
+    ], false),
     createMenus('第三方类库', [
       'axios'
-    ])
+    ], false)
   ]
 }

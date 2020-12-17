@@ -52,11 +52,14 @@ export default {
       this.zoom = new Zoom({
         className: this.classes + ' ol-zoom'
       })
-      this.zoomSlider = new ZoomSlider({
-        className: this.classes + ' ol-zoomslider'
-      })
       map.addControl(this.zoom)
-      map.addControl(this.zoomSlider)
+
+      if (this.slider) {
+        this.zoomSlider = new ZoomSlider({
+          className: this.classes + ' ol-zoomslider'
+        })
+        map.addControl(this.zoomSlider)
+      }
     }
   },
   created() {

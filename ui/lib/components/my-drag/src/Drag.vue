@@ -342,6 +342,7 @@
           if (item.$options && item.$options.name === 'MyResize') {
             return item.resizing
           }
+          return false
         })
       },
       /**

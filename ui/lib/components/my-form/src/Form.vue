@@ -205,8 +205,8 @@
       },
       currentModel: {
         deep: true,
-        handler(val) {
-          // if (isEqual(val, old)) return
+        handler(val, old) {
+          if (isEqual(val, old)) return
           /**
            * 表单值改变时触发
            * @event change

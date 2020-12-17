@@ -120,8 +120,8 @@
         this.$emit('click', vm)
       },
       setCurrentAnchor(container) {
-        const viewOffsetTop = container.offsetTop
-        const viewScrollTop = container.scrollTop
+        const viewOffsetTop = container.offsetTop || document.documentElement.scrollTop
+        const viewScrollTop = container.scrollTop || document.documentElement.scrollTop
         let matchScrollTop = 0
         this.links.forEach(link => {
           const el = document.querySelector(link.anchor)
@@ -137,7 +137,6 @@
       handleViewUpdate() {
         const wrapper = this.getContainer()
         if (!wrapper) return
-
         this.setCurrentAnchor(wrapper)
       }
     }
