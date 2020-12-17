@@ -1,22 +1,7 @@
 <template>
-  <my-chart-cloud height="100%" :data="data"></my-chart-cloud>
+  <my-wrapper title="测试"></my-wrapper>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        data: {
-          columns: ['标签', '权重'],
-          rows: [
-            ['直接访问', 1],
-            ['邮件营销', 2],
-            ['联盟广告', 2],
-            ['视频广告', 3],
-            ['搜索引擎', 4]
-          ]
-        }
-      }
-    }
-  }
+  export default {}
 </script>

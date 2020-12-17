@@ -1,5 +1,30 @@
 # 更新日志
 
+## v4.2.0
+
+### 新特性
+- 增加数据可视化大屏组件库
+- 重新设计行业图标
+- 关系图组件优化
+  - 添加链接和分组的编辑功能
+  - 增加节点编辑器组件
+  - 增加focusScale参数
+  - 增加多行文本事件
+  - 增加动画及高亮效果
+  - update 连线动画
+- 新增 MyLocationPicker 经纬度提取输入组件
+- 新增 MySearchBox 搜索输入框组件
+- 新增 MyBreadcrumb 面包屑导航
+
+### 修复
+- my-map-draw 修改功能 添加 指定修改目标的配置
+- my-dialog组件初始化后高度不能改变
+- my-map-zoom slider 参数无效
+- my-map-drawer 增加change事件
+- my-map-dawer 文档缺失
+- /my/ui/map/marker.html 文档报错
+- MyDialog内存泄漏
+- 地图Cluster、Heat 数据变化时视图没有更新
 
 ## v4.1.0
 
