@@ -119,7 +119,7 @@
     "fibers": "^5.0.0",
     "jsdoc": "^3.6.5",
     "node-sass": "^5.0.0",
-    "sass-loader": "^10.0.2",
+    "sass-loader": "^10.1.0",
     "vue-template-compiler": "^2.6.12",
     "vuepress": "^1.7.1"
   },
