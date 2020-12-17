@@ -56,7 +56,7 @@ GoJS是一个JavaScript库，可以让您轻松地在现代Web浏览器中创建
 :::demo
 ```html
 <template>
-  <Diagram  height="400px" :nodes="nodes" :links="links" :options="options"></Diagram>
+  <Diagram  height="400px" :nodes="nodes" :highlight-mode="'adjoin'" :links="links" :options="options"></Diagram>
 </template>
 <script>
   import {go, Diagram, circle, link} from '$ui/gojs'

@@ -25,6 +25,12 @@ export function linkTemplate(options = {}, t) {
       $disabled: {
         opacity: t.disabledOpacity
       },
+      $gray: {
+        opacity: t.grayOpacity
+      },
+      $selected: {
+        opacity: t.selectedOpacity
+      },
       $events,
       $bindings,
       ...(props || {})
@@ -41,7 +47,7 @@ export function linkTemplate(options = {}, t) {
  */
 export function link(options = {}, theme) {
   const t = merge({}, normal, theme)
-  const {line, toArrow, fromArrow, label} = options
+  const {line, toArrow, fromArrow, label, labelArray, labelArrayItem} = options
   return linkTemplate({
     ...options,
     children: [
@@ -81,6 +87,7 @@ export function link(options = {}, theme) {
         props: {
           name: 'label',
           text: '',
+          cursor: label.$events ? 'pointer' : '',
           segmentOffset: new go.Point(0, -12),
           segmentOrientation: go.Link.OrientUpright,
           segmentFraction: 0.5,
@@ -88,6 +95,38 @@ export function link(options = {}, theme) {
           stroke: t.color,
           font: '14px sans-serif',
           ...label
+        }
+      }) : null,
+      labelArray ? creator({
+        name: go.Panel,
+        props: {
+          type: go.Panel.Vertical,
+          name: 'labelArray',
+          segmentOffset: new go.Point(0, 0),
+          segmentOrientation: go.Link.OrientUpright,
+          segmentFraction: 0.5,
+          segmentIndex: 0,
+          itemTemplate: creator({
+            name: go.Panel,
+            props: {
+              type: go.Panel.Auto,
+              margin: 2
+            },
+            children: [
+              creator({
+                name: go.TextBlock,
+                props: {
+                  name: 'labelArrayItem',
+                  cursor: labelArrayItem && labelArrayItem.$events ? 'pointer' : '',
+                  stroke: t.color,
+                  font: '14px sans-serif',
+                  $bindings: {text: ''},
+                  ...labelArrayItem
+                }
+              })
+            ]
+          }),
+          ...labelArray
         }
       }) : null
     ]

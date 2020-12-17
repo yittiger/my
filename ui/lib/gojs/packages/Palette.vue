@@ -35,6 +35,10 @@
       width: {
         type: Number,
         default: 100
+      },
+      highlightMode: {
+        type: String,
+        default: 'none'
       }
     },
     computed: {
@@ -44,19 +48,28 @@
         }
       },
       styles() {
-        const {top, bottom} = this.myDiagram?.rect
+        let paletteTop = 0, paletteBottom = 0
+        if(this.$parent.$vnode.tag.includes('Diagram')) {
+          const {top, bottom} = this.myDiagram?.rect
+          paletteTop = top
+          paletteBottom = bottom
+        }
         return {
           width: `${this.width}px`,
-          top: `${top}px`,
-          bottom: `${bottom}px`
+          top: `${paletteTop}px`,
+          bottom: `${paletteBottom}px`
         }
       }
     },
     created() {
-      this.myDiagram.rect.left = this.width
+      if(this.$parent.$vnode.tag.includes('Diagram')) {
+        this.myDiagram.rect.left = this.width
+      }
     },
     beforeDestroy() {
-      this.myDiagram.rect.left = 0
+      if(this.$parent.$vnode.tag.includes('Diagram')) {
+        this.myDiagram.rect.left = 0
+      }
     }
   }
 </script>

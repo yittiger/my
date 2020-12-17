@@ -14,29 +14,66 @@ export function base({name, props, children} = {}) {
   const {mouseEnter, mouseLeave} = $events
   props.$events = {
     ...$events,
+    // 当鼠标快速经过节点群时，为避免画面闪烁和节约性能，对鼠标进出进行延时处理
     mouseEnter: (e, obj) => {
-      obj.part.isHighlighted = true
-      if (obj instanceof go.Group) {
-        const parts = obj.findSubGraphParts()
-        parts.each(parts => {
-          ++parts.zOrder
-        })
-      } else {
-        ++obj.part.zOrder
-      }
-      mouseEnter && mouseEnter(e, obj)
+        const model = obj.diagram.model
+        const highlightMode = model.modelData.myGoHighlightMode
+        model.set(model.modelData, 'myGoIsHighlighting', true)
+        if(highlightMode === 'adjoin') {
+          if(obj.part instanceof go.Node) {
+            const connectedNodes = obj.part.findNodesConnected()
+            const connectedLinks = obj.part.findLinksConnected()
+            connectedNodes.each(N => {
+              N.isHighlighted = true
+            })
+            connectedLinks.each(L => {
+              L.isHighlighted = true
+            })
+          } else if(obj.part instanceof go.Link) {
+            if(obj.part.fromNode) obj.part.fromNode.isHighlighted = true
+            if(obj.part.fromNode) obj.part.toNode.isHighlighted = true
+          }
+        }
+        obj.part.isHighlighted = true
+        if (obj instanceof go.Group) {
+          const parts = obj.findSubGraphParts()
+          parts.each(parts => {
+            ++parts.zOrder
+          })
+        } else {
+          ++obj.part.zOrder
+        }
+        mouseEnter && mouseEnter(e, obj)
     },
     mouseLeave: (e, obj) => {
-      obj.part.isHighlighted = false
-      if (obj instanceof go.Group) {
-        const parts = obj.findSubGraphParts()
-        parts.each(parts => {
-          --parts.zOrder
-        })
-      } else {
-        --obj.part.zOrder
-      }
-      mouseLeave && mouseLeave(e, obj)
+        const model = obj.diagram.model
+        const highlightMode = model.modelData.myGoHighlightMode
+        model.set(model.modelData, 'myGoIsHighlighting', false)
+        if(highlightMode === 'adjoin') {
+          if(obj.part instanceof go.Node) {
+            const connectedNodes = obj.part.findNodesConnected()
+            const connectedLinks = obj.part.findLinksConnected()
+            connectedNodes.each(N => {
+              N.isHighlighted = false
+            })
+            connectedLinks.each(L => {
+              L.isHighlighted = false
+            })
+          } else if(obj.part instanceof go.Link) {
+            if(obj.part.fromNode) obj.part.fromNode.isHighlighted = false
+            if(obj.part.fromNode) obj.part.toNode.isHighlighted = false
+          }
+        }
+        obj.part.isHighlighted = false
+        if (obj instanceof go.Group) {
+          const parts = obj.findSubGraphParts()
+          parts.each(parts => {
+            --parts.zOrder
+          })
+        } else {
+          --obj.part.zOrder
+        }
+        mouseLeave && mouseLeave(e, obj)
     }
   }
   return creator({
