@@ -4,7 +4,7 @@
  */
 import Point from 'ol/geom/Point';
 import Feature from 'ol/Feature';
-import {Vector as VectorLayer} from 'ol/layer';
+import VectorLayer from 'ol/layer/Vector'
 import {Cluster, Vector as VectorSource} from 'ol/source';
 import parseStyle from '../../utils/style'
 

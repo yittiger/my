@@ -31,6 +31,7 @@
      * 属性参数
      * @member props
      * @property {Array} [data] 滚动数据，用作监听数据变更，更新html
+     * @property {Boolean} [disabled] 禁用
      * @property {string} [direction=up] 滚动方向，可选'up', 'down', 'left', 'right'
      * @property {boolean} [auto=true] 自动开始
      * @property {number} [speed=1] 滚动速度，数值越大速度越快
@@ -46,6 +47,7 @@
           return []
         }
       },
+      disabled: Boolean,
       // 滚动方向
       direction: {
         type: String,
@@ -88,7 +90,8 @@
       },
       classes() {
         return {
-          'my-marquee--horizontal': this.isHorizontal
+          'my-marquee--horizontal': this.isHorizontal,
+          'is-disabled': this.disabled
         }
       },
       scrollStyle() {
@@ -106,11 +109,21 @@
         handler() {
           this.$nextTick(this.renderCopyHtml)
         }
+      },
+      disabled(val) {
+        this.stop()
+        if (val) {
+          this.copyHtml = ''
+          this.scrollPosition = 0
+        } else {
+          this.$nextTick(this.renderCopyHtml)
+          this.auto && this.start()
+        }
       }
     },
     methods: {
       renderCopyHtml() {
-        if (!this.$refs.content) return
+        if (!this.$refs.content || this.disabled) return
         this.copyHtml = this.$refs.content.innerHTML
         this.updateView()
       },
@@ -120,6 +133,7 @@
         // 内容必须要撑开高度宽度
         this.contentHeight = rect.height
         this.contentWidth = rect.width
+        this.$emit('resize', rect, this)
       },
       /**
        * 开始滚动
@@ -218,7 +232,8 @@
         })
       },
       resume() {
-        const match = (this.scrollPosition % this.scrollLength) === 0
+        const value = Math.floor(this.scrollPosition) % this.scrollLength
+        const match = value === 0
         if (match) {
           this.resumeId && clearTimeout(this.resumeId)
           this.resumeId = setTimeout(this.start, this.waitTime)
@@ -227,6 +242,7 @@
 
       },
       handleMouseEnter() {
+        this.stop()
         this.isPause = true
       },
       handleMouseLeave() {
@@ -234,7 +250,7 @@
       }
     },
     mounted() {
-      this.auto && this.start()
+      (this.auto && !this.disabled) && this.start()
     },
     beforeDestroy() {
       this.stop()

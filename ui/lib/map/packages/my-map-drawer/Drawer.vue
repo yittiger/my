@@ -16,6 +16,10 @@
 </template>
 
 <script>
+  /**
+   * 抽屉组件
+   * @module $ui/map/my-map-drawer
+   */
   import MapPanel from '../my-map-panel'
   import clickoutside from 'element-ui/lib/utils/clickoutside'
 
@@ -27,6 +31,13 @@
     components: {
       MapPanel
     },
+    /**
+     * 属性参数, 继承 MyMapPanel
+     * @member props
+     * @property {string} [placement=left] 停靠位置, 可选值 'left', 'right', 'top', 'bottom'
+     * @property {boolean} [collapsed] 收起
+     * @property {boolean} [closeOnClickOutside] 点击外部收起
+     */
     props: {
       // 停靠位置
       placement: {
@@ -97,6 +108,11 @@
             return `el-icon-caret-${collapsed ? 'top' : 'bottom'}`
         }
         return ''
+      }
+    },
+    watch: {
+      currentCollapsed(val) {
+        this.$emit('change', val)
       }
     },
     methods: {

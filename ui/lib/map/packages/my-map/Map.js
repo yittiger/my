@@ -458,7 +458,7 @@ export default {
       if (this.map) {
         this.map.updateSize()
       }
-      this.$emit('viewSizeChange', rect)
+      this.$emit('view-size-change', rect)
     },
     setCanvasFilter() {
       if (!this.map) return

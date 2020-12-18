@@ -259,6 +259,59 @@
 ```
 :::
 
+## 多行文本事件
+:::demo
+```html
+<template>
+  <Diagram height="300px"
+           :nodes="nodes"
+           :links="links"
+           :options="options"></Diagram>
+</template>
+<script>
+  import {Diagram, link} from '$ui/gojs'
+
+  export default {
+    components: {
+      Diagram
+    },
+    data() {
+      return {
+        nodes: [
+          {key: 1},
+          {key: 2}
+        ],
+        links: [
+          {from: 1, to: 2, text: ['短信', '微信', 'QQ']}
+        ],
+        options: {
+          linkTemplate: link({
+            toArrow: true,
+            fromArrow: true,
+            labelArray: {
+              $bindings: {itemArray: 'text'}
+            },
+            labelArrayItem: {
+              $events: {
+                click: this.handleClick
+              }
+            }
+          })
+        }
+      }
+    },
+    methods: {
+      handleClick(e, obj) {
+        this.$message.info(`click: ${JSON.stringify(obj.panel.data)}`)
+        console.log('click', e, obj.panel.data)
+      }
+    }
+  }
+</script>
+
+```
+:::
+
 ## 配色
 
 :::demo

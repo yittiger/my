@@ -18,6 +18,11 @@
       MyIcon,
       Tooltip
     },
+    data() {
+      return {
+        isActive: false
+      }
+    },
     props: {
       name: String,
       type: String,
@@ -31,7 +36,8 @@
       classes() {
         return {
           'is-disabled': this.disabled,
-          'is-dark': this.myDiagram?.dark
+          'is-dark': this.myDiagram?.dark,
+          'is-active': this.isActive
         }
       },
       tooltipProps() {

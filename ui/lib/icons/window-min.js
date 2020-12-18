@@ -10,7 +10,7 @@ const Icon = ({props}) => {
   const attrs = {...globalConfig.svg, ...props}
   return (
     <svg {...{attrs: attrs}}>
-       <path d="M696 647H328c-11 0-20-9-20-20s9-20 20-20h368c11 0 20 9 20 20s-9 20-20 20z"/>
+       <path d="M640 672H384c-17.7 0-32-14.3-32-32s14.3-32 32-32h256c17.7 0 32 14.3 32 32s-14.3 32-32 32z"/>
     </svg>
   )
 }

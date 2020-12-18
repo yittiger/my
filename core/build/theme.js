@@ -66,8 +66,8 @@ function createEntryFile(type, entryDir) {
   files.forEach(item => {
     const msg = utils.parsePath(item)
     const content = type === 'el'
-      ? `import 'element-ui/packages/theme-chalk/src/${msg.base}'
-    ` : `import '${utils.urlFormat(utils.join(core.LibPath, 'styles', msg.base))}'`;
+      ? `import 'element-ui/packages/theme-chalk/src/${msg.base}'`
+      : `import '${utils.urlFormat(utils.join(core.LibPath, 'styles', msg.base))}'`;
 
     utils.writeFile(`${entryDir}/${msg.base.replace('.scss', '.js')}`, content, 'utf-8')
   })

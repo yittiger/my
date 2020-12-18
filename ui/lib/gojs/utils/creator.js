@@ -31,7 +31,8 @@ function cleanArray(array = []) {
  */
 function parseProps(props = {}) {
   const opts = {...props}
-  const {$hover, $selected, $bindings, $events, $disabled} = opts
+  const {$gray, $hover, $selected, $bindings, $events, $disabled} = opts
+  delete opts.$gray
   delete opts.$hover
   delete opts.$selected
   delete opts.$bindings
@@ -39,6 +40,7 @@ function parseProps(props = {}) {
   delete opts.$disabled
   return {
     $normal: {...cleanProps(opts), ...$events},
+    $gray: cleanProps($gray),
     $hover: cleanProps($hover),
     $selected: cleanProps($selected),
     $bindings: $bindings,
@@ -68,11 +70,41 @@ function createHoverBindings({$normal, $hover, $selected, $disabled}) {
       const selectedValue = $selected[name]
       // 已选中状态不响应hover
       if (isSelected && selectedValue !== undefined) {
-
         return selectedValue
       }
       return yes ? value : $normal[name]
     }).ofObject()
+  })
+}
+/**
+ * 通过modelData里的参数绑定值，控制节点样式
+ * @param $normal
+ * @param $hover
+ * @param $gray
+ * @param $selected
+ * @param $disabled
+ * @returns {Array}
+ */
+function createGrayBindings({$normal, $gray, $hover, $selected, $disabled}) {
+  if (!$hover) return []
+  return Object.entries($gray).map(([name, value]) => {
+    return new go.Binding(name, '', (modelData, obj) => {
+      const isEnabled = obj.part?.isEnabled
+      const disabledValue = $disabled ? $disabled[name] : undefined
+      if (!isEnabled && disabledValue !== undefined) {
+        return disabledValue
+      }
+      const isSelected = obj.part?.isSelected
+      const selectedValue = $selected[name]
+      if (isSelected && selectedValue !== undefined) {
+        return selectedValue
+      }
+      if(modelData.myGoHighlightMode === 'none') {
+        return $normal[name]
+      } else {
+        return modelData.myGoIsHighlighting ? $gray[name] : $normal[name]
+      }
+    }).ofModel()
   })
 }
 
@@ -151,6 +183,7 @@ export default function ({name, props, children} = {}) {
     opts.$normal,
     ...cleanArray(items),
     ...transformBindings(opts.$bindings),
+    ...createGrayBindings(opts),
     ...createHoverBindings(opts),
     ...createSelectedBindings(opts),
     ...createDisabledBindings(opts)

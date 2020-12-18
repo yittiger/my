@@ -192,10 +192,12 @@
       },
       filterNodeMethod() {
         const {label} = this.keyMap
-        return typeof this.filter === 'function' ? this.filter : (value, data) => {
-          if (!value) return true;
-          return data[label].indexOf(value) !== -1;
-        }
+        return typeof this.filter === 'function'
+          ? this.filter
+          : (value, data) => {
+            if (!value) return true;
+            return data[label].indexOf(value) !== -1;
+          }
       },
       tags() {
         const {label} = this.keyMap

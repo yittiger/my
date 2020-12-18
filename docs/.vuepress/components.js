@@ -117,7 +117,8 @@ module.exports = {
       'back-top': '返回顶部',
       contextmenu: '右键菜单',
       anchor: '锚菜单',
-      'radial-menu': '圆形菜单'
+      'radial-menu': '圆形菜单',
+      'breadcrumb': '面包屑菜单'
     },
     '数据录入': {
       form: '表单',
@@ -207,6 +208,44 @@ module.exports = {
       scatter: '地图散点动画',
       flight: '地图航线动画',
       track: '地图轨迹动画'
+    }
+  },
+  '可视化大屏': {
+    '基础组件': {
+      page: '页面',
+      screen: '场景',
+      box: '容器',
+      loading: '加载',
+      header: '页头',
+      border: '边框',
+      adorn: '装饰',
+      icon: '图标',
+      menu: '菜单'
+    },
+    '图表': {
+      line: '折线图',
+      bar: '柱状图',
+      pictorial: '象形柱状图',
+      pie: '饼图',
+      ring: '圆环',
+      rings: '多环图',
+      rank: '排名',
+      progress: '进度',
+      fill: '水位图',
+      radar: '雷达',
+      geo: '地图',
+      tags: '标签云'
+    },
+    '数据展示': {
+      title: '标题',
+      text: '文本',
+      number: '数字',
+      date: '日期时间',
+      timer: '计时器',
+      list: '列表'
+    },
+    '动效组件': {
+      starry: '星空动效'
     }
   }
 }

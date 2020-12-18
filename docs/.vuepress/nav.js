@@ -24,6 +24,10 @@ module.exports = [
     link: '/ui/icon/'
   },
   {
+    text: '大屏',
+    link: '/ui/dv/'
+  },
+  {
     text: '页面',
     link: '/ui/pages/'
   },
@@ -49,6 +53,10 @@ module.exports = [
       {
         text: '地图组件',
         link: '/api/map.html'
+      },
+      {
+        text: '可视化大屏',
+        link: '/api/dv.html'
       }
     ]
   }

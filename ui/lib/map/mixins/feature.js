@@ -55,7 +55,7 @@ export default {
       this.props && this.feature.setProperties({...this.props}) // 绑定属性
       this.myMap.addFeature(this.feature)
       this.setStyle()
-      this.$emit('featureDraw')
+      this.$emit('feature-draw')
     },
     /**
      * 设置图形样式

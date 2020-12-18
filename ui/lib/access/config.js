@@ -38,6 +38,9 @@ export default {
   // VueRouter实例
   $router: null,
 
+  // Vuex实例
+  $store: null,
+
   // 进入路由预处理函数，在进入路页面前进行某些处理，例如单点登录，必须返回Promise
   preprocess: null,
 

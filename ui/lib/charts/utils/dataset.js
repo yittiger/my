@@ -35,16 +35,17 @@ function createSource(standardColumns = [], rows = [], settings = {}) {
   })
 
   // 找到第一个设置了排序的列
-  const sortColumnIndex = standardColumns.findIndex(col => col.sort)
+  const sortColumnIndex = standardColumns.findIndex(col => !!col.sort)
   // 如果有设置排序，对数据进行从大到小排序
   if (sortColumnIndex >= 0) {
+    const col = standardColumns[sortColumnIndex]
     // 要判断类别所在的轴，横和竖的排序方式不同
-    const direction = settings.direction
+    const dir = settings.direction
+    const sortType = typeof col.sort === 'string' ? col.sort : (dir === 'x' ? 'asc' : 'desc')
     dataRows.sort((first, second) => {
-      return direction === 'x'
+      return sortType === 'asc'
         ? second[sortColumnIndex] - first[sortColumnIndex]
         : first[sortColumnIndex] - second[sortColumnIndex]
-
     })
   }
 
@@ -160,7 +161,7 @@ function getLimitRows(standardColumns, rows, limit) {
  * 2、数据项是对象形式，如：
  *   [
  *    {name:'month',displayName:'月份'},
- *    {name:'value', displayName:'销量', type:'int', unit:'k', precision:0, sort:true}
+ *    {name:'value', displayName:'销量', type:'int', unit:'k', precision:0, sort:true|asc|desc}
  *   ]
  *   其中 name、displayName、type是echarts自带功能， unit、precision 是自扩展功能
  *   type 表示数据类型，通常不需要设置，echarts 会自动识别，可选值：number | ordinal | float | float | time

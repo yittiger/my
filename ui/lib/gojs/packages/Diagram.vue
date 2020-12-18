@@ -26,7 +26,6 @@
   import finder from '../mixins/finder'
   import '../style/index.scss'
 
-
   const defaultOptions = function () {
     return {
       initialAutoScale: go.Diagram.Uniform,

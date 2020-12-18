@@ -29,7 +29,7 @@
                      :row="row"
                      @command="handleCommand($event, row, $index)"></Handlebar>
         </template>
-        <template v-slot:_handle.header="scope">
+        <template v-slot:[`_handle.header`]="scope">
           <slot name="handle-header" v-bind="scope">{{scope.column.label}}</slot>
         </template>
 

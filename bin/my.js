@@ -28,7 +28,7 @@ const commandArray = [
   'route',
   'bridge',
   'start',
-  'server',
+  'server',  
   'preview',
   'app',
   'page'

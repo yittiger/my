@@ -132,7 +132,8 @@
         }
       },
       tooltipProps() {
-        return this.tooltip ? {
+        return this.tooltip
+          ? {
             placement: 'top',
             content: typeof this.tooltip === 'string' ? this.tooltip : '',
             ...(typeof this.tooltip === 'object' ? this.tooltip : null)

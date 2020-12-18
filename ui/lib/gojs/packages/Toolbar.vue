@@ -10,7 +10,8 @@
                    :key="index"
                    @click="handleClick"></ToolbarItem>
     </template>
-
+    <search-result ref="searchResult" v-if="searchActive" v-bind="searchProp"></search-result>
+    <Inspector ref="inspector"  v-if="inspectorActive" v-bind="inspectorProp"></Inspector>
   </div>
 </template>
 
@@ -18,8 +19,10 @@
 
   import {Divider} from 'element-ui'
   import ToolbarItem from './ToolbarItem'
+  import SearchResult from './SearchResult'
+  import Inspector from './Inspector'
   import tools from '../utils/tools'
-  // import go from '../utils/lib'
+  import { getShortestPath, getChain, toList, linksTrack, go } from '../utils/lib'
 
   const defaultItems = [
     'json',
@@ -40,7 +43,11 @@
     'invert',
     '|',
     'zoomIn',
-    'zoomOut'
+    'zoomOut',
+    '|',
+    'shortestPath',
+    'search',
+    'inspector'
   ]
 
   export default {
@@ -48,7 +55,9 @@
     inject: ['myDiagram'],
     components: {
       Divider,
-      ToolbarItem
+      ToolbarItem,
+      SearchResult,
+      Inspector
     },
     props: {
       items: {
@@ -56,6 +65,24 @@
         default() {
           return defaultItems
         }
+      },
+      searchProp: {
+        type: Object,
+        default() {
+          return {}
+        }
+      },
+      inspectorProp: {
+        type: Object,
+        default() {
+          return {}
+        }
+      }
+    },
+    data() {
+      return {
+        searchActive: false,
+        inspectorActive: false
       }
     },
     computed: {
@@ -112,6 +139,14 @@
           case 'export':
             this.exportFile(name)
             break
+          case 'shortestPath':
+            this.findShortestPath(vm)
+            break
+          case 'search':
+            this.searchNode(vm)
+            break
+          case 'inspector':
+            this.showInspector(vm)
         }
         this.$emit('click', vm)
       },
@@ -145,6 +180,56 @@
             break
           case 'excel':
             break
+        }
+      },
+      findShortestPath({options}) {
+         const diagram = this.myDiagram.diagram
+         const selection = toList(diagram.selection)
+         if(selection.length !== 2) {
+           this.$message({
+             type: 'warning',
+             message: '请选择两个节点'
+           })
+           return
+         }
+         const minPath = getShortestPath(diagram, selection[0].key, selection[1].key)
+         const { chain, links } = getChain(diagram, minPath)
+         const model = diagram.model
+         diagram.startTransaction('highlightNodeAndLink')
+         model.set(model.modelData, 'myGoIsHighlighting', true)
+         diagram.commitTransaction('highlightNodeAndLink')
+         switch(options.resultMode) {
+           case 'highlight': 
+           diagram.highlightCollection(chain);
+           break;
+           case 'select': 
+           diagram.selectCollection(chain); 
+           break;
+         }
+         // 如果每次新建一个animation，有可能会造成内存泄漏
+         if(!diagram._linkTrackAnimation) {
+           diagram._linkTrackAnimation = new go.Animation()
+         }
+         linksTrack(links, diagram, diagram._linkTrackAnimation)
+      },
+      searchNode(vm) {
+        vm.isActive = !vm.isActive
+        this.searchActive = vm.isActive
+        if(this.searchActive) {
+          this.$nextTick(() => {
+              const searchResultEl = this.$refs.searchResult.$el
+              this.myDiagram.$el.append(searchResultEl)
+          })
+        }
+      },
+      showInspector(vm) {
+        vm.isActive = !vm.isActive
+        this.inspectorActive = vm.isActive
+        if(this.inspectorActive) {
+          this.$nextTick(() => {
+              const inspectorEl = this.$refs.inspector.$el
+              this.myDiagram.$el.append(inspectorEl)
+          })
         }
       }
     },

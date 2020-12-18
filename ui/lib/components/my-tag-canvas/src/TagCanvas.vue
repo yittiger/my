@@ -74,7 +74,6 @@
         })
       },
       options: {
-        deep: true,
         handler() {
           this.update()
         }
@@ -95,10 +94,10 @@
       handleClick(item) {
         /**
          * 点击时触发
-         * @event on-click
+         * @event click
          * @param {Object} item 数据项
          */
-        this.$emit('on-click', item)
+        this.$emit('click', item)
       },
       setCanvasSize() {
         const rect = this.$el.getBoundingClientRect()

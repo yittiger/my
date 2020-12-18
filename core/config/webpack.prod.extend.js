@@ -118,5 +118,4 @@ module.exports = function (chain, theme, app) {
     })
   })
 
-
 }
