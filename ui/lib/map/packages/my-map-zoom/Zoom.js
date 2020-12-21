@@ -68,8 +68,8 @@ export default {
   beforeDestroy() {
     const map = this.myMap?.map
     if (map) {
-      this.zoom && map.addControl(this.zoom)
-      this.zoomSlider && map.addControl(this.zoomSlider)
+      this.zoom && map.removeControl(this.zoom)
+      this.zoomSlider && map.removeControl(this.zoomSlider)
     }
   }
 }
