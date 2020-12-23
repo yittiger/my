@@ -303,7 +303,8 @@ module.exports = {
       'extension',
       'coder',
       'route',
-      'app'
+      'app',
+      'questions'
     ], false),
     createMenus('内置资源', [
       'color',
