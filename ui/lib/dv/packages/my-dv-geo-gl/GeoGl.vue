@@ -16,6 +16,7 @@
                   :settings="mapSettings"
                   :debug="debug"
                   v-bind="$attrs"></MyChartMapGl>
+    <slot></slot>
   </Box>
 </template>
 
@@ -24,10 +25,7 @@
   import Chart from '../../mixins/Chart'
   import Loading from '../my-dv-loading'
   import merge from 'lodash/merge'
-  // import extend from '$ui/charts/utils/extend'
-
   import {mapStyle, viewControl, visualMap} from './defaults'
-
 
   export default {
     name: 'MyDvGeoGl',

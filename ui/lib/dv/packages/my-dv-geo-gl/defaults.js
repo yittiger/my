@@ -1,14 +1,14 @@
-// const color = '#073684'
-// const borderColor = '#215495'
-// const hoverColor = '#1890FF'
-// const highlightColor = '#1de2ff'
-// const textColor = '#b4e4ff'
-
-const color = '#2a3139'
-const borderColor = '#3f5c68'
-const hoverColor = '#373b40'
-const highlightColor = '#58b5c8'
+const color = '#073684'
+const borderColor = '#215495'
+const hoverColor = '#1890FF'
+const highlightColor = '#1de2ff'
 const textColor = '#b4e4ff'
+
+// const color = '#2a3139'
+// const borderColor = '#3f5c68'
+// const hoverColor = '#373b40'
+// const highlightColor = '#58b5c8'
+// const textColor = '#b4e4ff'
 
 const mapStyle = {
   boxHeight: 10,
