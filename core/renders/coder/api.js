@@ -65,7 +65,7 @@ export function <%=item.camelCaseName%> (
       <%}%>
 
       <%if(item.transform && item.transform.length>0){%>
-          transformResponse: [transformHandler(<%=item.transform%>, '<%=item.camelCaseName%>', <%=item.ajaxParam%>
+          transformResponse: [transformHandler(<%=item.transform%>, '<%=item.camelCaseName%>', <%=item.ajaxParam%>, options
           <%if(item.params.length>0){%>
             ,{<%=item.params.join(', ')%>}
           <%}%>)],
