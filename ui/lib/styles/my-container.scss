@@ -11,7 +11,7 @@
 }
 
 @include b(container) {
-  overflow: auto;
+  overflow: initial;
   position: relative;
   background-color: $--background;
   color: $--color-normal-text;

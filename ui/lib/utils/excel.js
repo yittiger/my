@@ -202,4 +202,237 @@ export function reader(file, options = {}) {
   
 }
 
-export default {write, writeFromTable, read, reader}
+// ============== 以下为复杂表头输出函数集合 =============================
+const getHeader = function(headers, excelHeader, deep, perOffset) {
+  let offset = 0;
+  let cur = excelHeader[deep];
+  if (!cur) {
+    cur = excelHeader[deep] = [];
+  }
+  pushUndefined(cur, perOffset - cur.length);
+  for (let i = 0; i < headers.length; i++) {
+    const head = headers[i];
+    cur.push(head.name);
+    // head.hasOwnProperty('child')
+    if (head.child && Array.isArray(head.child) && head.child.length > 0) {
+      const childOffset = getHeader(
+        head.child,
+        excelHeader,
+        deep + 1,
+        cur.length - 1
+      );
+      pushNull(cur, childOffset - 1);
+      offset += childOffset;
+    } else {
+      offset++;
+    }
+  }
+  return offset;
+};
+const pushUndefined = function(arr, count) {
+  for (let i = 0; i < count; i++) {
+    arr.push(undefined);
+  }
+};
+const pushNull = function(arr, count) {
+  for (let i = 0; i < count; i++) {
+    arr.push(null);
+  }
+};
+const fillNull = function(arr) {
+  const max = Math.max(...arr.map(a => a.length));
+  arr.filter(e => e.length < max).forEach(e => pushNull(e, max - e.length));
+};
+const extractData = function(selectionData, revealList) {
+  const headerList = [];
+  flat(revealList, headerList);
+  // 结果集
+  const result = [];
+  selectionData.forEach(row => {
+    const rowData = [];
+    headerList.forEach(prop => {
+      let value = null;
+      if (typeof prop === 'function') {
+        value = prop(row);
+      } else {
+        value = row[prop];
+      }
+      value = value === null || value === undefined ? '' : value;
+      rowData.push(value);
+    });
+    result.push(rowData);
+  });
+  return result;
+};
+const flat = function(revealList, result) {
+  revealList.forEach(e => {
+    if (e.child) {
+      flat(e.child, result);
+    } else if (e.exeFun) {
+      result.push(e.exeFun);
+    } else if (e.prop) {
+      result.push(e.prop);
+    }
+  });
+};
+const doMerges = function(arr) {
+  // 要么横向合并 要么纵向合并
+  const deep = arr.length;
+  const merges = [];
+  for (let y = 0; y < deep; y++) {
+    // 先处理横向合并
+    const row = arr[y];
+    let colSpan = 0;
+    for (let x = 0; x < row.length; x++) {
+      if (row[x] === null) {
+        colSpan++;
+        if (x + 1 === row.length && (colSpan > 0 && x > colSpan)) {
+          merges.push({ s: { r: y, c: x - colSpan }, e: { r: y, c: x } });
+        }
+      } else if (colSpan > 0 && x > colSpan) {
+        merges.push({ s: { r: y, c: x - colSpan - 1 }, e: { r: y, c: x - 1 } });
+        colSpan = 0;
+      } else {
+        colSpan = 0;
+      }
+    }
+  }
+  // 再处理纵向合并
+  const colLength = arr[0].length;
+  for (let x = 0; x < colLength; x++) {
+    let rowSpan = 0;
+    for (let y = 0; y < deep; y++) {
+      if (arr[y][x] != null) {
+        rowSpan = 0;
+      } else {
+        rowSpan++;
+      }
+    }
+    if (rowSpan > 0) {
+      merges.push({
+        s: { r: deep - rowSpan - 1, c: x },
+        e: { r: deep - 1, c: x }
+      });
+    }
+  }
+  return merges;
+};
+const aoaToSheet = function(data) {
+  const ws = {};
+  const range = { s: { c: 10000000, r: 10000000 }, e: { c: 0, r: 0 } };
+  for (let R = 0; R !== data.length; ++R) {
+    for (let C = 0; C !== data[R].length; ++C) {
+      if (range.s.r > R) range.s.r = R;
+      if (range.s.c > C) range.s.c = C;
+      if (range.e.r < R) range.e.r = R;
+      if (range.e.c < C) range.e.c = C;
+      /// 这里生成cell的时候，使用上面定义的默认样式
+      const cell = {
+        v: data[R][C],
+        s: {
+          font: { name: '宋体', sz: 11, color: { auto: 1 } },
+          border: {
+            color: { auto: 1 }
+          },
+          alignment: {
+            /// 自动换行
+            wrapText: 1,
+            // 居中
+            horizontal: 'center',
+            vertical: 'center',
+            indent: 0
+          }
+        }
+      };
+      if (cell.v == null) continue;
+      const cellRef = XLSX.utils.encode_cell({ c: C, r: R });
+      if (typeof cell.v === 'number') cell.t = 'n';
+      else if (typeof cell.v === 'boolean') cell.t = 'b';
+      // 类型处理
+      // else if (cell.v instanceof Date) {
+      //   cell.t = 'n'; cell.z = XLSX.SSF._table[14];
+      //   cell.v = this.dateNum(cell.v);
+      // }
+      else cell.t = 's';
+      ws[cellRef] = cell;
+    }
+  }
+  if (range.s.c < 10000000) ws['!ref'] = XLSX.utils.encode_range(range);
+  return ws;
+};
+const s2ab = function(s) {
+  var buf = new ArrayBuffer(s.length);
+  var view = new Uint8Array(buf);
+  for (var i = 0; i !== s.length; ++i) view[i] = s.charCodeAt(i) & 0xff;
+  return buf;
+};
+const openDownloadXLSXDialog = function(url, saveName) {
+  if (typeof url === 'object' && url instanceof Blob) {
+    url = URL.createObjectURL(url); // 创建blob地址
+  }
+  var aLink = document.createElement('a');
+  aLink.href = url;
+  aLink.download = saveName || ''; // HTML5新增的属性，指定保存文件名，可以不要后缀，注意，file:///模式下不会生效
+  var event;
+  if (window.MouseEvent) event = new MouseEvent('click');
+  else {
+    event = document.createEvent('MouseEvents');
+    event.initMouseEvent(
+      'click',
+      true,
+      false,
+      window,
+      0,
+      0,
+      0,
+      0,
+      0,
+      false,
+      false,
+      false,
+      false,
+      0,
+      null
+    );
+  }
+  aLink.dispatchEvent(event);
+};
+
+/**
+ * 读取文件
+ * @param {String} docName 输出文件名称
+ * @param {Array} rowData 行数据
+ * @param {Array} colData 表头列数据 {name: '表头名', prop: '字段名', child: []}
+ * cloData = [ { name: '姓名', prop: 'name' }, { name: '专业技能', child: [ { name: '前端', child: [ { name: 'JavaScript', prop: 'js' } ] } ] } ]
+ */
+const complexTableExport = function(docName, rowData, colData) {
+  const sheetName = docName; // '多级表头excel'
+  const excelHeader = []; // [[], []]; // , [] 
+  getHeader(colData, excelHeader, 0, 0);
+  fillNull(excelHeader);
+  const merges = doMerges(excelHeader);
+  const dataList = extractData(rowData, colData);
+  excelHeader.push(...dataList);
+  const ws = aoaToSheet(excelHeader);
+  ws['!merges'] = merges;
+  const workbook = {
+    SheetNames: [sheetName],
+    Sheets: {}
+  };
+  workbook.Sheets[sheetName] = ws;
+  // excel样式
+  const wopts = {
+    bookType: 'xlsx',
+    bookSST: true,
+    type: 'binary',
+    cellStyles: true
+  };
+  const wbout = XLSX.write(workbook, wopts);
+  const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
+  openDownloadXLSXDialog(blob, sheetName + '.xlsx');
+}; 
+
+// ===========================================
+
+
+export default { write, writeFromTable, read, reader, complexTableExport }

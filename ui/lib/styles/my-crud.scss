@@ -4,6 +4,11 @@
   .my-table__pager {
     padding-bottom: 0 !important;
   }
+  @include e(filter) {
+    .my-container__inner {
+      overflow: hidden;
+    }
+  }
 }
 
 @include b(crud-form-dialog) {
