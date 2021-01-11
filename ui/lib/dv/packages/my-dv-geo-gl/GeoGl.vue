@@ -21,6 +21,10 @@
 </template>
 
 <script>
+  /**
+   * 3D地图
+   * @module $ui/dv/my-dv-geo-gl
+   */
   import {MyChartMapGl} from '$ui/charts'
   import Chart from '../../mixins/Chart'
   import Loading from '../my-dv-loading'
@@ -35,6 +39,22 @@
       Loading,
       MyChartMapGl
     },
+    /**
+     * 属性参数
+     * @member props
+     * @property {string} [name] 注册的地图名称
+     * @property {Object|Function} [json] 地图geoJson
+     * @property {Object|Function} [extend] extend 扩展
+     * @property {Object} [control] 控制配置
+     * @property {Object} [visual]
+     * @property {string} [type=map3D] 图表类型
+     * @property {Array} [columns] 数据列
+     * @property {Array} [rows] 数据行
+     * @property {Function} [loader] 数据加载函数，如设置了loader，type、columns、rows 将失效
+     * @property {object|function} [dataHelper] 构造序列数据项辅助函数
+     * @property {object|function} [typeHelper] 序列构造辅助函数
+     * @property {object} [mapStyle] 地图基础样式
+     */
     props: {
       name: String,
       // geoJSON

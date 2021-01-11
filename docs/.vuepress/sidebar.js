@@ -268,7 +268,8 @@ module.exports = {
       'fill',
       'radar',
       'geo',
-      'tags'
+      'tags',
+      'geo3d'
     ], false),
     createMenus('数据展示', [
       'title',

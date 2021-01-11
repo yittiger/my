@@ -1,7 +1,7 @@
 <template>
   <MyLayout class="my-crud" :north="{height:'auto'}" split :fit="fit">
     <template v-if="$slots.filter" v-slot:north>
-      <MyContainer>
+      <MyContainer class="my-crud__filter">
         <MyFilter v-bind="filter"
                   :model="currentQuery"
                   @submit="handleFilterSubmit"
@@ -410,7 +410,7 @@
        * @method refresh
        */
       refresh() {
-        this.$refs.table.refresh()
+        this.$refs.table.refresh(1)
       },
       batchRemove() {
         const elTable = this.$refs.table.$refs.elTable

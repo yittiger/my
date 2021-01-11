@@ -34,6 +34,9 @@ const mapStyle = {
     }
   },
   emphasis: {
+    label: {
+      show: true
+    },
     itemStyle: {
       color: hoverColor
     }
