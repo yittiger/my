@@ -167,9 +167,11 @@ module.exports = {
       'description'
     ]),
     createMenus('动画效果', [
-      'revolve',
       'flip',
-      'wave'
+      'tag-canvas',
+      'revolve',
+      'wave',
+      'particle'
     ])
   ],
   '/ui/charts/': [
