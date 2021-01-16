@@ -20,14 +20,14 @@ export default {
   },
   data() {
     return {
-      chartData: Object.create(null),
+      chartData: null,
       loading: true
     }
   },
   computed: {
     theme() {
-      const settings = this?.page?.settings || {}
-      return Object.freeze(theme(settings))
+      const config = this?.page?.config || {}
+      return Object.freeze(theme(config))
     }
   },
   watch: {
@@ -54,11 +54,12 @@ export default {
           this.loading = false
         })
       } else {
-        const {columns, rows} = this
+        const {columns, rows, type} = this
         if (columns && rows) {
           this.chartData = Object.freeze({
             columns,
-            rows
+            rows,
+            type: type || 'map'
           })
         }
         this.loading = false

@@ -1,4 +1,4 @@
-import 'echarts';
+import 'echarts/lib/echarts'
 import 'echarts-gl'
 import MyChart from '$ui/charts/packages/my-chart'
 import {install} from '$ui/utils/helper'

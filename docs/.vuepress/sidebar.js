@@ -268,7 +268,8 @@ module.exports = {
       'fill',
       'radar',
       'geo',
-      'tags'
+      'tags',
+      'geo3d'
     ], false),
     createMenus('数据展示', [
       'title',
@@ -303,7 +304,8 @@ module.exports = {
       'extension',
       'coder',
       'route',
-      'app'
+      'app',
+      'questions'
     ], false),
     createMenus('内置资源', [
       'color',

@@ -59,7 +59,9 @@ export default {
     // 主题
     theme: {
       type: [String, Object],
-      default: DEFAULT_THEME
+      default() {
+        return DEFAULT_THEME
+      }
     },
 
     // 显示加载动画
@@ -161,6 +163,7 @@ export default {
       this.proxySetOption()
 
       addResizeListener(this.$el, this.proxyResize)
+
     },
     // ECharts原生 setOption
     nativeSetOption(options) {
@@ -208,7 +211,9 @@ export default {
       if (!geo || !geo.features) return
       geo.features.forEach(feat => {
         const properties = feat.properties
-        this.coordinates[properties.name] = properties.cp
+        if (properties.cp) {
+          this.coordinates[properties.name] = properties.cp
+        }
       })
     },
     registerMap() {
@@ -243,7 +248,7 @@ export default {
   },
   render() {
     return (
-      <div class={this.classes} style={this.styles}>my-chart</div>
+      <div class={this.classes} style={this.styles}></div>
     )
   },
   created() {

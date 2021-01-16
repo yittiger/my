@@ -95,6 +95,12 @@ export default {
         this.effectFeature = new Feature(new Point(coordinates[0]))
         this.myMap.addFeature(this.effectFeature)
       }
+      /**
+       * 动画开始时触发
+       * @event start
+       * @param {VueComponent} vm
+       */
+      this.$emit('start', this)
       const {effectFeature, period} = this
       const start = new Date().getTime()
       const animate = () => {
@@ -102,8 +108,23 @@ export default {
         let fraction = (tick - start) / (period * 1000)
         fraction += this.fraction
         if (fraction > 1) {
+          /**
+           * 动画完成时触发
+           * @event finish
+           * @param {VueComponent} vm
+           */
+          this.$emit('finish', this)
           this.fraction = 0
-          this.loop && this.effectRender()
+          if (this.loop) {
+            this.effectRender()
+          } else {
+            /**
+             * 动画停止时触发
+             * @event stop
+             * @param {VueComponent} vm
+             */
+            this.$emit('stop', this)
+          }
           return
         }
         const coordinate = geometry.getCoordinateAt(fraction)

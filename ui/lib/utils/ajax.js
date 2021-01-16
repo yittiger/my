@@ -345,12 +345,13 @@ export default function (options = {}) {
  * @param {Function} transformer 自定义数据转换函数
  * @param {string} method 方法名称
  * @param {object} postData 请求的参数对象
+ * @param {object} options ajax请求的options
  * @param {object} params 请求的url参数对象
  * @returns {Function}
  */
-export function transformHandler(transformer, method, postData, params) {
+export function transformHandler(transformer, method, postData, options, params) {
   return function (data) {
     const json = typeof data === 'string' ? JSON.parse(data) : data
-    return transformer(json, method, postData, params)
+    return transformer(json, method, postData, options, params)
   }
 }
