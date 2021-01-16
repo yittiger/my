@@ -51,7 +51,15 @@
         validator(val) {
           return ['left', 'center', 'right'].includes(val)
         }
-      }
+      },
+      labelStyle: {
+        type: Object,
+        default: () => { return {} }
+      },
+      contentStyle: {
+        type: Object,
+        default: () => { return {} }
+      }  
     },
     data() {
       return {
