@@ -27,6 +27,8 @@
      * @property {number} [span=1] 包含列的数量
      * @property {string} [labelAlign=left] 标签对齐方式
      * @property {string} [contentAlign=left] 内容对齐方式
+     * @property {object} [labelStyle={}] label节点的样式
+     * @property {object} [contentStyle={}] content节点的样式
      */
     props: {
       label: String,
@@ -51,7 +53,15 @@
         validator(val) {
           return ['left', 'center', 'right'].includes(val)
         }
-      }
+      },
+      labelStyle: {
+        type: Object,
+        default: () => { return {} }
+      },
+      contentStyle: {
+        type: Object,
+        default: () => { return {} }
+      }  
     },
     data() {
       return {

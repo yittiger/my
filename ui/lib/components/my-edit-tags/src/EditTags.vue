@@ -100,7 +100,7 @@ export default {
       return className
     },
     inputStyle() {
-      const margin = this.isRight ? {marginLeft: '0px'} : {marginRight: '5px'}
+      const margin = this.isRight ? {marginLeft: '5px'} : {marginRight: '5px'}
       return {
         width: this.inputWidth, 
         float: this.isRight ? 'none' : 'left',
@@ -108,7 +108,7 @@ export default {
       }
     },
     addTagStyle() {
-      const margin = this.isRight ? {marginLeft: '0px', marginRight: '0px'} : {marginLeft: '0px', marginRight: '5px'}
+      const margin = this.isRight ? {marginLeft: '5px', marginRight: '0px'} : {marginLeft: '0px', marginRight: '5px'}
       return {
         float: this.isRight ? 'none' : 'left',
         ...margin 
