@@ -37,14 +37,40 @@
         */
     color: 'rgba(0,188,212,0.9)'
   }
+    /**
+   * 插槽
+   * @member slots
+   * @property {string} default 默认插槽，定义其它内容
+   */
     export default {
       name: 'MyParticle',
+      /**
+     * 属性参数
+     * @member props
+     * @property {object} [options] 粒子配置
+     * @property {object} [options.maxNum] 粒子数量
+     * @property {object} [options.initSpeed] 每秒新增的粒子数
+     * @property {object} [options.radius] 粒子半径区间, 数字或数组
+     * @property {object} [options.speed] 运动速度最大值
+     * @property {object} [options.direction] 运动指向方向
+     * @property {object} [options.rebound] 是否反弹
+     * @property {object} [options.scaleSpeed] direction为expand 或 shrink时有用，粒子放大速度
+     * @property {object} [options.hole] direction为expand 或 shrink时有用，黑洞半径
+     * @property {string} [width] 画布宽
+     * @property {string} [height] 画布高
+     * @property {function} [handleParticle] 粒子属性处理方法
+     * @property {function} [handleDraw] 粒子形状处理方法
+     * @property {function} [initParticle] 粒子初始化方法
+     * @property {string|Array} [color] 粒子颜色
+     * @property {string} [color[].color] 粒子颜色
+     * @property {number} [color[].duration] 颜色持续时间
+     * @property {number} [color[].transitionTime] 颜色变换时间
+     **/
       props: {
         options: {
           type: Object,
           default() {
             return {
-
             }
           }
         },
