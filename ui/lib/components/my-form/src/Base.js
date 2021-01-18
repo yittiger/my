@@ -126,12 +126,13 @@ export default {
           return this.value || this.getDefaultValue()
         }
       },
-      set(val) {
+      set(val) { 
         if (this.name && this.myForm) {
           const {currentModel} = this.myForm
           const model = cloneDeep(currentModel)
           _set(model, this.name, val)
-          if (!isEqual(currentModel, model)) {
+          if (!isEqual(currentModel, model)) { 
+            this.myForm.currentModel[this.name] = model[this.name]
             this.myForm.currentModel = model
           }
         } else {
