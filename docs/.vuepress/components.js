@@ -152,7 +152,8 @@ module.exports = {
       flip: '数字翻转动画',
       'tag-canvas': '标签云',
       revolve: '3D人像',
-      wave: '波浪特效'
+      wave: '波浪特效',
+      particle: '粒子特效'
     }
   },
   '图表': {
