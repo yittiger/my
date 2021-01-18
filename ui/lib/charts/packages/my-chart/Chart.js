@@ -211,7 +211,9 @@ export default {
       if (!geo || !geo.features) return
       geo.features.forEach(feat => {
         const properties = feat.properties
-        this.coordinates[properties.name] = properties.cp
+        if (properties.cp) {
+          this.coordinates[properties.name] = properties.cp
+        }
       })
     },
     registerMap() {

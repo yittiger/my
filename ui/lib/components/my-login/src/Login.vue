@@ -13,7 +13,7 @@
     </div>
     <my-form class="my-login__form"
              ref="form"
-             :rules="rules"
+             :rules="mergeRules"
              @submit="handleSubmit"
              :footer="null">
       <my-input :props="{prefixIcon:'el-icon-user'}"
@@ -71,6 +71,7 @@
      * @property {boolean} [center] 居中
      * @property {string} [accountPlaceholder=登录账号]
      * @property {string} [passwordPlaceholder=登录密码]
+     * @property {Object} [rules] 表单验证配置
      */
     props: {
       logo: {
@@ -111,7 +112,8 @@
       passwordPlaceholder: {
         type: String,
         default: '登录密码'
-      }
+      },
+      rules: Object
     },
     data() {
       return {
@@ -119,7 +121,7 @@
       }
     },
     computed: {
-      rules() {
+      mergeRules() {
         const {account, password} = this.keyMap
         return {
           [account]: [{
@@ -129,7 +131,8 @@
           [password]: [{
             required: true,
             message: '请输入登录密码'
-          }]
+          }],
+          ...this.rules
         }
       },
       styles() {

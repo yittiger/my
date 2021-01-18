@@ -81,7 +81,7 @@ export function createCurvePoints(from, to, radius = 0, angle = 90, space = 0.01
   const dx = (fy - ty) / (fx - tx)
   // 参照直线的夹角
   const r = (angle * Math.PI / 180) + Math.atan(dx)
-  console.log('r', r)
+  // console.log('r', r)
   // 计算得出曲线拐点的坐标
   const x = ox + radius * Math.cos(r)
   const y = oy + radius * Math.sin(r)

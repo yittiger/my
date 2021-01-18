@@ -1,6 +1,6 @@
 {
   "name": "@xdh/my",
-  "version": "4.2.0-rc.1",
+  "version": "4.2.0-rc.2",
   "keywords": [
     "ElementUI",
     "UI组件",
@@ -24,7 +24,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "color": "node bin/my color",
-    "fix": "node bin/my  fix",
+    "fix": "node bin/my fix",
     "coder": "node bin/my coder",
     "svg": "node bin/my svg",
     "theme": "node bin/my theme",

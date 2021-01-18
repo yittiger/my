@@ -19,7 +19,7 @@ export default {
   },
   render(h, context) {
     const {child, border, colon, type, layout} = context.props
-    const {label, currentSpan = 1, key, labelAlign, contentAlign} = child
+    const {label, currentSpan = 1, key, labelAlign, contentAlign, labelStyle, contentStyle} = child
     const labelProps = {
       class: {
         'my-detail-item__label': true,
@@ -27,7 +27,15 @@ export default {
         [`is-${labelAlign}`]: !!labelAlign,
         'my-detail-item--no-label': !(child.$slots.label || label)
       },
-      key: key
+      key: key,
+      style: {
+        ...labelStyle
+      }
+    }
+    const contentProps = {
+      style: {
+        ...contentStyle
+      }
     }
     if (layout === 'vertical') {
       labelProps.colspan = currentSpan * 2 - 1;
@@ -37,9 +45,10 @@ export default {
         return (<th {...labelProps} colspan={labelProps.colspan}>{child.$slots.label || label}</th>)
       }
       return (
-        <td class={['my-detail-item__content', `is-${contentAlign}`]}
+        <td {...contentProps} class={['my-detail-item__content', `is-${contentAlign}`]}
             key={key}
-            colspan={currentSpan * 2 - 1}>
+            colspan={currentSpan * 2 - 1} 
+        >
           {child.$slots.default}
         </td>
       )
@@ -48,7 +57,7 @@ export default {
     if (layout === 'vertical') {
       if (type === 'content') {
         return (
-          <td colspan={currentSpan} class={['my-detail-item__wrap', `is-${contentAlign}`]} key={key}>
+          <td {...contentProps} colspan={currentSpan} class={['my-detail-item__wrap', `is-${contentAlign}`]} key={key}>
           <span class="my-detail-item__content">
             {child.$slots.default}
           </span>
@@ -58,6 +67,7 @@ export default {
       return (
         <td colspan={currentSpan} class={['my-detail-item__wrap', `is-${contentAlign}`]} key={key}>
         <span
+          style={{...labelStyle}}
           class={{'my-detail-item__label': true, 'my-detail-item--colon': colon}}>
         {child.$slots.label || label}
         </span>
@@ -68,7 +78,7 @@ export default {
     return (
       <td colspan={currentSpan} class="my-detail-item__wrap" key={key}>
         <span {...labelProps}>{child.$slots.label || label}</span>
-        <span class="my-detail-item__content">
+        <span {...contentProps} class="my-detail-item__content">
        {child.$slots.default}
       </span>
       </td>

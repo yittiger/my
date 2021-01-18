@@ -340,7 +340,6 @@
         }
         this.currentLoading = true
         this.errorMessage = null
-        console.log('now load')
         this.loader(this.currentPage, this.currentPageSize).then(res => {
           const loaded = loaders[this.mode]
           loaded && loaded(res)
