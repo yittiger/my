@@ -153,13 +153,18 @@ export default {
         color:  [ 
                   {
                       color: 'rgba(255,0,0,1)', // 只支持rgba 颜色格式
-                      transitionTime: 1000, // 变换时长
-                      duration: 5000   // 持续时间
+                      transitionTime: 500, // 变换时长
+                      duration: 3000   // 持续时间
                   },
                   {
                       color: 'rgba(0,255,0,1)',
-                      transitionTime: 1000,
-                      duration: 5000 
+                      transitionTime: 500,
+                      duration: 3000 
+                  },
+                  {
+                      color: 'rgba(251, 255, 0, 1)',
+                      transitionTime: 500,
+                      duration: 3000 
                   }
                 ]
       }
@@ -223,7 +228,7 @@ export default {
         <div class="title">幂函数</div>
       </Particle>
       <Particle height="calc(50% - 30px)" width="50%" :options="options" :handle-particle="position3" class="particle">
-        <div class="title">圆</div>
+        <div class="title">心型</div>
       </Particle>
       <Particle height="calc(50% - 30px)" width="50%" :options="options" :handle-particle="position4" class="particle">
         <div class="title">双曲线</div>
@@ -287,14 +292,21 @@ export default {
     position3(item, canvas, time) {
        const centerX = canvas.width / 2
         const centerY = canvas.height / 2
-        if(Math.sqrt((item.x - centerX) * (item.x - centerX) + (item.y - centerY) * (item.y - centerY)) > 100) {
-              const ra = Math.random() * 100
-              const theta = Math.random() * Math.PI * 2
-            item.x = centerX + ra * Math.sin(theta)
-            item.y = centerY + ra * Math.cos(theta)
-        }
-        item.x += item.vX
-        item.y += item.vY
+      const xStart = centerX - 100
+      const xEnd = centerX + 100
+      let rX = item.x, rY = item.y
+      if(item.x < xStart || item.x > xEnd) {
+        rX = xStart + Math.floor(Math.random() * Math.abs(xEnd - xStart));
+        item.x = rX;
+      }
+      const yStart = centerY + 25 - (Math.pow((rX - centerX) * (rX - centerX) / 10000, 1 / 3) - Math.sqrt(1 - (rX - centerX) * (rX - centerX) / 10000)) * 60;
+      const yEnd = centerY + 25 - (Math.pow((rX - centerX) * (rX - centerX) / 10000, 1 / 3) + Math.sqrt(1 - (rX - centerX) * (rX - centerX) / 10000)) * 60;
+      if(item.y < Math.min(yStart, yEnd) || item.y > Math.max(yStart, yEnd)) {
+        rY = Math.min(yStart, yEnd) + Math.random() * Math.abs(yEnd - yStart);
+        item.y = rY;
+      }
+        item.x += item.vX;
+        item.y += item.vY;
     },
     position4(item, canvas, time) {
          // 双曲线
@@ -343,18 +355,23 @@ export default {
 ```html
 <template>
   <div class="container4">
-      <div style="margin-bottom: 5px;">自定义粒子的形状：使用handleDraw参数传入的方法绘制自定义图形。可配合initParticle方法初始化粒子属性在绘制时使用。
+      <div style="margin-bottom: 5px;">自定义粒子的形状：使用handleDraw参数传入的方法绘制自定义图形。可配合initParticle方法初始化粒子属性,并在绘制时使用。
       </div>
-      <Particle height="calc(100% - 50px)" width="50%" :options="options" 
+      <Particle height="calc(50% - 20px)" width="50%" :options="options"
       :handle-draw="draw1"
        class="particle">
         <div class="title">形状</div>
       </Particle>
-      <Particle height="calc(100% - 50px)" width="50%" :options="options" 
+      <Particle height="calc(50% - 20px)" width="50%" :options="options" :handle-particle="position"
       :handle-draw="draw2"
       :init-particle="initParticle"
        class="particle">
         <div class="title">文字</div>
+      </Particle>
+      <Particle height="calc(50% - 20px)" width="100%" :options="{speed: 1, maxNum: 50}"
+      :handle-draw="draw3"
+       class="particle">
+        <div class="title">图片</div>
       </Particle>
   </div>
 </template>
@@ -366,13 +383,14 @@ export default {
   },
   data() {
     return {
+      logo: require('$ui/assets/logo.png'),
       options: {
-         maxNum: 50, // 粒子数量
+         maxNum: 150, // 粒子数量
         initSpeed: 50, // 每秒新增的粒子数
         radius: 1.5, // 粒子半径区间, 数字或数组
         speed: 2, // 运动速度最大值
         direction: 'bottom', // 运动指向方向
-        color: '#9254de'
+        color: '#7cb305'
       }
     }
   },
@@ -383,6 +401,25 @@ export default {
             text: [0, 1][Math.floor(Math.random() * 2)],
             vX: 0
         }
+    },
+    position(item, canvas, time) {
+       const centerX = canvas.width / 2
+        const centerY = canvas.height / 2
+      const xStart = centerX - 100
+      const xEnd = centerX + 100
+      let rX = item.x, rY = item.y
+      if(item.x < xStart || item.x > xEnd) {
+        rX = xStart + (Math.floor(Math.random() * 5) / 5) * Math.abs(xEnd - xStart);
+        item.x = rX;
+      }
+      const yStart = centerY - (Math.sqrt(10000 - (rX - centerX) * (rX - centerX)));
+      const yEnd = centerY + (Math.sqrt(10000 - (rX - centerX) * (rX - centerX)));
+      if(item.y < Math.min(yStart, yEnd) || item.y > Math.max(yStart, yEnd)) {
+        rY = Math.min(yStart, yEnd) + Math.random() * Math.abs(yEnd - yStart);
+        item.y = rY;
+      }
+        item.x += item.vX;
+        item.y += item.vY;
     },
     draw1(cxt, item, time) {
          cxt.beginPath();
@@ -399,6 +436,11 @@ export default {
         // item.text 即是在初始化粒子时定义的
         cxt.fillText(item.text, item.x, item.y)
         cxt.fill();
+    },
+    draw3(cxt, item, time) {
+      let img = new Image()
+      img.src = this.logo
+      cxt.drawImage(img, item.x, item.y, item.radius * 10, item.radius * 10);
     }
   }
 }
