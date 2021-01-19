@@ -25,9 +25,7 @@ export default {
     pagerProps: {
       immediate: true,
       handler(props, oldProps) {
-        
         if (!isEqual(props, oldProps)) {
-          console.log('is change', props, oldProps)
           this.currentPage = props.currentPage
           this.currentTotal = props.total
           this.currentPageSize = props.pageSize
@@ -37,7 +35,7 @@ export default {
     }
   },
   methods: {
-    handlePageChange(page) { 
+    handlePageChange(page) {
       this.currentPage = page
       /**
        * 分页页码变化时触发
@@ -45,7 +43,7 @@ export default {
        * @param {number} page 页码
        * @param {number} pageSize 页大小
        */
-      this.$emit('page-change', page, this.currentPageSize) 
+      this.$emit('page-change', page, this.currentPageSize)
       this.load()
     },
     handlePageSizeChange(size) {

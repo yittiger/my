@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     theme() {
-      const config = this?.page?.config || {}
+      const config = this?.page?.settings || {}
       return Object.freeze(theme(config))
     }
   },
