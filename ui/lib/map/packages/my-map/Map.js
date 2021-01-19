@@ -20,6 +20,9 @@ export default {
       myMap: this
     }
   },
+  inject: {
+    page: {default: null}
+  },
   /**
    * 属性参数
    * @member props
@@ -297,7 +300,11 @@ export default {
     },
     handleEvent(e) {
       const type = e.type
-      const feature = this.getFeatureAtPixel(e.pixel)
+      const page = this.page || {}
+      const {widthScale = 1, heightScale = 1} = page
+      const [x, y] = e.pixel
+      const pixel = [x / widthScale, y / heightScale]
+      const feature = this.getFeatureAtPixel(pixel)
       switch (type) {
         case 'pointermove':
           this.setCursor(feature)
