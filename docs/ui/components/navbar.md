@@ -212,6 +212,7 @@
     <el-radio-button label="dark">dark</el-radio-button>
     <el-radio-button label="primary">primary</el-radio-button>
     <el-radio-button label="gradual">gradual</el-radio-button>
+    <el-radio-button label="black">black</el-radio-button>
   </el-radio-group>
   <div style="margin-top: 20px;">
     <my-navbar :logo="logo" 

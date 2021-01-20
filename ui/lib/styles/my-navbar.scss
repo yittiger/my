@@ -9,7 +9,7 @@ $light-background: $--nav-light-background !default;
 $light-hover-background: $--nav-light-item-background-hover !default;
 
 $black-color: $neutral-white-3 !default;
-$black-hover-color:  $neutral-white-2 !default;
+$black-hover-color: $neutral-white-2 !default;
 $black-background: #001529 !default;
 $black-hover-background: $neutral-black-2 !default;
 
@@ -37,7 +37,7 @@ $gradual-hover-background: $neutral-black-7 !default;
     h1 {
       color: $color;
     }
-    > a{
+    > a {
       position: relative;
     }
   }
@@ -63,6 +63,7 @@ $gradual-hover-background: $neutral-black-7 !default;
   height: $height;
   background: $--background;
   border-bottom: 1px solid $--color-divider;
+  box-sizing: content-box;
 
   @include e(trigger) {
     display: inline-block;
