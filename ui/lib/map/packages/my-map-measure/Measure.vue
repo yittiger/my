@@ -10,7 +10,7 @@
              manual>
     </MapDraw>
 
-    <my-map-html v-for="(item, index) in measures"
+    <MapHtml v-for="(item, index) in measures"
                  :key="index"
                  class="my-map-measure__tip"
                  :class="`is-${theme}`"
@@ -19,9 +19,9 @@
                  :offset="[0, -7]">
       <span v-html="item.content"></span>
       <i @click="handleDelete(item, index)" class="my-map-measure__delete el-icon-delete"></i>
-    </my-map-html>
+    </MapHtml>
 
-    <my-map-html v-if="helpTipPosition && !disabled"
+    <MapHtml v-if="helpTipPosition && !disabled"
                  class="my-map-measure__help"
                  :class="`is-${theme}`"
                  ref="helpTooltip"
@@ -29,16 +29,16 @@
                  positioning="center-left"
                  :position="helpTipPosition">
       {{helpTip}}
-    </my-map-html>
+    </MapHtml>
 
-    <my-map-html v-if="measureTipPosition"
+    <MapHtml v-if="measureTipPosition"
                  class="my-map-measure__tip"
                  :class="`is-${theme}`"
                  :position="measureTipPosition"
                  :offset="[0,-15]"
                  positioning="bottom-center">
       <span v-html="measureTip"></span>
-    </my-map-html>
+    </MapHtml>
   </div>
 </template>
 
@@ -49,6 +49,7 @@
    * @module $ui/map/my-map-measure
    */
   import MapDraw from '../my-map-draw'
+  import MapHtml from '../my-map-html'
   import {getArea, getLength} from 'ol/sphere'
   import {unByKey} from 'ol/Observable'
 
@@ -73,7 +74,8 @@
     name: 'MyMapMeasure',
     inject: ['myMap'],
     components: {
-      MapDraw
+      MapDraw,
+      MapHtml
     },
     /**
      * 属性参数
