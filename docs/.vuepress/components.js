@@ -118,7 +118,8 @@ module.exports = {
       contextmenu: '右键菜单',
       anchor: '锚菜单',
       'radial-menu': '圆形菜单',
-      'breadcrumb': '面包屑菜单'
+      'breadcrumb': '面包屑菜单',
+      'three-menu': '3D菜单'
     },
     '数据录入': {
       form: '表单',
@@ -152,7 +153,8 @@ module.exports = {
       flip: '数字翻转动画',
       'tag-canvas': '标签云',
       revolve: '3D人像',
-      wave: '波浪特效'
+      wave: '波浪特效',
+      particle: '粒子特效'
     }
   },
   '图表': {

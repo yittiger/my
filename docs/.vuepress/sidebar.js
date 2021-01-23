@@ -134,7 +134,8 @@ module.exports = {
       'contextmenu',
       'anchor',
       'radial-menu',
-      'breadcrumb'
+      'breadcrumb',
+      'three-menu'
     ]),
     createMenus('数据录入', [
       'form',
@@ -167,9 +168,11 @@ module.exports = {
       'description'
     ]),
     createMenus('动画效果', [
-      'revolve',
       'flip',
-      'wave'
+      'tag-canvas',
+      'revolve',
+      'wave',
+      'particle'
     ])
   ],
   '/ui/charts/': [
