@@ -215,19 +215,50 @@ export default {
                     <div class="con1"> 
                         <div class="title">camera</div>
                         <div class="keys">
-                            <el-form-item label="camera.deep(深度):">
+                            <el-form-item label="camera.deep(默认深度):">
                                 <el-input-number size="mini"  v-model="options.camera.deep"  :step="500" :min="0" :max="6000" label="深度"></el-input-number>
                               </el-form-item>
-                            <el-form-item label="camera.lockY(锁定Y坐标):">
+                            <el-form-item label="camera.minDistance(最近):">
+                                <el-input-number size="mini"  v-model="options.camera.minDistance"  :step="100" :min="0" :max="6000" label="最近"></el-input-number>
+                              </el-form-item>
+                            <el-form-item label="camera.maxDistance(最远):">
+                                <el-input-number size="mini"  v-model="options.camera.maxDistance"  :step="100" :min="0" :max="10000" label="最远"></el-input-number>
+                              </el-form-item>
+                            <el-form-item label="camera.minZoom(最小缩放):">
+                                <el-input-number size="mini"  v-model="options.camera.minZoom"  :step="0.5" :min="0.5" :max="100" label="最小缩放"></el-input-number>
+                              </el-form-item>
+                            <el-form-item label="camera.maxZoom(最大缩放):">
+                                <el-input-number size="mini"  v-model="options.camera.maxZoom"  :step="0.5" :min="0.5" :max="100" label="最大缩放"></el-input-number>
+                              </el-form-item>
+                            <el-form-item label="camera.minPolarAngle(垂直最小旋转):">
+                                 <el-input-number size="mini"  v-model="options.camera.minPolarAngle"  :step="0.01"  label="垂直最小旋转"></el-input-number>
+                             </el-form-item>
+                            <el-form-item label="camera.maxPolarAngle(垂直最大旋转):">
+                                 <el-input-number size="mini"  v-model="options.camera.maxPolarAngle"  :step="0.01"  label="垂直最大旋转"></el-input-number>
+                             </el-form-item>
+                              <el-form-item label="camera.minAzimuthAngle(水平最小旋转):">
+                                 <el-input-number size="mini"  v-model="options.camera.minAzimuthAngle"  :step="0.01"  label="水平最小旋转"></el-input-number>
+                             </el-form-item>
+                            <el-form-item label="camera.maxAzimuthAngle(水平最大旋转):">
+                                 <el-input-number size="mini"  v-model="options.camera.maxAzimuthAngle"  :step="0.01" label="水平最大旋转"></el-input-number>
+                             </el-form-item>
+                              <el-form-item label="camera.enableZoom(是否可缩放):">
                                 <el-switch
-                                v-model="options.camera.lockY"
+                                v-model="options.camera.enableZoom"
                                 active-text="是"
                                 inactive-text="否">
                                 </el-switch>
                              </el-form-item>
-                            <el-form-item label="camera.zoom(是否可缩放):">
+                              <el-form-item label="camera.enableRotate(是否可旋转):">
                                 <el-switch
-                                v-model="options.camera.zoom"
+                                v-model="options.camera.enableRotate"
+                                active-text="是"
+                                inactive-text="否">
+                                </el-switch>
+                             </el-form-item>
+                              <el-form-item label="camera.enablePan(是否可拖动,右键):">
+                                <el-switch
+                                v-model="options.camera.enablePan"
                                 active-text="是"
                                 inactive-text="否">
                                 </el-switch>
@@ -311,7 +342,7 @@ export default {
         :item-height="84"
         :item-space="20"
         :options="options"
-        :list="list"  width="calc(100% - 400px)" height="calc(600px - 50px)">
+        :list="list"  width="calc(100% - 550px)" height="calc(600px - 50px)">
         <div slot="item" slot-scope="{ item }"
         class="panel"
         @click="itemClick(item)"
@@ -352,8 +383,17 @@ export default {
       options: {
         camera: {
           deep: 1000,
-          lockY: true,
-          zoom: false
+          minDistance: 1000,
+        maxDistance: 2000,
+        minZoom: 0.5,
+        maxZoom: 3,
+        minPolarAngle: 60,
+        maxPolarAngle: 120,
+        minAzimuthAngle: -180,
+        maxAzimuthAngle: 180,
+        enableZoom: true,
+        enableRotate: true,
+        enablePan: true
         },
         table: {
           x: 0,
@@ -419,7 +459,7 @@ export default {
   height: 600px;
     .filter{
     float: left;
-    width: 400px;
+    width: 550px;
     height: calc(100% - 50px);
     overflow-y: auto;
   }

@@ -60,11 +60,13 @@ import '$ui/icons/all-fill.js'
 import '$ui/icons/network.js'
 import '$ui/icons/copy-rect-fill.js'
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min'
-import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls'
+// import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import {
   CSS3DObject,
   CSS3DRenderer
 } from 'three/examples/jsm/renderers/CSS3DRenderer'
+import { cloneDeep } from '$ui/utils/util'
 const defaultOption = {
         camera: {
         //   deep: 2000
@@ -118,9 +120,18 @@ export default {
      * @property {number} [transformDuration] 变换时长(ms)
      * @property {object} [options] 布局配置
      * @property {object} [options.camera] 摄像机配置
-     * @property {number} [options.camera.deep] 摄像相机深度
-     * @property {boolean} [options.camera.lockY] 锁定Y坐标
-     * @property {boolean} [options.camera.zoom] 是否可缩放
+     * @property {number} [options.camera.deep] 默认摄像相机深度
+     * @property {number} [options.camera.minDistance] 最近摄像相机深度
+     * @property {number} [options.camera.maxDistance] 最远摄像相机深度
+     * @property {number} [options.camera.minZoom] 最小缩放
+     * @property {number} [options.camera.maxZoom] 最大缩放
+     * @property {number} [options.camera.minPolarAngle] 垂直最小旋转角度
+     * @property {number} [options.camera.maxPolarAngle] 垂直最大旋转角度
+     * @property {number} [options.camera.minAzimuthAngle] 水平最小旋转角度
+     * @property {number} [options.camera.maxAzimuthAngle] 水平最大旋转角度
+     * @property {boolean} [options.camera.enableZoom] 是否可缩放
+     * @property {boolean} [options.camera.enableRotate] 是否可旋转
+     * @property {boolean} [options.camera.enablePan] 是否可鼠标右键拖动
      * @property {object} [options.table] 表格布局配置
      * @property {number} [options.table.x] x偏移
      * @property {number} [options.table.y] y偏移
@@ -271,21 +282,10 @@ export default {
       this.renderer = new CSS3DRenderer()
       this.renderer.setSize(this.screenWidth, this.screenHeight)
       this.$refs.container.appendChild(this.renderer.domElement)
-
-      this.controls = new TrackballControls(
-        this.camera,
-        this.renderer.domElement
-      )
-      this.controls.minDistance = 100
-      this.controls.zoomSpeed = 2
-      this.controls.maxDistance =
-        1500 * Math.floor(this.objects.length / (gridColumn * gridColumn)) +
+     const defaultMaxDistance = 1500 * Math.floor(this.objects.length / (gridColumn * gridColumn)) +
         (this.itemHeight + this.itemSpace) * this.column * 1.5 +
         500
-        if(!this.layoutOption.camera.zoom && this.layoutOption.camera.zoom !== undefined) {
-            this.controls.noZoom = true
-        }
-      this.controls.addEventListener('change', this.listRender)
+      this.setControl(defaultMaxDistance)
       this.transform(this.defaultLayout, this.transformDuration)
       window.addEventListener('resize', this.onWindowResize, false)
       this.$el.addEventListener('click', this.handleLoop, false)
@@ -294,6 +294,43 @@ export default {
       }
         addResizeListener(this.$el, this.setScreenSize)
        this.setScreenSize()
+    },
+    setControl(defaultMaxDistance) {
+        this.controls = new OrbitControls(
+        this.camera,
+        this.renderer.domElement
+      )
+     
+      const _cameraOption = cloneDeep(this.layoutOption.camera || {})
+      if(_cameraOption.minPolarAngle !== undefined) {
+        _cameraOption.minPolarAngle = _cameraOption.minPolarAngle * Math.PI / 180
+      }
+      if(_cameraOption.maxPolarAngle !== undefined) {
+        _cameraOption.maxPolarAngle = _cameraOption.maxPolarAngle * Math.PI / 180
+      }
+      if(_cameraOption.minAzimuthAngle !== undefined) {
+        _cameraOption.minAzimuthAngle = _cameraOption.minAzimuthAngle * Math.PI / 180
+      }
+      if(_cameraOption.maxAzimuthAngle !== undefined) {
+        _cameraOption.maxAzimuthAngle = _cameraOption.maxAzimuthAngle * Math.PI / 180
+      }
+      const cameraOption = Object.assign({}, {
+        minDistance: 100,
+        maxDistance: defaultMaxDistance,
+        minZoom: 0,
+        maxZoom: Infinity,
+        minPolarAngle: 0,
+        maxPolarAngle: Math.PI,
+        minAzimuthAngle: -Infinity,
+        maxAzimuthAngle: Infinity,
+        enableZoom: true,
+        enableRotate: true,
+        enablePan: true
+      }, _cameraOption)
+      for(let name in cameraOption) {
+        this.controls[name] = cameraOption[name]
+      }
+      this.controls.addEventListener('change', this.listRender)
     },
     initTable(vector) {
          const tableCol =
@@ -536,10 +573,7 @@ export default {
     animate() {
         TWEEN.update()
         this.controls.update()
-        if (this.camera && this.layoutOption.camera.lockY) {
-            this.camera.position.set(this.camera.position.x, 0, this.camera.position.z)
-        }
-      requestAnimationFrame(this.animate)
+        requestAnimationFrame(this.animate)
     },
     listRender() {
         if(this.renderer) {
