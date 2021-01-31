@@ -60,7 +60,6 @@ import '$ui/icons/all-fill.js'
 import '$ui/icons/network.js'
 import '$ui/icons/copy-rect-fill.js'
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min'
-// import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import {
   CSS3DObject,
@@ -314,6 +313,7 @@ export default {
       if(_cameraOption.maxAzimuthAngle !== undefined) {
         _cameraOption.maxAzimuthAngle = _cameraOption.maxAzimuthAngle * Math.PI / 180
       }
+      delete _cameraOption.deep
       const cameraOption = Object.assign({}, {
         minDistance: 100,
         maxDistance: defaultMaxDistance,
@@ -327,7 +327,7 @@ export default {
         enableRotate: true,
         enablePan: true
       }, _cameraOption)
-      for(let name in cameraOption) {
+      for(const name in cameraOption) {
         this.controls[name] = cameraOption[name]
       }
       this.controls.addEventListener('change', this.listRender)
@@ -573,6 +573,7 @@ export default {
     animate() {
         TWEEN.update()
         this.controls.update()
+         this.renderer.render(this.scene, this.camera)
         requestAnimationFrame(this.animate)
     },
     listRender() {

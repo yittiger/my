@@ -256,7 +256,7 @@ export default {
                                 inactive-text="否">
                                 </el-switch>
                              </el-form-item>
-                              <el-form-item label="camera.enablePan(是否可拖动,右键):">
+                              <el-form-item label="camera.enablePan(是否鼠标右键可拖动):">
                                 <el-switch
                                 v-model="options.camera.enablePan"
                                 active-text="是"
