@@ -31,7 +31,7 @@ import Adorn12 from './packages/my-dv-adorn12'
 import Adorn13 from './packages/my-dv-adorn13'
 import Line from './packages/my-dv-line'
 import Bar from './packages/my-dv-bar'
-import Pie from './packages/my-dv-Pie'
+import Pie from './packages/my-dv-pie'
 import Ring from './packages/my-dv-ring'
 
 export {
