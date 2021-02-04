@@ -88,6 +88,7 @@ export default {
       return Math.atan2(dy, dx)
     },
     effectRender() {
+      if (!this.feature) return
       const geometry = this.feature.getGeometry()
       const coordinates = geometry.getCoordinates()
       if (!coordinates || coordinates.length === 0) return
