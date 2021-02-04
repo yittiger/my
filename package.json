@@ -1,6 +1,6 @@
 {
   "name": "@xdh/my",
-  "version": "4.2.0",
+  "version": "4.2.1",
   "keywords": [
     "ElementUI",
     "UI组件",
@@ -154,7 +154,8 @@
       "padded-blocks": 0,
       "eol-last": 0,
       "object-curly-spacing": 0,
-      "no-callback-literal": 0
+      "no-callback-literal": 0,
+      "multiline-ternary": 0
     },
     "parserOptions": {
       "parser": "babel-eslint"
