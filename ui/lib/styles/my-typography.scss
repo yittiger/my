@@ -2,6 +2,7 @@
 
 
 @include b(typography) {
+  word-break: break-all;
   code {
     margin: 0 .2em;
     padding: .2em .4em .1em;
