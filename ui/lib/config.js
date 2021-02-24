@@ -8,7 +8,7 @@ const __config__ = {
   /**
    * 版本号
    */
-  version: '4.2.2',
+  version: '4.2.3',
   /**
    * debug 模式
    */
