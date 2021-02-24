@@ -77,7 +77,7 @@ $gradual-background: linear-gradient(to bottom, $--color-primary-light-1, $--col
 
   @include m(sidebar) {
     .my-navbar {
-      height: 61px;
+      height: 60px;
     }
     @include when(xs) {
       > .my-layout__west {
