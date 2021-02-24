@@ -512,7 +512,7 @@
       },
       handleTabSelect(tab, index) {
         if (tab.value) {
-          this.$router.push(tab.value)
+          this.$router.push(tab.value).catch(e => e)
         }
         /**
          * 选择选项卡时触发
@@ -527,7 +527,7 @@
         // 删除的是选择的tab
         if (tab.value === this.activeTabValue) {
           const current = this.tabs[index] || this.tabs[this.tabs.length - 1]
-          current && this.$router.push(current.value)
+          current && this.$router.push(current.value).catch(e => e)
         }
         /**
          * 关闭选项卡时触发
@@ -555,7 +555,7 @@
           case 'all':
             this.tabs.splice(1)
             if (this.tabs[0]) {
-              this.$router.push(this.tabs[0].value)
+              this.$router.push(this.tabs[0].value).catch(e => e)
             }
             break
         }
