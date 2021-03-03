@@ -234,8 +234,13 @@
        * @method submit
        */
       submit() {
-        this.$refs.elForm.validate(valid => {
+        this.$refs.elForm.validate((valid, object) => {
           if (valid) {
+            /**
+             *  表单验证通过
+             *  @event validate-success
+             */
+            this.$emit('validate-success')
             const model = cloneDeep(this.currentModel)
             if (this.onSubmit) {
               this.submitting = true
@@ -255,7 +260,15 @@
              * @param {VueComponent} vm 表单实例
              */
             this.$emit('submit', model, this)
+          } else {
+            /**
+             *  表单验证不通过
+             *  @event validate-fail
+             *  @param {object} object 未通过校验的字段
+             */
+            this.$emit('validate-fail', object)
           }
+
         })
       },
       /**
