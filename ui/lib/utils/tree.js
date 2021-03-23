@@ -12,17 +12,15 @@
  * @return {Array}
  */
 export function create(list = [], parentId = null, idKey = 'id', parentIdKey = 'parentId') {
-  const temp = Object.create(null), tree = []
+  const temp = new Map(), tree = []
   list.forEach(item => {
-    temp[item[idKey]] = {...item}
+    temp.set(item[idKey], {...item})
   })
-  
-  Object.keys(temp).forEach(key => {
-    const item = temp[key]
+  for (const item of temp.values()) {
     if (item[parentIdKey] === parentId) {
       tree.push(item)
     } else {
-      const parent = temp[item[parentIdKey]]
+      const parent = item.get(item[parentIdKey])
       if (parent) {
         if (!parent.children) {
           parent.children = []
@@ -30,8 +28,7 @@ export function create(list = [], parentId = null, idKey = 'id', parentIdKey = '
         parent.children.push(item)
       }
     }
-  })
-  
+  }
   return tree
 }
 
@@ -77,7 +74,7 @@ export function find(data = [], isFindOne, fn, field = 'children') {
  */
 export function findPath(data, fn, field = 'children') {
   const path = []
-  
+
   function find(array, parent) {
     parent && path.push(parent)
     for (let i = 0, len = array.length; i < len; i++) {
@@ -99,8 +96,8 @@ export function findPath(data, fn, field = 'children') {
       }
     }
   }
-  
+
   find([].concat(data))
   return path
-  
+
 }
