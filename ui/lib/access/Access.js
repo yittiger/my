@@ -91,6 +91,15 @@ class Access {
   }
 
   /**
+   * 更新登录数据
+   * @param {object} data 登录权限的数据，必须要包含 roles 或 can
+   */
+  update(data = {}) {
+    this.vm.access = Object.freeze(Object.assign({}, this.vm.access, data))
+    this.save()
+  }
+
+  /**
    * 更新角色
    * @param {string[]} roles
    */
