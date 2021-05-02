@@ -1,3 +1,8 @@
+/**
+ * 颜色相关工具函数
+ * @module $ui/utils/color
+ * @author 黄吉平
+ */
 import ColorMap from '$ui/assets/color.json'
 /**
  * 判断是否rbg格式颜色值
