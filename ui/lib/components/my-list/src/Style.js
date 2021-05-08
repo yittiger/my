@@ -112,6 +112,12 @@ export default {
       handler(val) {
         this.currentLoading = val
       }
+    },
+    // 监听currentTotal变化更新列表高度，解决列表初始化时 fit 状态下 page高度溢出外容器 bug
+    currentTotal(val) { 
+      setTimeout(() => { 
+        this.updateHeight()
+      }, 300)
     }
   },
   methods: {
