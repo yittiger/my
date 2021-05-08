@@ -1,31 +1,42 @@
 <template>
-<div style="height: 400px; width: 500px; border: 1px solid">
-  <my-form :model="model" @submit="handleSubmit">
-    <my-tree-select name="tree" label="下拉树" :options="options" :props="{multiple: false, collapseTags: true, clearable: true}"></my-tree-select>
-  </my-form>
-</div>
-  
+  <div>
+    <div> 
+      默认： <my-edit-tags  :tags-list.sync="arr1"></my-edit-tags> <br/>
+      双向绑定数据： {{arr1}}
+    </div>  <br/>
+    <div> 
+      medium: <my-edit-tags color="white" :tags-list.sync="arr2" size="medium"></my-edit-tags> 背景为白色<br/>
+      双向绑定数据： {{arr2}}
+    </div> <br/>
+    <div>     
+      small: <my-edit-tags type="warning" :tags-list.sync="arr3" size="small"></my-edit-tags> type: warning<br/>
+      双向绑定数据： {{arr3}}
+    </div> <br/>
+    <div> 
+      mini: <my-edit-tags :tags-list.sync="arr4" size="mini"></my-edit-tags><br/>
+      双向绑定数据： {{arr4}}
+    </div><br/> 
+    <div>前面输入
+      <my-edit-tags :tags-list.sync="arr5" :is-right="false"></my-edit-tags><br/>
+      双向绑定数据： {{arr5}}
+    </div><br/>
+    <div>只读
+      <my-edit-tags :tags-list="arr6" read-only></my-edit-tags>
+    </div>
+  </div>
 </template>
+
 <script>
-import tree from '../../docs/.vuepress/data/tree.json'
-import {create as createTree} from '$ui/utils/tree'
 export default {
   data() {
     return {
-      options: tree,
-      model: {
-        tree: 'yizhi'
-      }
+      arr1: ['1', '2', '3', '4'],
+      arr2: ['1', '2', '3', '4'],
+      arr3: ['1', '2', '3', '4'],
+      arr4: ['1', '2', '3', '4'],
+      arr5: ['1', '2', '3', '4'],
+      arr6: ['1', '2', '3', '4']
     }
-  },
-  methods: {
-    handleSubmit(model) {
-      alert(`submit: ${JSON.stringify(model)}`)
-    }
-  },
-  mounted() {
-    console.log(this.options)
-    console.log(createTree(tree))
   }
 }
 </script>

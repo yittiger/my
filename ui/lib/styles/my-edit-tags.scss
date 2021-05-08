@@ -7,28 +7,40 @@
   }
   
   @include e(warp) {
-    .input-new-tag.el-input--mini {
+    /deep/.input-new-tag.el-input--mini {
       margin-bottom: 10px;
       vertical-align: bottom; 
       
       @include when(large) {
-        height: 32px;
+        height: 32px; 
+        /deep/.el-input__inner{
+          height: 32px !important;
+          line-height: 32px !important;
+        }
       }
       @include when(medium){
         height: 28px;
+        /deep/.el-input__inner{
+          height: 28px !important;
+          line-height: 28px !important;
+        } 
       }
       @include when(small){
         height: 24px;
+        /deep/.el-input__inner{
+          height: 24px;
+          line-height: 24px;
+        }
       }
       @include when(mini){
         height: 21px;
-      }
-
-      /deep/ .el-input__inner {
-        height: 100%;
-        line-height: 1;
+        /deep/.el-input__inner{
+          height: 21px;
+          line-height: 21px;
+        }
       }
     }
+    
   }
   
 }
