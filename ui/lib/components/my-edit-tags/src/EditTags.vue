@@ -22,8 +22,7 @@
         @keyup.enter.native="handleInputConfirm"
         @blur="handleInputConfirm"
       >
-      </el-input>
-      
+      </el-input> 
       <el-tag v-else  key="edit" v-bind="$attrs" class="button-new-tag" :style="addTagStyle" :size="size"  @click="showInput" v-show="!readOnly">+ 添加</el-tag>
       
       
