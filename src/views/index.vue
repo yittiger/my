@@ -1,7 +1,7 @@
 <template>
   <div>
     <div> 
-      默认： <my-edit-tags  :tags-list.sync="arr1"></my-edit-tags> <br/>
+      默认： <my-edit-tags  :tags-list.sync="arr1" @change="changeHandle"></my-edit-tags> <br/>
       双向绑定数据： {{arr1}}
     </div>  <br/>
     <div> 
@@ -23,6 +23,16 @@
     <div>只读
       <my-edit-tags :tags-list="arr6" read-only></my-edit-tags>
     </div>
+
+    <hr>
+    <div>
+      <my-form @submit="handleSubmit" ref="form"> 
+        <my-form-custom name="tags">
+          <my-edit-tags :tags-list="[]" @change="tagsChangeHandle" ></my-edit-tags>
+        </my-form-custom>
+        
+      </my-form>
+    </div>
   </div>
 </template>
 
@@ -36,6 +46,17 @@ export default {
       arr4: ['1', '2', '3', '4'],
       arr5: ['1', '2', '3', '4'],
       arr6: ['1', '2', '3', '4']
+    }
+  },
+  methods: {
+    changeHandle(val) {
+      console.log(val, 'change')
+    },
+    handleSubmit(model) {
+      console.log(model)
+    },
+    tagsChangeHandle(tags) {
+      this.$refs.form.currentModel.tags = tags
     }
   }
 }

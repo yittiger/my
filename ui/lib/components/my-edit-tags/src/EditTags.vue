@@ -118,6 +118,9 @@ export default {
   watch: {
     tagsList(val) {
       this.dynamicTags = this.tagsList.concat([])
+    },
+    dynamicTags(val) {
+      this.$emit('change', val)
     }
   },
   methods: {
