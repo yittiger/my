@@ -1,64 +1,74 @@
 <template>
- <div style="width: 500px; height: 500px; border: 1px solid;margin: 0 auto">
+<div style="width: 500px; height: 500px; border: 1px solid;margin: 0 auto">
   <div class="slide-layout">
     <div class="left-warp">
-      <div class="resize-bar" style="width: 250px; max-width: 450px" ></div>
+      <div class="resize-bar" style="height: 250px; max-height: 450px" ></div>
       <div class="resize-line"></div>
       <div class="resize-save" ref="scrollWarp"  >
         <div class="left-content">left-content</div>
       </div>                                            
     </div>
-    <div class="right-warp" style="min-width: 50px">
+    <div class="preview-warp" style="min-width: 50px" ref="previewWarp">
       previewWarp
     </div>
   </div>
- </div>
+</div>
 </template>
+<style lang="scss" scoped>
+</style>
 <script>
 export default {
+  mixins: [],
+  components: {},
+  props: {
+  },
+  data() {
+    return {
+    }
+  },
+  computed: {
+  },
+  methods: {
+  },
+  created() {},
+  mounted() {}
 }
 </script>
+
 <style lang="scss" scoped>
 // @import "~@/style/_vars";
 .slide-layout { 
   height: 100%;
   overflow: hidden; 
-
 }
 .left-warp {
-  height: 100%; 
+  width: 100%; 
   position: relative;
-  float: left; 
-  // width: 50%;
-  // max-width: 95%;
   .edit-warp{
     width: 100%;
     height: 100%;
     padding: 15px;
-    outline: none;
-    /deep/ .img-text{
-      color: red; // $blue-5;
-    }
+    outline: none; 
   }
 }
 
-.right-warp {
-  height: 100%; 
-  box-sizing: border-box;
-  // overflow-x: hidden;
-  overflow-y: auto; 
+.preview-warp {
+  width: 100%;
+  padding: 10px; 
+  box-sizing: border-box; 
+  overflow-y: auto;
+    
 }
 
 .resize-save {
   position: absolute;
-  top: 0; right: 5px; bottom: 0; left: 0; 
-  overflow-x: hidden; 
+  top: 0; right: 0px; bottom: 5px; left: 0; 
+  overflow-y: hidden;  
 }
 .resize-bar {
-  position: relative;
-  // width: 250px; 
-  height:  100%;
-  resize: horizontal;
+  position: relative; 
+  width:  100%;
+  resize: vertical; // horizontal;
   cursor: ew-resize;
   cursor: col-resize;
   opacity: 0;
@@ -66,20 +76,20 @@ export default {
   
   &:hover ~ .resize-line,
   &:active ~ .resize-line {
-    border-left: 1px dashed skyblue;
+    border-bottom: 1px dashed skyblue;
   }
   &::-webkit-scrollbar {
     position:absolute;
-    width: 10px;
-    height: 999999px;
+    height: 10px;
+    width: 999999px;
   }
 }
 /* 拖拽线 */
 .resize-line {
   position: absolute;
-  right: 0; top: 0; bottom: 0;
-  border-right: 2px solid #eee;
-  border-left: 1px solid #bbb;
+  right: 0; left: 0; bottom: 0;
+  border-top: 2px solid #eee;
+  border-bottom: 1px solid #bbb;
   pointer-events: none;
 } 
 
@@ -87,7 +97,7 @@ export default {
 @supports (-moz-user-select: none) {
   .resize-bar:hover ~ .resize-line,
   .resize-bar:active ~ .resize-line {
-      border-left: 1px solid #bbb;
+      border-bottom: 1px solid #bbb;
   }
   .resize-bar:hover ~ .resize-line::after,
   .resize-bar:active ~ .resize-line::after {
