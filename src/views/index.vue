@@ -1,25 +1,28 @@
 <template>
- <div style="width: 500px; height: 500px; border: 1px solid;margin: 0 auto">
-  <div class="slide-layout">
-    <div class="left-warp">
-      <div class="resize-bar" style="width: 250px; max-width: 450px" ></div>
-      <div class="resize-line"></div>
-      <div class="resize-save" ref="scrollWarp"  >
-        <div class="left-content">left-content</div>
-      </div>                                            
-    </div>
-    <div class="right-warp" style="min-width: 50px">
-      previewWarp
-    </div>
-  </div>
+ <div style="width: 90%; height: 100%; border: 1px solid;margin: 0 auto">
+   <my-slide-layout type="horizontal" :edage-width="40" @on-resize="handle">
+     <div slot="odd" style="width: 100%; height: 100%;background: lightgreen">left</div>
+     <div slot="even" style="width: 100%; height: 100%;background: pink">right</div>
+   </my-slide-layout>
+   
  </div>
 </template>
 <script>
+// import SlideLayout from '@/components/slide-layout'
 export default {
+  components: {
+    // SlideLayout
+  },
+  methods: {
+    handle(e) {
+      console.log(e)
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
 // @import "~@/style/_vars";
+ 
 .slide-layout { 
   height: 100%;
   overflow: hidden; 
