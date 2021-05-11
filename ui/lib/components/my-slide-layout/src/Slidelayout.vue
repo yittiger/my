@@ -56,8 +56,21 @@
 </template>
 <script>
 import {addResizeListener, removeResizeListener} from 'element-ui/lib/utils/resize-event'
+ /**
+   * 插槽
+   * @member slots
+   * @property {string} odd 左边/上边插槽
+   * @property {string} even 右边/下边插槽
+  */  
 export default {
   name: 'MySlideLayout',
+  /**
+   * 属性参数
+   * @member props
+   * @property {string} [type] horizontal(默认)/vertical
+   * @property {number} [edageWidth] 右侧(横向)/下方(纵向) 的默认宽/高度占比（百分比，5-95） 
+   * @property {number} [range] 右侧(横向)/下方(纵向) 的宽/高度占比范围（百分比，5-95）
+  */ 
   props: {
     type: {
       type: String,
