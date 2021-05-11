@@ -101,7 +101,8 @@ module.exports = {
       fixed: '定位布局',
       flex: 'Flex布局',
       layout: '板块布局',
-      pro: '通用框架'
+      pro: '通用框架',
+      'slide-layout': '滑动布局'
     },
     '容器修饰': {
       panel: '面板',

@@ -1,8 +1,8 @@
 <template>
  <div style="width: 90%; height: 100%; border: 1px solid;margin: 0 auto">
-   <my-slide-layout type="horizontal" :edage-width="40" @on-resize="handle">
-     <div slot="odd" style="width: 100%; height: 100%;background: lightgreen">left</div>
-     <div slot="even" style="width: 100%; height: 100%;background: pink">right</div>
+   <my-slide-layout type="vertical" :edage-width="40" @on-resize="handle">
+     <div slot="odd" style="width: 99%; height: 99%;background: lightgreen">left</div>
+     <div slot="even" style="width: 99%; height: 99%;background: pink">right</div>
    </my-slide-layout>
    
  </div>
