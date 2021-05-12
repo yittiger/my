@@ -135,7 +135,8 @@ module.exports = {
       'contextmenu',
       'anchor',
       'radial-menu',
-      'breadcrumb'
+      'breadcrumb',
+      'three-menu'
     ]),
     createMenus('数据录入', [
       'form',
