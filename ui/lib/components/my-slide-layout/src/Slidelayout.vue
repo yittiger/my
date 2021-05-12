@@ -55,6 +55,10 @@
   </div>
 </template>
 <script>
+  /**
+   * 滑动布局组件
+   * @module $ui/components/my-slide-layout
+   */
 import {addResizeListener, removeResizeListener} from 'element-ui/lib/utils/resize-event'
  /**
    * 插槽
@@ -68,8 +72,8 @@ export default {
    * 属性参数
    * @member props
    * @property {string} [type] horizontal(默认)/vertical
-   * @property {number} [edageWidth] 右侧(横向)/下方(纵向) 的默认宽/高度占比（百分比，5-95） 
-   * @property {number} [range] 右侧(横向)/下方(纵向) 的宽/高度占比范围（百分比，5-95）
+   * @property {number} [edageWidth] 左侧(横向)/上方(纵向) 的默认宽/高度占比（百分比，5-95） 
+   * @property {array} [range] 左侧(横向)/上方(纵向) 的宽/高度占比范围（百分比，5-95）
   */ 
   props: {
     type: {
@@ -118,7 +122,7 @@ export default {
   methods: {
     setLayout() {
       const fullLength = this.type === 'horizontal' ? this.$refs.body.offsetWidth : this.$refs.body.offsetHeight
-      const defaultPercent = (100 - this.edageWidth) / 100 
+      const defaultPercent = this.edageWidth / 100 
       const length = Math.round(fullLength * defaultPercent)
       const maxPercent = this.range[1] / 100
       const minPercent = this.range[0] / 100
@@ -129,9 +133,18 @@ export default {
       this.maxLength = maxLength
       this.minLength = minLength
       this.finish = true
+      /**
+       * 布局宽高定义好后触发
+       * @event on-ready
+       */
       this.$emit('on-ready')
     },
     resizeHandle() {
+      /**
+       * 布局拖动时触发
+       * @event on-resize
+       * @param {HtmlDom} 定义宽高变化的html节点
+       */
       this.$emit('on-resize', this.$refs.resizeBar)
     }
   },
