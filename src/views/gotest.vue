@@ -2,7 +2,7 @@
   <Diagram height="100%" width="100%" :nodes="nodes" :links="links" :options="options"></Diagram>
 </template>
 <script>
-  import {$, go, Diagram, link} from '$ui/gojs' // circle, 
+  import {$, go, Diagram} from '$ui/gojs' // , link 
   import tree from '../../docs/.vuepress/data/tree.json'
   import 'gojs/extensions/HyperlinkText'
   export default {
@@ -43,7 +43,15 @@
           //     }
           //   }
           // }),
-          linkTemplate: link({
+          linkTemplate: $(go.Link, {
+              curve: go.Link.Bezier,
+              toEndSegmentLength: 30, 
+              fromEndSegmentLength: 30
+            },
+            $(go.Shape, { strokeWidth: 1.5 }) // the link shape, with the default black stroke
+          ),
+          /*
+          link({
             toArrow: {},
             label: {
               $bindings: [
@@ -53,7 +61,9 @@
                 })
               ]
             }
-          })
+          }),
+          */
+          layout: $(go.TreeLayout, { nodeSpacing: 3 })
         }
       }
     },
@@ -61,7 +71,9 @@
       cusNodeTemplate() {
         return $(go.Node,
           $('HyperlinkText', 
-            function(node) { return 'http://www.baidu.com'; },
+            function(node) {
+              return `http://newgateway.gitee.io/my/ui/components/${node.data.key}.html` 
+            },
  
             $(go.Panel, 'Auto',
               $(go.Shape, { fill: '#1F4963', stroke: null }),
