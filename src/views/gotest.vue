@@ -11,58 +11,17 @@
     },
     data() {
       return {
-        nodes: [
-          {key: 1, text: 'node1'},
-          {key: 2, text: 'node2'},
-          {key: 3, text: 'node3'},
-          {key: 4, text: 'node4'},
-          {key: 5, text: 'node5'},
-          {key: 6, text: 'node6'},
-          {key: 7, text: 'node7'},
-          {key: 8, text: 'node8'},
-          {key: 9, text: 'node9'},
-          {key: 10, text: 'node10'}
-        ],
-        links: [
-          {from: 1, to: 2},
-          {from: 1, to: 3},
-          {from: 1, to: 4},
-          {from: 1, to: 5},
-          {from: 1, to: 6},
-          {from: 2, to: 7},
-          {from: 2, to: 8},
-          {from: 2, to: 9},
-          {from: 2, to: 10}
-        ],
+        nodes: [],
+        links: [],
         options: {
-          nodeTemplate: this.cusNodeTemplate(),
-          // circle({
-          //   label: {
-          //     $bindings: {
-          //       text: 'text'
-          //     }
-          //   }
-          // }),
+          nodeTemplate: this.cusNodeTemplate(), 
           linkTemplate: $(go.Link, {
               curve: go.Link.Bezier,
               toEndSegmentLength: 30, 
               fromEndSegmentLength: 30
             },
             $(go.Shape, { strokeWidth: 1.5 }) // the link shape, with the default black stroke
-          ),
-          /*
-          link({
-            toArrow: {},
-            label: {
-              $bindings: [
-                new go.Binding('text', 'to', (v, o) => {
-                  const props = o.part.data.props 
-                  return `link:${props.fromNode.label}-${props.toNode.label}`
-                })
-              ]
-            }
-          }),
-          */
+          ), 
           layout: $(go.TreeLayout, { nodeSpacing: 3 })
         }
       }
@@ -73,8 +32,7 @@
           $('HyperlinkText', 
             function(node) {
               return `http://newgateway.gitee.io/my/ui/components/${node.data.key}.html` 
-            },
- 
+            }, 
             $(go.Panel, 'Auto',
               $(go.Shape, { fill: '#1F4963', stroke: null }),
               $(go.TextBlock,
@@ -127,15 +85,12 @@
             total = total.concat(links)
           }  
           return total
-        }, [])
-        console.log(links)
+        }, []) 
         this.links = links
-        // 
       }
     },
     mounted() { 
       this.makeRelation()
-      
     }
   }
 </script>
