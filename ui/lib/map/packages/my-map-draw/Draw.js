@@ -97,16 +97,22 @@ export default {
       if (this.layer) return
       const source = new VectorSource()
       const style = this.getStyle(this.effect)
+     
       this.layer = new VectorLayer({
         source,
         style
       })
+      
       map.addLayer(this.layer)
       if (!this.manual) {
         this.draw()
         this.modify()
       }
-      this.$emit('ready', this)
+      this.$emit('ready', this) 
+      setTimeout(() => { 
+        // 设置画板图层在所有图层的最顶层（解决切换地图瓦片后编辑图层被覆盖bug）
+        this.layer.setZIndex(map.getLayers().getArray().length)
+      }, 100)
     },
     /**
      * 进入绘画模式
