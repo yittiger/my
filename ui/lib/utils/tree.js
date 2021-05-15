@@ -20,7 +20,7 @@ export function create(list = [], parentId = null, idKey = 'id', parentIdKey = '
     if (item[parentIdKey] === parentId) {
       tree.push(item)
     } else {
-      const parent = item.get(item[parentIdKey])
+      const parent = temp.get(item[parentIdKey])
       if (parent) {
         if (!parent.children) {
           parent.children = []

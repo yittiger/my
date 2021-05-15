@@ -117,7 +117,8 @@ module.exports = {
       'fixed',
       'flex',
       'layout',
-      'pro'
+      'pro',
+      'slide-layout'
     ]),
     createMenus('容器修饰', [
       'panel',
