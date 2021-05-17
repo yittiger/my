@@ -101,7 +101,8 @@ module.exports = {
       fixed: '定位布局',
       flex: 'Flex布局',
       layout: '板块布局',
-      pro: '通用框架'
+      pro: '通用框架',
+      'slide-layout': '滑动布局'
     },
     '容器修饰': {
       panel: '面板',
@@ -118,7 +119,8 @@ module.exports = {
       contextmenu: '右键菜单',
       anchor: '锚菜单',
       'radial-menu': '圆形菜单',
-      'breadcrumb': '面包屑菜单'
+      'breadcrumb': '面包屑菜单',
+      'three-menu': '3D菜单'
     },
     '数据录入': {
       form: '表单',

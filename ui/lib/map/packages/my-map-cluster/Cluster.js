@@ -5,7 +5,7 @@
 import Point from 'ol/geom/Point';
 import Feature from 'ol/Feature';
 import VectorLayer from 'ol/layer/Vector'
-import {Cluster, Vector as VectorSource} from 'ol/source';
+import { Cluster, Vector as VectorSource } from 'ol/source';
 import parseStyle from '../../utils/style'
 
 // 样式函数构造器
@@ -13,7 +13,7 @@ const defaultStyleCreator = config => {
 
   return feature => {
     const size = (feature.get('features') || []).length
-    const {fill, radius, strokeWidth, strokeColor, textFill, scaleSeed} = config
+    const { fill, radius, strokeWidth, strokeColor, textFill, scaleSeed } = config
     return parseStyle({
       circle: {
         radius: radius + scaleSeed * size,
@@ -145,7 +145,7 @@ export default {
      * @param {Object[]} data 数据据
      */
     draw(data = []) {
-      const {coordinate} = this.keyMap
+      const { coordinate } = this.keyMap
       const features = data.map(item => new Feature({
         geometry: new Point(item[coordinate]),
         data: item,

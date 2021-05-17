@@ -16,7 +16,7 @@
     </Tabs>
     <div class="my-tabs__body">
       <slot :tab="currentTab">
-        <component v-if="tabComponent" :is="tabComponent" v-bind="currentTab.props"></component>
+        <component v-if="tabComponent" :is="tabComponent" v-bind="currentTab.props" v-on="currentTab.on" :ref="currentTab.ref"></component>
       </slot>
     </div>
   </MyContainer>

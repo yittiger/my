@@ -15,14 +15,19 @@
                 :closable="closable"
                 :allow-create="false"
                 @remove="handleRemove"
-                icon="el-icon-arrow-down"></TagInput>
+                icon="el-icon-arrow-down"
+                > 
+                </TagInput>
       <ElInput v-else
                :value="checked ? checked[keyMap.label]:''"
                :placeholder="placeholder"
                :size="size"
                :disabled="disabled"
                :readonly="readonly"
-               suffix-icon="el-icon-arrow-down"></ElInput>
+               >
+                <i v-show="!clearable || (!checked && clearable)" slot="suffix" class="el-input__icon el-icon-arrow-down" ></i>
+                <i v-show="checked && clearable" slot="suffix" class="el-input__icon el-icon-error" style="cursor:pointer" @click.stop="clearClickHandle"></i>
+               </ElInput>
     </template>
 
     <div class="my-tree-select__content">
@@ -33,6 +38,7 @@
                clearable
                placeholder="请输入筛选关键字"></ElInput>
       <Tree class="my-tree-select__tree is-line"
+            v-tree-connect
             ref="tree"
             v-bind="tree"
             :highlight-current="!multiple"
@@ -66,6 +72,7 @@
   import TagInput from './TagInput'
   import {create as createTree} from '$ui/utils/tree'
   import {isEqual} from '$ui/utils/util'
+  import treeConnect from '$ui/directives/tree-connect'
 
   /**
    * 属性参数
@@ -74,6 +81,7 @@
    * @property {array} [options] 选项数组 [{id, parentId, label, value}]
    * @property {Object} [keyMap] 字段映射 {id, parentId, label, value, disabled}
    * @property {boolean} [multiple] 开启多选
+   * @property {boolean} [clearable] 是否可以删除
    * @property {string} [size] 尺寸，可选值：'medium', 'small', 'mini', ''
    * @property {boolean} [disabled]  禁用
    * @property {boolean} [readonly] 只读
@@ -87,7 +95,7 @@
    *
    */
   export default {
-
+    directives: {'tree-connect': treeConnect},
     components: {
       ElInput: Input,
       TagInput,
@@ -119,6 +127,8 @@
       },
       // 开启多选
       multiple: Boolean,
+      // 可以删除
+      clearable: Boolean,
       placeholder: String,
       // 尺寸
       size: {
@@ -253,6 +263,10 @@
           this.$emit('input', keys)
           this.$refs.picker.visible = false
         }
+      },
+      clearClickHandle() {
+        this.checked = null
+        this.$emit('input', '')
       }
     }
   }
