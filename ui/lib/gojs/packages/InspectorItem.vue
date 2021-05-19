@@ -22,18 +22,18 @@
             </div>
             <span  class="my-go-inspector__input" :style="`width: calc(100% - ${(item.labelWidth || 60) + 10}px);`"  v-if="data[item.key] !== undefined">
                 <template v-if="['string', 'number'].includes(item.type)">
-                    <el-input v-if="item.key === ''" v-model="data[item.key]" size="mini"
+                    <el-input v-if="item.key === ''" v-model="dataProxy[item.key]" size="mini"
                     @change="dataChange"></el-input>
-                    <el-input v-else v-model="data[item.key]" size="mini" @change="dataChange"></el-input>
+                    <el-input v-else v-model="dataProxy[item.key]" size="mini" @change="dataChange"></el-input>
                 </template>
                 <template v-else-if="item.type === 'color'">
-                    <el-color-picker v-model="data[item.key]" @change="dataChange"></el-color-picker>
+                    <el-color-picker v-model="dataProxy[item.key]" @change="dataChange"></el-color-picker>
                 </template>
                 <template v-else-if="item.type === 'number'">
-                    <el-input :precision="2" :step="0.1" v-model="data[item.key]" @change="dataChange"></el-input>
+                    <el-input :precision="2" :step="0.1" v-model="dataProxy[item.key]" @change="dataChange"></el-input>
                 </template>
                 <template v-else-if="item.type === 'select'">
-                    <el-select v-model="data[item.key]" :popper-class="popperClasses" @change="dataChange" size="mini">
+                    <el-select v-model="dataProxy[item.key]" :popper-class="popperClasses" @change="dataChange" size="mini">
                          <el-option
                             v-for="opt in item.options"
                             :key="opt.value"
@@ -43,14 +43,14 @@
                     </el-select>
                 </template>
                 <template v-else-if="item.type === 'boolean'"  >
-                    <el-radio-group v-model="data[item.key]" @change="dataChange">
+                    <el-radio-group v-model="dataProxy[item.key]" @change="dataChange">
                         <el-radio :label="true">是</el-radio>
                         <el-radio :label="false">否</el-radio>
                     </el-radio-group>
                 </template>
                 <template v-else-if="item.type === 'array'">
                     <div v-for="(it, idx) in data[item.key]" :key="idx">
-                        <el-input v-model="data[item.key][idx]" size="mini" @change="dataChange"></el-input>
+                        <el-input v-model="dataProxy[item.key][idx]" size="mini" @change="dataChange"></el-input>
                     </div>
                 </template>
                 <template v-else-if="item.type === 'objectArray'">
@@ -91,7 +91,14 @@ export default {
         isArrayItem: Boolean
     },
     data() {
-        return {}
+        return {
+            dataProxy: cloneDeep(this.data)
+        }
+    },
+    watch: {
+        data(val) {
+            this.dataProxy = cloneDeep(val)   
+        }
     },
     computed: {
       classes() {
@@ -106,7 +113,7 @@ export default {
     },
     methods: {
        dataChange() {
-           this.$emit('change')
+           this.$emit('change', this.dataProxy)
        },
        addKeyItem(item) {
          let defaultValue
@@ -118,12 +125,11 @@ export default {
          } else {
              defaultValue = cloneDeep(defaultValues[item.type])
          }
-         this.$set(this.data, item.key, defaultValue)
-          this.$emit('change')
+         this.$set(this.dataProxy, item.key, defaultValue)
+          this.$emit('change', this.dataProxy)
        }
     },
     created() {
-
     }
 }
 </script>
