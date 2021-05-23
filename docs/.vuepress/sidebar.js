@@ -148,6 +148,7 @@ module.exports = {
       'tag-select',
       'tree-select',
       'edit-tags',
+      'at-input',
       'cron',
       'login',
       'search-box',

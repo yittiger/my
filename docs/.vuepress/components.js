@@ -129,6 +129,7 @@ module.exports = {
       range: '范围输入框',
       editor: '富文本编辑器',
       'tag-input': '标签输入框',
+      'at-input': '@人输入框',
       'tag-select': '标签选择框',
       'tree-select': '下拉树选择',
       'edit-tags': 'EditTags',
