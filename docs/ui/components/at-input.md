@@ -16,7 +16,7 @@
   <div style="padding: 20px">
     <my-form @submit="handleSubmit" ref="form"> 
       <my-form-custom label="留言" >
-        <my-at-input type="textarea" ref="atInput" placeholder="test" v-model="content" @on-tagEdit="tagEditChange" @change="contentChange">
+        <my-at-input type="textarea" ref="atInput" :placeholder="placeholder" v-model="content" @on-tagEdit="tagEditChange" @change="contentChange">
         <div slot="popover">
           <div>标签内容：{{tagName}} </div>
           <ul>
@@ -47,6 +47,7 @@ export default {
   data() {
    
     return {
+      placeholder: '键入‘@’添加联系人',
       content: '',
       text: '',
       tagName: '',
