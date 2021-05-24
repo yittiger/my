@@ -120,12 +120,12 @@ export default {
             this.setCategory()
         }
       },
-      dataChange() {
+      dataChange(data) {
           const model = this.myDiagram.diagram.model
           this.myDiagram.diagram.startTransaction('changeData')
-          for(const name in this.currentNodeData) {
+          for(const name in data) { // this.currentNodeData
               if(!['isGroup', '__gohashid', 'key'].includes(name)) {
-                  model.set(this.currentNode.data, name, cloneDeep(this.currentNodeData[name]))
+                  model.set(this.currentNode.data, name, cloneDeep(data[name]))
               }
           }
           this.myDiagram.diagram.commitTransaction('changeData')
