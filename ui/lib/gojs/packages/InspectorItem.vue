@@ -96,8 +96,11 @@ export default {
         }
     },
     watch: {
-        data(val) {
-            this.dataProxy = cloneDeep(val)   
+        data: {
+            handler: function(val) {
+                this.dataProxy = cloneDeep(val)
+            },
+            deep: false   
         }
     },
     computed: {
@@ -113,6 +116,7 @@ export default {
     },
     methods: {
        dataChange() {
+        //    console.log(this.dataProxy, '***********************')
            this.$emit('change', this.dataProxy)
        },
        addKeyItem(item) {
