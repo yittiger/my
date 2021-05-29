@@ -10,8 +10,8 @@ import MouseWheelZoom from 'ol/interaction/MouseWheelZoom'
 import PointerInteraction from 'ol/interaction/Pointer';
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
-import {createLayer} from '../../utils/layer'
-import {addResizeListener, removeResizeListener} from 'element-ui/lib/utils/resize-event'
+import { createLayer } from '../../utils/layer'
+import { addResizeListener, removeResizeListener } from 'element-ui/lib/utils/resize-event'
 
 export default {
   name: 'MyMap',
@@ -21,7 +21,7 @@ export default {
     }
   },
   inject: {
-    page: {default: null}
+    page: { default: null }
   },
   /**
    * 属性参数
@@ -166,7 +166,7 @@ export default {
      * 实例化Map
      */
     init() {
-      const {center, projection, zoom, minZoom, maxZoom} = this.$props
+      const { center, projection, zoom, minZoom, maxZoom } = this.$props
       const layer = createLayer(this.adapter)
       // 标识图层
       layer.__MY_LAYER__ = true
@@ -301,7 +301,7 @@ export default {
     handleEvent(e) {
       const type = e.type
       const page = this.page || {}
-      const {widthScale = 1, heightScale = 1} = page
+      const { widthScale = 1, heightScale = 1 } = page
       const [x, y] = e.pixel
       const pixel = [x / widthScale, y / heightScale]
       const feature = this.getFeatureAtPixel(pixel)
@@ -486,6 +486,11 @@ export default {
 
       layers.forEach(n => {
         n.getSource().clear()
+      })
+
+      const children = this.$children || []
+      children.forEach(n => {
+        n.clear && n.clear()
       })
     }
   },

@@ -1,11 +1,13 @@
 <template>
-  <div>Working</div>
+  <div >
+    work
+  </div>
 </template>
-
-<script>
-  export default {}
+<script> 
+export default {
+  
+}
 </script>
-
 <style lang="scss" scoped>
 
 </style>

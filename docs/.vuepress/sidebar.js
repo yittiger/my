@@ -117,7 +117,8 @@ module.exports = {
       'fixed',
       'flex',
       'layout',
-      'pro'
+      'pro',
+      'slide-layout'
     ]),
     createMenus('容器修饰', [
       'panel',
@@ -134,7 +135,8 @@ module.exports = {
       'contextmenu',
       'anchor',
       'radial-menu',
-      'breadcrumb'
+      'breadcrumb',
+      'three-menu'
     ]),
     createMenus('数据录入', [
       'form',
@@ -146,6 +148,7 @@ module.exports = {
       'tag-select',
       'tree-select',
       'edit-tags',
+      'at-input',
       'cron',
       'login',
       'search-box',

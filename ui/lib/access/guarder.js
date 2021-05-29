@@ -170,7 +170,7 @@ export default function (instance) {
     }
     // 执行预处理
     if (preprocess) {
-      preprocess.call(instance, {to, from, access: instance}).then(() => {
+      preprocess.call(instance, {to, from, access: instance, next}).then(() => {
         run(to, next)
       })
     } else {
