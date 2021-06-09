@@ -120,3 +120,4 @@ module.exports = {
 ## 反馈、交流钉钉群
 
 ![info](http://newgateway.gitee.io/my/img/dingtalk.png)
+![info](http://newgateway.gitee.io/my/img/qqgroup.jpg)
