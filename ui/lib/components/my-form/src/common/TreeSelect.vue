@@ -52,7 +52,7 @@
             :data="optionsTree"
             :style="treeStyle">
         <template v-slot="{node, data}">
-            <span :class="{'is-disabled':node[keyMap.disabled]}">
+            <span :class="{'is-disabled':node[keyMap.disabled] || (onlyLeaf && !node.isLeaf)}">
               <slot :node="node"
                     :data="data">{{node[keyMap.label]}}</slot></span>
         </template>
@@ -171,6 +171,10 @@
       maxHeight: {
         type: Number,
         default: 300
+      },
+      onlyLeaf: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
@@ -242,6 +246,7 @@
     methods: {
       handleCurrentChange(item, node) {
         if (this.multiple || item.disabled || this.readonly || this.disabled) return
+        if (this.onlyLeaf && !node.isLeaf) return
         this.checked = item
         this.$emit('input', item[this.keyMap.value])
         this.$nextTick(() => {
@@ -250,9 +255,24 @@
 
       },
       handleCheckChange() {
-        this.checked = this.$refs.tree.getCheckedNodes()
-        const {value} = this.keyMap
-        this.$emit('input', this.checked.map(n => n[value]))
+        // 修复由于tree checkbox 变化导致频繁触发‘change’事件 的bug
+        if (!this._timer) {
+          this._timer = setTimeout(() => {
+            this.checked = this.$refs.tree.getCheckedNodes()
+            
+            const {value} = this.keyMap
+            let result
+            if (this.onlyLeaf) {
+              result = this.checked.filter((item) => {
+                return !item.children
+              }).map(n => n[value])
+            } else {
+              result = this.checked.map(n => n[value])
+            }
+            this.$emit('input', result)
+            this._timer = null
+          }, 100)
+        }
       },
       handleRemove(index) {
         if (this.checked) {
