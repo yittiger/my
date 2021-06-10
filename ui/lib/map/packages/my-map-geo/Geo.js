@@ -8,7 +8,7 @@ import {Vector as VectorSource} from 'ol/source'
 import styleMixin from '../../mixins/style'
 import {geoJsonDecode} from '$ui/map/utils/util'
 import parseStyle from '$ui/map/utils/style'
-
+import LineString from 'ol/geom/LineString'
 // 样式构造函数
 const defaultStyleCreator = vm => {
   const {stroke, text, fill, styleText, showText} = vm
@@ -24,6 +24,29 @@ const defaultStyleCreator = vm => {
       text: content
     })
   }
+}
+// 多维数组转二维数组
+const flatCoords = function (coords, arr = []) { 
+  let flag = false
+  for (let index = 0; index < coords.length; index++) {
+    if (coords[index][0] && typeof coords[index][0] === 'object') {
+      flag = true
+    }
+  } 
+  
+  if (flag) {
+    const newCoords = coords.reduce((total, item) => {
+      total = total.concat(item) 
+      return total
+    }, [])
+    flatCoords(newCoords, arr)
+  } else {
+    coords.forEach((coord) => {
+      arr.push(coord)
+    }) 
+  }
+  
+  return arr
 }
 
 export default {
@@ -133,6 +156,24 @@ export default {
         coordinates[name] = f.get('cp')
       })
       return coordinates
+    },
+    /**
+     * 获取图形区域extent(ol/extent)
+     * @return {Array}
+     */
+    getExtent() {
+      const features = this.getFeatures()
+      const featuresCoords = features.map((feature) => {
+        return feature.getGeometry().getCoordinates()
+      })
+      const arr = featuresCoords.reduce((total, coords) => {
+        const arr = flatCoords(coords, [])
+        total = total.concat(arr)
+        return total
+      }, [])  
+      const fullGeo = new LineString(arr)
+      const extent = fullGeo.getExtent()
+      return extent  
     },
     /**
      * 继承鼠标经过设置图形的层级和文本字体
