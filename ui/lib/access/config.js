@@ -66,10 +66,7 @@ export default {
   canParentSplit: '#',
 
   // 路由数组判断的字段
-  routerListProp: 'path',
-
-  // routerList 例外数组
-  routerExcludes: ['/*', '/login', '/403', '/404'],
+  routerListProp: 'path', 
 
   // 路由加载进度控制
   progress: null
