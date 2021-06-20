@@ -26,7 +26,10 @@ function createVM(Vue, options, storage) {
         can: [],
 
         // 登录token
-        token: null
+        token: null,
+        
+        // 权限路由列表
+        routerList: []
       }
     },
     created() {
@@ -126,6 +129,15 @@ class Access {
     this.save()
   }
 
+  /**
+   * 设置routerList
+   * @param {array} routerList
+   */
+  setRouterList(routerList) {
+    this.vm.access = Object.freeze(Object.assign({}, this.vm.access, {routerList: routerList}))
+    this.save()
+  }
+  
   /**
    * 是否已登录
    * @return {boolean}
