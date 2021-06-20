@@ -65,6 +65,9 @@ export default {
   // 权限层级分隔
   canParentSplit: '#',
 
+  // 路由数组判断的字段
+  routerListProp: 'path', 
+
   // 路由加载进度控制
   progress: null
 }

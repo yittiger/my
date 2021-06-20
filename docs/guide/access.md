@@ -51,10 +51,12 @@ setConfig({
   roles: Array, // 角色列表
   can: Array, // 权限编码列表
   token: String // 登录token
+  routerList: Array // 动态路由表
 }
 ```
 其中 roles 与 can 必须要有一个，即可以用角色或权限编码鉴权，或两者同时使用。
-可以传入其他自定义的数据项
+routerList 为后端返回的带权限的路由列表。
+可以传入其他自定义的数据项。
 
 ### $access.get() 
 
@@ -172,7 +174,7 @@ export default function ({get}) {
 
 
 ### 中间件语法
-`Access` 中内置了三个中间件，分别为：login、role、can
+`Access` 中内置了四个中间件，分别为：login、role、can、router
 
 中间件使用，例如格式如下：
 ```bash
@@ -185,6 +187,7 @@ name:args,args....
 示例：
 ```sh 
 access: ['login']  // 需要登录访问
+access: ['login', 'router']  // 需要登录访问, 且当前路由路径存在于access中存的routerList（后端返回权限路由表）时
 access: ['login', 'role:administrator'] // 需要登录，并且登录的用户角色是administrator
 access: ['login', 'role:administrator|teacher'] // 需要登录，并且登录的用户角色是administrator或者是teacher
 access: ['login', 'role:administrator|teacher,true'] // 需要登录，并且登录的用户角色是administrator并且是teacher
@@ -211,6 +214,7 @@ access: ['login', 'can:admin.*|delete_article'], // 是管理员或有删除文�
 ---
 access:
 - login
+- router
 - role:admin
 ---
 ```
