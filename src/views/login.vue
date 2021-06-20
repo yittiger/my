@@ -1,7 +1,7 @@
 <template>
   <div>
     login
-    <el-button @click="loginHandle">test</el-button>
+    <el-button @click="loginHandle">login</el-button>
   </div>
 </template>
 <script>
@@ -20,7 +20,7 @@ export default {
       this.$access.login({
         roles: ['admin'], 
         token: '12345',
-        routerList: [{path: '/need-login'}, {path: '/need-router/test'}]
+        routerList: [{path: '/need-login'}, {path: '/need-router'}]
       })
       this.$router.push({
         path: '/need-login'

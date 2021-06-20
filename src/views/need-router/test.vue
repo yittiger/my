@@ -4,8 +4,9 @@ access:
 ---
 <template>
   <div>
-    test
-    <router-link to="/need-router">need-router</router-link>
+    test页面<br/>
+    <router-link to="/need-router">跳转到need-router</router-link><br/>
+    <router-link to="/need-login">返回need-login</router-link>
   </div>
 </template>
 <script>
