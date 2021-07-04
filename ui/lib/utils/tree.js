@@ -9,9 +9,10 @@
  * @param {*} [parentId=null] 父节点的值
  * @param {string} [idKey=id] id字段名称
  * @param {string} [parentIdKey=parentId] parentId字段名称
+ * @param {boolean} [withRoot=false] 有根节点id时是否保留返回根节点
  * @return {Array}
  */
-export function create(list = [], parentId = null, idKey = 'id', parentIdKey = 'parentId') {
+export function create(list = [], parentId = null, idKey = 'id', parentIdKey = 'parentId', withRoot = false) {
   const temp = new Map(), tree = []
   list.forEach(item => {
     temp.set(item[idKey], {...item})
@@ -29,7 +30,16 @@ export function create(list = [], parentId = null, idKey = 'id', parentIdKey = '
       }
     }
   }
-  return tree
+  if (parentId && withRoot) {
+    const target = list.find((item) => {
+      return item[idKey] === parentId
+    })
+    target.children = tree
+    return [target]
+  } else {
+    return tree
+  }
+  
 }
 
 /**
@@ -101,3 +111,26 @@ export function findPath(data, fn, field = 'children') {
   return path
 
 }
+
+
+const _flat = function(tree, map = {}, idProp = 'id', childrenProp = 'children') { 
+  tree.forEach((item) => {
+    map[item[idProp]] = item
+    if (item[childrenProp]) {
+      _flat(item.children, map)
+    } 
+  })
+}
+/**
+ * 将树状数据摊平为一维数组
+ * @param {Array} tree 树数据数组， 如 [{id:1, children:[{id:2}]}]
+ * @param {string} [idProp=id] 节点唯一编号字段名称
+ * @param {string} [childrenProp=children] 子级字段名称
+ * @return {Array} 节点路径数组
+ */
+export function treeRevert(tree, idProp = 'id', childrenProp = 'children') { 
+  const map = {}
+  _flat(tree, map, idProp, childrenProp)
+  return Object.values(map)
+}
+
