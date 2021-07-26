@@ -8,7 +8,7 @@
 :::demo
 ```html
 <template>
-    <div class="container1">
+    <div class="three-con1">
         <my-three-menu :list="list" height="500px">
         <div slot="item" slot-scope="{ item }"
         class="panel"
@@ -64,7 +64,7 @@ export default {
 }
 </script>
 <style type="text/scss" lang="scss">
-.container1{
+.three-con1{
   width: 100%;
   height: 500px;
    background-image: url('~$ui/assets/bg/05.jpg');
@@ -102,7 +102,7 @@ a {
 :::demo
 ```html
 <template>
-    <div class="container2">
+    <div class="three-con2">
           <div style="margin-bottom: 5px;">如果把它当成相册，开启play参数可以自动变换布局。
       </div>
         <my-three-menu 
@@ -163,7 +163,7 @@ export default {
 }
 </script>
 <style type="text/scss" lang="scss">
-.container2{
+.three-con2{
   width: 100%;
   height: 500px;
  .menu2{
@@ -196,7 +196,7 @@ export default {
 :::demo
 ```html
 <template>
-    <div class="container2">
+    <div class="three-con3">
           <div style="margin-bottom: 5px;"> 组件会根据传入的list长度决定布局的位置。然而，如果你想更精确控制，options参数提供了一些配置项来实现。
       </div>
        <div class="filter">
@@ -454,7 +454,7 @@ export default {
 }
 </script>
 <style type="text/scss" lang="scss">
-.container2{
+.three-con3{
   width: 100%;
   height: 600px;
     .filter{

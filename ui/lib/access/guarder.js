@@ -5,12 +5,14 @@ import Queue from '$ui/utils/queue'
 import loginMiddleware from './middleware/login'
 import roleMiddleware from './middleware/role'
 import canMiddleware from './middleware/can'
+import routerMiddleware from './middleware/router'
 
 // 路由控制中间件
 const middlewareMap = {
   login: loginMiddleware,
   role: roleMiddleware,
-  can: canMiddleware
+  can: canMiddleware,
+  router: routerMiddleware
 }
 
 // 中间件解析缓存
@@ -25,7 +27,7 @@ const Caches = {}
  * @return {object}
  */
 function parser(action = '', {nameSplit, paramSplit, argSplit}) {
-  let middleware = Caches[action]
+  let middleware = Caches[action] 
   if (middleware) return middleware
   const arr = action.trim().split(nameSplit)
   const name = arr[0]
@@ -105,16 +107,23 @@ function handleFail(instance, next, middleware, action, queue) {
  * @param to
  * @return {*[]}
  */
-function getAccess(to) {
+function getAccess(to) { 
   const matched = to.matched
   let access = []
-  matched.forEach(match => {
-    if (match.meta.access) {
+  matched.forEach((match, index) => {
+    if (match.meta.access) { 
       access = access.concat(match.meta.access)
     }
-  })
+    // 遍历权限数组，若为‘router’ 即将当前path设为参数
+    access.forEach((item, index) => {
+      if (item === 'router') {
+        access[index] = `${item}:${to.path}`
+      }
+    })
+  }) 
   // 去重
-  return [...new Set(access)]
+  const result = [...new Set(access)]
+  return result 
 }
 
 /**

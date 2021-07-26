@@ -52,7 +52,7 @@
             :data="optionsTree"
             :style="treeStyle">
         <template v-slot="{node, data}">
-            <span :class="{'is-disabled':node[keyMap.disabled]}">
+            <span :class="{'is-disabled':node[keyMap.disabled] || (onlyLeaf && !node.isLeaf)}">
               <slot :node="node"
                     :data="data">{{node[keyMap.label]}}</slot></span>
         </template>
@@ -70,8 +70,8 @@
   import {Input, Tree} from 'element-ui'
   import BasePicker from './BasePicker'
   import TagInput from './TagInput'
-  import {create as createTree} from '$ui/utils/tree'
-  import {isEqual} from '$ui/utils/util'
+  import {create as createTree, treeRevert} from '$ui/utils/tree'
+  import {cloneDeep, isEqual} from '$ui/utils/util'
   import treeConnect from '$ui/directives/tree-connect'
 
   /**
@@ -153,6 +153,11 @@
         type: [String, Number, Boolean],
         default: null
       },
+      // 是否保留根节点
+      withRoot: {
+        type: Boolean,
+        default: false
+      },
       // 折叠标签，多选有效
       collapseTags: Boolean,
       // 允许关闭标签，多选有效
@@ -171,6 +176,15 @@
       maxHeight: {
         type: Number,
         default: 300
+      },
+      onlyLeaf: {
+        type: Boolean,
+        default: false
+      },
+      // 是否使用原options作为参数
+      useOriginOpts: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
@@ -186,8 +200,12 @@
         }
       },
       optionsTree() {
-        const {id, parentId} = this.keyMap
-        return createTree(this.options || [], this.root, id, parentId)
+        if (this.useOriginOpts) {
+          return cloneDeep(this.options)
+        } else {
+          const {id, parentId} = this.keyMap
+          return createTree(this.options || [], this.root, id, parentId, this.withRoot)
+        }
       },
       currentNodeKey() {
         if (this.multiple) {
@@ -220,13 +238,15 @@
         handler(val) {
           const {value} = this.keyMap
           if (isEqual(val, this.checked)) return
+          // 若使用原装options 需要先将原装树转化为一维数组
+          const _opts = this.useOriginOpts ? treeRevert(this.options) : this.options
           if (this.multiple) {
             const vals = val ? [].concat(val) : []
-            this.checked = this.options.filter(item => {
+            this.checked = _opts.filter(item => {
               return vals.includes(item[value])
             })
           } else {
-            this.checked = this.options.find(item => {
+            this.checked = _opts.find(item => {
               return val === item[value]
             })
           }
@@ -242,6 +262,7 @@
     methods: {
       handleCurrentChange(item, node) {
         if (this.multiple || item.disabled || this.readonly || this.disabled) return
+        if (this.onlyLeaf && !node.isLeaf) return
         this.checked = item
         this.$emit('input', item[this.keyMap.value])
         this.$nextTick(() => {
@@ -250,9 +271,25 @@
 
       },
       handleCheckChange() {
-        this.checked = this.$refs.tree.getCheckedNodes()
-        const {value} = this.keyMap
-        this.$emit('input', this.checked.map(n => n[value]))
+        // 修复由于tree checkbox 变化导致频繁触发‘change’事件 的bug
+        if (!this._timer) {
+          this._timer = setTimeout(() => {
+            this.checked = this.$refs.tree.getCheckedNodes()
+            
+            const {value} = this.keyMap
+            let result
+            if (this.onlyLeaf) {
+              result = this.checked.filter((item) => {
+                return !item.children
+              }).map(n => n[value])
+            } else {
+              result = this.checked.map(n => n[value])
+            }
+            
+            this.$emit('input', result)
+            this._timer = null
+          }, 100)
+        }
       },
       handleRemove(index) {
         if (this.checked) {

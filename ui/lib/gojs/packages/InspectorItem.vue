@@ -54,8 +54,11 @@
                     </div>
                 </template>
                 <template v-else-if="item.type === 'objectArray'">
-                    <div v-for="(it, idx) in data[item.key]" :key="idx">
-                        <InspectorItem  is-array-item :key-array="item.children" :data="data[item.key][idx]"
+                    <div v-for="(it, idx) in dataProxy[item.key]" :key="idx">
+                        <InspectorItem  is-array-item :key-array="item.children" 
+                         :index="idx"
+                         :item-key="item.key"
+                         :data="it"
                         @change="dataChange"></InspectorItem>
                     </div>
                 </template>
@@ -88,7 +91,14 @@ export default {
                 return {}
             }
         },
-        isArrayItem: Boolean
+        isArrayItem: Boolean,
+        itemKey: {
+            type: String,
+            default: ''
+        },
+        index: {
+            type: Number
+        }
     },
     data() {
         return {
@@ -96,11 +106,11 @@ export default {
         }
     },
     watch: {
-        data: {
-            handler: function(val) {
-                this.dataProxy = cloneDeep(val)
-            },
-            deep: false   
+        data(val) {
+            this.dataProxy = cloneDeep(val)   
+        },
+        dataProxy(val) {
+            this.$emit('update:data', val)
         }
     },
     computed: {
@@ -115,9 +125,12 @@ export default {
       }
     },
     methods: {
-       dataChange() {
-        //    console.log(this.dataProxy, '***********************')
-           this.$emit('change', this.dataProxy)
+       dataChange(data, key, index) {
+           // key值非空，则为数组内对象的改变,通过删除再插入强行改变
+           if(key) {
+               this.dataProxy[key].splice(index, 1, data)
+           }
+            this.$emit('change', this.dataProxy, this.itemKey, this.index)
        },
        addKeyItem(item) {
          let defaultValue
