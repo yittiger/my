@@ -31,7 +31,8 @@ const commandArray = [
   'server',  
   'preview',
   'app',
-  'page'
+  'page',
+  'widgets'
 ]
 const commandMap = Object.create(null)
 commandArray.forEach(name => {
