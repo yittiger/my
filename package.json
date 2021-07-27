@@ -43,6 +43,7 @@
     "bridge": "node bin/my bridge",
     "app": "node bin/my app",
     "page": "node bin/my page",
+    "widgets": "node bin/my widgets",
     "release": "npm run svg && npm run lint && npm run build && npm run build:docs",
     "deploy:major": "npm version major && npm publish --access public",
     "deploy:minor": "version minor && npm publish --access public",

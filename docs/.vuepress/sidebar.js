@@ -298,6 +298,9 @@ module.exports = {
     'profile',
     'dv'
   ],
+  '/ui/widgets/': [
+    'dict'
+  ],
   '/guide/': [
     createMenus('开发指南', [
       '/changelog',
