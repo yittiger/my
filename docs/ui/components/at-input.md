@@ -14,11 +14,7 @@
 ```html
 <template>
   <div style="padding: 20px">
-<<<<<<< HEAD
     <my-form @submit="handleSubmit" ref="form" :reset-text="false"> 
-=======
-    <my-form @submit="handleSubmit" ref="form"> 
->>>>>>> 4147969f9a6c7299cbd63c037234f4ebbf9b7f1d
       <my-form-custom label="留言" >
         <my-at-input type="textarea" ref="atInput" :placeholder="placeholder" v-model="content" @on-tagEdit="tagEditChange" @change="contentChange">
         <div slot="popover">
@@ -77,12 +73,8 @@ export default {
   methods: {
     getAllData() { 
       const result = this.$refs.atInput.getData()
-<<<<<<< HEAD
       // console.log(result)
       this.$alert(JSON.stringify(result))
-=======
-      console.log(result)
->>>>>>> 4147969f9a6c7299cbd63c037234f4ebbf9b7f1d
     },
     tagEditChange(val) {
       this.tagName = val
@@ -94,17 +86,10 @@ export default {
     listClick(data) {
       this.tagName = ''
       this.$refs.atInput.tagInsert({
-<<<<<<< HEAD
         name: data.name, // 必须(标签显示名)
         data: data, // 必须(标签对应数据)
         id: data.id, // 非必须，若无则组件自动创建id 与 @标签一一对应
         color: 'red' // 非必须，标签颜色
-=======
-        name: data.name,
-        data: data,
-        id: data.id,
-        color: 'red'
->>>>>>> 4147969f9a6c7299cbd63c037234f4ebbf9b7f1d
       })
     },
     handleSubmit(model) {
