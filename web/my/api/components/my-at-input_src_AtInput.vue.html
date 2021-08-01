@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>my-at-input/src/AtInput.vue - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Outline.html">Outline</a></li><li><a href="Tag.html">Tag</a></li><li><a href="TagCanvas.html">TagCanvas</a></li></ul><h3>Modules</h3><ul><li><a href="module-$ui_components_my-affix.html">$ui/components/my-affix</a></li><li><a href="module-$ui_components_my-anchor.html">$ui/components/my-anchor</a></li><li><a href="module-$ui_components_my-at-input.html">$ui/components/my-at-input</a><ul class='methods'><li data-type='method'><a href="module-$ui_components_my-at-input.html#~getData">getData</a></li><li data-type='method'><a href="module-$ui_components_my-at-input.html#~setData">setData</a></li><li data-type='method'><a href="module-$ui_components_my-at-input.html#~tagInsert">tagInsert</a></li><li data-type='method'><a href="module-$ui_components_my-at-input.html#~togglePopover">togglePopover</a></li></ul></li><li><a href="module-$ui_components_my-autocomplete.html">$ui/components/my-autocomplete</a></li><li><a href="module-$ui_components_my-avatar.html">$ui/components/my-avatar</a></li><li><a href="module-$ui_components_my-avatars.html">$ui/components/my-avatars</a></li><li><a href="module-$ui_components_my-back-top.html">$ui/components/my-back-top</a></li><li><a href="module-$ui_components_my-breadcrumb.html">$ui/components/my-breadcrumb</a></li><li><a href="module-$ui_components_my-capture.html">$ui/components/my-capture</a><ul class='methods'><li data-type='method'><a href="module-$ui_components_my-capture.html#~_renderImg">_renderImg</a></li></ul></li><li><a href="module-$ui_components_my-card-list.html">$ui/components/my-card-list</a><ul class='methods'><li data-type='method'><a href="module-$ui_components_my-card-list.html#~refresh">refresh</a></li></ul></li><li><a href="module-$ui_components_my-cascader.html">$ui/components/my-cascader</a></li><li><a href="module-$ui_components_my-checkbox.html">$ui/components/my-checkbox</a></li><li><a href="module-$ui_components_my-clipboard.html">$ui/components/my-clipboard</a><ul class='methods'><li data-type='method'><a href="module-$ui_components_my-clipboard.html#~copy">copy</a></li></ul></li><li><a href="module-$ui_components_my-color-picker.html">$ui/components/my-color-picker</a></li><li><a href="module-$ui_components_my-contextmenu.html">$ui/components/my-contextmenu</a></li><li><a href="module-$ui_components_my-corner-mark.html">$ui/components/my-corner-mark</a></li><li><a href="module-$ui_components_my-crud.html">$ui/components/my-crud</a><ul class='methods'><li data-type='method'><a href="module-$ui_components_my-crud.html#~openAddDialog">openAddDialog</a></li><li data-type='method'><a href="module-$ui_components_my-crud.html#~refresh">refresh</a></li><li data-type='method'><a href="module-$ui_components_my-crud.html#~reload">reload</a></li></ul></li><li><a href="module-$ui_components_my-date.html">$ui/components/my-date</a></li><li><a href="module-$ui_components_my-date-picker.html">$ui/components/my-date-picker</a></li><li><a href="module-$ui_components_my-description.html">$ui/components/my-description</a></li><li><a href="module-$ui_components_my-detail.html">$ui/components/my-detail</a></li><li><a href="module-$ui_components_my-detail-item.html">$ui/components/my-detail-item</a></li><li><a href="module-$ui_components_my-dialog.html">$ui/components/my-dialog</a></li><li><a href="module-$ui_components_my-drag.html">$ui/components/my-drag</a><ul class='methods'><li data-type='method'><a href="module-$ui_components_my-drag.html#~getRelativeEl">getRelativeEl</a></li></ul></li><li><a href="module-$ui_components_my-drop.html">$ui/components/my-drop</a></li><li><a href="module-$ui_components_my-edit-tags.html">$ui/components/my-edit-tags</a></li><li><a href="module-$ui_components_my-editor.html">$ui/components/my-editor</a></li><li><a href="module-$ui_components_my-empty.html">$ui/components/my-empty</a></li><li><a href="module-$ui_components_my-filter.html">$ui/components/my-filter</a></li><li><a href="module-$ui_components_my-fixed.html">$ui/components/my-fixed</a><ul class='methods'><li data-type='method'><a href="module-$ui_components_my-fixed.html#~resize">resize</a></li></ul></li><li><a href="module-$ui_components_my-flex.html">$ui/components/my-flex</a></li><li><a href="module-$ui_components_my-flex-item.html">$ui/components/my-flex-item</a></li><li><a href="module-$ui_components_my-flip.html">$ui/components/my-flip</a></li><li><a href="module-$ui_components_my-float.html">$ui/components/my-float</a></li><li><a href="module-$ui_components_my-float-item.html">$ui/components/my-float-item</a></li><li><a href="module-$ui_components_my-form.html">$ui/components/my-form</a><ul class='methods'><li data-type='method'><a href="module-$ui_components_my-form.html#~reset">reset</a></li><li data-type='method'><a href="module-$ui_components_my-form.html#~submit">submit</a></li></ul></li><li><a href="module-$ui_components_my-form_src_Base.html">$ui/components/my-form/src/Base</a></li><li><a href="module-$ui_components_my-form_src_common_TagInput.html">$ui/components/my-form/src/common/TagInput</a></li><li><a href="module-$ui_components_my-form_src_common_TagSelect.html">$ui/components/my-form/src/common/TagSelect</a></li><li><a href="module-$ui_components_my-form_src_common_TreeSelect.html">$ui/components/my-form/src/common/TreeSelect</a></li><li><a href="module-$ui_components_my-header.html">$ui/components/my-header</a></li><li><a href="module-$ui_components_my-highlight.html">$ui/components/my-highlight</a></li><li><a href="module-$ui_components_my-icon.html">$ui/components/my-icon</a></li><li><a href="module-$ui_components_my-im-wall.html">$ui/components/my-im-wall</a></li><li><a href="module-$ui_components_my-input.html">$ui/components/my-input</a></li><li><a href="module-$ui_components_my-input-number.html">$ui/components/my-input-number</a></li><li><a href="module-$ui_components_my-layout.html">$ui/components/my-layout</a></li><li><a href="module-$ui_components_my-lazy.html">$ui/components/my-lazy</a></li><li><a href="module-$ui_components_my-list.html">$ui/components/my-list</a><ul class='methods'><li data-type='method'><a href="module-$ui_components_my-list.html#~load">load</a></li><li data-type='method'><a href="module-$ui_components_my-list.html#~refresh">refresh</a></li><li data-type='method'><a href="module-$ui_components_my-list.html#~reset">reset</a></li><li data-type='method'><a href="module-$ui_components_my-list.html#~scrollTop">scrollTop</a></li></ul></li><li><a href="module-$ui_components_my-location-picker.html">$ui/components/my-location-picker</a></li><li><a href="module-$ui_components_my-login.html">$ui/components/my-login</a><ul class='methods'><li data-type='method'><a href="module-$ui_components_my-login.html#~submit">submit</a></li></ul></li><li><a href="module-$ui_components_my-marquee.html">$ui/components/my-marquee</a><ul class='methods'><li data-type='method'><a href="module-$ui_components_my-marquee.html#~pause">pause</a></li><li data-type='method'><a href="module-$ui_components_my-marquee.html#~start">start</a></li><li data-type='method'><a href="module-$ui_components_my-marquee.html#~stop">stop</a></li></ul></li><li><a href="module-$ui_components_my-master-app.html">$ui/components/my-master-app</a><ul class='methods'><li data-type='method'><a href="module-$ui_components_my-master-app.html#~initState">initState</a></li><li data-type='method'><a href="module-$ui_components_my-master-app.html#~onStateChange">onStateChange</a></li><li data-type='method'><a href="module-$ui_components_my-master-app.html#~onStateChange">onStateChange</a></li><li data-type='method'><a href="module-$ui_components_my-master-app.html#~setState">setState</a></li></ul></li><li><a href="module-$ui_components_my-menu.html">$ui/components/my-menu</a></li><li><a href="module-$ui_components_my-micro-app.html">$ui/components/my-micro-app</a></li><li><a href="module-$ui_components_my-navbar.html">$ui/components/my-navbar</a></li><li><a href="module-$ui_components_my-navbar-FullScreenAction.html">$ui/components/my-navbar-FullScreenAction</a></li><li><a href="module-$ui_components_my-navbar-IconAction.html">$ui/components/my-navbar-IconAction</a></li><li><a href="module-$ui_components_my-navbar-UserAction.html">$ui/components/my-navbar-UserAction</a></li><li><a href="module-$ui_components_my-number.html">$ui/components/my-number</a></li><li><a href="module-$ui_components_my-panel.html">$ui/components/my-panel</a></li><li><a href="module-$ui_components_my-paragraph.html">$ui/components/my-paragraph</a></li><li><a href="module-$ui_components_my-particle.html">$ui/components/my-particle</a></li><li><a href="module-$ui_components_my-pro.html">$ui/components/my-pro</a><ul class='methods'><li data-type='method'><a href="module-$ui_components_my-pro.html#~addTab">addTab</a></li><li data-type='method'><a href="module-$ui_components_my-pro.html#~closeTabs">closeTabs</a></li><li data-type='method'><a href="module-$ui_components_my-pro.html#~setTab">setTab</a></li></ul></li><li><a href="module-$ui_components_my-promise.html">$ui/components/my-promise</a></li><li><a href="module-$ui_components_my-radial-menu.html">$ui/components/my-radial-menu</a></li><li><a href="module-$ui_components_my-radio.html">$ui/components/my-radio</a></li><li><a href="module-$ui_components_my-range.html">$ui/components/my-range</a></li><li><a href="module-$ui_components_my-rate.html">$ui/components/my-rate</a></li><li><a href="module-$ui_components_my-resize.html">$ui/components/my-resize</a></li><li><a href="module-$ui_components_my-result.html">$ui/components/my-result</a></li><li><a href="module-$ui_components_my-revolve.html">$ui/components/my-revolve</a><ul class='methods'><li data-type='method'><a href="module-$ui_components_my-revolve.html#~next">next</a></li><li data-type='method'><a href="module-$ui_components_my-revolve.html#~prev">prev</a></li><li data-type='method'><a href="module-$ui_components_my-revolve.html#~start">start</a></li><li data-type='method'><a href="module-$ui_components_my-revolve.html#~stop">stop</a></li></ul></li><li><a href="module-$ui_components_my-search-box.html">$ui/components/my-search-box</a></li><li><a href="module-$ui_components_my-select.html">$ui/components/my-select</a></li><li><a href="module-$ui_components_my-sidebar.html">$ui/components/my-sidebar</a></li><li><a href="module-$ui_components_my-skeleton.html">$ui/components/my-skeleton</a></li><li><a href="module-$ui_components_my-slide-layout.html">$ui/components/my-slide-layout</a></li><li><a href="module-$ui_components_my-slider.html">$ui/components/my-slider</a></li><li><a href="module-$ui_components_my-sortable.html">$ui/components/my-sortable</a></li><li><a href="module-$ui_components_my-spin.html">$ui/components/my-spin</a></li><li><a href="module-$ui_components_my-stat-card.html">$ui/components/my-stat-card</a></li><li><a href="module-$ui_components_my-switch.html">$ui/components/my-switch</a></li><li><a href="module-$ui_components_my-table.html">$ui/components/my-table</a><ul class='methods'><li data-type='method'><a href="module-$ui_components_my-table.html#~refresh">refresh</a></li></ul></li><li><a href="module-$ui_components_my-tabs.html">$ui/components/my-tabs</a></li><li><a href="module-$ui_components_my-tag-canvas.html">$ui/components/my-tag-canvas</a></li><li><a href="module-$ui_components_my-tag-input.html">$ui/components/my-tag-input</a></li><li><a href="module-$ui_components_my-tag-select.html">$ui/components/my-tag-select</a></li><li><a href="module-$ui_components_my-text.html">$ui/components/my-text</a></li><li><a href="module-$ui_components_my-three-menu.html">$ui/components/my-three-menu</a></li><li><a href="module-$ui_components_my-timer.html">$ui/components/my-timer</a><ul class='methods'><li data-type='method'><a href="module-$ui_components_my-timer.html#~reset">reset</a></li><li data-type='method'><a href="module-$ui_components_my-timer.html#~start">start</a></li><li data-type='method'><a href="module-$ui_components_my-timer.html#~stop">stop</a></li></ul></li><li><a href="module-$ui_components_my-title.html">$ui/components/my-title</a></li><li><a href="module-$ui_components_my-tree-select.html">$ui/components/my-tree-select</a></li><li><a href="module-$ui_components_my-typography.html">$ui/components/my-typography</a></li><li><a href="module-$ui_components_my-water-fall.html">$ui/components/my-water-fall</a></li><li><a href="module-$ui_components_my-watermark.html">$ui/components/my-watermark</a></li><li><a href="module-$ui_components_my-wave.html">$ui/components/my-wave</a></li><li><a href="module-$ui_components_my-wrapper.html">$ui/components/my-wrapper</a></li><li><a href="module-widgets_my-print.html">widgets/my-print</a></li></ul><h3>Events</h3><ul><li><a href="module-$ui_components_my-stat-card.html#~event:action">action</a></li><li></li><li><a href="module-$ui_components_my-form_src_common_TagInput.html#~event:add">add</a></li><li><a href="module-$ui_components_my-wrapper.html#~event:back">back</a></li><li><a href="module-$ui_components_my-dialog.html#~event:cancel">cancel</a></li><li><a href="module-$ui_components_my-typography.html#~event:change">change</a></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li><a href="module-$ui_components_my-tag-canvas.html#~event:click">click</a></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li><a href="module-$ui_components_my-avatars.html#~event:click-add">click-add</a></li><li><a href="module-$ui_components_my-avatars.html#~event:click-item">click-item</a></li><li><a href="module-$ui_components_my-avatars.html#~event:click-more">click-more</a></li><li><a href="module-$ui_components_my-radial-menu.html#~event:close">close</a></li><li></li><li><a href="module-$ui_components_my-pro.html#~event:collapse">collapse</a></li><li><a href="module-$ui_components_my-form_src_common_TagSelect.html#~event:collapsed">collapsed</a></li><li><a href="module-$ui_components_my-table.html#~event:column-change">column-change</a></li><li><a href="module-$ui_components_my-navbar-UserAction.html#~event:command">command</a></li><li></li><li></li><li><a href="global.html#event:complete">complete</a></li><li></li><li><a href="module-$ui_components_my-typography.html#event:copy">copy</a></li><li></li><li></li><li></li><li></li><li><a href="module-$ui_components_my-drag.html#~event:drag">drag</a></li><li></li><li><a href="module-$ui_components_my-dialog.html#~event:drag-start">drag-start</a></li><li><a href="module-$ui_components_my-dialog.html#~event:drag-stop">drag-stop</a></li><li><a href="module-$ui_components_my-drop.html#~event:drop">drop</a></li><li><a href="module-$ui_components_my-typography.html#event:edited">edited</a></li><li></li><li></li><li></li><li></li><li><a href="module-$ui_components_my-typography.html#event:editing">editing</a></li><li></li><li></li><li></li><li></li><li><a href="module-$ui_components_my-drop.html#~event:enter">enter</a></li><li><a href="module-$ui_components_my-table.html#~event:error">error</a></li><li></li><li></li><li></li><li></li><li><a href="module-$ui_components_my-typography.html#event:expand">expand</a></li><li></li><li></li><li></li><li></li><li><a href="module-$ui_components_my-timer.html#~event:finish">finish</a></li><li><a href="module-$ui_components_my-dialog.html#~event:hide">hide</a></li><li><a href="module-$ui_components_my-lazy.html#~event:init">init</a></li><li><a href="module-$ui_components_my-form_src_common_TagInput.html#~event:input-change">input-change</a></li><li><a href="module-$ui_components_my-drop.html#~event:leave">leave</a></li><li><a href="module-$ui_components_my-wrapper.html#~event:link-click">link-click</a></li><li><a href="module-$ui_components_my-dialog.html#~event:load">load</a></li><li><a href="module-$ui_components_my-revolve.html#~event:loaded">loaded</a></li><li><a href="module-$ui_components_my-dialog.html#~event:maximize">maximize</a></li><li><a href="module-$ui_components_my-im-wall.html#~event:on-added">on-added</a></li><li><a href="module-$ui_components_my-capture.html#~event:on-capture">on-capture</a></li><li><a href="global.html#event:on-change">on-change</a></li><li><a href="module-$ui_components_my-capture.html#~event:on-output">on-output</a></li><li><a href="module-$ui_components_my-at-input.html#~event:on-popToggle">on-popToggle</a></li><li></li><li><a href="module-$ui_components_my-slide-layout.html#~event:on-ready">on-ready</a></li><li><a href="module-$ui_components_my-slide-layout.html#~event:on-resize">on-resize</a></li><li><a href="module-$ui_components_my-at-input.html#~event:on-tagEdit">on-tagEdit</a></li><li><a href="module-$ui_components_my-radial-menu.html#~event:open">open</a></li><li></li><li><a href="module-$ui_components_my-drop.html#~event:over">over</a></li><li><a href="global.html#~event:page-change">page-change</a></li><li></li><li></li><li><a href="module-$ui_components_my-login.html#~event:pki">pki</a></li><li><a href="module-$ui_components_my-revolve.html#~event:progress">progress</a></li><li><a href="module-$ui_components_my-form_src_common_TagInput.html#~event:remove">remove</a></li><li><a href="module-$ui_components_my-timer.html#~event:reset">reset</a></li><li></li><li><a href="module-$ui_components_my-resize.html#~event:resize">resize</a></li><li></li><li><a href="module-$ui_components_my-dialog.html#~event:resize-start">resize-start</a></li><li><a href="module-$ui_components_my-dialog.html#~event:resize-stop">resize-stop</a></li><li><a href="module-$ui_components_my-search-box.html#~event:search">search</a></li><li><a href="module-$ui_components_my-sidebar.html#~event:select">select</a></li><li></li><li></li><li></li><li><a href="module-$ui_components_my-dialog.html#~event:show">show</a></li><li><a href="global.html#~event:size-change">size-change</a></li><li></li><li></li><li><a href="module-$ui_components_my-timer.html#~event:start">start</a></li><li></li><li></li><li></li><li><a href="module-$ui_components_my-timer.html#~event:stop">stop</a></li><li></li><li></li><li></li><li><a href="module-$ui_components_my-login.html#~event:submit">submit</a></li><li></li><li></li><li><a href="module-$ui_components_my-table.html#~event:success">success</a></li><li></li><li></li><li></li><li></li><li></li><li><a href="module-$ui_components_my-panel.html#~event:tab-change">tab-change</a></li><li><a href="module-$ui_components_my-pro.html#~event:tab-remove">tab-remove</a></li><li><a href="module-$ui_components_my-pro.html#~event:tab-select">tab-select</a></li><li><a href="module-$ui_components_my-timer.html#~event:tick">tick</a></li><li><a href="module-$ui_components_my-form.html#~event:validate">validate</a></li><li><a href="module-$ui_components_my-form.html#~event:validate-fail">validate-fail</a></li><li><a href="module-$ui_components_my-form.html#~event:validate-success">validate-success</a></li><li><a href="module-widgets_my-back-top.html#event:click">click</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddShadowToImage">AddShadowToImage</a></li><li><a href="global.html#appendChildNode">appendChildNode</a></li><li><a href="global.html#createEllipsisContainer">createEllipsisContainer</a></li><li><a href="global.html#createEllipsisContentHolder">createEllipsisContentHolder</a></li><li><a href="global.html#destroyVue">destroyVue</a></li><li><a href="global.html#getData">getData</a></li><li><a href="global.html#inRange">inRange</a></li><li><a href="global.html#instanceVue">instanceVue</a></li><li><a href="global.html#props">props</a></li><li><a href="global.html#pxToNumber">pxToNumber</a></li><li><a href="global.html#removeEllipsisContainer">removeEllipsisContainer</a></li><li><a href="global.html#RoundImage">RoundImage</a></li><li><a href="global.html#scrollTop">scrollTop</a></li><li><a href="global.html#setData">setData</a></li><li><a href="global.html#styleToString">styleToString</a></li><li><a href="global.html#wrapperDecorations">wrapperDecorations</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">my-at-input/src/AtInput.vue</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template>
+   
+  &lt;el-input class="my-at-input" :size="type === 'textarea' ? 'small' : size" v-model="useless">
+    &lt;template slot="append"> 
+      &lt;el-popover
+      v-bind="{...popoverProps}"
+      trigger="manual" 
+      v-model="listVisible"> 
+        &lt;slot name="popover">&lt;/slot>
+        &lt;div  slot="reference" class="popup-btn" :style="{'left':`${popupLeft}px`, 'top': `${popupTop}px`}">&lt;/div>
+      &lt;/el-popover>
+
+      &lt;div ref="contentEdit" :placeholder="placeholder" :class="['content-edit', 'el-input__inner', `${type}-type`]"  :contenteditable="true" @keydown="editHandle"  :style="{
+        'width': `${maxWidth}px`,
+        'max-width': `${maxWidth}px`, 
+        ...contentEditStyle
+      }">&lt;/div>
+
+    &lt;/template>
+  &lt;/el-input>
+ 
+&lt;/template>
+
+&lt;script>
+ /**
+   * '@'人输入框组件
+   * @author huangjiping 
+   * @module $ui/components/my-at-input
+   */
+import {addResizeListener, removeResizeListener} from 'element-ui/lib/utils/resize-event'
+import {cloneDeep, debounce} from '$ui/utils/util'
+const TextareaLineHeight = 36
+const TagClassName = 'tag-span'
+const DefaultPopoverProps = {
+  placement: 'right-end',
+  title: '标题',
+  width: 400
+}
+/**
+   * 插槽
+   * @member slots
+   * @property {string} popover 弹窗显示的内容 (放置用户列表)
+   */
+export default {
+  name: 'MyAtInput',
+  mixins: [],
+  components: {},
+  /**
+   * 属性参数
+   * @member props
+   * @property {string} [value] v-model绑定的值
+   * @property {string} [tagClassName] '@标签'的类名， 默认'tag-span'
+   * @property {object} [popoverProps] popover的参数， 同el-popover
+   * @property {string} [type] 表单类型，input(默认) / textarea
+   * @property {number} [rows] 行数，在type为textarea时有效
+   * @property {string} [size] medium, small, mini
+   * @property {string} [placeholder] placeholder
+   */
+  props: {
+    value: {
+      type: String,
+      default: ''
+    },
+    tagClassName: {
+      type: String,
+      default: TagClassName
+    },
+    popoverProps: {
+      type: Object,
+      default: () => {
+        return DefaultPopoverProps
+      }
+    },
+    type: {
+      type: String,
+      default: 'input',
+      validator: function(v) {
+        return ['textarea', 'input'].includes(v)
+      }
+    },
+    rows: {
+      type: Number,
+      default: 4
+    },
+    size: {
+      type: String,
+      default: 'medium',
+      validator: function(v) {
+        return ['medium', 'small', 'mini'].includes(v)
+      }
+    },
+    placeholder: {
+      type: String,
+      default: ''
+    }
+  },
+  data() {
+    return {
+      maxWidth: 280,
+      useless: '',
+      listVisible: false,
+      lastSelection: {
+        range: '',
+        offset: '',
+        selection: '',
+        lastOffset: ''
+      },
+      popupLeft: 0,
+      popupTop: 0,
+      maxEditHeight: TextareaLineHeight,
+
+      tagData: {},
+
+      editContent: '',
+      currentTagStr: '',
+      contentChangeTimer: null
+    }
+  },
+  computed: {
+    contentEditStyle() {
+      if (this.type === 'textarea') {
+        return {height: `${TextareaLineHeight * this.rows}px`} 
+      } else {
+        return {}
+      }
+    }
+  },
+  watch: {
+    editContent(val) {
+      this.$emit('input', val)
+      this.$nextTick(() => {
+        this.defineLeaveData(val)
+        /**
+         * 输入框内容改变事件
+         * @event on-popToggle
+         * @param {string} 输入框内容
+         * @param {string} 输入框内容(纯文本)
+         * @param {object} 绑定的数据
+         */
+        this.$emit('change', val, this.$refs.contentEdit.innerText, this.tagData)
+      })
+    },
+    listVisible(val) {
+      /**
+       * 弹框切换时事件
+       * @event on-popToggle
+       * @param {boolean} 真为打开假为关闭
+       */
+      this.$emit('on-popToggle', val)
+      
+    },
+    currentTagStr(val) {
+      /**
+       * 标签内容改变事件
+       * @event on-tagEdit
+       * @param {string} ‘@’后面的编辑内容
+       */
+      this.$emit('on-tagEdit', val)
+    }
+  },
+  methods: {
+    editHandle(ev) {
+      const selection = window.getSelection() 
+      this.lastSelection.range = selection.getRangeAt(0)
+      this.lastSelection.selection = selection
+      this.lastSelection.lastOffset = selection.focusOffset 
+      // 监听 键入‘@’时 的动作
+      if (ev.code === 'Digit2' &amp;&amp; ev.shiftKey) {  
+        this.lastSelection.offset = selection.focusOffset
+        setTimeout(() => {
+          this._atKeyHandle()
+        }, 200) 
+      } 
+      // 监听 回退删除 的动作
+      if(ev.code === 'Backspace') { 
+        this._backSpaceHandle()
+      } 
+
+      if(ev.code === 'Enter') { 
+        this.listVisible = false
+      } 
+      
+      // ------------------------
+      if (this.contentChangeTimer) {
+        clearTimeout(this.contentChangeTimer)
+      }
+      this.contentChangeTimer = setTimeout(() => {
+        this.editContent = this.$refs.contentEdit.innerHTML 
+      }, 200)
+      // ------------------------
+      if (this.listVisible) {
+        const reg = /\s/g
+        setTimeout(() => {
+          const selection = window.getSelection()
+          const atArr = this.lastSelection.range.endContainer.textContent.split('@')
+          this.currentTagStr = atArr[atArr.length - 1] 
+         
+          if (reg.test(selection.focusNode.nodeValue[selection.focusOffset - 1])) {
+            this.$nextTick(() => {
+              this.currentTagStr = ''
+              this.listVisible = false
+            })
+          } 
+        }, 50)
+      }
+       
+    },
+    // '@' 字符键入时响应函数
+    _atKeyHandle() { 
+      const currentTextNode = this.lastSelection.selection.baseNode 
+      const range = document.createRange()
+      range.setStart(currentTextNode, 0)
+      range.setEnd(currentTextNode, this.lastSelection.lastOffset)
+      const ranngePosData = range.getBoundingClientRect()
+      
+      const width = ranngePosData.x + ranngePosData.width
+      const top = ranngePosData.y
+      this.popupLeft = width + 40
+      this.popupTop = top
+      this.listVisible = true
+    },
+    // 回退删除按键响应函数
+    _backSpaceHandle() {
+      const range = this.lastSelection.range 
+      // 删除到'@'前一个字符时，弹框出现 
+      if (range.endContainer.textContent[range.endContainer.textContent.length - 2] === '@') {
+        this.listVisible = true
+      }
+      // 删除到'@'字符时，弹框关闭
+      if (range.endContainer.textContent[range.endContainer.textContent.length - 1] === '@') {
+        this.listVisible = false
+      }
+
+      let removeNode = null
+      if (range.startOffset &lt;= 1 &amp;&amp; range.startContainer.parentElement.className !== this.tagClassName) {
+        removeNode = range.startContainer.previousElementSibling
+      }
+    
+
+      if (range.startContainer.parentElement.className === this.tagClassName) {
+        removeNode = range.startContainer.parentElement
+      }
+
+      
+      if (removeNode &amp;&amp; removeNode.className === this.tagClassName) { 
+        this.$refs.contentEdit.removeChild(removeNode)
+
+        this.$emit('on-tagDelete', this.tagData[removeNode.id])
+        delete this.tagData[removeNode.id] 
+      }
+    }, 
+    
+    _setMaxWidth() {
+      this.maxWidth = this.$el.offsetWidth
+    },
+    /**
+     * 插入标签调用函数
+     * @method tagInsert
+     * @params {object} data
+     * @params {string} data.name '@标签'的展示名称(必填)
+     * @params {object} data.data '@标签'绑定的数据(必填)
+     * @params {string} data.id '@标签'的id，非必填，不填则随机生成id
+     * @params {string} data.color '@标签'的字体颜色，非必填，不填则为蓝色
+     */
+    tagInsert(data) {
+      if (data) { 
+        const range = this.lastSelection.range 
+        const textNode = range.startContainer
+         
+        range.setStart(textNode, this.lastSelection.offset)
+        range.setEnd(textNode, this.lastSelection.offset + 1 + this.currentTagStr.length || 1)
+        range.deleteContents() 
+
+        const tagSpan = document.createElement('span')
+        const spaceSpan = document.createElement('span')
+
+        // 设置标签
+        tagSpan.className = this.tagClassName
+        tagSpan.style.color = data.color || '#409EFF'
+        tagSpan.innerHTML = '@' + data.name
+        spaceSpan.innerHTML = '&amp;nbsp;'
+        
+        // 绑定数据
+        const tagId = data.id ? data.id : `tag_${new Date().getTime()}`
+        tagSpan.id = tagId
+        this.tagData[tagId] = data.data
+
+        const fragment = document.createDocumentFragment()
+
+        let node = ''
+        let lastNode = ''
+        fragment.appendChild(tagSpan)
+        while((node = spaceSpan.firstChild)) {
+          lastNode = fragment.appendChild(node)
+        }
+        if (this.lastSelection.range &amp;&amp; this.lastSelection.selection) { 
+          this.lastSelection.range.insertNode(fragment)
+          this.lastSelection.selection.extend(lastNode, 1)
+          this.lastSelection.selection.collapseToEnd()
+        } 
+        this.editContent = this.$refs.contentEdit.innerHTML
+        this.listVisible = false 
+        this.currentTagStr = '' 
+      } else {
+        this.$message.danger('未设置绑定数据')
+        this.listVisible = false
+      } 
+    },
+    /**
+     * 获取数据
+     * @method getData
+     * @return {object} total
+     * @return {string} total.html 输入框内html
+     * @return {string} total.text 输入框内纯文本
+     * @return {string} total.data 绑定数据
+     */
+    getData() {
+      return {
+        html: this.$refs.contentEdit.innerHTML,
+        text: this.$refs.contentEdit.innerText,
+        data: this.tagData
+      }
+    },
+    /**
+     * 设置绑定数据
+     * @method setData
+     * @return {object} data 设置数据格式为 {[id]: {name: '', data: {...}}, ...}
+     */
+    setData(data) {
+      this.tagData = cloneDeep(data)
+    },
+    /**
+     * 手动设置弹窗开关
+     * @method togglePopover
+     * @params {boolean} flag popover开关参数
+     */
+    togglePopover(flag) {
+      this.listVisible = flag
+    },
+
+    defineLeaveData(content) {
+      for (const key in this.tagData) {
+        if (content.indexOf(key) &lt; 0) {
+          delete this.tagData[key]
+        }
+      }
+    }
+  },
+  created() {},
+  mounted() {
+    setTimeout(() => {
+      this._setMaxWidth()
+      this.maxEditHeight = this.$refs.contentEdit.offsetHeight
+      this.$refs.contentEdit.innerHTML = this.value
+      
+      this._setMaxWidthProxy = debounce(this._setMaxWidth, 500)
+      addResizeListener(this.$el, this._setMaxWidthProxy)
+    }, 300)
+    
+  },
+  beforeDestroy() {
+    this._setMaxWidthProxy &amp;&amp; removeResizeListener(this.$el, this._setMaxWidthProxy) 
+  }
+}
+&lt;/script></code></pre>
+        </article>
+    </section>
+
+
+
+
+
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Tue Jul 27 2021 14:30:26 GMT+0800 (GMT+08:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?c4e5f73318b5cb0c389e3d9a05f831cc";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</body>
+</html>

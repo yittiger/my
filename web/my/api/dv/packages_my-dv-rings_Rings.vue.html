@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>packages/my-dv-rings/Rings.vue - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-$ui_dv_my-dv-bar.html">$ui/dv/my-dv-bar</a></li><li><a href="module-$ui_dv_my-dv-box.html">$ui/dv/my-dv-box</a></li><li><a href="module-$ui_dv_my-dv-fill.html">$ui/dv/my-dv-fill</a></li><li><a href="module-$ui_dv_my-dv-geo.html">$ui/dv/my-dv-geo</a></li><li><a href="module-$ui_dv_my-dv-geo-gl.html">$ui/dv/my-dv-geo-gl</a></li><li><a href="module-$ui_dv_my-dv-icon.html">$ui/dv/my-dv-icon</a></li><li><a href="module-$ui_dv_my-dv-indicator.html">$ui/dv/my-dv-indicator</a></li><li><a href="module-$ui_dv_my-dv-line.html">$ui/dv/my-dv-line</a></li><li><a href="module-$ui_dv_my-dv-list.html">$ui/dv/my-dv-list</a></li><li><a href="module-$ui_dv_my-dv-loading.html">$ui/dv/my-dv-loading</a></li><li><a href="module-$ui_dv_my-dv-menu.html">$ui/dv/my-dv-menu</a></li><li><a href="module-$ui_dv_my-dv-page.html">$ui/dv/my-dv-page</a></li><li><a href="module-$ui_dv_my-dv-pictorial.html">$ui/dv/my-dv-pictorial</a></li><li><a href="module-$ui_dv_my-dv-pie.html">$ui/dv/my-dv-pie</a></li><li><a href="module-$ui_dv_my-dv-progress.html">$ui/dv/my-dv-progress</a></li><li><a href="module-$ui_dv_my-dv-radar.html">$ui/dv/my-dv-radar</a></li><li><a href="module-$ui_dv_my-dv-rank.html">$ui/dv/my-dv-rank</a></li><li><a href="module-$ui_dv_my-dv-ring.html">$ui/dv/my-dv-ring</a></li><li></li><li><a href="module-$ui_dv_my-dv-screen.html">$ui/dv/my-dv-screen</a></li><li><a href="module-$ui_dv_my-dv-starry.html">$ui/dv/my-dv-starry</a></li><li><a href="module-$ui_dv_my-dv-text.html">$ui/dv/my-dv-text</a></li><li><a href="module-$ui_dv_my-dv-title.html">$ui/dv/my-dv-title</a></li></ul><h3>Events</h3><ul><li><a href="module-$ui_dv_my-dv-menu.html#~event:click">click</a></li></ul><h3>Global</h3><ul><li><a href="global.html#darken">darken</a></li><li><a href="global.html#fade">fade</a></li><li><a href="global.html#getCircleRadianPoint">getCircleRadianPoint</a></li><li><a href="global.html#getColorByKeyword">getColorByKeyword</a></li><li><a href="global.html#getColorFromRgbValue">getColorFromRgbValue</a></li><li><a href="global.html#getOpacity">getOpacity</a></li><li><a href="global.html#getRgbaValue">getRgbaValue</a></li><li><a href="global.html#getRgbValue">getRgbValue</a></li><li><a href="global.html#getRgbValueFromHex">getRgbValueFromHex</a></li><li><a href="global.html#getRgbValueFromRgb">getRgbValueFromRgb</a></li><li><a href="global.html#lighten">lighten</a></li><li><a href="global.html#props">props</a></li><li><a href="global.html#toHex">toHex</a></li><li><a href="global.html#toRgb">toRgb</a></li><li><a href="global.html#validator">validator</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">packages/my-dv-rings/Rings.vue</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template>
+  &lt;DvChart class="my-dv-rings" :options="optionsFunc" v-bind="{...$props,...$attrs}">&lt;/DvChart>
+&lt;/template>
+&lt;script>
+  /**
+   * 多环图
+   * @module $ui/dv/my-dv-ring
+   */
+  import 'echarts/lib/chart/pie'
+  import 'echarts/lib/component/grid'
+  import DvChart from '../my-dv-chart'
+  import Chart from '../../mixins/Chart'
+  import merge from '$ui/charts/utils/extend'
+
+  export default {
+    name: 'MyDvRings',
+    mixins: [Chart],
+    components: {
+      DvChart
+    },
+    /**
+     * 属性参数
+     * @member props
+     * @property {Array} [columns] 数据列
+     * @property {Array} [rows] 数据行
+     * @property {Function} [loader] 数据加载函数，必须返回Promise
+     * @property {Object} [settings] 图表的私有设置
+     * @property {Object|Function} [extend] 扩展图表参数选项
+     * @property {boolean} [debug] 开启打印调试信息
+     */
+    props: {},
+    data() {
+      return {
+        max: 80
+      }
+    },
+    methods: {
+      maxValue({rows = []}) {
+        if (rows.length === 0) return 0
+        const values = rows.map(([name, value]) => value)
+        return Math.max.apply(Math.max, values)
+      },
+      itemSize({rows = []}) {
+        const count = rows.length
+        return count > 0 ? this.max / count : this.max
+      },
+      gap(data) {
+        return this.itemSize(data) / 2
+      },
+      grid(data) {
+        const gap = this.gap(data)
+        const [top, bottom] = [10 - gap / 4, 50 + gap / 4]
+        return {
+          top: `${top}%`,
+          bottom: `${bottom}%`,
+          left: '50%',
+          containLabel: false
+        }
+      },
+      total({rows = []}) {
+        let sum = 0
+        rows.forEach(n => {
+          sum += n[1]
+        })
+        return sum
+      },
+      series(data) {
+        const itemSize = this.itemSize(data)
+        const gap = this.gap(data)
+        const max = this.max
+        const rows = (data.rows || []).slice()
+        const pieSeries = []
+        rows.sort(function (a, b) {
+          return b[1] - a[1]
+        })
+        rows.forEach(([name, value], i) => {
+          const radius = [max - i * itemSize + '%', max - gap - i * itemSize + '%']
+          pieSeries.push({
+            type: 'pie',
+            clockWise: false,
+            hoverAnimation: false,
+            radius: radius,
+            center: ['50%', '50%'],
+            label: {
+              show: false
+            },
+            data: [{
+              value: value,
+              name,
+              tooltip: {
+                show: true,
+                formatter: function (params) {
+                  return `${params.name}: ${params.value}`
+                }
+              }
+            }, {
+              value: this.maxValue(data) / 0.75 - value,
+              name: '',
+              tooltip: {
+                show: false
+              },
+              itemStyle: {
+                color: 'rgba(0,0,0,0)'
+              }
+            }
+            ]
+          })
+
+          pieSeries.push({
+            name: '',
+            type: 'pie',
+            silent: true,
+            z: 1,
+            clockWise: false,
+            hoverAnimation: false,
+            radius: radius,
+            center: ['50%', '50%'],
+            label: {
+              show: false
+            },
+            data: [{
+              value: 7.5,
+              itemStyle: {
+                color: 'rgba(255,255,255,0.1)'
+              }
+            }, {
+              value: 2.5,
+              name: '',
+              itemStyle: {
+                color: 'rgba(0,0,0,0)'
+              }
+            }]
+          })
+        })
+        return pieSeries
+      },
+      lineYAxis({rows = []}) {
+        const colors = this?.page?.settings.colors || []
+        const lineYAxis = []
+        rows.forEach(([name, value], i) => {
+          lineYAxis.push({
+            value: i,
+            textStyle: {
+              rich: {
+                font: {
+                  color: colors[i] || 'rgba(255,255,255,0.5)',
+                  padding: [0, 2],
+                  fontSize: rows.length > 4 ? 14 : 16
+                }
+              }
+            }
+          })
+        })
+        return lineYAxis
+      },
+      optionsFunc(data) {
+        const extend = typeof this.extend === 'function' ? this.extend() : this.extend
+        const rows = data.rows || []
+        const options = {
+          series: this.series(data),
+          grid: this.grid(data),
+          tooltip: {},
+          yAxis: [{
+            type: 'category',
+            show: true,
+            inverse: true,
+            axisLine: {
+              show: false
+            },
+            axisTick: {
+              show: false
+            },
+            axisLabel: {
+              formatter: function (params) {
+                const [name, value] = rows[params];
+                return `{font|●}{font|${name}: }${value}`
+              },
+              interval: 0,
+              inside: true,
+              show: true
+            },
+            data: this.lineYAxis(data)
+          }],
+          xAxis: [{
+            show: false
+          }]
+        }
+        merge(options, extend || {})
+        return Object.freeze(options)
+      }
+    }
+  }
+&lt;/script>
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Tue Jul 27 2021 14:30:21 GMT+0800 (GMT+08:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?c4e5f73318b5cb0c389e3d9a05f831cc";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</body>
+</html>
