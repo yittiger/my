@@ -1,8 +1,8 @@
 <template>
   <div>
-     <el-button  type="primary" @click="open">简单弹窗</el-button>
+     <el-button  type="primary" @click="open" :loading="!optMap">简单弹窗</el-button>
       <my-dialog :visible.sync="visible" target="body" title="标题文字" width="400px" height="500px">
-        <test  ></test>
+        <test :opt-map="optMap" ></test>
         <!-- <my-form @submit="handleSubmit" v-if="optMap" > 
           <my-cascader name="city1" :options="optMap.city" root="100000"  ></my-cascader>
           <my-cascader name="city2" :options="optMap.city" root="100000"  ></my-cascader>
@@ -12,7 +12,7 @@
   </div>
 </template>
 <script>
-// import axios from 'axios'
+import axios from 'axios'
 import Test from '@/components/test'
 // import {create as createTree} from '$ui/utils/tree'
 export default {
@@ -37,7 +37,7 @@ export default {
       console.log(model)
     }
   },
-  /*
+   
   created() {
     Promise.all([
       axios({
@@ -66,13 +66,26 @@ export default {
           value: item.dictCode
         }
       })
-      this.optMap = {
-        city: city,
+      // const fullCityTree = createTree(city, '100000', 'id', 'parentId', true)
+      // const cityTree = createTree(city, '100000', 'id', 'parentId', true).map((item) => { 
+      //   item.children = null
+      //   return item
+      // })
+       
+       
+      // const fullDeptTree = createTree(dept, '0', 'id', 'parentId', true)
+      // const deptTree = createTree(dept, '0', 'id', 'parentId', true).map((item) => {
+      //   item.children = null
+      //   return item
+      // })
+      
+      this.optMap = { 
+        city: city, 
         dept: dept
       } 
+      // console.log(this.optMap)
     })
-  },
-  */
+  }, 
   mounted() {
   }
 }

@@ -23,6 +23,7 @@ export default {
    * 扩展参数
    * @member props
    * @property {*} [root] 数据项根节点的值
+   * @property {boolean} [useOriginOpts] 是否使用原options作为参数, 默认false
    */
   props: {
     value: [Array, String, Number],
@@ -30,6 +31,10 @@ export default {
     root: {
       type: [String, Number, Boolean],
       default: null
+    },
+    useOriginOpts: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -39,8 +44,12 @@ export default {
   },
   computed: {
     optionsTree() {
-      const {id, parentId} = this.keyMap
-      return createTree(this.currentOptions || [], this.root, id, parentId)
+      if (this.useOriginOpts) {
+        return this.currentOptions
+      } else {
+        const {id, parentId} = this.keyMap
+        return createTree(this.currentOptions || [], this.root, id, parentId)
+      }
     }
   },
   render() {

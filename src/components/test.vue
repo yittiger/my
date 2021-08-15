@@ -1,25 +1,32 @@
 <template>
 <div>
-  <my-form @submit="handleSubmit" v-if="optMap"> 
-    <my-cascader name="city1" :options="optMap.city" root="100000" v-if="treeInit" ></my-cascader>
-    <my-cascader name="city2" :options="optMap.city" root="100000"  v-if="treeInit" ></my-cascader> 
-    <my-cascader name="dept" :options="optMap.dept" root="0" v-if="treeInit"></my-cascader>
+  <my-form @submit="handleSubmit" > 
+    <my-cascader name="city1" :options="cityOpts" root="100000" :use-origin-opts="true" @focus="changeCityOpts" :props="{'clearable': true, 'props': { 'checkStrictly': true } }"></my-cascader>
+    <my-cascader name="city2" :options="cityOpts" root="100000"  :use-origin-opts="true" @focus="changeCityOpts"></my-cascader> 
+    <my-cascader name="city3" :options="cityOpts" root="100000"  :use-origin-opts="true" @focus="changeCityOpts"></my-cascader> 
+    <my-cascader name="dept" :options="deptOpts" root="0" :use-origin-opts="true" @focus="changeDeptOpts"></my-cascader>
+    <my-cascader name="dept2" :options="deptOpts" root="0" :use-origin-opts="true" @focus="changeDeptOpts"></my-cascader>
+    <my-cascader name="dept3" :options="deptOpts" root="0" :use-origin-opts="true" @focus="changeDeptOpts"></my-cascader>
+     <my-cascader name="dept4" :options="deptOpts" root="0" :use-origin-opts="true" @focus="changeDeptOpts"></my-cascader>
   </my-form>
 </div>
 </template>
 <script>
-import axios from 'axios'
+// import axios from 'axios'
+import {create as createTree} from '$ui/utils/tree'
 export default {
   components: {},
   props: {
-    // optMap: {
-    //   type: Object
-    // }
+    optMap: {
+      type: Object
+    }
   },
   data() {
     return {
-      optMap: null,
-      treeInit: true
+      // optMap: null,
+      deptOpts: [],
+      cityOpts: []
+
     }
   },
   computed: {
@@ -27,8 +34,23 @@ export default {
   methods: {
     handleSubmit(model) {
       console.log(model)
+    },
+    changeCityOpts() {
+      if (!this.cityOpts.length) {
+        this.cityOpts = createTree(this.optMap.city, '100000', 'id', 'parentId', false) 
+      }
+        
+    },
+    changeDeptOpts() {
+      if (!this.deptOpts.length) {
+        this.deptOpts = createTree(this.optMap.dept, '0', 'id', 'parentId', false)
+      }
     }
   },
+  created() {
+    
+  },
+  /*
   created() {
     Promise.all([
       axios({
@@ -64,10 +86,11 @@ export default {
       console.log(this.optMap)
     })
   },
+  */
   mounted() {
-    // setTimeout(() => {
-    //   this.treeInit = true
-    // }, 50)
+    // this.deptOpts = createTree(this.optMap.dept, '0', 'id', 'parentId', false)
+    // this.cityOpts = createTree(this.optMap.city, '100000', 'id', 'parentId', false)
+     
   }
 }
 </script>

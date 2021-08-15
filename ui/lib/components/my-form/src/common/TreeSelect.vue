@@ -91,6 +91,7 @@
    * @property {*} [root=null] 树的根节点，parentId的值
    * @property {boolean} [collapseTags]  折叠标签，多选有效
    * @property {boolean} [closable] 允许关闭标签，多选有效
+   * @property {boolean} [useOriginOpts] 是否使用原options作为参数, 默认false
    * @property {object} [tree] el-tree的其他参数
    *
    */

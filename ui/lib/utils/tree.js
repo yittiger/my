@@ -33,9 +33,13 @@ export function create(list = [], parentId = null, idKey = 'id', parentIdKey = '
   if (parentId && withRoot) {
     const target = list.find((item) => {
       return item[idKey] === parentId
-    })
-    target.children = tree
-    return [target]
+    }) 
+    if (target) {
+      target.children = tree
+      return [target]
+    } else {
+      return tree
+    }
   } else {
     return tree
   }
