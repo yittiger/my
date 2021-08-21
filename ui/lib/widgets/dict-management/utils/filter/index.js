@@ -8,7 +8,7 @@ export function addFormatFilter(name) {
   formatFuns[name] = (val, errorValue) => {
     const map = store.state.dict.optionMap[name] || {};
     const defaultValue = errorValue !== undefined ? errorValue : val
-    return (map[val] || {}).label || defaultValue;
+    return (map[val] || {}).fullName || (map[val] || {}).label || defaultValue;
   }
 }
 

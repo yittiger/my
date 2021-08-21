@@ -15,8 +15,7 @@
                 :closable="closable"
                 :allow-create="false"
                 @remove="handleRemove"
-                icon="el-icon-arrow-down"
-                v-on="$listeners"
+                icon="el-icon-arrow-down" 
                 > 
                 </TagInput>
       <ElInput v-else
@@ -24,8 +23,7 @@
                :placeholder="placeholder"
                :size="size"
                :disabled="disabled"
-               :readonly="readonly"
-               v-on="$listeners"
+               :readonly="readonly" 
                >
                 <i v-show="!clearable || (!checked && clearable)" slot="suffix" class="el-input__icon el-icon-arrow-down" ></i>
                 <i v-show="checked && clearable" slot="suffix" class="el-input__icon el-icon-error" style="cursor:pointer" @click.stop="clearClickHandle"></i>
@@ -242,9 +240,9 @@
           const {value} = this.keyMap
           if (isEqual(val, this.checked)) return
           // 若使用原装options 需要先将原装树转化为一维数组
-          const _opts = this.useOriginOpts ? treeRevert(this.options) : this.options
+          const _opts = this.useOriginOpts ? treeRevert(this.options) : this.options 
           if (this.multiple) {
-            const vals = val ? [].concat(val) : []
+            const vals = val ? [].concat(val) : [] 
             this.checked = _opts.filter(item => {
               return vals.includes(item[value])
             })
@@ -252,7 +250,7 @@
             this.checked = _opts.find(item => {
               return val === item[value]
             })
-          }
+          } 
         }
       },
       checked(val) {

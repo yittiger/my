@@ -4,12 +4,14 @@
       <my-dialog :visible.sync="visible" target="body" title="标题文字" width="400px" height="500px">
         <test :opt-map="optMap" ></test> 
       </my-dialog>
+
+       
   </div>
 </template>
 <script>
 import axios from 'axios'
-import Test from '@/components/test'
-// import {create as createTree} from '$ui/utils/tree'
+import Test from '@/components/test' 
+
 export default {
   components: {
     Test
@@ -19,7 +21,8 @@ export default {
   data() {
     return {
       optMap: null,
-      visible: false
+      visible: false,
+      object: null
     }
   },
   computed: {
@@ -60,11 +63,12 @@ export default {
           value: item.dictCode
         }
       }) 
-      
+      // console.log(city, '===')
       this.optMap = { 
         city: city, 
         dept: dept
-      }  
+      } 
+      
     })
   }, 
   mounted() {
