@@ -165,7 +165,7 @@ const getCommonDict = function (dictCode) {
           }
         }
     ]
-    this.$getOptionsMap().then((res) => {
+    this.$getOptionsMap(dictList).then((res) => {
       this.optionsMap = res 
     })
   ```
@@ -203,7 +203,8 @@ export default {
     // ....
   },
   created() {
-    this.getOptionsMap([]).then((res) => {})
+    const dictList = [] // [{code: 'xxx', name: 'xxx'}]
+    this.getOptionsMap(dictList).then((res) => {})
   }
 }
 ```

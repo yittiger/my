@@ -16,6 +16,7 @@
                 :allow-create="false"
                 @remove="handleRemove"
                 icon="el-icon-arrow-down"
+                v-on="$listeners"
                 > 
                 </TagInput>
       <ElInput v-else
@@ -24,6 +25,7 @@
                :size="size"
                :disabled="disabled"
                :readonly="readonly"
+               v-on="$listeners"
                >
                 <i v-show="!clearable || (!checked && clearable)" slot="suffix" class="el-input__icon el-icon-arrow-down" ></i>
                 <i v-show="checked && clearable" slot="suffix" class="el-input__icon el-icon-error" style="cursor:pointer" @click.stop="clearClickHandle"></i>

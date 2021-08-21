@@ -464,7 +464,7 @@ export default {
 
 基于 `el-cascader` 实现, 兼容 `el-cascader` 全部的参数、插槽和事件。
 
-数据源： [$docs/data/tree.json](../../files/tree.md)
+数据源： [$docs/data/tree.json](../../files/tree.md)，组件默认支持有父子关系的一维数组（树的原始数组，没有children）。亦可以支持完整的树结构数组（性能优化）
 
 :::demo
 ```html
@@ -481,24 +481,31 @@ export default {
         <span v-if="!node.isLeaf"> ({{ data.children.length }}) </span>
       </template>
     </my-cascader>
-
+    
+    <my-cascader name="demo6" label="原始树" :options="fullTree" :use-origin-opts="true"
+                 :props="{ props: {multiple: true}, clearable: true}"></my-cascader>
   </my-form>
 </template>
 
 <script>
 
   import tree from '$docs/data/tree.json'
-
+  import {create as createTree} from '$ui/utils/tree'
   export default {
     data() {
       return {
-        tree: tree
+        tree: tree, // 树数据元素数组
+        fullTree: []
       }
     },
     methods: {
       handleSubmit(model) {
         alert(`submit: ${JSON.stringify(model)}`)
       }
+    },
+    created() {
+      this.fullTree = createTree(tree, null, 'id', 'parentId', false)
+      console.log(this.fullTree, '====')
     }
   }
 </script>
