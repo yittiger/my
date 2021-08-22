@@ -2,7 +2,7 @@
  * 树结构数据处理函数
  * @module $ui/utils/tree
  */
-
+ import {cloneDeep} from "$ui/utils/util"
 /**
  * 列表转换树结构
  * @param {Object[]} list 列表数据，约定字段名称： id/parentId/children
@@ -13,8 +13,9 @@
  * @return {Array}
  */
 export function create(list = [], parentId = null, idKey = 'id', parentIdKey = 'parentId', withRoot = false) {
+  const _list = cloneDeep(list)
   const temp = new Map(), tree = []
-  list.forEach(item => {
+  _list.forEach(item => {
     temp.set(item[idKey], {...item})
   })
   for (const item of temp.values()) {
