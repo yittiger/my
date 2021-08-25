@@ -529,8 +529,9 @@ export default {
         <span v-if="!node.isLeaf"> ({{ data.children.length }}) </span>
       </template>
     </my-cascader>
-    
-    <my-cascader name="demo6" label="原始树" :options="fullTree" :use-origin-opts="true"
+    <my-cascader name="demo6" label="任意单选" :options="tree"
+                 :props="{ props: {multiple: false, checkStrictly: true}, clearable: true}"></my-cascader>
+    <my-cascader name="demo7" label="原始树" :options="fullTree" :use-origin-opts="true"
                  :props="{ props: {multiple: true}, clearable: true}"></my-cascader>
   </my-form>
 </template>
