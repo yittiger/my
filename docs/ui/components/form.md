@@ -377,3 +377,63 @@ export default {
 
 
 
+
+### 非事件方式获取form值
+
+实时获取form值,与onSubmit方式最大的区别就是不用通过事件的方式获取form值<br>
+注：要是想获取form里某一项值,不建议v-model方式双向绑定获取<br>
+特别是绑定的值为model的，会把form给初始化,用this.$refs.ref值.currentModel
+
+:::demo(form-9)
+```html
+<template>
+  <my-form 
+           inline
+           label-width="60px"
+           item-width="calc(50% - 20px)"
+           footer-block
+           size="small"
+           ref="myForm"
+           :resetText="false"
+           :submitText="false"
+           :model="model"
+           >
+     <my-checkbox name="category" label="种类" :options="categories" width="100%"></my-checkbox>
+     <my-select name="fruit" label="水果" :options="fruit"></my-select>
+     <my-date-picker name="date" label="日期" :props="{valueFormat:'yyyy-MM-dd'}"></my-date-picker>
+     <my-input name="title" label="标题" width="100%"></my-input>
+     <my-input name="content" label="内容" width="100%" :props="{type:'textarea'}"></my-input>
+     <el-button type="primary" @click="getForm">form值</el-button>
+  </my-form>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      model: {},
+      fruit: [
+          { la:'香蕉', value:1 },
+          { la:'苹果', value:2 },
+          { la:'草莓', value:3 },
+          { la:'雪梨', value:4 } 
+      ],
+      categories: [
+          { label:'种类一', value:1 },
+          { label:'种类二', value:2 },
+          { label:'种类三', value:3 },
+          { label:'种类四', value:4 }
+      ]
+    }
+  },
+  methods: {
+    getForm() {
+      alert('提交的数据：'+JSON.stringify(this.$refs.myForm.currentModel))
+    }
+  }
+}
+</script>
+
+```
+:::
+

@@ -327,6 +327,54 @@ export default {
 :::
 
 
+### 选项数据对象属性名称映射
+
+有选项数据的输入组件通过`keyMap`参数设置映射。以下表单项组件有选项：
+
+- my-select
+- my-checkbox
+- my-radio
+- my-cascader
+- my-tag-select
+- my-tree-select
+
+:::demo(form-item-9)
+```html
+<template>
+  <my-form @submit="handleSubmit">
+    <my-select name="select" :options="options" :keyMap="keyMap"></my-select>
+  </my-form>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      keyMap: {
+        label: 'name',
+        id: 'id', 
+        parentId: 'parentId', 
+        value: 'val'
+      },
+      options: [
+          {name: '选项一', val: 1},
+          {name: '选项二', val: 2},
+          {name: '选项三', val: 3},
+          {name: '选项四', val: 4},
+          {name: '选项五', val: 5}
+      ],
+      handleSubmit(model) {
+        alert('提交的数据：'+JSON.stringify(model))
+      }
+    }
+  }
+}
+</script>
+
+```
+:::
+
+
 ## 表单项组件
 
 表单项组件包括以下组件。
