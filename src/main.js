@@ -32,6 +32,12 @@ import vuexOptions from '@/store/index'
 import '@/style/index.scss'
 
 
+// 全局字典管理函数
+import dictManage from '@/helper/dict-management/index'
+
+// // 全局（字典）过滤器
+// import formatFilter from '@/helper/filter';
+
 /**
  * 主应用增强
  */
@@ -46,10 +52,17 @@ const {
 } = require('$ui/index')
 
 
+Vue.prototype.$getOptionsMap = dictManage.getOptionsMap
+
+
 /**
  * 全局共享数据 Vuex实例
  */
 const store = new Vuex.Store(vuexOptions)
+
+// 注册全局过滤器‘formFilter’
+Vue.filter('formatFilter', dictManage.formatFilterInit(store));
+
 
 /**
  * 如果启用了自动创建路由功能，获取路由配置信息

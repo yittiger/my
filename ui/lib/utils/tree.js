@@ -2,7 +2,7 @@
  * 树结构数据处理函数
  * @module $ui/utils/tree
  */
- import {cloneDeep} from "$ui/utils/util"
+ import {cloneDeep} from '$ui/utils/util'
 /**
  * 列表转换树结构
  * @param {Object[]} list 列表数据，约定字段名称： id/parentId/children

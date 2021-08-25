@@ -12,7 +12,7 @@ export function addFormatFilter(name) {
   }
 }
 
-export default function (vueStore) {
+export function formatFilterInit(vueStore) {
   store = vueStore
   return formatFilter
 }

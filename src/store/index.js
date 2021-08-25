@@ -6,6 +6,7 @@ import config from '$ui/config'
 import state from './state'
 import mutations from './mutations'
 import getters from './getters'
+import custModule from './modules/index'
 
 /**
  * Vuex.Store 实例
@@ -17,6 +18,9 @@ export default {
    * @type {Object}
    */
   state,
+  modules: {
+    ...custModule
+  },
   /**
    * 非代码生成器生成的mutations,  在  [store/mutations]{@link module:store/mutations} 中定义
    * @type {Object}
