@@ -40,3 +40,12 @@ a {
   overflow: auto;
   position: relative;
 }
+
+// 修复 el-cascader popup 过长问题
+body {
+  .el-popper.el-cascader__dropdown{
+    .el-cascader-panel{ 
+      max-height: 350px !important;
+    }
+  } 
+}
