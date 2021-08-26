@@ -33,7 +33,7 @@ import '@/style/index.scss'
 
 
 // 全局字典管理函数
-import dictManage from '@/helper/dict-management/index'
+import {getOptionsMap, formatFilterInit} from '@/helper/dict-management/index'
 
 // // 全局（字典）过滤器
 // import formatFilter from '@/helper/filter';
@@ -52,7 +52,7 @@ const {
 } = require('$ui/index')
 
 
-Vue.prototype.$getOptionsMap = dictManage.getOptionsMap
+Vue.prototype.$getOptionsMap = getOptionsMap
 
 
 /**
@@ -61,7 +61,7 @@ Vue.prototype.$getOptionsMap = dictManage.getOptionsMap
 const store = new Vuex.Store(vuexOptions)
 
 // 注册全局过滤器‘formFilter’
-Vue.filter('formatFilter', dictManage.formatFilterInit(store));
+Vue.filter('formatFilter', formatFilterInit(store));
 
 
 /**

@@ -1,4 +1,4 @@
-import {stampToDate} from './dateFormat';
+import {stampToDate} from './date-format';
 
 const formatFuns = {};
 let store = {}

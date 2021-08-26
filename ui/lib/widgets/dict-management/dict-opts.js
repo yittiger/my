@@ -70,6 +70,14 @@ export const findLevel = function(opts, id, arr) {
   }
 };
 
+
+export const findPathInOpts = function(opts, id) {
+  const arr = []
+  findLevel(opts, id, arr)
+  return arr
+}
+
+
 export const _getOptsMap = function(options) {
   const map = {};
   options.forEach(item => {

@@ -22,70 +22,10 @@
 >   - custFetch：获取字典的自定义函数(用于特殊字典)，需要返回一个Promise
 
 
-> **期望效果**
-> - 返回一个对象集合：key 为 当前规定字典对应的 name，value为 字典数组（字典数组已具备value、label、id、parentId字段方便表单组件调用）
-> - 在同一个数组中，同一个字典ID 对应多个 name时，可以只调用一次接口获取字典（此情况多出现在动态表单需求中）
-> - 当字典数据通过接口获取后，可以缓存在本地，在其他地方再次需要时，无需调接口获取
-> **其他好处**
-> 1. 在调用``“$getOptionsMap”`` 方法后，可以通过 ``$getOptionMap(dictId)`` 获取某个某个字典数据 的 以 每个字典value 为 key，以字典本身为value的集合。
-> 2. 提供一个 findLevel 函数，可以通过 一个字典的value，获取完整的父级关系， 例如：越秀区id => 广东省/广州市/越秀区 
-> 3. 在html模板中，通过名为``“formatFilter”``的vue.filter 将字典value的变量解析成对应的中文。例如  \{city|formatFilter('CITY')\} => '广州'
-```html
-<template>
-<div>
-  <my-form :model="model" v-if="optionsMap"> 
-    <my-cascader label="城市" name="city" :options="optionsMap.city"></my-cascader>
-    <my-cascader label="部门" name="org" :options="optionsMap.org"></my-cascader> 
-    <my-cascader label="地区" name="chengshi" :options="optionsMap.chengshi"></my-cascader>
-    <my-select label="其他" name="other" :options="optionsMap.other"></my-select>
-  </my-form>
-  <div>
-    {{model.city|formatFilter('CITY')}}
-  </div>
-</div>  
-</template>
-<script>
-export default {
-  data() {
-    return {
-      optionsMap: null,
-      model: {
-        city: '',
-        chengshi: '',
-        dept: '',
-        other: ''
-      }
-    }
-  },
-  created() {
-    const dictList = [
-      [
-        {name: 'city', code: 'CITY'},
-        {name: 'chengshi', code: 'CITY'},
-        {name: 'org', code: 'DEPTS'},
-        {
-          name: 'other', 
-          code: 'CustDicts', 
-          custFetch: () => {
-            const arr = [
-              {dictCode: '610404', dictName: '渭城区', parentCode: '610400', sortNo: 1},
-              {dictCode: '141127', dictName: '岚县', parentCode: '141100', sortNo: 1},
-              {dictCode: '710409', dictName: '丰原区', parentCode: '710400', sortNo: 1}
-            ]
-            return Promise.resolve(arr)
-          }
-        }
-    ]
-    this.$getOptionsMap().then((res) => {
-      this.optionsMap = res
-
-      const otherOptMap = this.$getOptionMap('CustDicts')
-      console.log(otherOptMap) // 输出 {'610404': {...}, '141127': {...}, }
-    })
-  }
-}
-</script>
-```
+**期望效果**
+- 返回一个对象集合：key 为 当前规定字典对应的 name，value为 字典数组（字典数组已具备value、label、id、parentId字段方便表单组件调用）
+- 在同一个数组中，同一个字典ID 对应多个 name时，可以只调用一次接口获取字典（此情况多出现在动态表单需求中）
+- 当字典数据通过接口获取后，可以缓存在本地，在其他地方再次需要时，无需调接口获取
 
 ## 安装命令
 ```sh 
@@ -93,16 +33,37 @@ npm run widgets dict
 ```
 执行命令后，工具生成在项目的 **``".my/widgets/dict-management"``** 路径下；
 > 生成文件目录如下：
-> - **``modules/dict.js``** 
-> - **``utils/filter``** 
-> - **``utils/dictOpts.js``** 
-> 
+> - **``filter/date-format.js``** 
+> - **``filter/index.js``** 
+> - **``dict-model.js``** 
+> - **``dict-opts.js``**
+> - **``index.js``**
+> 其中： “index.js”为 全部工具函数的输出文件， “dict-management”文件夹可以放置于“src/helper”作为工具函数使用
 
-## modules/dict.js 使用
+## dict-management 提供的方法 使用
+### dictModuleInit(): 字典管理Vuex模块生成函数
 #### 描述：
-vuex全局管理字典的 module 文件
+此函数 用于在vuex中生成 全局管理字典的 module 子模块
 #### 使用：
-modules下面的``“dict.js”``文件可以复制到 ``“./src/store/modules”``下，并在 ``“./src/store/index.js`` 中引入使用
+在项目store/modules下面的“dict.js”文件 使用``“dictModuleInit”``方法生成子模块
+```javascript
+// 引入‘addFormatFilter’ 和 ‘dictModuleInit’
+import {addFormatFilter, dictModuleInit} from '@/helper/dict-management/index';
+import axios from 'axios' 
+const getCommonDict = function (dictCode) {
+  // 调接口获取字典方法 根据项目实际情况自行编写。
+  return axios({
+    url: '/data/' + dictCode + '.json'
+  }).then((res) => {
+    return Promise.resolve(res.data.data) // 接口返回的数组[{label, value, parentId, id, fullName}]
+  }).catch(() => {
+    return Promise.resolve([])
+  })
+}
+// 将‘addFormatFilter’ 于 ‘getCommonDict’ 传入 module初始化函数
+export default dictModuleInit(getCommonDict, addFormatFilter)
+```
+在 "src/store/index.js" 中引入 dict 的模块文件， 并在modules 中注册
 ```javascript
 import dictModule from './modules/dict'
 export default {
@@ -113,112 +74,94 @@ export default {
   // ...
 }
 ```
-#### dict.js 的修改
-dict.js 开头有 ``getCommonDict``方法，需要根据项目需求自行修改。以下为参考：
-```javascript
-// 全局formatFilter 的添加字典函数
-import { addFormatFilter } from '@/helper/filter'; // 引入 filter 中的“addFormatFilter”方法，引入路径根据你将filter文件放置位置为准
-
-// --------------以下代码为定义字典加载方法-------
-import axios from 'axios'
-// 建议命名为“getCommonDict” 作为系统内常规获取字典的方法， 下面action中调用，后端字典接口 尽量以一个唯一ID为参数获取对应字典数据
-const getCommonDict = function (dictCode) {
-  // 调接口获取字典方法 根据项目实际情况自行编写。
-  return axios({
-      url: '/assets/data/' + dictCode + '.json'
-    }).then((res) => {
-      // 有数据 输出 数据
-      if (res.data.code === 0) {
-        return Promise.resolve(res.data.data)
-      } else {
-        // 没数据输出空数组
-        return Promise.resolve([])
-      }
-    }).catch(() => {
-      // 建议接口报错也输出空数组
-      return Promise.resolve([])
-    })
-}
-// --------------以上代码为定义字典加载方法-------
-
-```
-## utils/dictOpts 使用
+> **getCommonDict**方法的返回数据处理：
+> getCommonDict 返回的数据 为 字典数组，每个元素必须含有以下字段：
+> - label: 字典中文
+> - value: 字典对应code
+> - id: 字典的id，可以是 字典的code
+> - parentId: 当前字典的父id，用于生成树
+> - fullName: 字典全名（如省市区全程）， 若无，则以label代替（字典管理内部以实现）。
+ 
+### getOptionsMap 使用
 #### 描述：
-调用并获取字典的函数文件， 里面提供三个api:
-1. ``getOptionsMap(dictList)``: 根据字典配置数组 返回 对应字典数据结合
-  ```javascript
-  Vue.$prototype.$getOptionsMap = getOptionsMap
-  const dictList = [
-      [
-        {name: 'city', code: 'CITY'}, 
-        {name: 'org', code: 'DEPTS'},
-        {
-          name: 'other', 
-          code: 'CustDicts', 
-          custFetch: () => {
-            const arr = [
-              {dictCode: '610404', dictName: '渭城区'},
-              {dictCode: '141127', dictName: '岚县'},
-              {dictCode: '710409', dictName: '丰原区'}
-            ]
-            return Promise.resolve(arr)
-          }
+注册字典数据的函数， 根据传入的数组，生成对应的字典数据集合；
+#### 参数： 
+- @property {Array} [dictList] 当前要获取的字典
+- @property {string} [dictList.name] 字典对应的字段名（按当前模块需求命名）
+- @property {string} [dictList.code] 字典唯一代码（根据接口获取对应字典唯一ID）
+- @property {Function} [custFetch] 自定义的字典获取函数，需要返回 Promise
+#### 使用： 
+```javascript
+// 引入方法
+import {getOptionsMap} from '@/helper/dict-management/index'
+// 将 “$getOptionsMap” 注册为全局方法
+Vue.$prototype.$getOptionsMap = getOptionsMap
+const dictList = [
+    [
+      {name: 'city', code: 'CITY'}, 
+      {name: 'org', code: 'DEPTS'},
+      {
+        name: 'other', 
+        code: 'CustDicts', 
+        custFetch: () => {
+          const arr = [
+            {dictCode: '610404', dictName: '渭城区'},
+            {dictCode: '141127', dictName: '岚县'},
+            {dictCode: '710409', dictName: '丰原区'}
+          ]
+          return Promise.resolve(arr)
         }
-    ]
-    this.$getOptionsMap(dictList).then((res) => {
-      this.optionsMap = res 
-    })
-  ```
-2. ``getOptionMap(dictList)``: 根据字典Id 返回 对应字典数据结合  
-  ```javascript
-  Vue.$prototype.$getOptionsMap = getOptionsMap
-  Vue.$prototype.$getOptionMap = getOptionMap
-  const dictList = [
-      [
-        {name: 'city', code: 'CITY'}, 
-        {name: 'org', code: 'DEPTS'}
-    ]
-    this.$getOptionsMap().then((res) => {
-      this.optionsMap = res 
-      const cityMap = this.$getOptionMap('CITY')
-      console.log(cityMap) // {'440104': {...}, ...}
-    })
-  ```
-#### utils/dictOpts.js使用：
-将 “``dictOpts.js``”文件（无需utils文件夹）放置到项目中某位置（建议 helper文件夹<自定义工具函数>）， 在 main.js 中引入注册即可
-```javascript
-// main.js 
-// 全局字典管理函数
-import {getOptionsMap, getOptionMap} from '@/helper/dictOpts'
-
-Vue.prototype.$getOptionsMap = getOptionsMap // 注册字典管理
-Vue.prototype.$getOptionMap = getOptionMap // 注册字典管理
+      }
+  ]
+  this.$getOptionsMap(dictList).then((res) => {
+    this.optionsMap = res 
+  })
 ```
-或者在组件下引入
+### getOptionMap 使用: 
+#### 描述：
+根据字典Id 返回 对应字典数据结合 
+#### 参数： 
+@property {String} [dictCode] 需要获取的字典数据的对应唯一ID
+#### 使用：
+使用 ``“getOptionMap”``方法 必须确保 对应ID 的字典 已经获取成功
 ```javascript
-import {getOptionsMap} from '@/helper/dictOpts'
-export default {
-  methods: {
-    getOptionsMap,
-    // ....
-  },
-  created() {
-    const dictList = [] // [{code: 'xxx', name: 'xxx'}]
-    this.getOptionsMap(dictList).then((res) => {})
-  }
-}
+Vue.$prototype.$getOptionsMap = getOptionsMap
+Vue.$prototype.$getOptionMap = getOptionMap
+const dictList = [
+    [
+      {name: 'city', code: 'CITY'}, 
+      {name: 'org', code: 'DEPTS'}
+  ]
+  this.$getOptionsMap().then((res) => {
+    const cityMap = this.$getOptionMap('CITY')
+    console.log(cityMap) // {'440104': {...}, ...}
+  })
+``` 
+
+### findPathInOpts 使用: 
+#### 描述：
+根据某个字典ID, 获取完整的 字典层级， 如 用“越秀区” 获取 “广东省广州市越秀区” 
+> PS: findPathInOpts 与 "$ui/utils/tree" 中的“findPath()”区别是： findPath 在 完整的树状数据中查找。findPathInOpts 在 原始字典数据（一维数组）中查找
+#### 参数： 
+@property {String} [dictvalue] 字典项的value / id
+#### 使用：
+```javascript
+findPathInOpts('440104') // 返回 ['440', '44010', '440104']  
 ```
 
-## utils/filter 使用
-###描述
+### formatFilterInit
+#### 描述
 根据 全局字典函数``getOptionsMap``调用后 注册数据的 formatFilter 过滤器文件
-#### 使用方式：
-将utils下的``filter文件夹``（无需utils）直接复制到项目某处（建议helper文件夹下）， 在 main.js 中引入注册即可
+#### 参数
+项目的 Vuex Store 实例 
+#### 使用
+在 main.js 中引入注册即可
 ```javascript
 // main.js 
 // 全局（字典）过滤器
-import formatFilter from '@/helper/filter';
-// 注册全局过滤器‘formFilter’
+import {formatFilterInit} from '@/helper/dict-management/index' 
+const store = new Vuex.Store(vuexOptions) // 注册 store
+// 注册全局过滤器‘formFilter’， 需要将store 作为参数传入
 Vue.filter('formatFilter', formatFilter(store));
 ```
 在 代码中使用如下：
@@ -229,9 +172,10 @@ Vue.filter('formatFilter', formatFilter(store));
   建议在使用formatFilter前，在组件或页面 中先调用 getOptionsMap方法。
  -->
 ```
+
 ## 工具代码解析：
-#### store/dict.js
-在dict.js 的 vuex module中，注册了``fetchDictByCode`` 的action， 通过异步方式获取 字典数据，并保存在state 中。
+### dictModuleInit.js
+此方法生成了“dictModule”， 在dictModule中，注册了``fetchDictByCode`` 的action， 通过异步方式获取 字典数据，并保存在state 中。
 ```javascript
  actions: {
     fetchDictByCode(context, { dictCode, custFetch }) {
@@ -240,11 +184,7 @@ Vue.filter('formatFilter', formatFilter(store));
       return fetchFn.then(res => { 
         const arr = Array.isArray(res) && res.map(item => {
           return {
-            ...item,
-            value: item.dictCode || item.orgCode,
-            label: item.dictName || item.orgName,
-            id: item.dictCode || item.orgCode,
-            parentId: item.parentCode
+            ...item 
           };
         }) || [];
         const obj = {},
@@ -265,9 +205,9 @@ Vue.filter('formatFilter', formatFilter(store));
   }
 ```
 
-#### utils/dictOpts.js 
+### getOptionsMap()方法
 ##### getOptionsMap()方法
-dictOpts.js 文件 提供了 “getOptionsMap()”方法，可以在页面中进行调用，其原理是：
+“getOptionsMap()”方法，在Vue中注册后可以在页面中进行调用，其原理是：
 - 将传入的 dictList 数组 对 相同的“code” 进行去重合并（确保相同的字典ID仅调用一次接口）
 - 将 合并后的接口 转化为 “``fetchEditOpt()``”方法：
   > **fetchEditOpt() 方法**
@@ -338,3 +278,60 @@ export const getOptionsMap = function(DictList) {
 };
 ```
 
+## 使用案例
+```html
+<template>
+<div>
+  <my-form :model="model" v-if="optionsMap"> 
+    <my-cascader label="城市" name="city" :options="optionsMap.city"></my-cascader>
+    <my-cascader label="部门" name="org" :options="optionsMap.org"></my-cascader> 
+    <my-cascader label="地区" name="chengshi" :options="optionsMap.chengshi"></my-cascader>
+    <my-select label="其他" name="other" :options="optionsMap.other"></my-select>
+  </my-form>
+  <div>
+    {{model.city|formatFilter('CITY')}}
+  </div>
+</div>  
+</template>
+<script>
+export default {
+  data() {
+    return {
+      optionsMap: null,
+      model: {
+        city: '',
+        chengshi: '',
+        dept: '',
+        other: ''
+      }
+    }
+  },
+  created() {
+    const dictList = [
+      [
+        {name: 'city', code: 'CITY'},
+        {name: 'chengshi', code: 'CITY'},
+        {name: 'org', code: 'DEPTS'},
+        {
+          name: 'other', 
+          code: 'CustDicts', 
+          custFetch: () => {
+            const arr = [
+              {dictCode: '610404', dictName: '渭城区', parentCode: '610400', sortNo: 1},
+              {dictCode: '141127', dictName: '岚县', parentCode: '141100', sortNo: 1},
+              {dictCode: '710409', dictName: '丰原区', parentCode: '710400', sortNo: 1}
+            ]
+            return Promise.resolve(arr)
+          }
+        }
+    ]
+    this.$getOptionsMap().then((res) => {
+      this.optionsMap = res
+
+      const otherOptMap = this.$getOptionMap('CustDicts')
+      console.log(otherOptMap) // 输出 {'610404': {...}, '141127': {...}, }
+    })
+  }
+}
+</script>
+```

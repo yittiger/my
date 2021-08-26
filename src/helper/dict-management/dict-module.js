@@ -22,7 +22,7 @@ const getCommonDict = function (dictCode) {
 // import { addFormatFilter } from '@/helper/filter';
 // const dictModel = dictModelInit(getCommonDict, addFormatFilter)
 
-const dictModelInit = function(getCommonDict, addFormatFilter) {
+const dictModuleInit = function(getCommonDict, addFormatFilter) {
   return {
     namespaced: true,
     state: {
@@ -71,4 +71,4 @@ const dictModelInit = function(getCommonDict, addFormatFilter) {
   };
 } 
 
-export default dictModelInit
+export default dictModuleInit
