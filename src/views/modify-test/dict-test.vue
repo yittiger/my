@@ -4,9 +4,11 @@
     <p >{{code|formatFilter('CITY')}}</p>
 
     <div>
-      <my-form @submit="handleSubmit" :model="model">
-        <my-range label="范围" name="range" mode="datetime" :props="{valueFormat:'yyyy-MM-dd HH:mm:ss'}"></my-range>
-        <my-range label="范围" name="range2" mode="date" :props="{valueFormat:'yyyy-MM-dd'}"></my-range>
+      <my-form @submit="handleSubmit" :model="model" inline width="25%">
+        <my-range label="范围" name="range" mode="datetime" :props="{valueFormat:'yyyy-MM-dd HH:mm:ss'}" width="25%"></my-range>
+        <my-range label="范围" name="range2" mode="date" :props="{valueFormat:'yyyy-MM-dd'}" width="25%"></my-range>
+
+        <my-date-picker name="timeArea" label="日期" mode="dateTimeRange" width="25%" :props="{valueFormat:'yyyy-MM-dd HH:mm:ss'}"></my-date-picker>
       </my-form>
     </div>
   </div>
@@ -25,7 +27,10 @@ export default {
       code: '623026',
       optMap: null,
       city: [],
-      model: {}
+      model: {
+        timeArea: ['2021-07-27 00:00:00', '2021-08-21 00:00:00']
+      },
+      isStrict: true
     }
   },
   computed: {

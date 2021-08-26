@@ -34,12 +34,12 @@ export default {
     separator: {
       type: String,
       default: '-'
-    }
+    } 
   },
   data() {
     return {
-      min: '',
-      max: ''
+      min: '', 
+      max: '' 
     }
   },
   watch: {

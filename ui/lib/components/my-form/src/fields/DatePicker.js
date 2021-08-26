@@ -20,7 +20,7 @@ export default {
       type: String,
       default: 'date',
       validator(val) {
-        return ['time', 'timeSelect', 'date', 'dateTime'].includes(val)
+        return ['time', 'timeSelect', 'date', 'dateTime', 'dateTimeRange', 'dateRange'].includes(val)
       }
     }
   },
@@ -35,12 +35,17 @@ export default {
                     vModel={this.fieldValue}>
         </DatePicker>
       )
-    } else if (this.mode === 'dateTime') {
+    } else if (this.mode === 'dateTime' || this.mode === 'dateTimeRange' || this.mode === 'dateRange') {
+      const typeMap = {
+        dateTime: 'datetime',
+        dateTimeRange: 'datetimerange',
+        dateRange: 'daterange'
+      }
       vnode = (
         <DatePicker ref="comp"
                     class="my-date-picker"
                     {...{props: this.innerProps, on: this.$listeners, attrs: this.innerProps}}
-                    type="datetime"
+                    type={typeMap[this.mode]}
                     vModel={this.fieldValue}>
         </DatePicker>
       )
