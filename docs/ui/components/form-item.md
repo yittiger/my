@@ -561,12 +561,47 @@ export default {
 ```
 :::
 
+### DatePicker 日期时间选择器
+:::demo
+```html
+<template>
+  <my-form  @submit="handleSubmit" inline label-width="80px" >
+    <my-date-picker name="time" label="任意时间" mode="time" width="calc(50% - 15px)" :props="{valueFormat:'HH:mm:ss'}"></my-date-picker> 
+    <my-date-picker name="time2" label="时间节点" mode="timeSelect" width="calc(50% - 15px)" :props="{
+      valueFormat:'HH:mm:ss', 
+      pickerOptions: {
+        start: '00:00',
+        step: '00:30',
+        end: '24:00'
+      }
+    }"></my-date-picker> 
+    <my-date-picker name="timeRange" label="时间范围" mode="time" width="calc(50% - 15px)" :props="{valueFormat:'HH:mm:ss', isRange: true}"></my-date-picker> 
+    <my-date-picker name="date" label="日期" mode="date" width="calc(50% - 15px)" :props="{valueFormat:'yyyy-MM-dd'}"></my-date-picker> 
+    <my-date-picker name="dateTime" label="日期时间" mode="dateTime" width="calc(50% - 15px)" :props="{valueFormat:'yyyy-MM-dd HH:mm:ss'}"></my-date-picker> 
+    <my-date-picker name="dateArea" label="日期范围" mode="dateRange" width="calc(50% - 15px)" :props="{valueFormat:'yyyy-MM-dd'}"></my-date-picker>
+    <my-date-picker name="timeArea" label="日期时间范围" mode="dateTimeRange" width="calc(50% - 15px)" :props="{valueFormat:'yyyy-MM-dd HH:mm:ss'}"></my-date-picker>
+  </my-form>
+</template>
+<script>
+export default {
+  methods: {
+    handleSubmit(model) {
+      alert(`submit: ${JSON.stringify(model)}`)
+    }
+  }
+}
+</script>
+<style lang="scss">
+ 
+</style>
+
+```
+:::
+
 
 ### Checkbox 多选框
 
 ### ColorPicker 颜色选择器
-
-### DatePicker 日期时间选择器
 
 ### Editor 富文本编辑器
 
