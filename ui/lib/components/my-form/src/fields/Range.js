@@ -27,7 +27,7 @@ export default {
       type: String,
       default: 'number',
       validator(val) {
-        return ['number', 'time', 'date'].includes(val)
+        return ['number', 'time', 'date', 'datetime'].includes(val)
       }
     },
     // 分隔符
@@ -81,10 +81,10 @@ export default {
     },
     renderDate() {
       return [
-        <DatePicker class="my-range__input" {...{props: this.innerProps, attrs: this.innerProps}}
+        <DatePicker class="my-range__input" {...{props: {...this.innerProps, type: this.mode}, attrs: this.innerProps}}
                     vModel={this.min}></DatePicker>,
         this.createSeparator(),
-        <DatePicker class="my-range__input" {...{props: this.innerProps, attrs: this.innerProps}}
+        <DatePicker class="my-range__input" {...{props: {...this.innerProps, type: this.mode}, attrs: this.innerProps}}
                     vModel={this.max}></DatePicker>
       ]
     },
@@ -102,6 +102,7 @@ export default {
     const map = {
       number: this.renderNumber,
       date: this.renderDate,
+      datetime: this.renderDate,
       time: this.renderTime
     }
     const vnode = (

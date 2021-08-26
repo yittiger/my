@@ -437,6 +437,7 @@ export default {
 
 
 ### 自定义表单项
+
 在一些特殊情况下，myForm 需要结合 element-ui 的表单组件或者其他个性化表单组件使用， 可以使用“my-form-custom” 进行表单项个性化定制。
 - “my-form-custom” 内的 表单组件，不能用v-model 直接绑定 myForm 对应的“model”
 - “my-form-custom” 内的 表单组件修改后，需要通过“change”方法对myForm组件内的“currentModel”进行修改
