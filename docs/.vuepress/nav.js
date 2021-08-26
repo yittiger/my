@@ -32,7 +32,7 @@ module.exports = [
     link: '/ui/pages/'
   },
   {
-    text: '工具',
+    text: '补丁',
     link: '/ui/widgets/'
   },
   {

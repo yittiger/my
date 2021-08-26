@@ -376,8 +376,6 @@ export default {
 :::
 
 
-
-
 ### 非事件方式获取form值
 
 实时获取form值,与onSubmit方式最大的区别就是不用通过事件的方式获取form值<br>
@@ -430,6 +428,69 @@ export default {
     getForm() {
       alert('提交的数据：'+JSON.stringify(this.$refs.myForm.currentModel))
     }
+  }
+}
+</script>
+
+```
+:::
+
+
+### 自定义表单项
+在一些特殊情况下，myForm 需要结合 element-ui 的表单组件或者其他个性化表单组件使用， 可以使用“my-form-custom” 进行表单项个性化定制。
+- “my-form-custom” 内的 表单组件，不能用v-model 直接绑定 myForm 对应的“model”
+- “my-form-custom” 内的 表单组件修改后，需要通过“change”方法对myForm组件内的“currentModel”进行修改
+
+:::demo(form-10)
+```html
+<template>
+  <my-form 
+    ref="form"
+    @submit="handleSubmit"
+    inline
+    label-width="60px"
+    item-width="calc(50% - 20px)"
+    footer-block
+    size="small" 
+    > 
+    <my-input name="title" label="标题" width="100%"></my-input>
+     <!-- 自定义表单 -->
+    <my-form-custom label="时间范围" name="timeArea" width="100%">
+      <!--ele-ui的表单组件需要单独绑定外部一个变量“timeArea”-->
+      <el-date-picker
+        style="width: 95%"
+        v-model="timeArea"
+        @change="timeAreaChange"
+        type="datetimerange"
+        range-separator="至"
+        format="yyyy-MM-dd HH:mm:ss"
+        value-format="yyyy-MM-dd HH:mm:ss"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期">
+      </el-date-picker>
+    </my-form-custom>
+      
+  </my-form>
+</template>
+
+<script>
+import {cloneDeep} from '$ui/utils/util'
+export default {
+  data() {
+    return { 
+      timeArea: [] 
+    }
+  },
+  methods: {
+    timeAreaChange(val) {
+      const currentModel = cloneDeep(this.$refs.form.currentModel)
+      currentModel.timeArea = val
+      this.$refs.form.currentModel = currentModel
+    },
+    handleSubmit(model) {
+      alert('提交的数据：'+JSON.stringify(model))
+    },
+    
   }
 }
 </script>
