@@ -1,8 +1,8 @@
 <template>
   <div>
      <el-button  type="primary" @click="open" :loading="!optMap">简单弹窗</el-button>
-      <my-dialog :visible.sync="visible" target="body" title="标题文字" width="400px" height="500px">
-        <test :opt-map="optMap" ></test> 
+      <my-dialog :visible.sync="visible" target="body" title="标题文字" width="400px" height="500px" @submit="$refs.test.$refs.form.submit()">
+        <test :opt-map="optMap" ref="test"></test> 
       </my-dialog>
 
        
