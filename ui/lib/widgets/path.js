@@ -1,3 +1,4 @@
 module.exports = {
-  dict: 'dict-management'
+    dict: 'dict-management',
+    dwPersonPicker: 'dw-person-picker'
 }
