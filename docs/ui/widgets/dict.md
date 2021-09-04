@@ -132,7 +132,7 @@ const dictList = [
       {name: 'city', code: 'CITY'}, 
       {name: 'org', code: 'DEPTS'}
   ]
-  this.$getOptionsMap().then((res) => {
+  this.$getOptionsMap(dictList).then((res) => {
     const cityMap = this.$getOptionMap('CITY')
     console.log(cityMap) // {'440104': {...}, ...}
   })

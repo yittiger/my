@@ -26,7 +26,7 @@ export default {
   methods: {
       setTimes() {
         // 计时器翻页
-        this.timer = window.setInterval(() => {
+        this.timer = setInterval(() => {
           if (this.firstNumber < 9) this.firstNumber++
           else {
             if (this.firstNumber === 9) {
@@ -41,7 +41,7 @@ export default {
       this.setTimes()
     },
     beforeDestroy() {
-      window.clearInterval(this.timer)
+      clearInterval(this.timer)
     }
 }
 </script>
