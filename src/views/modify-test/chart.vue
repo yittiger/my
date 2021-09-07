@@ -22,11 +22,11 @@
 
     <div class="warp" style="width: 100%"> 
       <my-dv-page target="parent" fit>
-        <my-dv-line fit :columns="lineData.columns" :rows="lineData.rows" :settings="lineSetting"></my-dv-line>
+        <my-dv-line fit :columns="lineData.columns" :rows="lineData.rows" :settings="lineSetting" :extend="lineExtend" debug></my-dv-line>
       </my-dv-page>
     </div>
   </div>
-</template>
+</template>:
 <style lang="scss" scoped>
 .page{
   height: 100%;
@@ -137,17 +137,15 @@ export default {
         ],
         bars: ['开户']
       },
-      lineExtent: {
-        tooltips: [
-          {
-            position: [10, 10],
-            formatter: '{a}:{b}'
-          },
-          {
-            position: ['100%', '0'],
-            formatter: '{a}:/{b}'
+      lineExtend: {
+        'series[1].tooltip':  
+          { 
+            formatter: function(params, ticket, cb) {
+              // console.log(params)
+              return `比重<br/>${params.value[0]}: ${params.value[2]}%`
+            }
           }
-        ]
+        
       }
     }
   },
