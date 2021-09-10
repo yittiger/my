@@ -161,6 +161,50 @@ export default {
 ```
 :::
 
+### 主题颜色
+
+my-chart的主题颜色如下, 如果需要更改chart 的主题样式，可以通过 “extend.color: ['red', 'green']” 来实现
+
+:::demo(chart-7)
+```html
+<template>
+  <div class="color-palette">
+    <div class="color-item" v-for="(item, index) in themeColors" :key="`col_${index}`">
+      <div class="color" :style="{'background': item}"></div>
+      <div class="name">{{item}}</div>
+    </div>
+  </div>
+</template>
+
+<script> 
+export default {
+  data() {
+    return {
+      themeColors: [
+        '#37A2DA', '#32C5E9', '#67E0E3', '#9FE6B8', '#FFDB5C', '#ff9f7f', '#fb7293', '#E062AE', '#E690D1', '#e7bcf3', '#9d96f5', '#8378EA', '#96BFFF'
+      ]
+    }
+  }
+}
+</script>
+<style lang="scss" scoped>
+.color-palette {
+  display: flex;
+  flex-flow: row wrap;
+  .color-item{
+    margin: 3px;
+    .color{
+      width: 15px;
+      height: 15px;
+      margin: 4px auto;
+      border: 1px solid;
+    }
+  }
+}
+</style>
+```
+:::
+
 ### 显示加载动画
 
 可设置`loading`显示加载中提示
@@ -244,6 +288,7 @@ export default {
            }]
       },
       extend: {
+        color: ['green'],
         'yAxis.name': '销量',
         series: {
           label: {

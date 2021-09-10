@@ -2,8 +2,19 @@
 
 `my-chart-line`
 
-## 基本用法
+## 基本setting参数
 
+| 参数名 | 类型 | 默认值 | 描述 |
+|----|----|----|----|
+| direction | String | 'x' | 排列方向，即类别在哪个轴上，值为'x' / 'y' |
+| label | String, Object, Array |   | 数据项的标签设置，字符类型设置position， 对象与原生series.label设置一致 |
+| valueAxis | String, Object, Array |   | 值类型轴配置 |
+| stack | Object, Array |   | 堆叠柱，如 ['name1', 'name2']  或  {'name': ['name1', 'name2']} | 
+| bars | String, Array |   | 改成柱状图显示的系列 |    
+| smooth | Boolean, Number |  0.5 | 线条平滑，只对折线图有效 | 
+
+
+## 基本用法
 
 :::demo(line-1)
 ```html

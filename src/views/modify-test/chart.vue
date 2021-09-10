@@ -22,8 +22,12 @@
 
     <div class="warp" style="width: 100%"> 
       <my-dv-page target="parent" fit>
-        <my-dv-line fit :columns="lineData.columns" :rows="lineData.rows" :settings="lineSetting" :extend="lineExtend" debug></my-dv-line>
+        <my-dv-line fit :columns="lineData.columns" :rows="lineData.rows" :settings="lineSetting" :extend="lineExtend" debug theme="dark"></my-dv-line>
       </my-dv-page>
+    </div>
+
+    <div class="warp" >
+       <my-chart-line :data="themeData" theme="dark"></my-chart-line>
     </div>
   </div>
 </template>:
@@ -142,10 +146,28 @@ export default {
           { 
             formatter: function(params, ticket, cb) {
               // console.log(params)
-              return `比重<br/>${params.value[0]}: ${params.value[2]}%`
+              return `比重<br/><span style="display: inline-block;width:10px; height:10px;background:${params.color};border-radius: 50%;margin-right: 5px"></span>${params.value[0]}: ${params.value[2]}%`
             }
           }
         
+      },
+
+      themeData: {
+        columns: ['月份', '访问量'],
+        rows: [
+          ['一月', 100],
+          ['二月', 60],
+          ['三月', 78],
+          ['四月', 90],
+          ['五月', 110],
+          ['六月', 87],
+          ['七月', 90],
+          ['八月', 75],
+          ['九月', 63],
+          ['十月', 80],
+          ['十一月', 90],
+          ['十二月', 105]
+        ]
       }
     }
   },
