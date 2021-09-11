@@ -1,5 +1,17 @@
 # 柱状图
 
+## 基本setting参数
+
+| 参数名 | 类型 | 默认值 | 描述 |
+|----|----|----|----|
+| direction | String | 'x' | 排列方向，即类别在哪个轴上，值为'x' / 'y' |
+| label | String, Object, Array |   | 数据项的标签设置，字符类型设置position， 对象与原生series.label设置一致 |
+| valueAxis | String, Object, Array |   | 值类型轴配置, 可以参考echart的 “yAxis”的配置，如果是Array时，可以与“columns”数组的元素对应 |
+| stack | Object, Array |   | 数据堆叠，同个类目轴上系列配置相同的stack值可以堆叠放置，如 ['name1', 'name2']  或  {'name': ['name1', 'name2']}，参考series.stack | 
+| lines | String, Array |   | 改成线条显示的系列 |   
+| smooth | Boolean, Number | 0.5 | 线条平滑，只对折线图有效 |    
+
+
 ## 基础用法
 
 :::demo

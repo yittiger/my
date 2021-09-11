@@ -22,12 +22,21 @@
 
     <div class="warp" style="width: 100%"> 
       <my-dv-page target="parent" fit>
-        <my-dv-line fit :columns="lineData.columns" :rows="lineData.rows" :settings="lineSetting" :extend="lineExtend" debug theme="dark"></my-dv-line>
+        <my-dv-line fit :columns="lineData.columns" :rows="lineData.rows" :settings="lineSetting" :extend="lineExtend"  theme="dark"></my-dv-line>
       </my-dv-page>
     </div>
 
     <div class="warp" >
        <my-chart-line :data="themeData" theme="dark"></my-chart-line>
+    </div>
+
+    <div class="warp" >
+      <my-chart-map debug
+                :data="mapChart.data"
+                :register="mapChart.register"
+                map="china"
+                :extend="mapChart.extend"
+                :settings="mapChart.settings" ></my-chart-map>  
     </div>
   </div>
 </template>:
@@ -56,6 +65,7 @@
 }
 </style>
 <script>
+import china from '$ui/charts/geo/china.json'
 export default {
   mixins: [],
   components: {},
@@ -168,6 +178,55 @@ export default {
           ['十一月', 90],
           ['十二月', 105]
         ]
+      },
+
+      mapChart: {
+        register: china,
+        data: {
+          columns: ['省份', '面积'],
+          rows: [
+            ['广东', 100],
+            ['北京', 60],
+            ['广西', 78],
+            ['湖南', 90],
+            ['湖北', 110],
+            ['福建', 87],
+            ['新疆', 90],
+            ['贵州', 75],
+            ['江苏', 63],
+            ['山西', 80],
+            ['山东', 90],
+            ['黑龙江', 105]
+          ]
+        },
+        extend: {
+          visualMap: null,
+          // geo: {
+          //   id: 'chinaGeo',
+          //   show: true,
+          //   name: 'china',
+          //   roam: true,
+          //   center: [115.97, 29.71]
+          // },
+          'series.0.roam': true,
+          'series.0.center': [115.97, 29.71]
+        },
+        settings: {
+          geo: true,
+          dataHelper: row => {
+            return {
+              itemStyle: {
+                borderColor: 'blue',
+                borderWidth: 2,
+                areaColor: row[1] > 90 ? 'red' : 'green'
+              },
+              label: {
+                show: true,
+                color: '#fff'
+              }
+            }
+          } 
+        } 
       }
     }
   },

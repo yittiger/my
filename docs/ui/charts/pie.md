@@ -1,5 +1,17 @@
 # 饼图
 
+## 基本setting参数
+
+| 参数名 | 类型 | 默认值 | 描述 |
+|----|----|----|----|
+| center | Array | ['50%', '50%'] | 中心点位置 |
+| radius | String, Number, Array | [0, '75%'] | 饼图的半径 |
+| legend | String, Object | 'horizontal' | 可以传字符串'horizontal', 'vertical', 或参考echart legend的配置 |
+| roseType | Boolean, String | false | 配置玫瑰图， 可传值为true, false, 'radius', 'area' |
+| limit | Number |  | 限制个数，超出的合并成其他 | 
+| level | Array |  | 层级 实现 多圆饼图, 二维数组 如：[['第一组A','第一组B'], ['第二组A','第二组B'], ['第三组A', '第三组B']] | 
+| levelGap | Number | 10 | 层级饼图的分隔大小（占比百分比） |
+
 ## 基础用法
 
 :::demo
