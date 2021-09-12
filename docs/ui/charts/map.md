@@ -7,7 +7,7 @@ ECharts的基于地理坐标系的图表，如：`map` `scatter` `effectScatter`
 | 参数名 | 类型 | 默认值 | 描述 |
 |----|----|----|----|
 | type | Object, String | 'map' | 地图数据展示类型，可选类型有：'map' 'scatter' 'effectScatter' 'lines', 或者这些类型的对象（参考echart对应的series 类型） |
-| geo | Boolean | true | 是否开启Geo |
+| geo | Boolean | true | 是否开启Geo（开启Geo可以开启图表的地理坐标系定位功能） |
 | dataHelper | Object, Function |  | 构造序列数据项辅助函数 |
 | typeHelper | Object, Function |  | 序列构造辅助函数 |  
 
