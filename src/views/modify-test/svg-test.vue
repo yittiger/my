@@ -46,6 +46,6 @@ export default {
 .warp{
   border: 1px solid;
   padding: 10px;
-  background: yellow;
+  // background: yellow;
 }
 </style>

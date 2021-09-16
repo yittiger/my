@@ -1,11 +1,11 @@
 <template>
   <svg :width="`${widthProxy}px`" :height="`${heightProxy}px`" 
   :viewBox="viewBox"
-  style="border: 1px solid green">
+   >
      
-    <path :d="nodePaths" fill="transparent" stroke="blue" :stroke-width="trackSize"/>
+    <path :d="nodePaths" fill="transparent" :stroke="trackColor" :stroke-width="trackSize"/>
 
-    <circle :cx="0" :cy="0" :r="nodeSize" stroke="none" fill="red"> 
+    <circle :cx="0" :cy="0" :r="nodeSize" stroke="none" :fill="pointColor"> 
       <!-- :path="nodePaths"    -->
       <animateMotion
           :path="nodePaths"   
@@ -41,15 +41,15 @@ export default {
     },
     trackColor: {
       type: String,
-      default: 'blue'
+      default: 'skyblue'
     },
     pointColor: {
       type: String,
-      default: 'red'
+      default: 'skyblue'
     },
     trackSize: {
       type: Number,
-      default: 2
+      default: 1
     },
     nodeSize: {
       type: Number,
@@ -152,12 +152,12 @@ export default {
   created() {
   },
   mounted() {
-    console.log(this.angle)
-    console.log(turnPointCalc(90, 200, 50))
-    console.log(this.viewBox)
-    console.log(this.nodeStart)
-    console.log(this.linePoints)
-    console.log(this.nodePaths)
+    // console.log(this.angle)
+    // console.log(turnPointCalc(90, 200, 50))
+    // console.log(this.viewBox)
+    // console.log(this.nodeStart)
+    // console.log(this.linePoints)
+    // console.log(this.nodePaths)
   }
 }
 </script>

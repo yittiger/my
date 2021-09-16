@@ -11,12 +11,16 @@
     <my-dialog :visible.sync="visible" target="body" title="表单" width="60%" draggable resizable :footer="false" @close="close">
       <my-form footer-align="right"
                label-position="top"
-               :on-submit="handleSubmitDialog" >
+               :on-submit="handleSubmitDialog" 
+               :model="dialogModel" 
+              >
         <my-input name="test" label="test"></my-input>
+         
         <my-tree-select name="tree"
                       label="树形数据1" 
                       :options="treeOpts" 
-                      :props="{ multiple: true, collapseTags: false, useOriginOpts: true}"></my-tree-select> 
+                      :props="{ multiple: true, collapseTags: false, useOriginOpts: true}"  ></my-tree-select> 
+                      
       <my-cascader name="cascader" label="树形数据2" :options="treeOpts" :use-origin-opts="true" :props="{ props: {multiple: true}, clearable: true}"></my-cascader>
       </my-form>
     </my-dialog>  
@@ -36,7 +40,12 @@ export default {
     return {
       options: [], // treeOpts,
       treeOpts: [],
-      visible: false 
+      visible: false,
+      
+      dialogModel: {
+        tree: ['440100090100'],
+        cascader: [['440100020000', '440100020200', '440100020202']]
+      }
     }
   },
   computed: {

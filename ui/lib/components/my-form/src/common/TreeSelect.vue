@@ -234,9 +234,19 @@
       }
     },
     watch: {
+      optionsTree: {
+        immediate: true,
+        handler(val) {
+          if (this.value) {
+            this.resetValueByOpts(this.value)
+          }
+        }
+      },
       value: {
         immediate: true,
         handler(val) {
+          this.resetValueByOpts(val)
+          /*
           const {value} = this.keyMap
           if (isEqual(val, this.checked)) return
           // 若使用原装options 需要先将原装树转化为一维数组
@@ -251,6 +261,7 @@
               return val === item[value]
             })
           } 
+          */
         }
       },
       checked(val) {
@@ -261,6 +272,23 @@
       }
     },
     methods: {
+      // 将value 进行回填，需要使用到options的数据，因此如果options的数据变化，也要执行一次。
+      resetValueByOpts(val) {
+        const {value} = this.keyMap
+        if (isEqual(val, this.checked)) return
+        // 若使用原装options 需要先将原装树转化为一维数组
+        const _opts = this.useOriginOpts ? treeRevert(this.options) : this.options 
+        if (this.multiple) {
+          const vals = val ? [].concat(val) : [] 
+          this.checked = _opts.filter(item => {
+            return vals.includes(item[value])
+          })
+        } else {
+          this.checked = _opts.find(item => {
+            return val === item[value]
+          })
+        } 
+      },
       handleCurrentChange(item, node) {
         if (this.multiple || item.disabled || this.readonly || this.disabled) return
         if (this.onlyLeaf && !node.isLeaf) return
