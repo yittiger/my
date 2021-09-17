@@ -191,7 +191,8 @@
     data() {
       return {
         checked: null,
-        query: ''
+        query: '',
+        optionsProxy: []
       }
     },
     computed: {
@@ -202,10 +203,10 @@
       },
       optionsTree() {
         if (this.useOriginOpts) {
-          return cloneDeep(this.options)
+          return cloneDeep(this.optionsProxy)
         } else {
           const {id, parentId} = this.keyMap
-          return createTree(this.options || [], this.root, id, parentId, this.withRoot)
+          return createTree(this.optionsProxy || [], this.root, id, parentId, this.withRoot)
         }
       },
       currentNodeKey() {
@@ -234,6 +235,18 @@
       }
     },
     watch: {
+      options: {
+        immediate: true,
+        handler(val) {
+          if (this.useOriginOpts) {
+            setTimeout(() => {
+              this.optionsProxy = val
+            }, 300)
+          } else {
+            this.optionsProxy = val
+          }
+        }
+      },
       optionsTree: {
         immediate: true,
         handler(val) {
@@ -246,22 +259,6 @@
         immediate: true,
         handler(val) {
           this.resetValueByOpts(val)
-          /*
-          const {value} = this.keyMap
-          if (isEqual(val, this.checked)) return
-          // 若使用原装options 需要先将原装树转化为一维数组
-          const _opts = this.useOriginOpts ? treeRevert(this.options) : this.options 
-          if (this.multiple) {
-            const vals = val ? [].concat(val) : [] 
-            this.checked = _opts.filter(item => {
-              return vals.includes(item[value])
-            })
-          } else {
-            this.checked = _opts.find(item => {
-              return val === item[value]
-            })
-          } 
-          */
         }
       },
       checked(val) {
@@ -277,7 +274,7 @@
         const {value} = this.keyMap
         if (isEqual(val, this.checked)) return
         // 若使用原装options 需要先将原装树转化为一维数组
-        const _opts = this.useOriginOpts ? treeRevert(this.options) : this.options 
+        const _opts = this.useOriginOpts ? treeRevert(this.optionsProxy) : this.optionsProxy 
         if (this.multiple) {
           const vals = val ? [].concat(val) : [] 
           this.checked = _opts.filter(item => {

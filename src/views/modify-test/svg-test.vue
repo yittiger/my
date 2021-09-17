@@ -1,8 +1,20 @@
 <template>
   <div>
-    <div class="warp">
+    <!-- <div class="warp">
       <svg-line :width="300" :height="50" type="left-top" :angle="170.5"></svg-line>
-    </div>
+    </div> -->
+
+     <el-popover
+      popper-class="my-theme-popup"
+      placement="right-start"
+      width="auto"
+      trigger="click">
+      <div>
+        <svg-line :width="70" :height="20" type="left-top" :angle="145" :during="2"></svg-line>
+        <div style="width: 280px; height: 150px; border: 1px solid; border-raidus: 5px"></div>
+      </div>
+      <el-button slot="reference">click 激活</el-button>
+    </el-popover>
   </div>
 </template>
 <script>
@@ -48,4 +60,20 @@ export default {
   padding: 10px;
   // background: yellow;
 }
+
+
+</style>
+
+<style lang="scss" >
+  .el-popover.el-popper.my-theme-popup{
+    background: transparent !important;
+    box-shadow: none !important;
+    border: 0px solid !important;
+    padding: 0px !important;
+    min-width: 0;
+    .popper__arrow{
+      display: none;
+    }
+  }
+ 
 </style>

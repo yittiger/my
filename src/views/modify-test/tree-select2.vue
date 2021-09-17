@@ -8,7 +8,7 @@
       <my-cascader name="cascader" label="树形数据2" :options="options" :use-origin-opts="true" :props="{ props: {multiple: true}, clearable: true}"></my-cascader>
     </my-form>
     <el-button type="primary" @click="open" :loading="!options.length">打开弹窗</el-button>
-    <my-dialog :visible.sync="visible" target="body" title="表单" width="60%" draggable resizable :footer="false" @close="close">
+    <my-dialog :visible.sync="visible" target="body" title="表单" width="60%"  height="450px" draggable resizable :footer="false" @close="close">
       <my-form footer-align="right"
                label-position="top"
                :on-submit="handleSubmitDialog" 
@@ -18,10 +18,24 @@
          
         <my-tree-select name="tree"
                       label="树形数据1" 
-                      :options="treeOpts" 
+                      :options="options" 
+                      root="440100000000"
+                      :props="{ multiple: true, collapseTags: false, useOriginOpts: true}"  ></my-tree-select> 
+         <my-tree-select name="tree2"
+                      label="树形数据2" 
+                      :options="options" 
+                      root="440100000000"
+                      :props="{ multiple: true, collapseTags: false, useOriginOpts: true}"  ></my-tree-select> 
+        <my-tree-select name="tree3"
+                      label="树形数据3" 
+                      :options="options" 
+                      root="440100000000"
                       :props="{ multiple: true, collapseTags: false, useOriginOpts: true}"  ></my-tree-select> 
                       
-      <my-cascader name="cascader" label="树形数据2" :options="treeOpts" :use-origin-opts="true" :props="{ props: {multiple: true}, clearable: true}"></my-cascader>
+      <my-cascader name="cascader" label="树形数据4" :options="options" :use-origin-opts="true" root="440100000000" :props="{ props: {multiple: true}, clearable: true, }"></my-cascader>
+
+      <my-cascader name="cascader2" label="树形数据5" :options="options" :use-origin-opts="true" root="440100000000" :props="{ props: {multiple: true}, clearable: true, }"></my-cascader>
+      <my-cascader name="cascader3" label="树形数据6" :options="options" :use-origin-opts="true" root="440100000000" :props="{ props: {multiple: true}, clearable: true, }"></my-cascader>
       </my-form>
     </my-dialog>  
   </div>
@@ -38,6 +52,7 @@ export default {
   },
   data() {
     return {
+      data: [],
       options: [], // treeOpts,
       treeOpts: [],
       visible: false,
@@ -64,7 +79,7 @@ export default {
       }, 300)
     },
     close() {
-      this.treeOpts = []
+      // this.treeOpts = []
     }
   },
   created() {
@@ -72,6 +87,7 @@ export default {
       url: './data/DEPT.json',
       method: 'get'
     }).then((res) => {
+      this.data = res.data.data
       this.options = createTree(res.data.data, '440100000000')
       console.log(this.options)
     })

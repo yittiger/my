@@ -37,6 +37,27 @@ export default {
       default: false
     }
   },
+  data() {
+    return {
+      currentOptionsProxy: [] // currentOption 数据的代理，用于性能优化
+    }
+  },
+  watch: {
+    currentOptions: {
+      immediate: true,
+      handler(val) {
+        // 如果使用 “正常树形数据” 则异步将数据赋值给代理变量，用于提高性能。
+        if (this.useOriginOpts) {
+          setTimeout(() => {
+            this.currentOptionsProxy = val
+          }, 300)
+        } else {
+          this.currentOptionsProxy = val
+        }
+      }
+      
+    }
+  },
   methods: {
     getDefaultValue() {
       return []
@@ -45,10 +66,10 @@ export default {
   computed: {
     optionsTree() {
       if (this.useOriginOpts) {
-        return this.currentOptions
+        return this.currentOptionsProxy
       } else {
         const {id, parentId} = this.keyMap
-        return createTree(this.currentOptions || [], this.root, id, parentId)
+        return createTree(this.currentOptionsProxy || [], this.root, id, parentId)
       }
     }
   },

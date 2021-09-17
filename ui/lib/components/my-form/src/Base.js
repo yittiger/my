@@ -203,8 +203,8 @@ export default {
     // options 为了提高性能，不设置deep
     options: {
       immediate: true,
-      handler(val) {
-        this.currentOptions = cloneDeep(val) || []
+      handler(val) { 
+        this.currentOptions = cloneDeep(val) || [] 
         // options改变后，会触发表单验证，这里需要清楚验证错误信息
         this.$nextTick(() => {
           this.clearValidate()

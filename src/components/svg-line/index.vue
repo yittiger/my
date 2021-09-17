@@ -9,7 +9,7 @@
       <!-- :path="nodePaths"    -->
       <animateMotion
           :path="nodePaths"   
-                begin="0s" dur="5s" repeatCount="indefinite"
+                begin="0s" :dur="`${during}s`" repeatCount="indefinite"
                 ></animateMotion>
     </circle>
   </svg>
@@ -31,6 +31,10 @@ export default {
       validator(val) {
         return ['left-top', 'right-top', 'left-bottom', 'right-bottom'].includes(val)
       }
+    },
+    during: {
+      type: Number,
+      default: 3
     },
     angle: {
       type: Number,
