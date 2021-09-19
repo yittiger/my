@@ -1,42 +1,29 @@
 <template>
-  <div>
-    <!-- <div class="warp">
-      <svg-line :width="300" :height="50" type="left-top" :angle="170.5"></svg-line>
-    </div> -->
-
-     <el-popover
-      popper-class="my-theme-popup"
-      placement="right-start"
-      width="auto"
-      trigger="click">
-      <div>
-        <svg-line :width="70" :height="20" type="left-top" :angle="145" :during="2"></svg-line>
-        <div style="width: 280px; height: 150px; border: 1px solid; border-raidus: 5px"></div>
-      </div>
+  <div class="warp">
+     
+    <!-- <div style="width: 40%; height: 50px; border: 1px solid red">
+      <my-svg-line type="left-top" :angle="130.5"></my-svg-line>
+    </div>  -->
+    <!-- left-start/left-end/right-start/right-end -->
+    <my-popper placement="right-start" :svg-width="120" :svg-height="30" :svg-props="{'angle': 140}">
+      <div style="width: 140px; height: 60px; border: 1px solid; border-raidus: 5px"></div>
       <el-button slot="reference">click 激活</el-button>
-    </el-popover>
+    </my-popper>
+     
   </div>
 </template>
 <script>
-import SvgLine from '@/components/svg-line'
+// import MPopper from '@/components/m-popper'
 export default {
   components: {
-    SvgLine
+    // MPopper
   },
   props: {
     
   },
   data() {
     return {
-      size: 1,
-      width: 200,
-      height: 50,
-
-
-      dark: '#1890FF',
-      light: 'red',
-      time: 4,
-      show: false
+      
     }
   },
   computed: {
@@ -47,33 +34,34 @@ export default {
   created() {
   },
   mounted() {
-    setTimeout(() => {
-      this.show = true
-    }, 200) 
+     
      
   }
 }
 </script>
 <style lang="scss" scoped>
 .warp{
-  border: 1px solid;
-  padding: 10px;
-  // background: yellow;
+  height: 100%;
+  width: 100%;
+  display: flex; 
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
 }
 
 
 </style>
 
-<style lang="scss" >
-  .el-popover.el-popper.my-theme-popup{
-    background: transparent !important;
-    box-shadow: none !important;
-    border: 0px solid !important;
-    padding: 0px !important;
-    min-width: 0;
-    .popper__arrow{
-      display: none;
-    }
-  }
+// <style lang="scss" >
+//   .el-popover.el-popper.my-theme-popup{
+//     background: transparent !important;
+//     box-shadow: none !important;
+//     border: 1px solid !important;
+//     padding: 0px !important;
+//     min-width: 0;
+//     .popper__arrow{
+//       display: none;
+//     }
+//   }
  
-</style>
+// </style>
