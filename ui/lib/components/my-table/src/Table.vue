@@ -15,26 +15,31 @@
                  :header-cell-class-name="headerCellClassName"
                  :height="tableHeight ? '100%' : null">
           <template v-if="rendered">
-            <TableColumn v-for="(col, index) in displayColumns"
-                         :key="`${col.prop}_${col.type}_${index}`"
-                         v-bind="col"
-            >
-              <template v-if="col.type==='handle' || ( col.prop && $scopedSlots[col.prop])" v-slot="scope">
-                <!-- 自定义字段 插槽-->
-                <slot :name="col.prop || '_handle'" v-bind="scope" :column="col" :startIndex="startIndex"></slot>
-              </template>
+            <template v-for="(col, index) in displayColumns">
+              <!-- col 没有children 属性 -->
+              <TableColumn
+                          v-if="!col.children"
+                          :key="`${col.prop}_${col.type}_${index}`"
+                          v-bind="col"
+              >
+                <template v-if="col.type==='handle' || ( col.prop && $scopedSlots[col.prop])" v-slot="scope">
+                  <!-- 自定义字段 插槽-->
+                  <slot :name="col.prop || '_handle'" v-bind="scope" :column="col" :startIndex="startIndex"></slot>
+                </template>
 
-              <template v-if="col.type==='handle' || (col.prop && $scopedSlots[`${col.prop}.header`])"
-                        v-slot:header="scope">
-                <!-- 自定义字段表头 插槽-->
-                <slot :name="`${col.prop||'_handle'}.header`" v-bind="{column:col, $index:index, ...scope}">
-                  {{col.label}}
-                </slot>
-              </template>
+                <template v-if="col.type==='handle' || (col.prop && $scopedSlots[`${col.prop}.header`])"
+                          v-slot:header="scope">
+                  <!-- 自定义字段表头 插槽-->
+                  <slot :name="`${col.prop||'_handle'}.header`" v-bind="{column:col, $index:index, ...scope}">
+                    {{col.label}}
+                  </slot>
+                </template> 
+              </TableColumn>
 
-            </TableColumn>
-
-            <slot name="other-cols"></slot>
+              <!-- col 有children 属性， 直接返回slot插槽 -->
+              <slot v-else :name="col.prop" :column="col" ></slot>
+ 
+            </template> 
 
             <TableColumn v-if="columnFilter" :resizable="false" width="24px" class-name="my-table--not-drag"
                          fixed="right">

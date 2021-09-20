@@ -24,7 +24,7 @@
     </el-table>
 
     <my-table :columns="columns" :data="list"> 
-      <el-table-column slot="other-cols" label="其他" prop="other" >  
+      <!-- <el-table-column slot="other-cols" label="其他" prop="other" >  
         <el-table-column  v-for="subCol in [
             { label: '其他1', prop: 'other1' },
             { label: '其他2', prop: 'other2' }
@@ -37,7 +37,7 @@
               {{scope.row.other[subCol.prop]}}
             </template>
           </el-table-column>
-      </el-table-column> 
+      </el-table-column>  -->
     </my-table>
 
     <my-dialog :visible.sync="visible1"

@@ -1,15 +1,20 @@
 <template>
   <div class="warp">
-     
-    <!-- <div style="width: 40%; height: 50px; border: 1px solid red">
-      <my-svg-line type="left-top" :angle="130.5"></my-svg-line>
-    </div>  -->
-    <!-- left-start/left-end/right-start/right-end -->
-    <my-popper placement="right-start" :svg-width="120" :svg-height="30" :svg-props="{'angle': 140}">
-      <div style="width: 140px; height: 60px; border: 1px solid; border-raidus: 5px"></div>
-      <el-button slot="reference">click 激活</el-button>
-    </my-popper>
-     
+    <my-table :columns="columns" :data="list"> 
+      <template v-slot:other="scope">
+        <el-table-column :prop="scope.column.prop" :label="scope.column.label"> 
+          <el-table-column  v-for="subCol in scope.column.children"
+            :key="subCol.prop"
+            :prop="subCol.prop"
+            :label="subCol.label"
+            >
+            <!-- <template v-slot="scope">
+              {{scope.$index}}
+            </template> -->
+          </el-table-column>
+        </el-table-column>
+      </template>
+    </my-table> 
   </div>
 </template>
 <script>
@@ -23,7 +28,37 @@ export default {
   },
   data() {
     return {
-      
+      columns: [
+          { type: 'index', label: '#' },
+          { label: '姓名', prop: 'name'},
+          { label: '身份证', prop: 'id'},
+          { label: '年龄', prop: 'age'},
+          
+          { 
+            label: '其他', 
+            prop: 'other', 
+            children: [
+              { label: '其他1', prop: 'other1' },
+              { label: '其他2', prop: 'other2' }
+            ]
+          },
+          { label: '地址', prop: 'address'},
+          { label: '日期', prop: 'date'}
+      ],
+      list: [
+        {
+          name: 'a1',
+          id: 'a2',
+          age: 'a3',
+          address: 'a4',
+          date: 'a5',
+          other1: 'a11', 
+          other2: 'a21'
+          // other: {
+          //   other1: 'a11', other2: 'a21'
+          // } 
+        }
+      ]  
     }
   },
   computed: {
@@ -43,10 +78,7 @@ export default {
 .warp{
   height: 100%;
   width: 100%;
-  display: flex; 
-  flex-flow: column;
-  align-items: center;
-  justify-content: center;
+  
 }
 
 
