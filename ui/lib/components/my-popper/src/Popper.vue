@@ -31,13 +31,31 @@
   </el-popover>
 </template>
 <script>
+/**
+ * Popper
+ * @module $ui/components/my-popper
+ */
 import {MySvgLine} from '$ui'
-// import SvgLine from '@/components/svg-line' 
+/**
+ * 插槽
+ * @member slots
+ * @property {string} default 默认插槽
+ * @property {string} reference 同el-popper 的 reference插槽
+ */ 
 export default {
   name: 'MyPopper',
   components: {
     MySvgLine
   },
+  /**
+   * @member props
+   * @property {string} [type] my-popper的弹出方向：'left-top', 'right-top', 'left-bottom', 'right-bottom'
+   * @property {Number} [svgWidth] svg折线区域的宽度
+   * @property {Number} [svgHeight] svg折线区域的高度
+   * @property {String} [trackColor] svg线颜色 默认skyblue
+   * @property {String} [pointColor] svg点颜色 默认skyblue
+   * @property {String} [svgProps] svg线的其他属性，见my-svg-line
+   */
   props: {
     placement: {
       type: String,
@@ -58,8 +76,6 @@ export default {
       type: Object,
       default: () => {
         return {
-          // width: 70,
-          // height: 20,
           angle: 145,
           during: 2
         }

@@ -1,22 +1,22 @@
 <template>
   <div class="my-svg-line">
-  <svg :width="`${widthProxy}px`" :height="`${heightProxy}px`" 
-  :viewBox="viewBox"
-   >
-     
-    <path :d="nodePaths" fill="transparent" :stroke="trackColor" :stroke-width="trackSize"/>
-
-    <circle :cx="0" :cy="0" :r="nodeSize" stroke="none" :fill="pointColor"> 
-      <!-- :path="nodePaths"    -->
-      <animateMotion
-          :path="nodePaths"   
-                begin="0s" :dur="`${during}s`" repeatCount="indefinite"
-                ></animateMotion>
-    </circle>
-  </svg>
+    <svg :width="`${widthProxy}px`" :height="`${heightProxy}px`" 
+    :viewBox="viewBox" > 
+      <path :d="nodePaths" fill="transparent" :stroke="trackColor" :stroke-width="trackSize"/> 
+      <circle :cx="0" :cy="0" :r="nodeSize" stroke="none" :fill="pointColor">  
+        <animateMotion
+            :path="nodePaths"   
+                  begin="0s" :dur="`${during}s`" repeatCount="indefinite"
+                  ></animateMotion>
+      </circle>
+    </svg>
   </div>
 </template>
 <script>
+/**
+ * SvgLine
+ * @module $ui/components/my-svg-line
+ */
 import {addResizeListener, removeResizeListener} from 'element-ui/lib/utils/resize-event'
 // 参数（夹角）
 const turnPointCalc = function (deg, w, h) {
@@ -28,6 +28,16 @@ const turnPointCalc = function (deg, w, h) {
 export default {
   name: 'MySvgLine',
   components: {},
+  /**
+   * @member props
+   * @property {string} [type] svg线移动方向：'left-top', 'right-top', 'left-bottom', 'right-bottom'
+   * @property {Number} [during] svg光板移动速度， 单位秒
+   * @property {Number} [angle] svg线转角的角度，90 - 180 度
+   * @property {String} [trackColor] svg线颜色 默认skyblue
+   * @property {String} [pointColor] svg点颜色 默认skyblue
+   * @property {String} [trackSize] svg线宽度
+   * @property {String} [pointSize] svg点raidus
+   */
   props: {
     type: {
       type: String,
@@ -133,17 +143,11 @@ export default {
   methods: {
     turnPointCalc, 
     resize() {
-      // console.log(this)
-       
-        this.widthProxy = this.$el.offsetWidth
-        this.heightProxy = this.$el.offsetHeight
-      //   console.log(this.widthProxy, this.heightProxy)
-      
-      
+      this.widthProxy = this.$el.offsetWidth
+      this.heightProxy = this.$el.offsetHeight
     } 
   },
-  mounted() { 
-    // console.log(this.$el.offsetWidth)
+  mounted() {
     this.resize() 
     addResizeListener(this.$el, this.resize)
   },

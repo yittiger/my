@@ -156,7 +156,9 @@ module.exports = {
       'tag-canvas': '标签云',
       revolve: '3D人像',
       wave: '波浪特效',
-      particle: '粒子特效'
+      particle: '粒子特效',
+      'svg-line': 'Svg线动效',
+      popper: '带连线的popper'
     }
   },
   '图表': {

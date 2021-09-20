@@ -174,7 +174,9 @@ module.exports = {
       'tag-canvas',
       'revolve',
       'wave',
-      'particle'
+      'particle',
+      'svg-line',
+      'popper'
     ])
   ],
   '/ui/charts/': [
