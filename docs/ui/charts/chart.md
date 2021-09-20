@@ -2,6 +2,19 @@
 
 `my-chart` 是封装ECharts的Vue组件，所有图表都是基于`my-chart`进行扩展。
 
+## 使用注意
+**``my-chart组件并未引入echart的series组件，因此直接使用“my-chart”组件时，需要先引入echart的控件：``**
+```html
+<template>
+   <my-chart :options="options" width="500px" height="300px"></my-chart>
+</template>
+<script>
+import 'echarts/lib/chart/bar' // 引入bar控件，使my-chart 能够使用“bar”样式
+export default {
+  // ......
+}
+</script>
+``` 
 
 ## 通用参数
 
@@ -511,3 +524,72 @@ export default {
 
 - 当属性为函数时，设置的是函数的返回值
 - 当属性为对象时，如果在options中对应的属性为对象(eg: tooltip)或包含对象的数组(eg: series)， 对应的配置会被合并，否则将直接覆盖对应的配置
+
+:::demo(chart-7)
+```html
+<template> 
+  <div style="height: 450px">
+  <my-chart-line fit :data="lineData" :settings="lineSetting" :extend="lineExtend"></my-chart-line>
+  </div>
+</template>   
+<script>
+export default {
+  data() {
+    return {
+      lineData: {
+        columns: ['月份', '开户', '比重'],
+        rows: [
+          ['1月', 100 + Math.round((Math.random() - 0.5) * 100), Math.round(Math.random() * 20)],
+          ['2月', 100 + Math.round((Math.random() - 0.5) * 100), Math.round(Math.random() * 20)],
+          ['3月', 100 + Math.round((Math.random() - 0.5) * 100), Math.round(Math.random() * 20)],
+          ['4月', 100 + Math.round((Math.random() - 0.5) * 100), Math.round(Math.random() * 20)],
+          ['5月', 100 + Math.round((Math.random() - 0.5) * 100), Math.round(Math.random() * 20)],
+          ['6月', 100 + Math.round((Math.random() - 0.5) * 100), Math.round(Math.random() * 20)],
+          ['7月', 100 + Math.round((Math.random() - 0.5) * 100), Math.round(Math.random() * 20)],
+          ['8月', 100 + Math.round((Math.random() - 0.5) * 100), Math.round(Math.random() * 20)],
+          ['9月', 100 + Math.round((Math.random() - 0.5) * 100), Math.round(Math.random() * 20)],
+          ['10月', 100 + Math.round((Math.random() - 0.5) * 100), Math.round(Math.random() * 20)],
+          ['11月', 100 + Math.round((Math.random() - 0.5) * 100), Math.round(Math.random() * 20)],
+          ['12月', 100 + Math.round((Math.random() - 0.5) * 100), Math.round(Math.random() * 20)]
+        ]
+      },
+      lineSetting: {
+        valueAxis: [ 
+          {
+            type: 'value',
+            name: '开户',
+            min: 0,
+            max: 200,
+            axisLabel: {
+              formatter: '{value}'
+            }
+          },
+          {
+            type: 'value',
+            name: '比重',
+            min: 0,
+            max: 20,
+            axisLabel: {
+              formatter: '{value}%'
+            }
+          }
+        ],
+        bars: ['开户']
+      },
+      lineExtend: {
+        // 单独设置比重（柱状）的tooltip 样式
+        'series[1].tooltip':  
+          { 
+            backgroundColor: 'red',
+            formatter: function(params, ticket, cb) { 
+              return `比重<br/><span style="display: inline-block;width:10px; height:10px;background:${params.color};border-radius: 50%;margin-right: 5px"></span>${params.value[0]}: ${params.value[2]}%`
+            }
+          }
+        
+      }
+    }
+  }
+}
+</script> 
+```
+:::
