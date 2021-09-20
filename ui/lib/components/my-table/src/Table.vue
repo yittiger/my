@@ -34,6 +34,8 @@
 
             </TableColumn>
 
+            <slot name="other-cols"></slot>
+
             <TableColumn v-if="columnFilter" :resizable="false" width="24px" class-name="my-table--not-drag"
                          fixed="right">
               <ColumnFilter slot="header" :columns="columns" v-model="displayColumnProps"></ColumnFilter>

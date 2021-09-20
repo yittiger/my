@@ -76,7 +76,7 @@
       background: $--color-info;
       margin-left: 8px;
       cursor: pointer;
-
+      font-size: 1.3em;
       &:hover {
         opacity: 0.7;
       }
@@ -112,10 +112,11 @@
   }
 
   @include when(primary) {
-    border: 1px solid $--color-primary;
+    // border: 1px solid $--color-primary; // 暂时撤去边框
     border-top: none;
     @include e(header) {
-      background: $--color-primary;
+      // background: $--color-primary;
+      background: linear-gradient(90deg, $--color-primary, $--color-primary-light-8);
       color: $--color-primary-light-10;
     }
     @include e(footer) {
@@ -124,10 +125,11 @@
   }
 
   @include when(dark) {
-    border: 1px solid $--dialog-dark-border-color;
+    // border: 1px solid $--dialog-dark-border-color; // 暂时撤去边框
     border-top: none;
     @include e(header) {
-      background: $--dialog-dark-border-color;
+      // background: $--dialog-dark-border-color;
+      background: linear-gradient(90deg, $--dialog-dark-border-color, $--color-primary-light-4);
       color: $--color-primary-light-10;
     }
     @include e(footer) {

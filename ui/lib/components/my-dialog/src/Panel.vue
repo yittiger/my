@@ -27,7 +27,7 @@
           <MyIcon v-if="maximizable && maximized" @click="handleMaximized(false)" class="icon-window"
                   name="icon-dialog-window"
                   svg></MyIcon>
-          <MyIcon v-if="closable" @click="handleClose" class="icon-close" name="icon-dialog-close" svg></MyIcon>
+          <MyIcon v-if="closable" @click="handleClose" class="icon-close" name="icon-dialog-close" svg ></MyIcon>
         </div>
       </div>
 

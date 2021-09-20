@@ -39,6 +39,19 @@ button.el-button--default.is-plain {
   background: $--background;
 }
 
+.el-table{
+  thead {
+    background: $--background;
+    th {
+      background: rgba(0,0,0,0.09); // $--background-color-base;
+    }
+    &.is-group {
+      th {
+        background: rgba(0,0,0,0.09);
+      }
+    }
+  }
+}
 .el-table__row--striped {
   td {
     background: $--color-table-stripe !important;
