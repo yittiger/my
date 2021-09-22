@@ -344,12 +344,14 @@ export default {
   methods: {
     createDialog() {
      this.dialog = MyDialog.create({
-        title: '标题',
-        width: '300px',
-        height: '200px',
-        draggable: true,
-        target: 'body'
-     }, '这里是内容文本，也可以是vnode')
+        props: {
+          title: '标题',
+          width: '300px',
+          height: '200px',
+          draggable: true,
+          target: 'body'
+        }
+      }, '这里是内容文本，也可以是vnode')
     },
     closeDialog() {
       this.dialog && this.dialog.$destroy()

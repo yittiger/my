@@ -530,3 +530,96 @@ export default {
 
 ```
 :::
+
+### 多级表头
+
+:::demo(table-8)
+
+```html
+<template>
+    <div class="table-origin" style="height: 400px">
+      <my-table :columns="columns" :loader="loader" fit> 
+        <template v-slot:other="scope">
+          <el-table-column :prop="scope.column.prop" :label="scope.column.label"> 
+            <el-table-column  v-for="subCol in scope.column.children"
+              :key="subCol.prop"
+              :prop="subCol.prop"
+              :label="subCol.label"
+              > 
+            </el-table-column>
+          </el-table-column>
+        </template>
+      </my-table>
+    </div>
+</template>
+
+<script>
+import Mock from 'mockjs'
+
+export default {
+  data() {
+    return {
+      columns: [
+          { type: 'index', label: '#' },
+          { label: '姓名', prop: 'name'},
+          { label: '身份证', prop: 'id'},
+          { label: '年龄', prop: 'age'},
+          
+          { 
+            label: '其他', 
+            prop: 'other', 
+            children: [
+              { label: '其他1', prop: 'other1' },
+              { label: '其他2', prop: 'other2' }
+            ]
+          },
+          { label: '地址', prop: 'address'},
+          { label: '日期', prop: 'date'}
+      ],
+      list: [
+        // {
+        //   name: 'a1',
+        //   id: 'a2',
+        //   age: 'a3',
+        //   address: 'a4',
+        //   date: 'a5',
+        //   other1: 'a11', 
+        //   other2: 'a21' 
+        // }
+      ]  
+    }
+  },
+  methods: {
+     
+    mock(limit) {
+      return Mock.mock({
+        [`list|${limit}`]: [
+            {
+              id: '@id',
+              name: '@cname',
+              'age|10-100': 18,
+              address: '@ctitle',
+              date: '@date(yyyy-MM-dd)',
+              other1: '@ctitle',
+              other2: '@ctitle'
+            }
+        ]
+      })
+    },
+    loader() {
+      return new Promise(resolve => {
+        setTimeout(()=>{
+          resolve({
+             total: 10,
+             list: this.mock(10).list
+          })
+        }, 300)
+      })
+    }
+  }
+}
+</script>
+
+```
+:::
+

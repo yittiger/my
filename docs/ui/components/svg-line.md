@@ -8,7 +8,7 @@
 
 ### 基础用法
 
-:::demo(svgline-1)
+:::demo
 ```html
 <template>
 <div class="warp" >
@@ -40,7 +40,7 @@ export default {
 
 ### 其他用法
 
-:::demo(svgline-2)
+:::demo
 ```html
 <template>
 <div class="warp" >
