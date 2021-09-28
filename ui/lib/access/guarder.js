@@ -107,7 +107,7 @@ function handleFail(instance, next, middleware, action, queue) {
  * @param to
  * @return {*[]}
  */
-function getAccess(to) { 
+function getAccess(to) {
   const matched = to.matched
   let access = []
   matched.forEach((match, index) => {

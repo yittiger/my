@@ -1,6 +1,7 @@
 <template>
   <div style="min-height: 100%" v-loading="!options.length">
     <my-form   @submit="handleSubmit"  v-if="options.length">
+      <my-input name="a" disabled label="c"></my-input>
       <my-tree-select name="tree"
                       label="一维数组1" 
                       :options="options" 

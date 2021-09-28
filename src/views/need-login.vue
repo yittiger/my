@@ -31,7 +31,12 @@ export default {
   },
   methods: {
     updateRouter() {
-      this.$access.setRouterList([{path: '/need-login'}, {path: '/need-router'}, {path: '/need-router/test'}])
+      this.$access.setRouterList([
+        {path: '/need-login'}, 
+        {path: '/need-router'}, 
+        {path: '/need-router/test'},
+        {path: '/need-router/person/1234'}
+      ])
     }
   },
   created() {

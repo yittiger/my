@@ -1,14 +1,15 @@
 ---
 access:
-- login
+- router
 ---
 <template>
-  <div style="border: 1px solid; width: 200px; height: 200px">
-    <router-view></router-view>
-  </div>
+  <div>person id</div>
 </template>
+<style lang="scss" scoped>
+</style>
 <script>
 export default {
+  mixins: [],
   components: {},
   props: {
   },
@@ -20,11 +21,9 @@ export default {
   },
   methods: {
   },
-  created() {
-  },
+  created() {},
   mounted() {
+    console.log(this.$route.params)
   }
 }
 </script>
-<style lang="scss" scoped>
-</style>
