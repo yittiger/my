@@ -41,8 +41,8 @@ $--color-info-lighter: $neutral-white-9;
 
 // 中性色(浅色背景)
 $--color-title: $neutral-white-1;
-$--color-primary-text: $neutral-white-2;
-$--color-normal-text: $neutral-white-3;
+$--color-primary-text: $neutral-white-1; // $neutral-white-2;
+$--color-normal-text:  $neutral-white-2; // $neutral-white-3;
 $--color-secondary-text: $neutral-white-4;
 $--color-placeholder: $neutral-white-5;
 $--color-border: $neutral-white-6;
@@ -148,4 +148,10 @@ $--nav-light-collapsed-color-active: $--color-primary;
 $--nav-light-item-border-color-active: $--color-primary;
 $--nav-light-item-horizontal-color-active: $--color-primary;
 
+$--input-border-color: $--color-primary;
+$--input-focus-border: $--color-primary-light-8;
+$--input-hover-border: $--color-primary-light-6; 
 
+$--table-border-color: $blue-2;
+$--table-font-color: $--color-normal-text;
+$--table-header-font-color: $--color-normal-text;

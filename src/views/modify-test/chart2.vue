@@ -2,6 +2,7 @@
 <div>
   <el-table
     :data="tableData"
+    border
     style="width: 100%" :stripe="true">
     <el-table-column
       prop="date"
@@ -19,14 +20,16 @@
     </el-table-column>
   </el-table>
 
-  <my-filter label-width="60px" collapsible @submit="handleSubmit" :footer-block="true" >
-    <my-input label="标题" name="title"></my-input>
+  <my-filter label-width="80px" collapsible @submit="handleSubmit" :is-flex="true"  >
+    <!-- :footer-block="false" :footer-float="true" -->
+    <my-input label="标题" name="title" disabled></my-input>
     <my-input name="keyword" label="关键字" placeholder="请输入关键字"></my-input>
-    <my-select name="category" label="类别" :options="categories"></my-select>
+    <my-input name="keyword2" label="关键字2" placeholder="请输入关键字"></my-input>
+    <my-select name="category" label="类别" :options="categories" collapsible></my-select>
     
     <my-range label="范围" mode="date" name="range" collapsible></my-range>
   </my-filter>
-
+   <el-tag type="info">标签一</el-tag>
 </div>
     
 </template>

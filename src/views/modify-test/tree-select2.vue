@@ -8,6 +8,15 @@
       <my-cascader name="cascader" label="树形数据2" :options="options" :use-origin-opts="true" :props="{ props: {multiple: true}, clearable: true}"></my-cascader>
     </my-form>
     <el-button type="primary" @click="open" :loading="!options.length">打开弹窗</el-button>
+    
+    <el-tag type="info">标签一</el-tag>
+
+    <my-select v-model="testTag" :options="[
+      {labbel: 'op1', value: 'op1'},
+      {labbel: 'op2', value: 'op2'},
+      {labbel: 'op3', value: 'op3'}
+    ]" :props="{'multiple': true}"></my-select>
+
     <my-dialog :visible.sync="visible" target="body" title="表单" width="60%"  height="450px" draggable resizable :footer="false" @close="close">
       <my-form footer-align="right"
                label-position="top"
@@ -52,6 +61,7 @@ export default {
   },
   data() {
     return {
+      testTag: [],
       data: [],
       options: [], // treeOpts,
       treeOpts: [],

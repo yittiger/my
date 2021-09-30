@@ -44,6 +44,10 @@
      *
      */
     props: {
+      isFlex: {
+        type: Boolean,
+        default: true
+      },
       // 一行显示几项
       columns: {
         type: [Number, Object],
@@ -69,7 +73,8 @@
     computed: {
       classes() {
         return {
-          [`is-${this.$attrs.size}`]: !!this.$attrs.size
+          [`is-${this.$attrs.size}`]: !!this.$attrs.size,
+          'is-flex': this.isFlex
         }
       },
       itemWidth() {

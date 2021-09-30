@@ -3,6 +3,16 @@
 @include b(filter) {
   margin-bottom: -22px;
   overflow: hidden;
+  @include when(flex) {
+    display: flex;
+    flex-flow: row wrap;
+    .el-form-item{
+      flex: 0 0 auto;
+      &.my-form__footer{
+        flex: 1;
+      }
+    }
+  }
   @include when(medium) {
     margin-bottom: -20px;
   }

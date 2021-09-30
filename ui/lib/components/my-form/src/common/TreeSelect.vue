@@ -289,12 +289,13 @@
       handleCurrentChange(item, node) {
         if (this.multiple || item.disabled || this.readonly || this.disabled) return
         if (this.onlyLeaf && !node.isLeaf) return
-        this.checked = item
+        setTimeout(() => {
+          this.checked = item
+        }, 100)
         this.$emit('input', item[this.keyMap.value])
         this.$nextTick(() => {
           this.$refs.picker.visible = false
         })
-
       },
       handleCheckChange() {
         // 修复由于tree checkbox 变化导致频繁触发‘change’事件 的bug

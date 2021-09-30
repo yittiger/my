@@ -13,19 +13,19 @@ $black-hover-color: $neutral-white-2 !default;
 $black-background: #001529 !default;
 $black-hover-background: $neutral-black-2 !default;
 
-$dark-color: $--color-primary-light-8 !default;
+$dark-color: $--color-primary-light-10 !default;
 $dark-hover-color: $--color-primary-light-9 !default;
 $dark-background: $--color-primary-light-1 !default;
 $dark-hover-background: $--color-primary-light-2 !default;
 
-$primary-color: $--color-primary-light-9 !default;
-$primary-hover-color: $--color-primary-light-10 !default;
+$primary-color: $--color-primary-light-10 !default;
+$primary-hover-color: $--color-primary-light-9 !default;
 $primary-background: $--color-primary !default;
 $primary-hover-background: mix($--color-primary, $--color-primary-light-6) !default;
 
-$gradual-color: $--color-primary-light-8 !default;
+$gradual-color: $--color-primary-light-10 !default;
 $gradual-hover-color: $--color-primary-light-9 !default;
-$gradual-background: linear-gradient(to right, $--color-primary-light-1, $--color-primary) !default;
+$gradual-background: linear-gradient(to right, $--color-primary-light-3, $--color-primary) !default;
 $gradual-hover-background: $neutral-black-7 !default;
 
 

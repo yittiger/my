@@ -197,5 +197,13 @@ div.v-modal {
 }
 
 .el-input__inner{
-  border-color: #A8C2D3 !important;
+  border-color: $--input-border-color !important; // #A8C2D3 !important;
+  &:hover {
+    border-color: $--input-hover-border !important;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $--input-focus-border !important;
+  }
 }
