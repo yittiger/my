@@ -35,6 +35,7 @@ export default {
    * @member props
    * @property {Boolean} [isHorizontal] 是否横向布局，默认true， false 为纵向布局
    * @property {Object} [columns] 纵向布局时 显示列数，支持响应式对象设置 {xxl,xl,lg,md,sm,xs}
+   * @property {boolean} [listenEl] 监听$el元素宽度实现响应布局（默认为false）
    */
   props: {
     isHorizontal: {

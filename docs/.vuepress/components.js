@@ -149,7 +149,8 @@ module.exports = {
       highlight: '关键字高亮',
       'card-list': '卡片列表',
       'stat-card': '数据统计卡片',
-      description: '描述数据'
+      description: '描述数据',
+      'key-val-list': '键值对列表'
     },
     '动画效果': {
       flip: '数字翻转动画',

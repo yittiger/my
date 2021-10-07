@@ -47,7 +47,8 @@
    * 卡片列表组件
    * @module $ui/components/my-card-list
    */
-  import responsive, {responsiveArray} from '$ui/utils/responsive'
+  // import responsive, {responsiveArray} from '$ui/utils/responsive'
+  import responsiveCol from '$ui/utils/responsive-col'
   import {Pagination} from 'element-ui'
   // 分页组件默认配置
   const defaultPagerProps = {
@@ -66,6 +67,7 @@
    */
   export default {
     name: 'MyCardList',
+    mixins: [responsiveCol],
     components: {
       Pagination
     },
@@ -75,6 +77,7 @@
      * @property {Array} [data] 列表数据数组
      * @property {Function} [loader] 数据加载函数，loader 优先 data，函数必须要返回Promise，需要回调 {list, total}
      * @property {number|object} [columns] 显示列数，支持响应式对象设置 {xxl,xl,lg,md,sm,xs}
+     * @property {boolean} [listenEl] 监听$el元素宽度实现响应布局（默认为false）
      * @property {boolean|object} [pager] 分页配置，如果不设置，不开启分页功能
      * @property {number} [page=1] 初始页码, 从1开始
      * @property {number} [pageSize=12] 每页显示几条
@@ -88,14 +91,7 @@
       data: Array,
       // 数据加载函数，loader 优先 data，函数必须要返回Promise，回调{list, total}
       loader: Function,
-      // 显示列数，支持响应式对象设置 {xxl,xl,lg,md,sm,xs}
-      columns: {
-        type: [Number, Object],
-        default: 3,
-        validator(val) {
-          return typeof val === 'number' ? 24 % val === 0 : true
-        }
-      },
+       
       // 初始页码, 从1开始
       page: {
         type: Number,
@@ -132,10 +128,7 @@
     },
     data() {
       return {
-        list: [],
-        // 响应式场景
-        screens: {},
-        currentColumn: 3,
+        list: [], 
         currentPage: this.page,
         currentTotal: this.total,
         currentPageSize: this.pageSize,
@@ -180,17 +173,7 @@
         handler(val) {
           this.currentLoading = val
         }
-      },
-      columns: {
-        immediate: true,
-        handler() {
-          this.setupResponsive()
-          this.currentColumn = this.getResponsiveValue()
-        }
-      },
-      screens() {
-        this.currentColumn = this.getResponsiveValue()
-      },
+      }, 
       pagerProps: {
         immediate: true,
         handler(props) {
@@ -202,34 +185,6 @@
       }
     },
     methods: {
-      // 开启响应式
-      setupResponsive() {
-        this.token && responsive.off(this.token)
-
-        // 参数是对象类型，即开启响应式
-        if (typeof this.columns !== 'object') return
-
-        this.token = responsive.on(screens => {
-          this.screens = screens
-        })
-      },
-      // 获取当前响应式的列数
-      getResponsiveValue() {
-        const columns = this.columns
-        const defaultValue = 3
-        if (!columns) return defaultValue
-        // 参数是对象类型，即开启响应式
-        if (typeof columns === 'object') {
-          for (let i = 0; i < responsiveArray.length; i++) {
-            const breakpoint = responsiveArray[i]
-            if (this.screens[breakpoint]) {
-              return columns[breakpoint] || defaultValue
-            }
-          }
-        }
-        // 数字类型
-        return columns
-      },
       handlePageChange(page) {
         this.currentPage = page
         /**

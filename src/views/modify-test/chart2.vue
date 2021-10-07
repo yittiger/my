@@ -19,17 +19,19 @@
       label="地址">
     </el-table-column>
   </el-table>
-
-  <my-filter label-width="80px" collapsible @submit="handleSubmit" :is-flex="true"  >
-    <!-- :footer-block="false" :footer-float="true" -->
-    <my-input label="标题" name="title" disabled></my-input>
-    <my-input name="keyword" label="关键字" placeholder="请输入关键字"></my-input>
-    <my-input name="keyword2" label="关键字2" placeholder="请输入关键字"></my-input>
-    <my-select name="category" label="类别" :options="categories" collapsible></my-select>
+  <div  ref="warp">
     
-    <my-range label="范围" mode="date" name="range" collapsible></my-range>
-  </my-filter>
-   <el-tag type="info">标签一</el-tag>
+    <my-filter label-width="80px" collapsible @submit="handleSubmit" :is-flex="true" :listen-el="true" >
+      <!-- :footer-block="false" :footer-float="true" -->
+      <my-input label="标题" name="title" disabled></my-input>
+      <my-input name="keyword" label="关键字" placeholder="请输入关键字"></my-input>
+      <my-input name="keyword2" label="关键字2" placeholder="请输入关键字"></my-input>
+      <my-select name="category" label="类别" :options="categories" collapsible></my-select>
+      
+      <my-range label="范围" mode="date" name="range" collapsible></my-range>
+    </my-filter>
+   </div> 
+   <el-button @click="test">test</el-button>
 </div>
     
 </template>
@@ -65,6 +67,9 @@
       }
     },
     methods: {
+      test() {
+        this.$refs.warp.style.width = '50%'
+      },
       handleSubmit(model) {
         alert(`submit: ${JSON.stringify(model)}`)
       }

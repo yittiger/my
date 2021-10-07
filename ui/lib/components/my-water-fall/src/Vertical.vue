@@ -19,11 +19,12 @@
 </div>
 </template>
 
-<script>
+<script> 
 import {debounce} from '$ui/utils/util'
-import responsive, {responsiveArray} from '$ui/utils/responsive'
+import responsiveCol from '$ui/utils/responsive-col'
+import { addResizeListener, removeResizeListener } from 'element-ui/src/utils/resize-event';
 export default {
-  mixins: [],
+  mixins: [responsiveCol],
   components: {},
   props: {
     data: {
@@ -35,19 +36,11 @@ export default {
     margin: {
       type: Number,
       default: 5
-    },
-    // 显示列数，支持响应式对象设置 {xxl,xl,lg,md,sm,xs}
-    columns: {
-      type: [Number, Object],
-      default: 3,
-      validator(val) {
-        return typeof val === 'number' ? 24 % val === 0 : true
-      }
-    }
+    } 
   },
   data() {
     return {
-      currentColumn: 3,
+      // currentColumn: 3,
       screens: {},
       colArr: [],
       dataList: []
@@ -64,17 +57,16 @@ export default {
     }
   },
   watch: {
-    columns: {
+    currentColumn: {
       immediate: true,
-      handler() {
-        this.setupResponsive()
-        this.currentColumn = this.getResponsiveValue()
+      handler(val) {
         
+        setTimeout(() => {
+          this.setItemsPos()
+        }, 400)
       }
     },
-    screens() {
-      this.currentColumn = this.getResponsiveValue()
-    },
+    
     data() {
       this.$nextTick(() => {
         this.setItemsPos()
@@ -87,35 +79,7 @@ export default {
     } 
   },
 
-  methods: {
-    setupResponsive() {
-      this.token && responsive.off(this.token)
-
-      // 参数是对象类型，即开启响应式
-      if (typeof this.columns !== 'object') return
-
-      this.token = responsive.on(screens => {
-        this.screens = screens
-      })
-    },
-    // 获取当前响应式的列数
-    getResponsiveValue() {
-      const columns = this.columns
-      const defaultValue = 3
-      if (!columns) return defaultValue
-      // 参数是对象类型，即开启响应式
-      if (typeof columns === 'object') {
-        for (let i = 0; i < responsiveArray.length; i++) {
-          const breakpoint = responsiveArray[i]
-          if (this.screens[breakpoint]) {
-            return columns[breakpoint] || defaultValue
-          }
-        }
-      }
-      // 数字类型
-      return columns
-    },
-
+  methods: { 
     getColData() {
       this.colArr = this.$refs.colWarp.map((dom) => {
         return {
@@ -157,6 +121,10 @@ export default {
       this.getColData()
       this.sortItems()
     },
+    setItemsPosForEl() {
+      if (!this.listenEl) return
+      this.setItemsPos()
+    },
       
     _findMinHeight(cols) {
       let minH = cols[0].height
@@ -184,14 +152,16 @@ export default {
   created() { 
     // console.log('currentCol', this.currentColumn) 
   },
-  mounted() { 
-    this.setItemsPos()
-    this.setItemPosProxy = debounce(this.setItemsPos, 300)
-   
+  mounted() {  
+    this.setItemPosProxy = debounce(this.setItemsPos, 300) 
     window.addEventListener('resize', this.setItemPosProxy)
+
+    this.setItemPosForElProxy = debounce(this.setItemsPosForEl, 300) 
+    addResizeListener(this.elDom, this.setItemPosForElProxy)
   },
   beforeDestroy() {
-    window.removeEventListener('resize', this.setItemPosProxy)
+    window.removeEventListener('resize', this.setItemPosProxy) 
+    removeResizeListener(this.elDom, this.setItemPosForElProxy)
   }
 }
 </script>

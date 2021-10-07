@@ -15,8 +15,8 @@
    */
 
   import {MyForm} from '$ui'
-  import responsive, {responsiveArray} from '$ui/utils/responsive'
-
+  // import responsive, {responsiveArray} from '$ui/utils/responsive'
+  import responsiveCol from '$ui/utils/responsive-col'
   // 默认参数
   const defaultValues = {
     inline: true,
@@ -34,6 +34,8 @@
    */
   export default {
     name: 'MyFilter',
+    // 响应式列处理
+    mixins: [responsiveCol], 
     components: {
       MyForm
     },
@@ -41,7 +43,7 @@
      * 属性参数，支持MyFrom全部参数，并增加以下参数
      * @member props
      * @property {number|object} [columns] 一行显示几项, 可设置响应式
-     *
+     * @property {boolean} [listenEl] 监听$el元素宽度实现响应布局（默认为false）
      */
     props: {
       isFlex: {
@@ -55,19 +57,16 @@
           return {
             xs: 1,
             sm: 2,
-            md: 2,
-            lg: 3,
-            xl: 3,
-            xxl: 4
+            md: 3,
+            lg: 4,
+            xl: 4,
+            xxl: 5
           }
         }
       }
     },
     data() {
-      return {
-        // 响应式场景
-        screens: {},
-        currentColumn: 1
+      return { 
       }
     },
     computed: {
@@ -87,52 +86,11 @@
         }
       }
     },
-    watch: {
-      columns: {
-        immediate: true,
-        handler() {
-          this.setupResponsive()
-          this.currentColumn = this.getResponsiveValue()
-        }
-      },
-      screens() {
-        this.currentColumn = this.getResponsiveValue()
-      }
+    watch: { 
     },
-    methods: {
-      // 开启响应式
-      setupResponsive() {
-        this.token && responsive.off(this.token)
-
-        // 参数是对象类型，即开启响应式
-        if (typeof this.columns !== 'object') return
-
-        this.token = responsive.on(screens => {
-          this.screens = screens
-        })
-      },
-      // 获取当前响应式的列数
-      getResponsiveValue() {
-        const columns = this.columns
-        const defaultValue = 1
-        if (!columns) return defaultValue
-        // 参数是对象类型，即开启响应式
-        if (typeof columns === 'object') {
-          for (let i = 0; i < responsiveArray.length; i++) {
-            const breakpoint = responsiveArray[i]
-            if (this.screens[breakpoint]) {
-              return columns[breakpoint] || defaultValue
-            }
-          }
-        }
-
-        // 数字类型
-        return columns
-
-      }
+    methods: { 
     },
-    beforeDestroy() {
-      this.token && responsive.off(this.token)
+    beforeDestroy() { 
     }
   }
 </script>

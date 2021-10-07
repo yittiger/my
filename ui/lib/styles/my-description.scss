@@ -21,6 +21,7 @@
 
   @include e(content) {
     display: block;
+    word-wrap:break-word;
     color: $--color-primary-text;
     text-align: left;
     > .my-description {

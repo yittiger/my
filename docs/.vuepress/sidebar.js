@@ -97,7 +97,8 @@ module.exports = {
       'capture',
       'print',
       'sortable',
-      'tree-connect'
+      'tree-connect',
+      'responsive-col'
     ]),
     createMenus('基础元件', [
       'header',
@@ -167,7 +168,8 @@ module.exports = {
       'highlight',
       'card-list',
       'stat-card',
-      'description'
+      'description',
+      'key-val-list'
     ]),
     createMenus('动画效果', [
       'flip',

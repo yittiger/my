@@ -4,7 +4,7 @@
       class="my-description__title"
       :style="titleStyle"
       :class="titleClass">
-      <slot name="title">{{title}}</slot>
+      <slot name="title">{{title}}:</slot>
     </div>
     <div class="my-description__content"
          :class="contentClass"
