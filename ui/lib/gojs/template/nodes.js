@@ -240,7 +240,7 @@ export function nodeTemplate(options = {}, t) {
  */
 export function node(options = {}, theme = {}) {
   const t = merge({}, normal, theme)
-  const {shape, label} = options
+  const {shape, label, button} = options
   return nodeTemplate({
     ...options,
     children: [
@@ -271,7 +271,14 @@ export function node(options = {}, theme = {}) {
             ...label
           }
         })
-        : null
+        : null,
+      button ? creator({
+        name: 'TreeExpanderButton',
+        props: {
+          name: 'button',
+          ...button
+        }
+      }) : null
     ].filter(n => !!n)
   }, t)
 }

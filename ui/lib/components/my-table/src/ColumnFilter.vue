@@ -5,13 +5,19 @@
       popper-class="my-table-column-filter__popper"
       trigger="click">
       <i slot="reference" class="my-table-column-filter__trigger el-icon-more"></i>
-      <el-checkbox-group v-if="checkboxList.length" v-model="currentValue">
-        <el-checkbox v-for="(col,index) in checkboxList"
-                     :key="col.prop||index"
-                     :disabled="col.display==='always'"
-                     :label="col.prop">{{col.label}}
-        </el-checkbox>
-      </el-checkbox-group>
+      <div v-if="checkboxList.length" >
+        <el-checkbox-group v-model="currentValue">
+          <el-checkbox v-for="(col,index) in checkboxList"
+                      :key="col.prop||index"
+                      :disabled="col.display==='always'"
+                      :label="col.prop">{{col.label}}
+          </el-checkbox>
+        </el-checkbox-group>
+        <div style="margin-top:5px; text-align:center" v-if="filterConfirm">
+          <el-button type="primary" size="mini" @click="filterConfirmClick">确定</el-button>
+        </div>
+      </div>
+      
       <div v-else>没有可显示的列</div>
     </el-popover>
   </div>
@@ -31,6 +37,10 @@
         default() {
           return []
         }
+      },
+      filterConfirm: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
@@ -52,6 +62,11 @@
       },
       currentValue(val) {
         this.$emit('input', val)
+      }
+    },
+    methods: {
+      filterConfirmClick() {
+        this.$emit('column-change-confirm')
       }
     }
   }

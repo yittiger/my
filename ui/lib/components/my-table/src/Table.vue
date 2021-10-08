@@ -43,7 +43,7 @@
 
             <TableColumn v-if="columnFilter" :resizable="false" width="24px" class-name="my-table--not-drag"
                          fixed="right">
-              <ColumnFilter slot="header" :columns="columns" v-model="displayColumnProps"></ColumnFilter>
+              <ColumnFilter slot="header" :columns="columns" v-model="displayColumnProps" v-bind="$attrs" @column-change-confirm="colChangeConfirm"></ColumnFilter>
             </TableColumn>
           </template>
           <template v-slot:append>
@@ -145,6 +145,7 @@
      * @property {Object | Boolean} [columnSortable = false] 是否启用列拖拽排序, 可以配置Sortable个性化参数
      * @property {Object | Boolean} [rowSortable = false] 是否启用行拖拽排序, 可以配置Sortable个性化参数
      * @property {Boolean} [freeze=true] 冻结列表数据数组，如果需要对列表数据进行双向绑定，需要设置为false
+     * @property {Boolean} [filterConfirm=false] 列表筛选组件是否使用确认按钮（默认为false）
      */
 
     props: {
@@ -390,8 +391,18 @@
           }
         })
 
-      }
+      },
 
+      colChangeConfirm() {
+        /**
+         * 列表筛选点击确定时触发
+         * @event column-change-confirm
+         * @param {Array[]} columnPropNames
+         */
+        this.$emit('column-change-confirm', this.displayColumnProps)
+      }
+             
+      
     },
     mounted() {
       this.updateView()
