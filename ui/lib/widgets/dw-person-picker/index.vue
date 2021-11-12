@@ -7,19 +7,21 @@
       <el-col :span="12" class="input-col">
         <input-area
           ref="input"
-          @cancel="handleClosed"
-          @cancelSelect="handCancelSelect"
           :multiple="multiple"
+          :selectData="selectData"
           @submit="handleSubmit"
+          @cancel="handleClosed"
+          @cancelSelect="handleListSelect"
         ></input-area>
       </el-col>
       <el-col :span="12">
         <org-list
           ref="orgList"
           v-if="visible"
-          @select="handleListSelect"
+          v-bind="$attrs"
+          :selectData="selectData"
           :multiple="multiple"
-          :default-id="userDwId"
+          @select="handleListSelect"
         ></org-list>
       </el-col>
     </el-row>
@@ -27,8 +29,8 @@
 </template>
 
 <script>
-import InputArea from './input-area'
-import OrgList from './org-list'
+import InputArea from './input-area';
+import OrgList from './org-list';
 
 export default {
   components: {
@@ -47,37 +49,50 @@ export default {
     value: {
       type: Array,
       default() {
-        return []
+        return [];
       }
     }
   },
   data() {
     return {
-      userDwId: 'this.$access.get().userInfo.dwdm'
-    }
+      // 选中的数据
+      selectData: this.value
+    };
   },
   methods: {
     handleListSelect(item, isAdd) {
-      if (isAdd) {
-        this.$refs.input.handleSelect(item)
+      if (this.multiple) {
+        if (isAdd) {
+          this.selectData.push(item);
+        } else {
+          const idIndex = this.selectData.findIndex(e => item.id === e.id);
+          this.selectData.splice(idIndex, 1);
+        }
       } else {
-        this.$refs.input.removeItem(item)
+        this.selectData = [];
+        if (isAdd) {
+          this.selectData.push(item);
+        }
       }
+    //   console.log(this.selectData);
     },
-    handCancelSelect(item) {
-      this.$refs.orgList.removeSelect(item)
+    // 确定按钮
+    handleSubmit() {
     },
-    // 当前人员和部门
-    handleSubmit(items) {
-      console.log(items)
-      console.log(this.$refs.orgList.paths)
-      // this.$emit('submit', items)
-    },
+     // 取消按钮
     handleClosed() {
-      // this.$emit('close')
+    },
+    // 获取当前人员
+    getSelectPeoloe () {
+        return this.selectData
+    },
+     // 获取当前路径部门
+    getPaths() {
+        return this.$refs.orgList.paths
     }
+   
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

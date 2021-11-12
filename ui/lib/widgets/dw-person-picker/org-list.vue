@@ -74,83 +74,110 @@
 </template>
 
 <script>
-  import {findPath, create} from '$ui/utils/tree'
+import { findPath, create } from '$ui/utils/tree';
 
-  export default {
-    props: {
-      multiple: Boolean
-    },
-    data() {
-      return {
-        rootId: '2',
-        parentId: null,
-        parentName: '',
-        list: [
-          {id: '3', name: '部门3', parentId: '2'},
-          {id: '4', name: '部门4', parentId: '3'},
-          {id: '1', name: '部门1', parentId: '2'},
-          {id: '2', name: '部门2', parentId: '0'},
-          {id: '5', name: '部门5', parentId: '4'}
-        ],
-        tree: [],
-        paths: [],
-        users: [],
-        userLoading: false,
-        loadingMap: {}
+export default {
+  props: {
+    multiple: Boolean,
+    companyList: {
+      type: Array,
+      default: function() {
+        return [];
       }
     },
-    computed: {
-      currentOrgList() {
-        return this.list.filter(item => item.parentId === this.parentId)
+    selectData: {
+      type: Array,
+      default: function() {
+        return [];
       }
-    },
-    methods: {
-      loadOrg() {
-        this.tree = create(this.list, '0', 'id', 'parentId')
-        const target = this.list.find(r => r.parentId === '0') 
-        this.handleDown(target) 
-      },
-      loadUser(orgId) {
-        this.users = [] 
-        this.userLoading = true 
-        this.$nextTick(() => {
-          this.userLoading = false
-          this.users = [
-            {id: '12', name: '人员1', src: '', isSelect: false},
-            {id: '13', name: '人员2', src: '', isSelect: false},
-            {id: '14', name: '人员3', src: '', isSelect: false},
-            {id: '15', name: '人员4', src: '', isSelect: false}
-          ]
-        })
-      },
-      handleDown(item) {
-        this.parentId = item.id
-        this.parentName = item.name
-        this.paths = findPath(this.tree, n => n.id === item.id)
-        this.loadUser(item.id)
-      },
-      select(item, evt) {
-        if (this.multiple) {
-          if (typeof evt.target.checked !== 'undefined') {
-            this.$emit('select', item, evt.target.checked)
-          }
-        } else {
-          this.$emit('select', item, true)
-        }
-      },
-      removeSelect(name) {
-        this.users.map(item => {
-          if(item.name === name) {
-            item.isSelect = false
-          }
-          return item
-        })
-      }
-    },
-    created() {
-      this.loadOrg()
     }
+  },
+  data() {
+    return {
+      rootId: '2',
+      parentId: null,
+      parentName: '',
+      tree: [],
+      paths: [],
+      users: [],
+      userLoading: false,
+      loadingMap: {}
+    };
+  },
+  computed: {
+    currentOrgList() {
+      return this.companyList.filter(item => item.parentId === this.parentId);
+    }
+  },
+  watch: {
+    selectData: {
+      handler(newName, oldName) {
+        this.users.map(x => {
+          let num = 0;
+          for (let i = 0; i < newName.length; i++) {
+            if (x.id === newName[i].id) {
+              num++;
+            }
+          }
+          if(num) {
+              x.isSelect = true;
+          }else{
+              x.isSelect = false;
+          }
+          return x;
+        });
+      },
+      immediate: true,
+      deep: true
+    }
+  },
+  methods: {
+    loadOrg() {
+      this.tree = create(this.companyList, '0', 'id', 'parentId');
+      const target = this.companyList.find(r => r.parentId === '0');
+      this.handleDown(target);
+    },
+    loadUser(orgId) {
+      this.users = [];
+      this.userLoading = true;
+      this.$nextTick(() => {
+        this.userLoading = false;
+        this.users = [
+          { id: '12', name: '人员1', src: '', isSelect: false },
+          { id: '13', name: '人员2', src: '', isSelect: false },
+          { id: '14', name: '人员3', src: '', isSelect: false },
+          { id: '15', name: '人员4', src: '', isSelect: false }
+        ];
+        this.users.map(x => {
+          this.selectData.forEach(y => {
+            if (x.id === y.id) {
+              x.isSelect = true;
+            }
+          });
+          return x;
+        });
+      });
+    },
+    handleDown(item) {
+      this.parentId = item.id;
+      this.parentName = item.name;
+      this.paths = findPath(this.tree, n => n.id === item.id);
+      this.loadUser(item.id);
+    },
+    select(item, evt) {
+      if (this.multiple) {
+        if (typeof evt.target.checked !== 'undefined') {
+          this.$emit('select', item, evt.target.checked);
+        }
+      } else {
+        this.$emit('select', item, true);
+      }
+    }
+  },
+  created() {
+    this.loadOrg();
   }
+};
 </script>
 
 <style lang="scss" scoped>

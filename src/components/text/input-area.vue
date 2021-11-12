@@ -33,15 +33,15 @@
 </template>
 
 <script>
-import AutoComplete from './auto-complete'
+import AutoComplete from './auto-complete';
 
 export default {
   props: {
     multiple: Boolean,
-    selected: {
+    selectData: {
       type: Array,
-      default() {
-        return []
+      default: function() {
+        return [];
       }
     }
   },
@@ -51,95 +51,68 @@ export default {
   data() {
     return {
       timer: null,
-      currentItems: this.selected,
+      currentItems: [],
       keyword: '',
       popoverActive: false
-      // ,
-      // value: []
-    }
+    };
   },
   computed: {
     value: {
       get() {
-        console.log(this.currentItems)
-        return this.currentItems.map(item => item.name)
+        return this.currentItems.map(item => item.name);
       },
-      set(val) {
-        // this.currentItems = this.currentItems.filter(item =>
-        //   val.includes(item.name)
-        // )
-      }
+      set(val) {}
     }
   },
   watch: {
-    // value(newItem, oldItem) {
-    //    console.log(newItem)
-    //    console.log(oldItem)
-    // }
-    // selected(val) {
-    //   console.log(val)
-    //   this.currentItems = val
-    // }
+    selectData: {
+      handler(newName, oldName) {
+        this.currentItems = newName;
+      },
+      immediate: true,
+      deep: true
+    }
   },
   methods: {
-    validate(item) {
-      const node = this.currentItems.find(n => n.id === item.id)
-      if (node) {
-        this.$message({
-          type: 'warning',
-          message: '不能添加相同项'
-        })
-      }
-      return !node
-    },
     focusInput() {
-      this.$refs.inputTag.$refs.comp.$refs.input.focus()
+      this.$refs.inputTag.$refs.comp.$refs.input.focus();
     },
     handleInputChange(val) {
-      console.log(1)
       if (this.timer) {
-        clearTimeout(this.timer)
+        clearTimeout(this.timer);
       }
       this.timer = setTimeout(() => {
-        this.keyword = val
-        this.popoverActive = !!val
-      }, 500)
+        this.keyword = val;
+        this.popoverActive = !!val;
+      }, 500);
     },
     handleSelect(item) {
-      if (this.validate(item)) {
-        if (this.multiple) {
-          this.currentItems.push(item)
-        } else {
-          this.currentItems = [item]
-        }
-        this.$refs.inputTag.$refs.comp.query = ''
+      const id = this.currentItems.findIndex(e => {
+        return item.id === e.id;
+      });
+      if (id === -1) {
+        this.currentItems.push(item);
       }
+      this.popoverActive = false;
     },
-    // removeItem(item) {
-    //   this.currentItems = this.currentItems.filter(n => item.id !== n.id)
-    // },
     remove(index, tag) {
-      if (this.multiple) {
-        this.currentItems = this.currentItems.filter(n => tag !== n.name)
-        this.$emit('cancelSelect', tag)
-      } else {
-        this.currentItems = []
-      }
+      const currentItems = this.currentItems.find(n => tag === n.name);
+      this.$emit('cancelSelect', currentItems, false);
     },
     submit() {
-      this.$emit('submit', this.currentItems)
+      this.$emit('submit');
     },
     cancel() {
-      this.$emit('cancel')
+      this.$emit('cancel');
     }
   },
   mounted() {},
   beforeDestroy() {
     if (this.timer) {
-      clearTimeout(this.timer)
+      clearTimeout(this.timer);
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

@@ -11,13 +11,11 @@
         <i class="el-icon-user"></i>
         {{ item.name }}
       </div>
-      <div class="dep">{{ item.address }}</div>
     </div>
   </div>
 </template>
 
 <script>
-
 // import {getPersonByKeyword} from '$my/code/api/user'
 export default {
   props: {
@@ -29,12 +27,12 @@ export default {
   data() {
     return {
       items: []
-    }
+    };
   },
   watch: {
     keyword(val) {
       if (val) {
-        this.load(val)
+        this.load(val);
       }
     }
   },
@@ -45,13 +43,16 @@ export default {
       //     return { id: item.id, name: item.name, address: item.orgName, row: item}
       //   })
       // })
-     console.log(keyword, '请求接口......')
+      this.items = [
+        { id: '14', name: 'item.name123', src: '' }
+      ];
+      console.log(keyword, '请求接口......');
     },
     select(item) {
-      this.$emit('select', item)
+      this.$emit('select', item);
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
