@@ -303,7 +303,8 @@ module.exports = {
     'dv'
   ],
   '/ui/widgets/': [
-    'dict'
+    'dict',
+    'dw-person-picker'
   ],
   '/guide/': [
     createMenus('开发指南', [
