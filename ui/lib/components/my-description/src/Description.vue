@@ -37,6 +37,7 @@
      * @property {string} [align=left] 标题区对齐方式, 可选 'left', 'right', 'center'
      * @property {boolean} [top=false] 标题在顶部
      * @property {boolean} [inline=false] 单行显示
+     * @property {boolean} [border=false] 下划线
      */
     props: {
       // 标题文本
@@ -59,7 +60,12 @@
       // 标题在顶部
       top: Boolean,
       // 单行显示
-      inline: Boolean
+      inline: Boolean,
+      // 下划线
+      border: {
+        type: Boolean,
+        default: false
+      }
     },
     computed: {
       hasTitle() {
@@ -71,12 +77,20 @@
         }
       },
       contentStyle() {
+        let borderStyle = {}
+        if (this.border) {
+          borderStyle = {
+            backgroundSize: `calc(100% - ${(this.width || 0) + this.gutter}px) 100%`, // `calc(100% - ${(this.width || 0) + this.gutter}px) 100%;`,
+            backgroundPosition: `${(this.width || 0) + this.gutter}px 0`
+          }
+        }
         return {
           display: (this.top || this.width) ? 'block' : 'inline',
           paddingLeft: (this.hasTitle && !this.top)
             ? `${(this.width || 0) + this.gutter}px`
             : null,
-          paddingTop: (this.top && this.hasTitle) ? `${this.gutter}px` : null
+          paddingTop: (this.top && this.hasTitle) ? `${this.gutter}px` : null,
+          ...borderStyle
         }
       },
       titleClass() {
@@ -86,7 +100,8 @@
       },
       contentClass() {
         return {
-          [`is-${this.align}`]: (this.top && !!this.align)
+          [`is-${this.align}`]: (this.top && !!this.align),
+          'is-border': this.border
         }
       }
     }

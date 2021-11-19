@@ -1,35 +1,59 @@
 <template>
-  <div class="table-origin">
-    <div style="width:700px; margin: 10px auto"> 
-      <my-detail title="用户信息" >
-          <my-detail-item label="名称">http://localhost:8801/#/modify-test/key-val-list/modify-test/key-val-list</my-detail-item>
-          <my-detail-item label="地址">广东省广州市越秀区东风东路</my-detail-item>
-          <my-detail-item label="电话">020-88888888</my-detail-item>
-          <my-detail-item label="籍贯">广东 广州</my-detail-item>
-          <my-detail-item label="备注">无</my-detail-item>
-          
-      </my-detail>
-    </div>
-
-    <div style="width:700px; margin: 10px auto"> 
-      <my-detail title="用户信息"  border size="small">
-          <my-detail-item label="名称">http://localhost:8801/#/modify-test/key-val-list/modify-test/key-val-list</my-detail-item>
-          <my-detail-item label="地址">广东省广州市越秀区东风东路</my-detail-item>
-          <my-detail-item label="电话">020-88888888</my-detail-item>
-          <my-detail-item label="籍贯">广东 广州</my-detail-item>
-          <my-detail-item label="备注">无</my-detail-item>
-          
-      </my-detail>
-    </div>
-   </div>
+  <div style="width: 80%; margin: 10px auto">
+    <my-key-val-list :columns="{
+        xxl: 5,
+        xl: 4, 
+        lg: 4,
+        md: 3,
+        sm: 2,
+        xs: 2
+      }" 
+      :column="column" 
+      :data="data" 
+    > 
+      <template v-slot:titleA>
+        <my-header title="标题文字A" icon="el-icon-menu" theme="border-bottom" :background="false" size="small"></my-header>
+      </template> 
+      <template v-slot:titleB>
+        <my-header title="标题文字B" icon="el-icon-menu" theme="border-bottom" :background="false" size="small"></my-header>
+      </template>
+      <template v-slot:name="scope">
+        <my-description border :title="scope.label" :width="100" align="right">
+        <a>{{scope.value}}</a> 
+        </my-description>  
+      </template>
+        
+    </my-key-val-list>
+  </div>
 </template>
+<style scoped lang="scss">
 
+</style>
 <script>
-import {MyDetail, MyDetailItem} from '$ui'
-export default {
-  components: {
-    MyDetail,
-    MyDetailItem
+   
+  export default {
+     
+    data() {
+      return {
+        column: [
+          { label: '', prop: '', devide: 'titleA' },
+          { label: '姓名', prop: 'name'},
+          { label: '电话', prop: 'phone', devide: 'titleB'},
+          { label: '详细地址', prop: 'address', span: 24},  
+          { label: '年龄', prop: 'age'},
+          { label: '日期', prop: 'date'},
+          { label: '性别', prop: 'gender'}
+        ],
+        data: {
+          name: '王菲',
+          id: '23456',
+          age: '21',
+          address: '广东省广州市荔湾区黄沙大道西郊游泳场三号楼12345号',
+          date: '19871009',
+          phone: '1234',
+          gender: '男'
+        }
+      }
+    }
   }
-}
 </script>

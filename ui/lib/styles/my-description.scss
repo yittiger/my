@@ -24,6 +24,12 @@
     word-wrap:break-word;
     color: $--color-primary-text;
     text-align: left;
+
+    @include when(border) {
+      background: no-repeat;
+      background-image:repeating-linear-gradient(180deg, transparent 0, transparent calc(1.5em - 2px), $--color-border calc(1.5em - 1px));
+    }
+
     > .my-description {
       clear: initial;
       margin-bottom: 8px;
@@ -65,4 +71,6 @@
     display: inline-block;
     margin-right: 30px;
   }
+
+  
 }

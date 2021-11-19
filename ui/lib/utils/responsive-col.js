@@ -8,7 +8,14 @@
 import { addResizeListener, removeResizeListener } from 'element-ui/src/utils/resize-event';
 import responsive, {responsiveArray} from '$ui/utils/responsive'
 import {throttle} from '$ui/utils/util' 
-const defaultCol = 3
+const defaultCol = {
+  xxl: 5,
+  xl: 4, 
+  lg: 4,
+  md: 3,
+  sm: 2,
+  xs: 1
+} // 3
 
 const calcBreakPoint = function (width) {
   if (width <= 575) {

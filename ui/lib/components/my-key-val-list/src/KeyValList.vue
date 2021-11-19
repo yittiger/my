@@ -1,13 +1,13 @@
 <template> 
-  <el-row class="my-key-val-list" v-bind="$attrs" >
+  <el-row class="my-key-val-list " v-bind="$attrs" >
     <el-col v-for="(item, index) in showColList" :key="`${item.prop}_${index}`" :span="setSpan(item)"> 
       <template>
         <slot v-if="item.type === 'devide'" :name="item.prop">
 
         </slot>
         <slot v-else :name="item.prop"  v-bind="{...item, $index: index, value: data[item.prop]}">
-          <my-description :title="item.label" :width="item.width ? item.width : 100" :align="item.align ? item.align : 'right'">
-          {{data[item.prop]}} 
+          <my-description :border="item.border === false ? false : true" :title="item.label" :width="item.width ? item.width : 100" :align="item.align ? item.align : 'right'">
+           {{data[item.prop]}}
           </my-description>  
         </slot>
       </template> 
@@ -37,6 +37,7 @@ export default {
    * @property {String} [column.label] 列配置：标题
    * @property {String} [column.prop] 列配置：对应key字段
    * @property {String} [column.devide] 列配置：分割区域（在当前字段后面添加一个 span=24 的分割区域，根据devide名称为slot名）
+   * @property {Boolean} [column.ellipsis] 列配置：内容过长省略
    * @property {String} [column.span] 列配置：span(参考el-col), 不设置以响应式为准
    * @property {number|object} [columns] 一行显示几项, 可设置响应式
    * @property {boolean} [listenEl] 监听$el元素宽度实现响应布局（默认为false）
@@ -66,7 +67,9 @@ export default {
         if (!item.devide) {
           total.push(item)
         } else {
-          total.push(item)
+          if (item.prop) {
+            total.push(item)
+          }
           total.push({prop: item.devide, type: 'devide'})
         }
         return total
