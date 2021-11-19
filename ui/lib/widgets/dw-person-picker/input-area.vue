@@ -1,5 +1,5 @@
 <template>
-  <my-panel class="input-area" title="选中人员" :border="false" fit>
+  <my-panel class="input-area" title="选中人员" :border="false" fit shadow="never">
     <div class="input-wrapper" @click.stop="focusInput">
       <el-popover
         popper-class="picker__popper"
@@ -9,8 +9,11 @@
         :value="popoverActive"
       >
         <auto-complete
+          v-bind="$attrs"
           :keyword="keyword"
           @select="handleSelect"
+          :person-prop-map="personPropMap"
+          
         ></auto-complete>
         <my-tag-input
           slot="reference"
@@ -20,12 +23,12 @@
           :allow-create="false"
           icon
           @input-change="handleInputChange"
-          @remove="remove"
+          @remove="(index) => removeItem(currentItems[index])"
           placeholder="搜索姓名......"
         ></my-tag-input>
       </el-popover>
     </div>
-    <div slot="footer">
+    <div slot="footer" v-if="submitBtn">
       <el-button type="primary" @click="submit">确定</el-button>
       <el-button @click="cancel">取消</el-button>
     </div>
@@ -33,17 +36,16 @@
 </template>
 
 <script>
-import AutoComplete from './auto-complete';
+import AutoComplete from './auto-complete'
 
 export default {
   props: {
-    multiple: Boolean,
-    selectData: {
-      type: Array,
-      default: function() {
-        return [];
-      }
-    }
+    submitBtn: {
+      type: Boolean,
+      default: true
+    },
+    personPropMap: Object,
+    multiple: Boolean
   },
   components: {
     AutoComplete
@@ -54,65 +56,81 @@ export default {
       currentItems: [],
       keyword: '',
       popoverActive: false
-    };
+       
+    }
   },
   computed: {
     value: {
       get() {
-        return this.currentItems.map(item => item.name);
+        return this.currentItems.map(item => item.name)
       },
-      set(val) {}
+      set(val) {
+        // this.currentItems = this.currentItems.filter(item =>
+        //   val.includes(item.name)
+        // )
+      }
     }
   },
   watch: {
-    selectData: {
-      handler(newName, oldName) {
-        this.currentItems = newName;
-      },
-      immediate: true,
-      deep: true
-    }
+   
   },
   methods: {
-    focusInput() {
-      this.$refs.inputTag.$refs.comp.$refs.input.focus();
+    validate(item) {
+      const node = this.currentItems.find(n => n.id === item.id)
+      if (node) {
+        this.$message({
+          type: 'warning',
+          message: '不能添加相同项'
+        })
+      }
+      return !node
     },
-    handleInputChange(val) {
+    focusInput() {
+      this.$refs.inputTag.$refs.comp.$refs.input.focus()
+    },
+    handleInputChange(val) { 
       if (this.timer) {
-        clearTimeout(this.timer);
+        clearTimeout(this.timer)
       }
       this.timer = setTimeout(() => {
-        this.keyword = val;
-        this.popoverActive = !!val;
-      }, 500);
+        this.keyword = val
+        this.popoverActive = !!val
+      }, 500)
     },
     handleSelect(item) {
-      const id = this.currentItems.findIndex(e => {
-        return item.id === e.id;
-      });
-      if (id === -1) {
-        this.currentItems.push(item);
+      if (this.validate(item)) {
+        if (this.multiple) {
+          this.currentItems.push(item) 
+        } else {
+          this.currentItems = [item]
+        }
+        this.$refs.inputTag.$refs.comp.query = ''
       }
-      this.popoverActive = false;
-    },
-    remove(index, tag) {
-      const currentItems = this.currentItems.find(n => tag === n.name);
-      this.$emit('cancelSelect', currentItems, false);
+    }, 
+    removeItem(tag) { 
+      if (this.multiple) {
+        this.currentItems = this.currentItems.filter(n => tag[this.personPropMap.id] !== n[this.personPropMap.id])
+        this.$emit('cancelSelect', tag)
+      } else {
+        this.currentItems = []
+      }
     },
     submit() {
-      this.$emit('submit');
+      const result = JSON.parse(JSON.stringify(this.currentItems))
+      this.$emit('submit', result)
     },
     cancel() {
-      this.$emit('cancel');
+      this.currentItems = []
+      this.$emit('cancel')
     }
   },
   mounted() {},
   beforeDestroy() {
     if (this.timer) {
-      clearTimeout(this.timer);
+      clearTimeout(this.timer)
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

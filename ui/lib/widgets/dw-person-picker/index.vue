@@ -1,27 +1,28 @@
 <template>
   <div
-    class="persin-picker"
-    style="min-width: 400px; min-height: 400px; height: 100%; width: 100%"
+    class="person-picker"
+  
   >
     <el-row class="wrapper">
-      <el-col :span="12" class="input-col">
+      <el-col :span="showOrgList ? 12 : 24" class="input-col">
         <input-area
+          :person-prop-map="personPropMap"
           ref="input"
-          :multiple="multiple"
-          :selectData="selectData"
-          @submit="handleSubmit"
           @cancel="handleClosed"
-          @cancelSelect="handleListSelect"
+          @cancelSelect="handCancelSelect"
+          :multiple="multiple"
+          @submit="handleSubmit"
+          v-bind="$attrs"
         ></input-area>
       </el-col>
       <el-col :span="12">
         <org-list
           ref="orgList"
-          v-if="visible"
+          v-if="showOrgList"
+          @select="handleListSelect" 
           v-bind="$attrs"
-          :selectData="selectData"
+          :person-prop-map="personPropMap"
           :multiple="multiple"
-          @select="handleListSelect"
         ></org-list>
       </el-col>
     </el-row>
@@ -29,75 +30,97 @@
 </template>
 
 <script>
-import InputArea from './input-area';
-import OrgList from './org-list';
+import InputArea from './input-area'
+import OrgList from './org-list'
 
 export default {
   components: {
     InputArea,
     OrgList
   },
+  /*
+  submitBtn 控制是否显示提交、取消按钮 ，默认true
+  personPropMap：接口返回人员列表字段映射
+  multiple: 是否多选
+  showOrgList: 是否结合部门进行查询（显示右侧部门列表）
+  searchPerson: 通过搜索异步查询人员函数，必传，参数keyword, 返回 输出人员列表的 Promise对象 
+  loadOrg: 异步获取初始部门树的函数，必传，返回 输出组织架构树 的 Promise对象
+  loadOrgChildren: 异步获取各个子部门树的函数（用于懒加载），选传，返回 输出 子级部门 的 Promise对象
+  loadUser: 根据部门信息异步获取部门成员的函数，必传，返回 输出 部门成员数组 的 Promise对象,
+  orgPropMap：接口返回部门数据字段映射
+  */
   props: {
-    visible: {
-      type: Boolean,
-      default: true
-    },
     multiple: {
       type: Boolean,
       default: true
     },
-    value: {
-      type: Array,
-      default() {
-        return [];
+    showOrgList: {
+      type: Boolean,
+      default: true
+    },
+    personPropMap: {
+      type: Object,
+      default: () => {
+        return {
+          name: 'name',
+          id: 'id',
+          cardNo: 'cardNo'
+        }
       }
     }
   },
   data() {
     return {
-      // 选中的数据
-      selectData: this.value
-    };
+    }
   },
   methods: {
+    // 响应右边部门人员列表的选中与取消 （同步修改输入框内的currentItems数据）
     handleListSelect(item, isAdd) {
-      if (this.multiple) {
-        if (isAdd) {
-          this.selectData.push(item);
-        } else {
-          const idIndex = this.selectData.findIndex(e => item.id === e.id);
-          this.selectData.splice(idIndex, 1);
-        }
-      } else {
-        this.selectData = [];
-        if (isAdd) {
-          this.selectData.push(item);
-        }
+      if (isAdd) { 
+        this.$refs.input.handleSelect(item)
+      } else { 
+        this.$refs.input.removeItem(item)
       }
-    //   console.log(this.selectData);
     },
-    // 确定按钮
-    handleSubmit() {
+    // 响应输入框删除选中人员操作（同步右边部门人员菜单取消选中）
+    handCancelSelect(item) {
+      this.$refs.orgList.removeSelect(item)
     },
-     // 取消按钮
+    // 点击提交按钮 获取当前人员和部门
+    handleSubmit(items) {
+      let paths = []
+      if (this.$refs.orgList) {
+        paths = JSON.parse(JSON.stringify(this.$refs.orgList.paths))
+      }
+      this.$emit('submit', items, paths)
+    },
+    // 点击取消按钮
     handleClosed() {
+      // 清空右侧列表选中
+      this.$refs.orgList && this.$refs.orgList.users.forEach((item) => {
+        item._isSelect = false
+      })
+      this.$emit('close')
     },
-    // 获取当前人员
-    getSelectPeoloe () {
-        return this.selectData
+    // 通过API获取选中人员
+    getSelctPersons() {
+      const result = this.$refs.input.currentItems
+      return JSON.parse(JSON.stringify(result))
     },
-     // 获取当前路径部门
-    getPaths() {
-        return this.$refs.orgList.paths
-    }
-   
+    // 通过API获取选中部门
+    getSelectDept() {
+      const paths = this.$refs.orgList ? JSON.parse(JSON.stringify(this.$refs.orgList.paths)) : []
+      return paths
+    } 
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
 @import "~@/style/_vars.scss";
-.persin-picker {
+.person-picker {
+  height: 100%; 
+  width: 100%;
   box-sizing: border-box;
   * {
     box-sizing: border-box;

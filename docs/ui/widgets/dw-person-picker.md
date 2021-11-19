@@ -20,140 +20,216 @@ npm run widgets dw-person-picker
 > -   **`org-list.vue`**
 >     其中： “index.vue” 为入口文件， “dw-person-picker”文件夹可以放置于“src/helper”作为工具函数使用
 
-## dw-person-picker 提供的方法
+## 代码示例
 
-### 会暴露两个方法出来
-
-#### 1.getSelectPeoloe()
-
-获取已选的当前人员
-
-#### 2.getPaths()
-
-获取当前路径部门
-
-## dw-person-picker 使用
-
-### 可 props 三个参数
-
-#### 1.visible
-
-是否隐藏选择单位，默认展示
-
-#### 2.multiple
-
-是否多选，默认多选
-
-#### 3.value
-
-已选的当前人员
-
-```javascript
-// 参数例子
- [
-        { id: '12', name: '人员1', src: '' },
-        { id: '13', name: '人员2', src: '' }
-      ],
-```
-
-#### 4.companyList
-
-部门列表
-
-```javascript
-// 参数例子
-;[
-	{ id: '3', name: '部门3', parentId: '2' },
-	{ id: '4', name: '部门4', parentId: '3' },
-	{ id: '1', name: '部门1', parentId: '2' },
-	{ id: '2', name: '部门2', parentId: '0' },
-	{ id: '5', name: '部门5', parentId: '4' },
-]
-```
-
-## 注：
-
-### 在 org-list 里有 loadUser 方法，是每次点击部门获取该部门底下的员工的
-
-```javascript
-  loadUser(orgId) {
-      this.users = [];
-      this.userLoading = true;
-      this.$nextTick(() => {
-        this.userLoading = false;
-        this.users = [
-          { id: '12', name: '人员1', src: '', isSelect: false },
-          { id: '13', name: '人员2', src: '', isSelect: false },
-          { id: '14', name: '人员3', src: '', isSelect: false },
-          { id: '15', name: '人员4', src: '', isSelect: false }
-        ];
-        this.users.map(x => {
-          this.selectData.forEach(y => {
-            if (x.id === y.id) {
-              x.isSelect = true;
-            }
-          });
-          return x;
-        });
-      });
-    },
-```
-
-### 在 auto-complete 里有 load 方法，是搜索功能
-
-```javascript
-load(keyword) {
-      // getPersonByKeyword({xm: keyword}).then(res => {
-      //   this.items = res.map(item => {
-      //     return { id: item.id, name: item.name, address: item.orgName, row: item}
-      //   })
-      // })
-      this.items = [
-        { id: '14', name: 'item.name123', src: '' }
-      ];
-      console.log(keyword, '请求接口......');
-    },
-```
-
-## 使用案例
+### 使用案例
 
 ```html
 <template>
-	<div class="login-page">
-		<orgs :value="lists" :companyList="treeLists"></orgs>
+	<div>
+		<el-button size="mini" type="primary" @click="visible = true"
+			>select</el-button
+		>
+
+		<my-dialog
+			:visible.sync="visible"
+			target="body"
+			title="标题文字"
+			width="700px"
+			height="500px"
+			:footer="true"
+			@submit="getResult"
+		>
+			<dw-person-picker
+				ref="picker"
+				:submit-btn="false"
+				:show-org-list="true"
+				:multiple="true"
+				:load-org="createOrgTree"
+				:load-user="loadUserByOrg"
+				:search-person="searchPersonByText"
+				@submit="showResult"
+			></dw-person-picker>
+		</my-dialog>
 	</div>
 </template>
-
 <script>
-	import Orgs from '@/components/text'
+	import DwPersonPicker from '@/components/dw-person-picker'
+	import axios from 'axios'
+	import { create } from '$ui/utils/tree'
+	import Mock from 'mockjs'
 	export default {
 		components: {
-			Orgs,
+			DwPersonPicker,
 		},
+		props: {},
 		data() {
 			return {
-				lists: [
-					{ id: '12', name: '人员1', src: '' },
-					{ id: '13', name: '人员2', src: '' },
-				],
-				treeLists: [
-					{ id: '3', name: '部门3', parentId: '2' },
-					{ id: '4', name: '部门4', parentId: '3' },
-					{ id: '1', name: '部门1', parentId: '2' },
-					{ id: '2', name: '部门2', parentId: '0' },
-					{ id: '5', name: '部门5', parentId: '4' },
-				],
+				visible: false,
+				selects: [],
+				treeLists: [],
 			}
 		},
-		watch: {},
-		methods: {},
+		computed: {},
+		methods: {
+			mockUser(limit) {
+				return Mock.mock({
+					[`list|${limit}`]: [
+						{
+							id: '@id',
+							name: '@cname',
+							'age|10-100': 18,
+							department: '@ctitle',
+							other1: '@ctitle',
+							other2: '@ctitle',
+						},
+					],
+				})
+			},
+			createOrgTree() {
+				return axios({
+					url: '/data/DEPT.json',
+					method: 'get',
+				}).then((res) => {
+					const tree = create(res.data.data, '')
+					return Promise.resolve(tree)
+				})
+			},
+			loadUserByOrg(org) {
+				return new Promise((resolve) => {
+					setTimeout(() => {
+						const num = Math.round(Math.random() * 15)
+						const users = this.mockUser(num).list
+						resolve(users)
+					}, 500)
+				})
+			},
+			searchPersonByText(text) {
+				return new Promise((resolve) => {
+					setTimeout(() => {
+						const num = 1 + Math.round(Math.random() * 4)
+						const users = this.mockUser(num).list
+						resolve(users)
+					}, 500)
+				})
+			},
+			showResult(targets, dept) {
+				console.log(targets, dept)
+			},
+			getResult() {
+				const targets = this.$refs.picker.getSelctPersons()
+				const dept = this.$refs.picker.getSelectDept()
+				console.log(targets, dept)
+			},
+		},
+		created() {},
 		mounted() {},
 	}
 </script>
+<style lang="scss" scoped></style>
+```
 
-<style lang="scss" scoped>
-	.login-page {
-		height: 100%;
-	}
-</style>
+## 属性参数(inner) props
+
+### 1.submit-btn
+
+```javascript
+type: Boolean
+default:true
+description: 控制是否显示提交、取消按钮
+```
+
+### 2.multiple
+
+```javascript
+type: Boolean
+default:true
+description: 控制是否多选
+```
+
+### 3.show-org-list
+
+```javascript
+type: Boolean
+default:true
+description: 是否结合部门进行查询（显示右侧部门列表）
+```
+
+### 4.search-person
+
+```javascript
+type: Function
+required: true
+description: 通过搜索异步查询人员函数，必传，参数keyword, 返回输出人员列表的Promise对象
+```
+
+### 5.load-org
+
+```javascript
+type: Function
+required: true
+description: 异步获取初始部门树的函数，必传，返回输出组织架构树的Promise对象
+```
+
+### 6.load-org-children
+
+```javascript
+type: Function
+required: false
+description: 异步获取各个子部门树的函数（用于懒加载），选传，返回输出子级部门的Promise对象
+```
+
+### 8.org-prop-map
+
+```javascript
+type: Object
+default: {
+    name: 'label',
+    id: 'id',
+    children: 'children',
+    parentId: 'parentId'
+}
+description: 接口返回部门数据字段映射
+```
+
+### 8.load-user
+
+```javascript
+type: Function
+required: true
+description: 根据部门信息异步获取部门成员的函数，必传，返回输出部门成员数组的Promise对象
+```
+
+### 9.person-prop-map
+
+```javascript
+type: Object
+default:{
+    name: 'name',
+    id: 'id',
+    cardNo: 'cardNo'
+}
+description: 接口返回人员列表字段映射
+```
+
+## Methods(inner) 
+### 1.getSelctPersons
+```javascript
+description: 通过API获取选中人员
+```
+
+### 2.getSelectDept
+```javascript
+description: 通过API获取选中部门
+```
+
+## Events
+### 1.submit
+```javascript
+description: 点击提交按钮 获取当前人员和部门
+```
+
+### 2.close
+```javascript
+description: 点击取消按钮 清空右侧列表选中
 ```

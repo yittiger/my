@@ -9,50 +9,53 @@
     >
       <div class="name">
         <i class="el-icon-user"></i>
-        {{ item.name }}
+        {{ item[personPropMap.name] }}
       </div>
+      <!-- <div class="dep">{{ item.address }}</div> -->
     </div>
   </div>
 </template>
 
 <script>
+
 // import {getPersonByKeyword} from '$my/code/api/user'
 export default {
   props: {
     keyword: {
       type: String,
       default: ''
-    }
+    },
+    searchPerson: Function,
+    personPropMap: Object
   },
   data() {
     return {
       items: []
-    };
+    }
   },
   watch: {
     keyword(val) {
       if (val) {
-        this.load(val);
+        this.load(val)
       }
     }
   },
   methods: {
     load(keyword) {
-      // getPersonByKeyword({xm: keyword}).then(res => {
-      //   this.items = res.map(item => {
-      //     return { id: item.id, name: item.name, address: item.orgName, row: item}
-      //   })
-      // })
-      this.items = [
-        { id: '14', name: 'item.name123', src: '' }
-      ];
-      console.log(keyword, '请求接口......');
+      this.items = []
+      if (!this.searchPerson) {
+        throw new Error('searchPerson函数缺失')
+      }
+      this.searchPerson(keyword).then((res) => {
+        console.log(res, '查询人员')
+        this.items = res 
+      }) 
     },
     select(item) {
-      this.$emit('select', item);
+      this.$emit('select', item)
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
