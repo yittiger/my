@@ -32,7 +32,8 @@ const commandArray = [
   'preview',
   'app',
   'page',
-  'widgets'
+  'widgets',
+  'create'
 ]
 const commandMap = Object.create(null)
 commandArray.forEach(name => {
