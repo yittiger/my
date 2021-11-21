@@ -5,6 +5,9 @@
     <div class="title" v-if="tree.length === 1" @click="handleDown(tree[0])">
       <i class="el-icon-arrow-left"></i> {{tree[0][orgPropMap.name]}}
     </div>
+    <div class="title" v-else @click="resetOrgList">
+      <i class="el-icon-arrow-left"></i> 回到顶级
+    </div>
      
     <el-breadcrumb class="path-warp" v-if="paths.length > 0"
       separator-class="el-icon-arrow-right"
@@ -29,7 +32,7 @@
     <div class="org-list is-flex" v-loading="userLoading"> 
       <div class="department" v-show="currentOrgChildren.length">
         <div
-          :class="{'item': true, 'selected': item[orgPropMap.id] === currentOrg[orgPropMap.id]}"
+          :class="{'item': true, 'selected': currentOrg && item[orgPropMap.id] === currentOrg[orgPropMap.id]}"
           v-for="item in currentOrgChildren"
           :key="item[orgPropMap.id]" 
         >
@@ -136,10 +139,20 @@
         }
         this.loadOrg().then((res) => { 
           this.tree = res
-          const target = this.tree[0]
-          this.handleDown(target) 
-        }) 
-         
+          if (this.tree.length === 1) {
+            const target = this.tree[0]
+            this.handleDown(target)
+          } else {
+            // 当组织树存在多个顶部层级时
+            this.currentOrgChildren = [...this.tree]
+          } 
+        })  
+      },
+      // 多个一级菜单时 重置回到顶部的功能
+      resetOrgList() {
+        this.currentOrg = null
+        this.paths = []
+        this.currentOrgChildren = [...this.tree]
       },
       loadUserClick(org) {
         if (!this.loadUser) {

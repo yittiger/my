@@ -24,10 +24,11 @@
     word-wrap:break-word;
     color: $--color-primary-text;
     text-align: left;
+    line-height: 1.6em;
 
     @include when(border) {
       background: no-repeat;
-      background-image:repeating-linear-gradient(180deg, transparent 0, transparent calc(1.5em - 2px), $--color-border calc(1.5em - 1px));
+      background-image:repeating-linear-gradient(180deg, transparent 0, transparent calc(1.6em - 3px), $--color-border calc(1.6em - 1.5px));
     }
 
     > .my-description {

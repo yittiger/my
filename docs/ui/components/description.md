@@ -71,13 +71,13 @@
 <template>
   <el-row>
     <el-col :span="12">
-      <my-description title="标题左对齐" :width="100">
+      <my-description title="标题左对齐" :width="100"  border>
        <el-image slot="title" src="/my/img/avatar.jpeg"></el-image>
       文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容
       </my-description>  
     </el-col>
     <el-col :span="12">
-      <my-description title="标题居中" :width="100" top>
+      <my-description  title="标题居中" :width="100" top>
        <el-image slot="title" src="/my/img/avatar.jpeg" fit="cover" style="height:100px"></el-image>
       文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容
      </my-description> 
