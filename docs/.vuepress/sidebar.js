@@ -318,7 +318,8 @@ module.exports = {
       'coder',
       'route',
       'app',
-      'questions'
+      'questions',
+      'development'
     ], false),
     createMenus('内置资源', [
       'color',

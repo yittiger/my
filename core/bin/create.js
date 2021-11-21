@@ -17,9 +17,14 @@ const localPath = join(core.ProjectRootPath, '.my', '@xdh', 'my')
 
 module.exports = function(args = []) {
   utils.mkdir(localPath)
-  Object.entries(pathsList).forEach((entry) => {
-    utils.copy(entry[1], join(localPath, entry[0]))
+  const allCopy = Object.entries(pathsList).map((entry) => {
+    return utils.copy(entry[1], join(localPath, entry[0])).then((res) => {
+      utils.log(`复制${entry[0]}成功`, 'success')
+      return Promise.resolve()
+    }) 
+  })
+  Promise.all(allCopy).then(() => {
+    utils.log('创建完成', 'success')
   })
   
-  utils.log('执行成功', 'success')
 }

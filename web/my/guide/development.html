@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>开发指南 | MyUI 4.x</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/my/favicon.ico">
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?c4e5f73318b5cb0c389e3d9a05f831cc";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+    <meta name="description" content="MyUI是美亚柏科旗下新德汇出品的Web前端一站式项目工程框架，专注于公检法行业中台系统快速搭建，框架已在多个项目实战检验。">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <link rel="preload" href="/my/assets/css/0.styles.444d84a1.css" as="style"><link rel="preload" href="/my/assets/js/app.f77439f0.js" as="script"><link rel="preload" href="/my/assets/js/579.d257a000.js" as="script"><link rel="preload" href="/my/assets/js/1611.ac67cdd8.js" as="script">
+    <link rel="stylesheet" href="/my/assets/css/0.styles.444d84a1.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/my/" class="home-link router-link-active"><img src="/my/img/logo.png" alt="MyUI 4.x" class="logo"> <span class="site-name can-hide">MyUI 4.x</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/my/guide/" class="nav-link router-link-active">
+  指南
+</a></div><div class="nav-item"><a href="/my/ui/components/" class="nav-link">
+  组件
+</a></div><div class="nav-item"><a href="/my/ui/charts/" class="nav-link">
+  图表
+</a></div><div class="nav-item"><a href="/my/ui/map/" class="nav-link">
+  地图
+</a></div><div class="nav-item"><a href="/my/ui/go/" class="nav-link">
+  关系图
+</a></div><div class="nav-item"><a href="/my/ui/icon/" class="nav-link">
+  图标
+</a></div><div class="nav-item"><a href="/my/ui/dv/" class="nav-link">
+  大屏
+</a></div><div class="nav-item"><a href="/my/ui/pages/" class="nav-link">
+  页面
+</a></div><div class="nav-item"><a href="/my/ui/widgets/" class="nav-link">
+  补丁
+</a></div><div class="nav-item"><a href="http://newgateway.gitee.io/my-web/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  演示
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="JSDoc" class="dropdown-title"><span class="title">JSDoc</span> <span class="arrow down"></span></button> <button type="button" aria-label="JSDoc" class="mobile-dropdown-title"><span class="title">JSDoc</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/my/api/components.html" class="nav-link">
+  基础组件
+</a></li><li class="dropdown-item"><!----> <a href="/my/api/utils.html" class="nav-link">
+  工具函数
+</a></li><li class="dropdown-item"><!----> <a href="/my/api/charts.html" class="nav-link">
+  图表组件
+</a></li><li class="dropdown-item"><!----> <a href="/my/api/map.html" class="nav-link">
+  地图组件
+</a></li><li class="dropdown-item"><!----> <a href="/my/api/dv.html" class="nav-link">
+  可视化大屏
+</a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/my/guide/" class="nav-link router-link-active">
+  指南
+</a></div><div class="nav-item"><a href="/my/ui/components/" class="nav-link">
+  组件
+</a></div><div class="nav-item"><a href="/my/ui/charts/" class="nav-link">
+  图表
+</a></div><div class="nav-item"><a href="/my/ui/map/" class="nav-link">
+  地图
+</a></div><div class="nav-item"><a href="/my/ui/go/" class="nav-link">
+  关系图
+</a></div><div class="nav-item"><a href="/my/ui/icon/" class="nav-link">
+  图标
+</a></div><div class="nav-item"><a href="/my/ui/dv/" class="nav-link">
+  大屏
+</a></div><div class="nav-item"><a href="/my/ui/pages/" class="nav-link">
+  页面
+</a></div><div class="nav-item"><a href="/my/ui/widgets/" class="nav-link">
+  补丁
+</a></div><div class="nav-item"><a href="http://newgateway.gitee.io/my-web/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  演示
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="JSDoc" class="dropdown-title"><span class="title">JSDoc</span> <span class="arrow down"></span></button> <button type="button" aria-label="JSDoc" class="mobile-dropdown-title"><span class="title">JSDoc</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/my/api/components.html" class="nav-link">
+  基础组件
+</a></li><li class="dropdown-item"><!----> <a href="/my/api/utils.html" class="nav-link">
+  工具函数
+</a></li><li class="dropdown-item"><!----> <a href="/my/api/charts.html" class="nav-link">
+  图表组件
+</a></li><li class="dropdown-item"><!----> <a href="/my/api/map.html" class="nav-link">
+  地图组件
+</a></li><li class="dropdown-item"><!----> <a href="/my/api/dv.html" class="nav-link">
+  可视化大屏
+</a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>开发指南</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/my/changelog.html" class="sidebar-link">更新日志</a></li><li><a href="/my/guide/browser.html" class="sidebar-link">浏览器兼容性</a></li><li><a href="/my/guide/config.html" class="sidebar-link">配置</a></li><li><a href="/my/guide/constant.html" class="sidebar-link">常量和静态配置</a></li><li><a href="/my/guide/cmd.html" class="sidebar-link">脚本命令</a></li><li><a href="/my/guide/access.html" class="sidebar-link">权限控制</a></li><li><a href="/my/guide/extension.html" class="sidebar-link">内置实例扩展</a></li><li><a href="/my/guide/coder.html" class="sidebar-link">代码生成器</a></li><li><a href="/my/guide/route.html" class="sidebar-link">自动配置路由</a></li><li><a href="/my/guide/app.html" class="sidebar-link">子应用微服务</a></li><li><a href="/my/guide/questions.html" class="sidebar-link">常见问题</a></li><li><a href="/my/guide/development.html" aria-current="page" class="active sidebar-link">开发指南</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/my/guide/development.html#项目结构" class="sidebar-link">项目结构</a></li><li class="sidebar-sub-header"><a href="/my/guide/development.html#组件开发过程" class="sidebar-link">组件开发过程</a></li><li class="sidebar-sub-header"><a href="/my/guide/development.html#组件文档编写" class="sidebar-link">组件文档编写</a></li></ul></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>内置资源</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>进阶教程</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>第三方类库</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="开发指南"><a href="#开发指南" class="header-anchor">#</a> 开发指南</h1> <h2 id="项目结构"><a href="#项目结构" class="header-anchor">#</a> 项目结构</h2> <ul><li>“/ui/lib”文件夹存放业务功能源码（组件、 工具函数、样式等）</li> <li>“/core” 文件夹 为 项目工程化的代码（各自配置、打包发布、工程化自定义插件等）</li> <li>“/docs” 文件夹：MyUI 文档文件</li> <li>“/src” 文件夹： MyUI 开发测试环境</li></ul> <h2 id="组件开发过程"><a href="#组件开发过程" class="header-anchor">#</a> 组件开发过程</h2> <blockquote><ul><li>启动开发模式： npm run dev</li> <li>在&quot;/src&quot;内 开发组件</li> <li>常规组件开发完成后，在“/ui/lib/components”文件夹下 添加 “my-”为前缀的组件名称文件夹，例如： &quot;/my-edit-filed&quot;, 文件夹内容可以参考其他组件， 并将组件 html / js 代码放置于内，并编写安装函数（参考其他组件）</li> <li>（重点）<code>将常规组件的样式添加到“/ui/lib/styles”下面，添加与组件同名文件，如“my-edit-filed.scss”。如果组件无需样式，也要创建一个同名空文件（切记）。</code></li> <li>其他类型组件（如 echart / gojs / 地图）可放置于对应目录下，各自目录有对应的styles文件夹。</li></ul></blockquote> <h2 id="组件文档编写"><a href="#组件文档编写" class="header-anchor">#</a> 组件文档编写</h2> <blockquote><p>组件文档位于 /docs 文件夹</p> <ul><li>编辑文档通过 “npm run dev:docs” 进行启动， 系统会打开.vuepress 的项目</li> <li>组件的基本文档： 在开发一个组件的过程中，需要按照规范书写组件的 属性 、 插槽 和 函数 的注释（参考已有组件）。vuepress 可以自动生成组件文档。</li> <li>组件的使用文档：在&quot;/docs/ui&quot;文件夹下，已经分类放置不同类型的组件文档。请在你组件关联的类型文件夹内创建 对应的 md文件。</li> <li>组件使用文档的编写参考已有文档。</li> <li>配置文档的导航： 文档的导航配置文件位于“/docs/.vuepress/nav.js 、sidebar.js”</li></ul></blockquote></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/my/guide/questions.html" class="prev">
+        常见问题
+      </a></span> <span class="next"><a href="/my/guide/color.html">
+        色彩
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/my/assets/js/app.f77439f0.js" defer></script><script src="/my/assets/js/579.d257a000.js" defer></script><script src="/my/assets/js/1611.ac67cdd8.js" defer></script>
+  </body>
+</html>
