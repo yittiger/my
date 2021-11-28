@@ -159,14 +159,14 @@
           throw new Error('loadUser函数缺失')
         }
         this.currentOrg = org
-        this.paths = findPath(this.tree, n => n[this.orgPropMap.id] === org[this.orgPropMap.id])
+         this.paths = findPath(this.tree, n => n[this.orgPropMap.id] === org[this.orgPropMap.id])
         this.userLoading = true
         this.loadUser(org).then((res) => {
           this.userLoading = false
           this.users = res
+          console.log(res, 'user')
           // 没有部门人员， 如有下一级，自动跳转下一级
           if (!res.length && (org[this.orgPropMap.children] && org[this.orgPropMap.children].length)) {
-            // this.$message.warning('当前部门暂无人员')
             this.handleDown(org) 
           }
         })
