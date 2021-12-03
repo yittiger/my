@@ -31,18 +31,21 @@
              type="text"
              :disabled="disabled"
              :readonly="readonly"
-             v-model="query"
+             v-model.trim="query"
              class="el-select__input"
              @keyup.enter.prevent.stop="select"
+             @blur="blur"
              :style="inputStyle"/>
-    </div>
+    </div>  
     <ElInput ref="reference"
              :size="size"
              :suffix-icon="icon"
              :disabled="disabled"
              :readonly="readonly"
              :placeholder="showPlaceholder"
-             @focus="focus">
+             @focus="focus"
+             @blur="blur"  
+            >
     </ElInput>
 
     <Select v-if="false"></Select>
@@ -97,6 +100,10 @@
       collapseTags: Boolean,
       placeholder: String,
       closable: {
+        type: Boolean,
+        default: true
+      },
+      blurCreate: {
         type: Boolean,
         default: true
       },
@@ -210,6 +217,9 @@
       },
       blur() {
         this.$refs.input && this.$refs.input.blur()
+        if (this.blurCreate) {
+          this.select()
+        }
         this.$emit('blur')
       },
       removeTag(index) {

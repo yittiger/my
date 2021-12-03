@@ -9,7 +9,7 @@ import 'echarts/lib/chart/pictorialBar'
 import echarts from 'echarts/lib/echarts'
 // import graphic from 'echarts/lib/component/graphic'
 // const xData = ['本年话务总量', '本年人工话务量', '每万客户呼入量']
-const yData = [300, 1230, 425]
+const yData = [0, 1230, 425]
 export default {
   data() {
     return {
@@ -45,21 +45,7 @@ export default {
         ],
         yAxis: [
           {
-            show: false,
-            type: 'value',
-            axisLabel: {
-              textStyle: {
-                color: '#fff'
-              }
-            },
-            splitLine: {
-              lineStyle: {
-                color: '#0c2c5a'
-              }
-            },
-            axisLine: {
-              show: false
-            }
+            show: false
           }
         ],
         series: [
@@ -80,7 +66,7 @@ export default {
                 color: 'red' // '顶部文字颜色'
               }
             },
-            color: '#2DB1EF', // topColor
+            color: '#2DB1EF', // 顶部颜色
             data: yData
           },
           {
@@ -104,7 +90,7 @@ export default {
             itemStyle: {
               normal: {
                 color: 'transparent',
-                borderColor: '#2EA9E5',
+                borderColor: 'red', // '内边框颜色',
                 borderType: 'solid',
                 borderWidth: 1
               }
@@ -120,7 +106,7 @@ export default {
             itemStyle: {
               normal: {
                 color: 'transparent',
-                borderColor: '#19465D',
+                borderColor: 'red', // '#19465D', // '外边框颜色',
                 borderType: 'solid',
                 borderWidth: 2
               }
