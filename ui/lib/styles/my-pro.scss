@@ -3,7 +3,7 @@
 $light-background: $white !default;
 $primary-background: $--color-primary !default;
 $dark-background: $--color-primary-light-1 !default;
-$gradual-background: linear-gradient(to bottom, $--color-primary-light-3, $--color-primary) !default;
+$gradual-background: linear-gradient(to bottom, $--color-primary-light-1, $--color-primary) !default;
 
 @include b(pro) {
   min-height: 100vh;

@@ -1,31 +1,92 @@
 <template>
-<!--  -->
-   <my-chart theme="light" :options="options" width="500px" height="300px" ></my-chart>
+
+  <my-chart v-bind="$attrs" v-on="$listeners" :theme="theme" :options="chartOptions"  ></my-chart>
+
 </template>
 
 <script>
+/*
+参考案例： 立体圆柱Charts
+https://www.makeapie.com/editor.html?c=xvh81yeAKa
+*/
 import 'echarts/lib/chart/bar'
 import 'echarts/lib/chart/pictorialBar'
-import echarts from 'echarts/lib/echarts'
-// import graphic from 'echarts/lib/component/graphic'
-// const xData = ['本年话务总量', '本年人工话务量', '每万客户呼入量']
-const yData = [0, 1230, 425]
+// import echarts from 'echarts/lib/echarts'
+import {LinearGradient} from 'echarts/lib/util/graphic'
+import {colorData} from '$ui/utils/color'
+import setExtend from '$ui/charts/utils/extend'
 export default {
-  data() {
-    return {
-     
-      options: { 
-        title: {
-            text: 'ECharts 入门示例'
-        },
+  props: {
+    theme: {
+      type: String,
+      default: 'dark'
+    },
+    data: {
+      type: Object,
+      default: () => {
+        return {
+          xData: [],
+          yData: []
+        }
+      }
+    },
+    color: {
+      type: String,
+      default: '#37A2DA',
+      validator: function(t) {
+        return !!colorData(t)
+      }
+    },
+    topColor: {
+      type: String
+    },
+    bottomColor: {
+      type: String
+    },
+    linearDegree: {
+      type: Array,
+      default: () => { return [0.9, 0.1] }
+    },
+    barWidth: {
+      type: Number,
+      default: 40
+    },
+    extend: {
+      type: Object
+    }
+  },
+
+  data() { 
+    return {}
+  },
+  computed: {
+    colorMap() {
+      return colorData(this.color)
+    },
+    topLabelColor() {
+      if (this.topColor) {
+        return this.topColor
+      } else {
+        return this.colorMap.hex
+      }
+    },
+    bottomLabelColor() {
+      if (this.bottomColor) {
+        return this.bottomColor
+      } else {
+        return this.colorMap.hex
+      }
+    },
+    chartOptions() {
+      const opts = {  
         tooltip: {
-          show: true
+          show: true 
         },
         animation: false,
         xAxis: [
           {
             type: 'category',
-            data: ['本年话务总量', '本年人工话务量', '每万客户呼入量'],
+            data: this.data.xData,
             axisTick: {
               alignWithLabel: true
             },
@@ -36,9 +97,9 @@ export default {
               show: false 
             },
             axisLabel: {
-              // textStyle: {
-              //     color: '#fff'
-              // },
+              textStyle: {
+                color: this.bottomLabelColor
+              },
               margin: 30
             }
           }
@@ -52,7 +113,7 @@ export default {
           {
             name: '',
             type: 'pictorialBar',
-            symbolSize: [40, 10],
+            symbolSize: [this.barWidth, 10],
             symbolOffset: [0, -6], // 上部椭圆
             symbolPosition: 'end',
             z: 12, 
@@ -63,82 +124,85 @@ export default {
                 // "formatter": "{c}%"
                 fontSize: 15,
                 fontWeight: 'bold',
-                color: 'red' // '顶部文字颜色'
+                color: this.topLabelColor // '顶部文字颜色'
               }
             },
-            color: '#2DB1EF', // 顶部颜色
-            data: yData
+            color: this.colorMap.hex, // 顶部颜色
+            data: this.data.yData
           },
           {
             name: '',
             type: 'pictorialBar',
-            symbolSize: [40, 10],
+            symbolSize: [this.barWidth, 10],
             symbolOffset: [0, 7], // 下部椭圆
             // "barWidth": "20",
             z: 12,
-            color: '#2DB1EF',
-            data: yData
+            color: this.colorMap.hex,
+            data: this.data.yData
           },
           {
             name: '',
             type: 'pictorialBar',
-            symbolSize: function (d) {
-              return d > 0 ? [50, 15] : [0, 0]
+            symbolSize: (d) => {
+              return d > 0 ? [(this.barWidth + 10), 15] : [0, 0]
             },
             symbolOffset: [0, 12], // 下部内环
             z: 10,
             itemStyle: {
               normal: {
                 color: 'transparent',
-                borderColor: 'red', // '内边框颜色',
+                borderColor: this.colorMap.hex, // '内边框颜色',
                 borderType: 'solid',
                 borderWidth: 1
               }
             },
-            data: yData
+            data: this.data.yData
           },
           {
             name: '',
             type: 'pictorialBar',
-            symbolSize: [70, 20],
+            symbolSize: [this.barWidth + 20, 20],
             symbolOffset: [0, 18], // 下部外环
             z: 10,
             itemStyle: {
               normal: {
                 color: 'transparent',
-                borderColor: 'red', // '#19465D', // '外边框颜色',
+                borderColor: this.colorMap.hex, // '#19465D', // '外边框颜色',
                 borderType: 'solid',
                 borderWidth: 2
               }
             },
-            data: yData
+            data: this.data.yData
           },
           {
             type: 'bar',
             // silent: true,
-            barWidth: '40',
+            barWidth: `${this.barWidth}`,
             barGap: '10%', // Make series be overlap
             barCateGoryGap: '10%',
             itemStyle: {
-              normal: { // new echarts.
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 0.7, [
+              normal: {
+                color: new LinearGradient(0, 0, 0, 0.9, [
                     {
                         offset: 0,
-                        color: '#38B2E6'
+                        color: `rgba(${this.colorMap._rgb}, 0.9)`
                     },
                     {
                         offset: 1,
-                        color: '#0B3147'
+                        color: `rgba(${this.colorMap._rgb}, 0.1)` // '#0B3147'
                     }
                 ]),
                 opacity: 0.8
               }
             },
-            data: yData
+            data: this.data.yData
           }
         ]
       }
+      setExtend(opts, this.extend)
+      return opts
     }
+    
   }
 }
 

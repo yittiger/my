@@ -16,7 +16,9 @@
     <div class="warp" style="width: 60%">
       <!-- <my-chart-pie :data="data" :settings="settings"></my-chart-pie> -->
       <my-dv-page target="parent" fit>
-        <my-chart-pie :data="pieData" :settings="pieSettings"></my-chart-pie>   
+        <my-chart-pie :data="pieData" :settings="pieSettings"  :extend="{
+          'color': themeColors
+        }"></my-chart-pie>   
       </my-dv-page>
     </div>
 
@@ -109,6 +111,9 @@ export default {
         radius: ['50%', '70%'],
         center: ['30%', '50%'],
          legend: 'vertical'
+      },
+      pieExtend: {
+        color: []
       },
 
       lineData: {
