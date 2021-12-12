@@ -19,7 +19,7 @@
   import Chart from '../../mixins/Chart'
   import Loading from '../my-dv-loading'
   import merge from 'lodash/merge'
-
+  import setExtend from '$ui/charts/utils/extend'
   export default {
     name: 'MyDvChart',
     mixins: [Chart],
@@ -53,6 +53,7 @@
         const opts = typeof this.options === 'function'
           ? this.options(data)
           : (this.options || {})
+        setExtend(opts, this.extend)
         this.currentOptions = Object.freeze(merge({}, this.currentOptions, opts))
       }
     }

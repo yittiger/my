@@ -30,6 +30,13 @@ export default {
         }
       }
     },
+    type: {
+      type: String,
+      default: 'circle',
+      validator: function (t) {
+        return ['circle', 'diamond'].includes(t)
+      }
+    },
     color: {
       type: String,
       default: '#37A2DA',
@@ -50,6 +57,14 @@ export default {
     barWidth: {
       type: Number,
       default: 40
+    },
+    track: {
+      type: Boolean | Number,
+      default: false
+    },
+    bed: {
+      type: Boolean,
+      default: true
     },
     extend: {
       type: Object
@@ -110,9 +125,11 @@ export default {
           }
         ],
         series: [
+          // ============上下顶底椭圆==============
           {
             name: '',
             type: 'pictorialBar',
+            symbol: this.type,
             symbolSize: [this.barWidth, 10],
             symbolOffset: [0, -6], // 上部椭圆
             symbolPosition: 'end',
@@ -133,6 +150,7 @@ export default {
           {
             name: '',
             type: 'pictorialBar',
+            symbol: this.type,
             symbolSize: [this.barWidth, 10],
             symbolOffset: [0, 7], // 下部椭圆
             // "barWidth": "20",
@@ -140,9 +158,101 @@ export default {
             color: this.colorMap.hex,
             data: this.data.yData
           },
+          // ============底座series===========
+          ...this.bedSeries,
+          // ============柱身 series===========
+          {
+            type: 'bar',
+            // silent: true,
+            barWidth: `${this.barWidth}`,
+            barGap: '10%', // Make series be overlap
+            barCategoryGap: '10%',
+            itemStyle: {
+              normal: {
+                color: new LinearGradient(0, 0, 0, 0.9, [
+                    {
+                        offset: 0,
+                        color: `rgba(${this.colorMap._rgb}, 0.9)`
+                    },
+                    {
+                        offset: 1,
+                        color: `rgba(${this.colorMap._rgb}, 0.4)` // '#0B3147'
+                    }
+                ]),
+                opacity: 0.8
+              }
+            },
+            data: this.data.yData
+          },
+          // ===========track series==========
+          ...this.trackSeries
+        ]
+      }
+      setExtend(opts, this.extend)
+      return opts
+    },
+    trackData() {
+      if (!this.track) {
+        return null
+      } else {
+        const maxData = this.data.yData.concat([]).sort((a, b) => { return b - a })[0]
+        if (typeof this.track === 'boolean') {
+          return this.data.yData.map((item) => {
+            return maxData
+          })
+        } else {
+          const max = Math.max(this.track, maxData)
+          return this.data.yData.map((item) => {
+            return max
+          })
+        }
+      }  
+    },
+    // track series数据
+    trackSeries() {
+      if (this.trackData) {
+        return [
+          {  
+            type: 'bar',
+            barWidth: `${this.barWidth}`,
+            barGap: '-100%', // Make series be overlap 
+            itemStyle: {
+              normal: {
+                color: `rgba(${this.colorMap._rgb}, 0.2)`
+              }
+            },
+            tooltip: {
+              formatter: '总量: {c}' 
+            },
+            zlevel: -1,
+            data: this.trackData
+          },
+          { 
+            type: 'pictorialBar',
+            symbol: this.type,
+            symbolSize: [this.barWidth, 10],
+            symbolOffset: [0, '-50%'], // 上部椭圆
+            symbolPosition: 'end',
+            tooltip: {
+              formatter: '总量: {c}' 
+            },
+            z: -1,  
+            color: `rgba(${this.colorMap._rgb},0.3)`, // 顶部颜色
+            data: this.trackData
+          }
+        ]
+      } else {
+        return []
+      }
+    },
+    // 底座series数据
+    bedSeries() {
+      if (this.bed) {
+        return [
           {
             name: '',
             type: 'pictorialBar',
+            symbol: this.type,
             symbolSize: (d) => {
               return d > 0 ? [(this.barWidth + 10), 15] : [0, 0]
             },
@@ -161,6 +271,7 @@ export default {
           {
             name: '',
             type: 'pictorialBar',
+            symbol: this.type,
             symbolSize: [this.barWidth + 20, 20],
             symbolOffset: [0, 18], // 下部外环
             z: 10,
@@ -173,34 +284,11 @@ export default {
               }
             },
             data: this.data.yData
-          },
-          {
-            type: 'bar',
-            // silent: true,
-            barWidth: `${this.barWidth}`,
-            barGap: '10%', // Make series be overlap
-            barCateGoryGap: '10%',
-            itemStyle: {
-              normal: {
-                color: new LinearGradient(0, 0, 0, 0.9, [
-                    {
-                        offset: 0,
-                        color: `rgba(${this.colorMap._rgb}, 0.9)`
-                    },
-                    {
-                        offset: 1,
-                        color: `rgba(${this.colorMap._rgb}, 0.1)` // '#0B3147'
-                    }
-                ]),
-                opacity: 0.8
-              }
-            },
-            data: this.data.yData
           }
         ]
+      } else {
+        return []
       }
-      setExtend(opts, this.extend)
-      return opts
     }
     
   }

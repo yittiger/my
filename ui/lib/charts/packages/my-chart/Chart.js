@@ -184,8 +184,7 @@ export default {
         return
       }
       // adapter 由子类实现, 解析私有图表的配置
-      const options = this.$options.adapter ? this.$options.adapter(this) : {}
-
+      const options = this.$options.adapter ? this.$options.adapter(this) : {} 
       // 扩展 options
       if (this.extend) {
         setExtend(options, typeof this.extend === 'function' ? this.extend(options) : this.extend)
@@ -257,6 +256,7 @@ export default {
   },
   mounted() {
     this.registerMap().then(this.init)
+    
   },
   beforeDestroy() {
     this.dispose()
