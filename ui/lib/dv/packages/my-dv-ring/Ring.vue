@@ -9,6 +9,7 @@
   import 'echarts/lib/chart/pie'
   import DvChart from '../my-dv-chart'
   import Chart from '../../mixins/Chart'
+  import {DEFAULT_THEME} from '$ui/charts/utils/constant'
 
   export default {
     name: 'MyDvRing',
@@ -43,15 +44,76 @@
         type: Number,
         default: 45
       },
-      title: String
+      title: String,
+      useGap: {
+        type: Boolean,
+        default: false
+      },
+      blur: {
+        type: Boolean,
+        default: true
+      },
+      trackWidth: {
+        type: Number,
+        default: 15,
+        validator: function (t) {
+          return Math.min(5, Math.max(t, 15))
+        }
+      }
     },
     computed: {
       seriesData() {
         const {rows = []} = this.chartData
-        return rows.map(([name, value]) => ({
-          name,
-          value
-        }))
+        const data = rows.map(([name, value], index) => { 
+          let blurOpts = {}
+          if (this.blur) {
+            const extColors = this.extend.color // 以extend 颜色为优先
+            const defColors = DEFAULT_THEME.color // 其次以默认主题颜色
+            const color = 'rgba(255, 255, 255, .6)' // 最后为透明白色
+          
+            blurOpts = {
+              itemStyle: {
+                normal: {
+                  shadowBlur: 15,
+                  shadowColor: extColors[index] || defColors[index] || color
+                }
+              }
+            }
+          }
+          return {
+            name,
+            value,
+            ...blurOpts
+          }
+          
+        })
+        if (this.useGap) {
+          const total = rows.reduce((total, item) => {
+            total += item[1]
+            return total
+          }, 0)
+          const gapNum = (total * 0.02).toFixed(1)
+          return data.reduce((total, item) => {
+            total = total.concat([item, {
+              name: '', 
+              value: gapNum, 
+              itemStyle: {
+                normal: {
+                  borderColor: 'rgba(0, 0, 0, 0)',
+                  borderWidth: 0,
+                  color: 'rgba(0, 0, 0, 0)',
+                  label: { show: false },
+                  labelLine: { show: false }
+                }
+              } 
+            }])
+            return total
+          }, [])
+        } else {
+          return data
+        }
+
+        
       }
     },
     methods: {
@@ -100,7 +162,7 @@
               data: this.seriesData,
               z: 3,
               center: center,
-              radius: [`${radius - 15}%`, `${radius}%`],
+              radius: [`${radius - this.trackWidth}%`, `${radius}%`],
               clockwise: true,
               avoidLabelOverlap: true,
               hoverOffset: 15,

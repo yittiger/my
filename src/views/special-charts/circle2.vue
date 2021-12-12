@@ -1,13 +1,12 @@
 <template>
    <div style="height:600px">
      <my-dv-page target="parent" fit>
-        <my-dv-ring fit :columns="columns" :rows="rows" title="渠道统计"  :extend="extend"></my-dv-ring>
+        <my-dv-ring fit  :columns="columns" :rows="rows" title="渠道统计" :use-gap="true" :extend="extend" debug :track-width="5" :setting="setting"></my-dv-ring>
      </my-dv-page>
      <!-- <my-chart-pie :data="data" :extend="extend"></my-chart-pie> -->
    </div>
 </template>
-<script>
-import setExtend from '$ui/charts/utils/extend'
+<script> 
 export default {
   data() {
     return {
@@ -26,13 +25,15 @@ export default {
         ],
       // },
       extend: {
-        color: ['red', 'green', 'blue'] // ['#00ffff', '#00cfff', '#006ced', '#ffe000', '#ffa800', '#ff5b00', '#ff3000']
+        color: ['#00ffff', '#00cfff', '#006ced', '#ffe000', '#ffa800', '#ff5b00', '#ff3000']
+      },
+      setting: {
+        radius: ['70%', '75%']
       }
     }
   },
   mounted() {
-    const obj = {}
-    console.log(setExtend(obj, this.extend))
+    
   }
 }
 </script>
