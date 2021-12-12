@@ -32,7 +32,7 @@ export default {
         ],
         settings: {
           valueAxis: ['访问量', '留存率'],
-          bars: ['访问量'],
+            bars: ['访问量'],
           smooth: false
       },
       extend: {
