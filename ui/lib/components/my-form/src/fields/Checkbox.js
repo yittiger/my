@@ -123,7 +123,7 @@ export default {
           )
         })
         : this.currentOptions.map((opt, index) => {
-          const props = {...opt, label: opt[value]}
+          const props = {...opt, label: opt[value], border: this.props.border}
           return (
             <Checkbox style={this.optionStyle} {...{props: props}}>
               {scopedSlots(opt, index)}
