@@ -1,140 +1,152 @@
 <template>
-  <div
-    class="person-picker"
-  
-  >
-    <el-row class="wrapper">
-      <el-col :span="showOrgList ? 12 : 24" class="input-col">
-        <input-area
-          :person-prop-map="personPropMap"
-          ref="input"
-          @cancel="handleClosed"
-          @cancelSelect="handCancelSelect"
-          :multiple="multiple"
-          @submit="handleSubmit"
-          v-bind="$attrs"
-        ></input-area>
-      </el-col>
-      <el-col :span="12">
-        <org-list
-          ref="orgList"
-          v-if="showOrgList"
-          @select="handleListSelect" 
-          v-bind="$attrs"
-          :person-prop-map="personPropMap"
-          :multiple="multiple"
-        ></org-list>
-      </el-col>
-    </el-row>
-  </div>
+  <el-popover 
+    v-bind="{
+      ...popPropsProxy,
+      trigger: type === 'popover' ? 'click' : 'manual'
+    }" 
+    v-model="popVisible">
+    <slot name="field" slot="reference" :selItems="selItems">
+      <my-tag-input :allow-create="false" label="人员" v-model="selItemNames" @click.native="openPicker" @remove="selRemove"></my-tag-input>
+    </slot> 
+    <div class="picker-warp" v-if="type==='popover'" :style="{'height': `${popPropsProxy.height || 400}px`}">
+      <dw-person-picker-core ref="picker" v-bind="$attrs" @submit="showResult"></dw-person-picker-core>  
+    </div> 
+    <my-dialog  :visible.sync="dialogVisible" v-if="type==='dialog'" v-bind="{...dialogPropsProxy}"> 
+      <dw-person-picker-core ref="picker" v-bind="$attrs" @submit="showResult"></dw-person-picker-core>
+    </my-dialog>
+  </el-popover>
+ 
+ 
+  <!--   -->
 </template>
-
+<style lang="scss" scoped>
+</style>
 <script>
-import InputArea from './input-area'
-import OrgList from './org-list'
+import DwPersonPickerCore from '@/components/dw-person-picker/core'
+import {isEqual} from '$ui/utils/util'
+const DefaultDialogProps = {
+  target: 'body', 
+  title: '选择', 
+  width: '700px',
+  height: '580px', 
+  footer: false,
+  modal: true
+}
 
+const DefaultPopProps = {
+  placement: 'bottom-start',
+  title: '选择',
+  width: 600,
+  height: 400 
+}
 export default {
-  components: {
-    InputArea,
-    OrgList
-  },
-  /*
-  submitBtn 控制是否显示提交、取消按钮 ，默认true
-  personPropMap：接口返回人员列表字段映射
-  multiple: 是否多选
-  showOrgList: 是否结合部门进行查询（显示右侧部门列表）
-  searchPerson: 通过搜索异步查询人员函数，必传，参数keyword, 返回 输出人员列表的 Promise对象 
-  loadOrg: 异步获取初始部门树的函数，必传，返回 输出组织架构树 的 Promise对象
-  loadOrgChildren: 异步获取各个子部门树的函数（用于懒加载），选传，返回 输出 子级部门 的 Promise对象
-  loadUser: 根据部门信息异步获取部门成员的函数，必传，返回 输出 部门成员数组 的 Promise对象,
-  orgPropMap：接口返回部门数据字段映射
-  */
+  mixins: [],
+  components: {DwPersonPickerCore},
+ 
   props: {
-    multiple: {
-      type: Boolean,
-      default: true
+    value: {
+      type: Array,
+      default: () => { return [] }
     },
-    showOrgList: {
-      type: Boolean,
-      default: true
+    type: {
+      type: String,
+      default: 'popover',
+      validator: function(t) {
+        return ['dialog', 'popover'].includes(t)
+      }
     },
-    personPropMap: {
+    fieldPropsMap: {
       type: Object,
       default: () => {
         return {
           name: 'name',
-          id: 'id',
-          cardNo: 'cardNo'
+          id: 'id'
         }
+      }
+    },
+    dialogProps: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    },
+    popProps: {
+      type: Object,
+      default: () => {
+        return {}
       }
     }
   },
   data() {
     return {
+      selItemNames: [],
+      selItems: [],
+
+      popVisible: false,
+      dialogVisible: false,
+      dialogPropsProxy: {
+        ...DefaultDialogProps,
+        ...this.dialogProps
+      },
+      popPropsProxy: {
+        ...DefaultPopProps,
+        ...this.popProps
+      }
+      
+    }
+  },
+  computed: {
+  },
+  watch: {
+    value: {
+      immediate: true,
+      handler(val) {
+        if (!isEqual(val, this.selItems)) {
+          this.selItems = [...val]
+        }
+      }
+    },
+    selItems: {
+      immediate: true,
+      handler(val) {
+        setTimeout(() => {
+          this.selItemNames = this.selItems.map((item) => {
+            return item[this.fieldPropsMap.name]
+          })
+        }, 200)
+        
+        this.$emit('change', val)
+        this.$emit('input', val) 
+      }
     }
   },
   methods: {
-    // 响应右边部门人员列表的选中与取消 （同步修改输入框内的currentItems数据）
-    handleListSelect(item, isAdd) {
-      if (isAdd) { 
-        this.$refs.input.handleSelect(item)
-      } else { 
-        this.$refs.input.removeItem(item)
-      }
+    openPicker() {
+      console.log('cc')
+      if (this.type === 'dialog') {
+        this.dialogVisible = true
+      } 
+    }, 
+    showResult(targets, dept) {  
+      const uniTarget = this._removeDuplicate(targets, this.selItems, this.fieldPropsMap.id) 
+      this.selItems = this.selItems.concat(uniTarget)
+      this.dialogVisible = false
+      this.popVisible = false
     },
-    // 响应输入框删除选中人员操作（同步右边部门人员菜单取消选中）
-    handCancelSelect(item) {
-      this.$refs.orgList.removeSelect(item)
+    selRemove(index, label) {
+      this.selItems.splice(index, 1)
     },
-    // 点击提交按钮 获取当前人员和部门
-    handleSubmit(items) {
-      let paths = []
-      if (this.$refs.orgList) {
-        paths = JSON.parse(JSON.stringify(this.$refs.orgList.paths))
-      }
-      this.$emit('submit', items, paths)
-    },
-    // 点击取消按钮
-    handleClosed() {
-      // 清空右侧列表选中
-      this.$refs.orgList && this.$refs.orgList.users.forEach((item) => {
-        item._isSelect = false
+    _removeDuplicate(data, targets, key) {
+      return data.filter((item) => {
+        const Key = item[key] // 唯一表示
+        const targetIndex = targets.findIndex((node) => {
+          return node[key] === Key
+        })
+        return targetIndex < 0
       })
-      this.$emit('close')
-    },
-    // 通过API获取选中人员
-    getSelctPersons() {
-      const result = this.$refs.input.currentItems
-      return JSON.parse(JSON.stringify(result))
-    },
-    // 通过API获取选中部门
-    getSelectDept() {
-      const paths = this.$refs.orgList ? JSON.parse(JSON.stringify(this.$refs.orgList.paths)) : []
-      return paths
-    } 
-  }
+    }
+  },
+  created() {},
+  mounted() {}
 }
 </script>
-
-<style lang="scss" scoped>
-@import "~@/style/_vars.scss";
-.person-picker {
-  height: 100%; 
-  width: 100%;
-  box-sizing: border-box;
-  * {
-    box-sizing: border-box;
-  }
-  /deep/ .wrapper {
-    height: 100%;
-    .el-col {
-      box-sizing: border-box;
-      height: 100%;
-    }
-  }
-
-  .input-col {
-    border-right: 1px solid $blue-8;
-  }
-}
-</style>

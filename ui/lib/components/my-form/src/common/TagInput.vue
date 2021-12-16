@@ -26,7 +26,7 @@
              @close="removeTag(index)">{{item}}
         </Tag>
       </span>
-      <input v-if="allowCreate"
+      <input 
              ref="input"
              type="text"
              :disabled="disabled"
@@ -44,7 +44,7 @@
              :readonly="readonly"
              :placeholder="showPlaceholder"
              @focus="focus"
-             @blur="blur"  
+             @blur="blur" 
             >
     </ElInput>
 
@@ -78,7 +78,8 @@
      * @property {string} [placeholder] 输入框占位文本
      * @property {boolean} [closable=true] 允许删除标签
      * @property {boolean} [allowCreate=true] 允许创建标签
-     * @property {string} [icon=el-icon-price-tag] 输入框后缀的图标样式
+     * @property {string} [icon=el-icon-price-tag] 输入框后缀的图标样式 
+     * @property {boolean} [blurCreate = true] 允许通过blur方式插入
      *
      */
     props: {
@@ -115,7 +116,7 @@
       icon: {
         type: String,
         default: 'el-icon-price-tag'
-      }
+      } 
     },
     data() {
       return {

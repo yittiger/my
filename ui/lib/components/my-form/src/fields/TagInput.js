@@ -13,7 +13,16 @@ export default {
     TagInput
   },
   props: {
-    value: Array
+    value: Array,
+
+    blurCreate: {
+      type: Boolean,
+      default: true
+    },
+    allowCreate: {
+      type: Boolean,
+      default: true
+    }
   },
   methods: {
     getDefaultValue() {
@@ -39,7 +48,12 @@ export default {
     const vnode = (
       <TagInput ref="comp"
                 {...{
-                  props: {...this.innerProps, size: this.inputSize},
+                  props: {
+                    ...this.innerProps, 
+                    size: this.inputSize, 
+                    blurCreate: this.blurCreate,
+                    allowCreate: this.allowCreate
+                  },
                   on: {
                     ...this.$listeners,
                     change: this.handleChange

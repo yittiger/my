@@ -40,7 +40,7 @@ export default {
     },
     columns: {
       type: [Number, Object],
-      default: defaultCol,
+      default: () => { return {...defaultCol} },
       validator(val) {
         return typeof val === 'number' ? 24 % val === 0 : true
       }

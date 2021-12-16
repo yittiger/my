@@ -16,6 +16,7 @@
           
         ></auto-complete>
         <my-tag-input
+           
           slot="reference"
           ref="inputTag"
           v-model="value"

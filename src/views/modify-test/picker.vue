@@ -1,15 +1,38 @@
 <template>
   <div >
     <el-button size="mini" type="primary" @click="visible = true">select</el-button>
-    <div v-show="selectPersons.length">
+    <!-- <div v-show="selectPersons.length">
       选择人员： <el-tag v-for="item in selectPersons" :key="item.id">{{item.name}}</el-tag>
-    </div>  
-    <div v-show="selectDepts.length">
+    </div>   -->
+    <!-- <div v-show="selectDepts.length">
       选择部门： <el-tag v-for="item in selectDepts" :key="item.id">{{item.label}}</el-tag>
-    </div>  
-    <my-dialog :visible.sync="visible" target="body" title="标题文字" width="700px" height="500px" :footer="true" @submit="getResult">
-      <dw-person-picker ref="picker" :submit-btn="false" :show-org-list="true" :multiple="true" :load-org="createOrgTree" :load-user="loadUserByOrg" :search-person="searchPersonByText" @submit="showResult"></dw-person-picker>
-    </my-dialog> 
+    </div> -->
+
+    <dw-person-picker :field-props-map="{name: 'name', id: 'id'}" type="dialog" :submit-btn="true" :multiple="true" :load-org="createOrgTree" :load-user="loadUserByOrg" :search-person="searchPersonByText" v-model="selectPersons"> 
+      <template v-slot:field="{selItems}">
+        <div style="border:1px solid; height: 40px"> 
+          <el-tag type="warning" v-for="(item, index) in selItems" :key="index">{{item.name}}</el-tag>
+        </div>
+      </template>
+    </dw-person-picker>
+    <br/>
+    <hr>
+    <br/>
+    <div> 
+      <my-list :data="selectPersons" border split stripe>
+        <template v-slot="{item}">
+          <div class="item">
+            <my-key-val-list :column="column" :data="item" border> </my-key-val-list>
+          </div>
+        </template>  
+      </my-list>
+
+    </div>
+    <!-- <my-tag-input  label="人员" v-model="persons" readonly ></my-tag-input> -->
+
+    <!-- <my-dialog :visible.sync="visible" target="body" title="标题文字" width="700px" height="500px" :footer="true" @submit="getResult">
+      <dw-person-picker ref="picker" :submit-btn="false" :show-org-list="true" @submit="showResult"></dw-person-picker>
+    </my-dialog>  -->
   </div>
 </template>
 <style scoped lang="scss">
@@ -29,7 +52,16 @@ export default {
     return {
       visible: false,
       selectPersons: [],
-      selectDepts: []   
+      selectDepts: [],
+      persons: [],
+      column: [
+        { label: '姓名', prop: 'name'},
+        { label: '身份证', prop: 'id' },
+        { label: '年龄', prop: 'age' },
+        { label: '部门', prop: 'department' },
+        { label: '其他', prop: 'other' },
+        { label: '其他2', prop: 'other2' }
+      ]
     }
   },
   methods: {
