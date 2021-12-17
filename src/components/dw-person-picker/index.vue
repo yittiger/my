@@ -6,20 +6,21 @@
     }" 
     v-model="popVisible">
     <slot name="field" slot="reference" :selItems="selItems">
-      <my-tag-input :allow-create="false" label="人员" v-model="selItemNames" @click.native="openPicker" @remove="selRemove"></my-tag-input>
+      <my-tag-input class="picker-field" v-bind="$attrs" :allow-create="false" v-model="selItemNames" @click.native="openPicker" @remove="selRemove"></my-tag-input>
     </slot> 
     <div class="picker-warp" v-if="type==='popover'" :style="{'height': `${popPropsProxy.height || 400}px`}">
-      <dw-person-picker-core ref="picker" v-bind="$attrs" @submit="showResult"></dw-person-picker-core>  
+      <dw-person-picker-core ref="picker" v-bind="{...$attrs, 'submitBtn': true }"  @submit="showResult"></dw-person-picker-core>  
     </div> 
     <my-dialog  :visible.sync="dialogVisible" v-if="type==='dialog'" v-bind="{...dialogPropsProxy}"> 
-      <dw-person-picker-core ref="picker" v-bind="$attrs" @submit="showResult"></dw-person-picker-core>
+      <dw-person-picker-core ref="picker" v-bind="{...$attrs, 'submitBtn': true }" @submit="showResult"></dw-person-picker-core>
     </my-dialog>
   </el-popover>
- 
- 
-  <!--   -->
+  <!-- <my-tag-input :allow-create="false" v-model="selItemNames" @click.native="openPicker" @remove="selRemove"></my-tag-input> -->
 </template>
 <style lang="scss" scoped>
+/deep/ .el-form-item.picker-field{
+  margin-bottom: 0;
+}
 </style>
 <script>
 import DwPersonPickerCore from '@/components/dw-person-picker/core'
@@ -32,7 +33,6 @@ const DefaultDialogProps = {
   footer: false,
   modal: true
 }
-
 const DefaultPopProps = {
   placement: 'bottom-start',
   title: '选择',
@@ -42,7 +42,25 @@ const DefaultPopProps = {
 export default {
   mixins: [],
   components: {DwPersonPickerCore},
- 
+  /*
+    //  ========== 表单弹窗参数 ================
+    value: 用作v-model双向绑定
+    type: 弹窗的打开方式： dialog / popover
+    fieldPropsMap： 接口返回人员列表字段映射（作用于表单的显示标签中）
+    dialogProps: 弹窗配置参数
+    popProps: popover 配置参数
+
+    // ========== 选择器参数 =================
+    submitBtn 控制是否显示提交、取消按钮 ，默认true
+    personPropMap：接口返回人员列表字段映射
+    multiple: 是否多选
+    showOrgList: 是否结合部门进行查询（显示右侧部门列表）
+    searchPerson: 通过搜索异步查询人员函数，必传，参数keyword, 返回 输出人员列表的 Promise对象 
+    loadOrg: 异步获取初始部门树的函数，必传，返回 输出组织架构树 的 Promise对象
+    loadOrgChildren: 异步获取各个子部门树的函数（用于懒加载），选传，返回 输出 子级部门 的 Promise对象
+    loadUser: 根据部门信息异步获取部门成员的函数，必传，返回 输出 部门成员数组 的 Promise对象,
+    orgPropMap：接口返回部门数据字段映射
+  */
   props: {
     value: {
       type: Array,
@@ -107,13 +125,12 @@ export default {
       }
     },
     selItems: {
-      immediate: true,
+      immediate: false,
       handler(val) {
-        setTimeout(() => {
-          this.selItemNames = this.selItems.map((item) => {
-            return item[this.fieldPropsMap.name]
-          })
-        }, 200)
+        
+        this.selItemNames = this.selItems.map((item) => {
+          return item[this.fieldPropsMap.name]
+        }) 
         
         this.$emit('change', val)
         this.$emit('input', val) 
@@ -122,7 +139,6 @@ export default {
   },
   methods: {
     openPicker() {
-      console.log('cc')
       if (this.type === 'dialog') {
         this.dialogVisible = true
       } 

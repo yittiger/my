@@ -6,7 +6,7 @@
         placement="bottom-start"
         width="300"
         trigger="manual"
-        :value="popoverActive"
+        v-model="popoverActive"
       >
         <auto-complete
           v-bind="$attrs"
@@ -16,6 +16,7 @@
           
         ></auto-complete>
         <my-tag-input
+          style="width: 100%" 
           slot="reference"
           ref="inputTag"
           v-model="value"
@@ -91,11 +92,12 @@ export default {
     handleInputChange(val) { 
       if (this.timer) {
         clearTimeout(this.timer)
+        this.timer = null
       }
       this.timer = setTimeout(() => {
         this.keyword = val
         this.popoverActive = !!val
-      }, 500)
+      }, 300)
     },
     handleSelect(item) {
       if (this.validate(item)) {

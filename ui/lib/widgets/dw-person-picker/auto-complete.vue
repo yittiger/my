@@ -47,7 +47,7 @@ export default {
         throw new Error('searchPerson函数缺失')
       }
       this.searchPerson(keyword).then((res) => {
-        console.log(res, '查询人员')
+        console.log(res, '查询人员', this.personPropMap.name)
         this.items = res 
       }) 
     },

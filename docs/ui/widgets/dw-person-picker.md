@@ -46,7 +46,7 @@ npm run widgets dw-person-picker
 
 </style>
 <script>
-import DwPersonPicker from '$ui/widgets/dw-person-picker' // 此处为文档引用，正式使用请在项目中组件路径中引入
+import DwPersonPicker from '$ui/widgets/dw-person-picker/core' // 此处为文档引用，正式使用请在项目中组件路径中引入
 import Mock from 'mockjs'
 import CityData from '$docs/data/CITY.json'
 import {create as createTree} from '$ui/utils/tree'
