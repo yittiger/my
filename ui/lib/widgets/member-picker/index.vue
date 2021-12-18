@@ -9,13 +9,12 @@
       <my-tag-input class="picker-field" v-bind="$attrs" :allow-create="false" v-model="selItemNames" @click.native="openPicker" @remove="selRemove"></my-tag-input>
     </slot> 
     <div class="picker-warp" v-if="type==='popover'" :style="{'height': `${popPropsProxy.height || 400}px`}">
-      <dw-person-picker-core ref="picker" v-bind="{...$attrs, 'submitBtn': true }"  @submit="showResult"></dw-person-picker-core>  
+      <member-picker-core ref="picker" v-bind="{...$attrs, 'submitBtn': true }"  @submit="showResult"></member-picker-core>  
     </div> 
     <my-dialog  :visible.sync="dialogVisible" v-if="type==='dialog'" v-bind="{...dialogPropsProxy}"> 
-      <dw-person-picker-core ref="picker" v-bind="{...$attrs, 'submitBtn': true }" @submit="showResult"></dw-person-picker-core>
+      <member-picker-core ref="picker" v-bind="{...$attrs, 'submitBtn': true }" @submit="showResult"></member-picker-core>
     </my-dialog>
-  </el-popover>
-  <!-- <my-tag-input :allow-create="false" v-model="selItemNames" @click.native="openPicker" @remove="selRemove"></my-tag-input> -->
+  </el-popover> 
 </template>
 <style lang="scss" scoped>
 /deep/ .el-form-item.picker-field{
@@ -23,7 +22,7 @@
 }
 </style>
 <script>
-import DwPersonPickerCore from '@/components/dw-person-picker/core'
+import MemberPickerCore from './core'
 import {isEqual} from '$ui/utils/util'
 const DefaultDialogProps = {
   target: 'body', 
@@ -41,7 +40,7 @@ const DefaultPopProps = {
 }
 export default {
   mixins: [],
-  components: {DwPersonPickerCore},
+  components: {MemberPickerCore},
   /*
     //  ========== 表单弹窗参数 ================
     value: 用作v-model双向绑定

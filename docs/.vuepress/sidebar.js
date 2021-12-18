@@ -304,7 +304,7 @@ module.exports = {
   ],
   '/ui/widgets/': [
     'dict',
-    'dw-person-picker'
+    'member-picker'
   ],
   '/guide/': [
     createMenus('开发指南', [
