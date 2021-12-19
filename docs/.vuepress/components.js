@@ -135,7 +135,8 @@ module.exports = {
       'edit-tags': 'EditTags',
       login: '登录',
       'search-box': '搜索输入框',
-      'location-picker': '经纬度提取器'
+      'location-picker': '经纬度提取器',
+      'select-field': '自定义选择器'
     },
     '数据展示': {
       detail: '数据详情描述列表',

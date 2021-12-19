@@ -57,6 +57,10 @@ button.el-button--default.is-plain {
   .el-table__body tr:hover > td {
     background-color: $--color-table-hover !important;
   }
+  .el-table__body tr.hover-row > td {
+    background-color: $--color-table-hover !important;
+  }
+  
   .el-table__row--striped {
     td {
       background: $--color-table-stripe !important;
