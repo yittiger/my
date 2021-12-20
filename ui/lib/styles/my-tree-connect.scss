@@ -12,6 +12,7 @@ $default-color: $--color-info;
     color: $default-color;
     &:before {
       content: '+';
+      box-sizing: border-box;
       display: inline-block;
       border: 1px solid $default-color;
       border-radius: 2px;
@@ -19,7 +20,7 @@ $default-color: $--color-info;
       width: 14px;
       height: 14px;
       font-size: 14px;
-      line-height: 10px;
+      line-height: 14px;
       margin-top: 2px;
     }
   }
