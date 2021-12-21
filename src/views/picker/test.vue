@@ -2,25 +2,28 @@
   <div>
     
     <div style="width:680px; height:480px;border: 1px solid">
-      <!-- :load-org="getOrgData"  -->
+      <!-- remote-tree-filter
+        :lazy-load-org="lazyLoadNode"
+        @on-remoteQueryChange="remoteQueryChangeHandle"
+        @on-remoteQueryFilter="remoteQueryFilterHandle"  -->
       <org-member-picker 
         ref="orgMemberPicker"
-        :lazy-load-org="lazyLoadNode"
-        remote-tree-filter
-        @on-remoteQueryChange="remoteQueryChangeHandle"
-        @on-remoteQueryFilter="remoteQueryFilterHandle"
+        
+        :load-org="getOrgData"
+        
 
         :person-load="personLoadFn"  
         :list-column="personCol"
         :org-select="true"
         :is-multi-person="true"
         :tree-props="{
-          'check-strictly': true 
+          'check-strictly': true,
+          'filterNodeMethod': filterNode
         }"
         :table-props="{'page-size': 20}"
         @on-submit="handleSubmit"
-        
-      ></org-member-picker><!-- 'filterNodeMethod': filterNode -->
+         
+      ></org-member-picker><!--  -->
     </div> 
   </div>
 </template>

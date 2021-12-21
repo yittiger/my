@@ -3,6 +3,7 @@
     <div class="picker-warp">
       <div class="inner">
         <my-slide-layout class="picker-layout" type="horizontal" :edage-width="40" :range="[30, 60]">
+          <!--组织结构树组件-->
           <div slot="odd" class="left-side" >
             <org-tree  
               ref="orgTree"
@@ -13,34 +14,41 @@
               }"
               @on-orgClick="orgClickHandle"
               @on-orgChecked="orgCheckedHandle"
-             
+              v-on="$listeners"
             ></org-tree>
           </div>
+          <!--人员列表组件-->
           <div slot="even" class="right-side">
             <person-list 
             ref="personList" 
-            v-bind="{...$attrs, 'personPropMap': personPropMap}" 
+            v-bind="{
+              ...$attrs, 
+              'personPropMap': personPropMap, 
+              'isMultiPerson': isMultiPerson
+            }" 
             :sel-dept-label="selDeptLabel" 
             :dept-data="selDeptData" 
             @on-clearSelDept="clearSelDeptHandle"
             @on-personSel="(sels) => {selectPersons = sels}"
+            v-on="$listeners"
             ></person-list>
             
           </div>
         </my-slide-layout>
       </div> 
     </div>
-    <div class="select-warp">
-      <el-row>
-        <el-col :span="2" style="line-height:32px">人员</el-col>
-        <el-col :span="22">
-          
+    <!--选中结果区域-->
+    <div class="select-warp" v-if="isShowResult">
+      <!--人员选中结果-->
+      <el-row style="padding: 2px 0" v-show="selectPersons.length">
+        <el-col :span="2" style="line-height:32px">人员：</el-col>
+        <el-col :span="22"> 
           <el-tag 
           v-for="(item, index) in selectPersons" 
           :key="`person_${index}`"
           v-show="index < selPersonShowMax"
           closable
-          @close="selPersonRemove(item)"
+          @close="selPersonRemove(item, index)"
           >{{item[personPropMap.name]}}</el-tag>
           <el-tag
             type="info" 
@@ -50,7 +58,10 @@
         
         </el-col>
       </el-row>
-      <el-row >
+
+      <!--部门选中结果-->
+      <el-row style="padding: 2px 0"  
+      v-show="(orgSelect && checkedDepts.length) || (!orgSelect && selDeptLabel)" >
         <el-col :span="2" style="line-height:32px">部门：</el-col>
         <el-col :span="22" v-if="orgSelect">
           <el-tag 
@@ -76,9 +87,11 @@
         </el-col>
       </el-row>
     </div>
-    <div class="btn-warp">
-      <el-button type="primary" size="small">确定</el-button>
-      <el-button type="warning" size="small">取消</el-button>
+
+    <!--操作按钮区域-->
+    <div class="btn-warp" v-show="isShowSubmit">
+      <el-button type="primary" size="small" @click="submitClickHandle">确定</el-button>
+      <el-button type="warning" size="small" @click="cancelClickHandle">取消</el-button>
     </div>
   </div>
 </template>
@@ -105,8 +118,13 @@
       bottom: 0;
     }
   }
-  .select-warp{}
+  .select-warp{
+    padding-top: 3px;
+    border-top: 1px solid  rgba(0,0,0,.04);
+  }
   .btn-warp{
+    border-top: 1px solid  rgba(0,0,0,.04);
+    padding-top: 4px;
     text-align: right;
   }
   .picker-layout{
@@ -124,16 +142,115 @@
 </style>
 <script>
 /*
-  submitBtn 控制是否显示提交、取消按钮 ，默认true
-  personPropMap：接口返回人员列表字段映射
-  multiple: 是否多选
-  showOrgList: 是否结合部门进行查询（显示右侧部门列表）
-  searchPerson: 通过搜索异步查询人员函数，必传，参数keyword, 返回 输出人员列表的 Promise对象 
-  loadOrg: 异步获取初始部门树的函数，必传，返回 输出组织架构树 的 Promise对象
-  loadOrgChildren: 异步获取各个子部门树的函数（用于懒加载），选传，返回 输出 子级部门 的 Promise对象
-  loadUser: 根据部门信息异步获取部门成员的函数，必传，返回 输出 部门成员数组 的 Promise对象,
-  orgPropMap：接口返回部门数据字段映射
-  */
+  
+  
+  // 最大显示选中人数
+  selDeptShowMax: {
+    type: Number,
+    default: 5
+  },
+  // 最大显示选中部门数
+  selPersonShowMax: {
+    type: Number,
+    default: 5
+  },
+  
+  
+  // 是否显示结果
+  isShowResult: {
+    type: Boolean,
+    default: true
+  },
+  // 是否显示确定取消按钮
+  isShowSubmit: {
+    type: Boolean,
+    default: true
+  } 
+  =======================
+  // 部门数据字段映射
+  orgPropMap: {
+    type: Object,
+    default: () => {
+      return {
+        label: 'label',
+        id: 'id',
+        children: 'children',
+        parentId: 'parentId'
+      }
+    }
+  },
+  // 异步获取初始部门树的函数，返回 输出组织架构树 的 Promise对象
+  loadOrg: Function,
+
+  // 懒加载获取部门数据
+  lazyLoadOrg: Function,
+
+  // 是否选择部门
+  orgSelect: {
+    type: Boolean,
+    default: false
+  },
+
+  // 树组件传参
+  treeProps: {
+    type: Object,
+    default: () => { 
+      return {
+        'check-strictly': true
+      } 
+    }
+  },
+  // 远程查询部门
+  remoteTreeFilter: {
+    type: Boolean,
+    default: false
+  }
+  ====================
+  // 人员是否多选 
+  // 人员数据字段映射 
+  personPropMap: {
+    type: Object,
+    default: () => {
+      return {
+        name: 'name',
+        cardNum: 'cardNum',
+        dept: 'dept',
+        id: 'id'
+      }
+    }
+  },
+  isMultiPerson: {
+    type: Boolean,
+    default: true
+  }, 
+  // 是否默认自动加载人员
+  autoLoad: {
+    type: Boolean,
+    default: false
+  },
+  // 表格组件其他传参
+  tableProps: {
+    type: Object,
+    default: () => {
+      return {}
+    }
+  },
+  // 人员加载函数
+  personLoad: {
+    type: Function
+  },
+  // 人员显示列表
+  listColumn: {
+    type: Array,
+    default: () => {
+      return [
+        { prop: 'name', label: '姓名' },
+        { prop: 'cardNum', label: '身份证' },
+        { prop: 'dept', label: '单位' }
+      ]
+    }
+  } 
+*/
 
 import OrgTree from './org-tree'
 import PersonList from './person-list'
@@ -143,7 +260,8 @@ export default {
     OrgTree,
     PersonList
   },
-  props: { 
+  props: {
+    // 人员数据字段映射 
     personPropMap: {
       type: Object,
       default: () => {
@@ -155,6 +273,7 @@ export default {
         }
       }
     },
+    // 部门数据字段映射
     orgPropMap: {
       type: Object,
       default: () => {
@@ -166,10 +285,12 @@ export default {
         }
       }
     },
+    // 最大显示选中人数
     selDeptShowMax: {
       type: Number,
       default: 5
     },
+    // 最大显示选中部门数
     selPersonShowMax: {
       type: Number,
       default: 5
@@ -179,20 +300,31 @@ export default {
       type: Boolean,
       default: false
     },
-     
+    // 人员是否多选 
     isMultiPerson: {
+      type: Boolean,
+      default: true
+    },
+    // 是否显示结果
+    isShowResult: {
+      type: Boolean,
+      default: true
+    },
+    // 是否显示确定取消按钮
+    isShowSubmit: {
       type: Boolean,
       default: true
     }
   },
   data() {
     return {
-      selDeptData: null,
-      checkedDepts: [],
-      selectPersons: []
+      selDeptData: null, // 选中用于查询人员的部门数据
+      checkedDepts: [], // 多选时选中的部门数据列表
+      selectPersons: [] // 选中的人员数据列表
     }
   },
   computed: {
+    // 当前查询人员部门的名称（在人员列表中显示）
     selDeptLabel() {
       if (!this.selDeptData) {
         return ''
@@ -208,24 +340,57 @@ export default {
       this.$refs.personList.searchQuery = ''
       this.$nextTick(() => { 
         this.$refs.personList.$refs.list.refresh(1)
-      }) 
+      })
+
     },
     // 人员列表派出的清除当前部门事件
     clearSelDeptHandle() {
       this.selDeptData = null 
+      this.$nextTick(() => { 
+        this.$refs.personList.$refs.list.refresh(1)
+      }) 
     },
     // 部门选中(checkbox变化)事件
     orgCheckedHandle(depts) {
       this.checkedDepts = depts 
     },
-    // 下方选中部门的删除事件函数
+    // 下方结果选中部门的删除事件函数
     selDeptRemove(tag) {
       this.$refs.orgTree.$refs.tree.setChecked(tag[this.orgPropMap.id], false)
     },
-
-    selPersonRemove(person) {
-      console.log(person)
+    // 下方结果选中人员的删除事件函数
+    selPersonRemove(person, index) {
+      this.$refs.personList.removePersonSel(index)
+    },
+    
+    // 获取选中人员
+    getSelPersons() {
+      return this.selectPersons
+    },
+    // 获取选中部门
+    getSelDepts() {
+      if (this.orgSelect) {
+        return this.checkedDepts
+      } else {
+        return [this.selDeptData]
+      }
+    },
+    // 取消按钮点击事件
+    cancelClickHandle() {
+      // 清除选中部门  
+      this.checkedDepts.forEach((tag) => {
+        this.$refs.orgTree.$refs.tree.setChecked(tag[this.orgPropMap.id], false)
+      })
+      this.$refs.personList.selectPersons = [] 
+      this.$emit('on-cancel')
+    },
+    // 确定按钮点击事件
+    submitClickHandle() {
+      const person = this.getSelPersons()
+      const dept = this.getSelDepts()
+      this.$emit('on-submit', person, dept)
     }
+
   },
   created() {},
   mounted() {}
