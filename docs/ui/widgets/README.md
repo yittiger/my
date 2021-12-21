@@ -9,3 +9,4 @@ npm run widgets [工具名称]
 ```
 - 命令执行完后，代码将生成于项目的 ``.my/widgets/[工具名称]`` 文件夹下
 - 建议用户根据当前工具的文档，将代码适当修改并复制到相应位置进行使用
+- 如果My-Web工程没有此命令，请自行在package.json的“scripts”里添加 ``“"widgets": "my widgets"”``

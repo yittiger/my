@@ -16,6 +16,7 @@
         :list-column="personCol"
         :org-select="true"
         :is-multi-person="true"
+        autoLoad
         :tree-props="{
           'check-strictly': true,
           'filterNodeMethod': filterNode
