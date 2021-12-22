@@ -294,3 +294,96 @@ export default {
 </script>
 
 ```html
+:::
+
+### 直接使用内部
+使用选择器内部
+:::demo
+
+```html
+<template>
+  <div style="width:500px; height: 400px"> 
+    <list-picker 
+      ref="listPicker" 
+      :list-load="caseListLoadFn"
+      :options-props-map="casePropsMap"
+      @on-submit="submitHandle" 
+    > 
+    </list-picker> 
+  </div>
+</template>
+<style lang="scss" scoped>
+
+</style>
+<script>
+import Mock from 'mockjs'
+import ListPicker from '$ui/widgets/list-picker/core'
+export default {
+  mixins: [],
+  components: {ListPicker},
+  props: {
+  },
+  data() {
+    return {
+      casePropsMap: {
+        label: 'caseName',
+        id: 'id',
+        value: 'id'
+      }
+    }
+  },
+  computed: {
+  },
+  methods: {
+    caseListLoadFn(page, pageSize, filter) {
+      return new Promise((resolve, reject) => {
+        console.log(page, pageSize, filter)
+        setTimeout(() => {
+          const data = Mock.mock({
+            [`list|${pageSize}`]: [
+              {
+                id: '@id',
+                caseName: '@ctitle', 
+                content: '@ctitle'
+              }
+            ]
+          })
+    
+          resolve({
+            total: 80,
+            list: data.list
+          })
+        }, 300)
+      })
+    }, 
+    submitHandle(sel) {
+      this.$alert(sel)
+    }
+     
+  } 
+}
+</script>
+```html
+:::
+
+## 属性参数
+### 表单弹窗参数
+| 参数      | 说明    | 类型      | 可选值       | 默认值   |
+|---------- |-------- |---------- |-------------  |-------- |
+| value | 用作v-model双向绑定 | array | — | [] |
+| fieldProps | my-select-field组件的参数 | object | - | - |
+| optionsPropsMap | 选项表单与选项列表的共同字段映射 | object | - | { label: 'name', id: 'id', value: 'id' } |
+| keepPickerState | 打开选择器时是否回填当前选择数据 | boolean | - | true |
+
+### 表单弹窗参数
+| 参数      | 说明    | 类型      | 可选值       | 默认值   |
+|---------- |-------- |---------- |-------------  |-------- |
+| listLoad |  | Function 
+| optionsPropsMap | 选项的字段映射 | Object | - | { label: 'name', id: 'id', value: 'id' } |,
+| selItemShowMax | 选中最多显示的数量 | Number | - | 5 |
+| isShowResult | 是否显示选中结果 | Boolean | - | true |
+| isShowSubmit | 是否显示提交按钮 | Boolean | - | true |
+| isMultiSel | 是否多选 | Boolean | - | true |
+
+### 其他参数
+支持 my-table 除 loader 外其他参数

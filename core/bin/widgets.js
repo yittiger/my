@@ -12,9 +12,8 @@ module.exports = function(args = []) {
   const widgetPath = utils.join(core.LibPath, 'widgets', pathList[pathName]) 
 
   const localPath = utils.join(core.ProjectRootPath, '.my', 'widgets', pathList[pathName]) 
-  // if (fs.existsSync(localPath)) {
-  //   utils.log()
-  // }
+  
+  // console.log(widgetPath, localPath)
 
   utils.copy(widgetPath, localPath)
   utils.log(`工具已经安装成功,位置：${localPath}`, 'success')
