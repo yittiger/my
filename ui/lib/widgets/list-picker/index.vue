@@ -12,6 +12,9 @@
     @show="openPickerHandle"
     v-on="{...otherListener}"
   > 
+    <template v-slot:field="{selItems}" >
+      <slot name="field" :selItems="selItems"></slot>
+    </template>
     <list-picker slot="picker" ref="picker" v-bind="{isShowSubmit: false, ...$attrs, optionsPropsMap: optionsPropsMap}">
       <template v-slot:filter >
         <slot name="filter"></slot>
@@ -98,6 +101,9 @@ export default {
       this.selectItems = this.selectItems.concat(adds)
       this.$refs.field.closePicker()
       this.$emit('on-submit', this.selectItems)
+    },
+    openPicker() {
+      this.$refs.field.openPicker()
     },
     // 选择器弹窗打开 
     openPickerHandle() { 

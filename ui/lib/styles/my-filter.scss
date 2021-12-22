@@ -10,6 +10,9 @@
       flex: 0 0 auto;
       &.my-form__footer{
         flex: 1;
+        .el-form-item__label{
+          display: none !important;
+        }
       }
     }
   }

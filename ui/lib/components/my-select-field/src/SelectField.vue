@@ -4,18 +4,19 @@
       ...popPropsProxy,
       trigger: popoverType
     }" 
+    v-on="{...popoverListener}"
     v-model="popVisible">
     <slot name="field" slot="reference" :selItems="selItems">
       <my-tag-input class="my-select-field" v-bind="$attrs" :allow-create="false" v-model="selItemNames" @click.native="openPicker" @remove="selRemove"></my-tag-input>
     </slot> 
-    <div class="picker-warp" v-if="type==='popover'" :style="{'height': `${popPropsProxy.height || 300}px`}">
+    <div class="picker-warp" v-if="type==='popover' && popVisible" :style="{'height': `${popPropsProxy.height || 300}px`}">
       <slot name="picker"></slot>
     </div>
     <div style="text-align:right" v-if="popPropsProxy.footer" >
       <el-button type="primary" size="small" @click="confirmHandle">确定</el-button>
       <el-button type="warning" size="small"  @click="cancelHandle">取消</el-button>  
     </div> 
-    <my-dialog  :visible.sync="dialogVisible" v-if="type==='dialog'" v-bind="{...dialogPropsProxy}" @submit="confirmHandle" @cancel="cancelHandle"> 
+    <my-dialog  :visible.sync="dialogVisible" v-if="type==='dialog'" v-bind="{...dialogPropsProxy}" @submit="confirmHandle" @cancel="cancelHandle"  v-on="$listeners"> 
        <slot name="picker"></slot>
     </my-dialog>
   </el-popover> 
@@ -58,7 +59,7 @@ export default {
    * @property {array} [value] 实现双向绑定v-model
    * @property {string} [type] 选择器打开方式，dialog / popover, 默认popover
    * @property {object} [fieldPropsMap] 表单中显示内容的字段映射，通常自定义选中选择的数据为对象格式，需要选择对象中某个字段作为 tag-input 中的标签显示字段
-   * @property {string} [fieldPropsMap.name] 确定tag-input标签的显示字段
+   * @property {string} [fieldPropsMap.label] 确定tag-input标签的显示字段
    * @property {string} [fieldPropsMap.id] 确定选择数据的唯一标识
    * @property {object} [dialogProps] dialog弹窗的配置项（继承my-dialog的props）
    * @property {object} [popProps] popover 的配置项（继承el-popover的props）
@@ -88,7 +89,7 @@ export default {
       type: Object,
       default: () => {
         return {
-          name: 'name',
+          label: 'name',
           id: 'id'
         }
       }
@@ -127,27 +128,29 @@ export default {
   computed: {
     popoverType() {
       return this.type === 'popover' ? this.popPropsProxy.footer ? 'manual' : 'click' : 'manual' 
+    },
+    popoverListener() {
+      const listeners = {...this.$listeners}
+      delete listeners.input
+      return listeners
     }
   },
   watch: {
     value: {
-      immediate: true,
-      handler(val) {
+      immediate: false,
+      handler(val) { 
         if (!isEqual(val, this.selItems)) {
-          this.selItems = [...val]
+          this.selItems = [...val] 
         }
       }
     },
-    selItems: {
-      immediate: false,
-      handler(val) {
-        this.selItemNames = this.selItems.map((item) => {
-          return item[this.fieldPropsMap.name]
-        }) 
-        
-        this.$emit('change', val)
-        this.$emit('input', val) 
-      }
+    selItems(val) {
+      this.selItemNames = val.map((item) => {
+        return item[this.fieldPropsMap.label]
+      }) 
+      this.$emit('change', val)
+      this.$emit('input', val) 
+      
     }
   },
   methods: {
@@ -176,7 +179,8 @@ export default {
       // } 
     }, 
     selRemove(index, label) {
-      this.selItems.splice(index, 1)
+      const item = this.selItems.splice(index, 1) 
+      this.$emit('on-remove', item[0], index)
     },
     _removeDuplicate(data, targets, key) {
       return data.filter((item) => {
@@ -203,8 +207,7 @@ export default {
       this.closePicker()
     }
   },
-  mounted() {
-    // console.log(this.popoverType)
+  created() { 
   }
 }
 </script>

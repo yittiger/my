@@ -42,10 +42,12 @@
     /**
      * 属性参数，支持MyFrom全部参数，并增加以下参数
      * @member props
+     * @property {boolean} [isFlex] 支持表单弹性布局，并且提交按钮固定在表单最右侧
      * @property {number|object} [columns] 一行显示几项, 可设置响应式
      * @property {boolean} [listenEl] 监听$el元素宽度实现响应布局（默认为false）
      */
     props: {
+      // 表单弹性布局
       isFlex: {
         type: Boolean,
         default: true

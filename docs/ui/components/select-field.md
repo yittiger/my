@@ -16,7 +16,7 @@
       ref="select"
       :pop-props="{footer: true}" 
       v-model="selectItems" 
-      :field-props-map="{name: 'xm', id: 'card'}" 
+      :field-props-map="{label: 'xm', id: 'card'}" 
       @on-confirm="confirmHandle"
     > 
       <my-table 
@@ -107,7 +107,7 @@
           ref="select"
           type="dialog" 
           v-model="selectPersons" 
-          :field-props-map="{name: 'xm', id: 'card'}" 
+          :field-props-map="{label: 'xm', id: 'card'}" 
           @on-confirm="confirmHandle"
           @change="pickerChange"
         > 
