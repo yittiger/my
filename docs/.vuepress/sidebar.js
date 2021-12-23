@@ -306,7 +306,8 @@ module.exports = {
     'dict',
     'member-picker',
     'org-member-picker',
-    'list-picker'
+    'list-picker',
+    'charts1'
   ],
   '/guide/': [
     createMenus('开发指南', [

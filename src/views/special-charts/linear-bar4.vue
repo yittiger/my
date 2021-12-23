@@ -8,7 +8,7 @@
 <script>
 import {LinearGradient} from 'echarts/lib/util/graphic'
 import {colorData} from '$ui/utils/color'
-const colors = ['#74FCED', '#40D3F7'] 
+const colors = ['#74FCED', '#56f570'] 
 export default {
   data() {
     const barColor = colors.map((color) => {

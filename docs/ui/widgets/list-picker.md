@@ -366,7 +366,9 @@ export default {
 ```html
 :::
 
+
 ## 属性参数
+组件基于my-select-field组件和my-list组件封装，
 ### 表单弹窗参数
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
@@ -387,3 +389,19 @@ export default {
 
 ### 其他参数
 支持 my-table 除 loader 外其他参数
+
+## API method
+### Picker (整体组件)方法
+| 参数      | 说明    |  参数      | 输出       |
+|---------- |-------- |---------- |------------- |
+| openPicker | 打开弹窗（dialog）的函数 | - | - |
+| closePicker | 关闭弹窗（dialog）的函数 | - | - |
+| filterSubmitHandle | 查询表单的提交函数 | query 表单查询数据 | - | 
+
+### PickerCore (选择器组件) 方法
+| 参数      | 说明    |  参数     | 输出       |
+|---------- |-------- |---------- |------------- |
+| removeItemSel | 删除选中的选项 | item选项数据 | - |
+| getSelectItems | 获取选中的选项 | - | 选中数据数组 |
+| setSelectItems | 设置选中的选项 | items 选项数据数组 | - |
+| clearSelectItems | 清空选中的选项 | - | - |

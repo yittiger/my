@@ -104,6 +104,9 @@ export default {
     },
     openPicker() {
       this.$refs.field.openPicker()
+    }, 
+    closePicker() {
+      this.$refs.field.closePicker()
     },
     // 选择器弹窗打开 
     openPickerHandle() { 

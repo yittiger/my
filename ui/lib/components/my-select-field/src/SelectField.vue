@@ -182,6 +182,13 @@ export default {
       const item = this.selItems.splice(index, 1) 
       this.$emit('on-remove', item[0], index)
     },
+    /**
+     * 去重函数（将一个数组添加到另一个数组里，需要将已有的数据去重）
+     * @method _removeDuplicate
+     * @param {array} [data] 需要排重的数据
+     * @param {array} [targets] 去重数据的放置目标
+     * @param {string} [key] 排重的标识字段
+     */
     _removeDuplicate(data, targets, key) {
       return data.filter((item) => {
         const Key = item[key] // 唯一表示
