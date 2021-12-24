@@ -62,7 +62,7 @@ export default {
       type: Object,
       default: () => {
         return {
-          name: 'name',
+          label: 'name',
           id: 'id',
           cardNo: 'cardNo'
         }

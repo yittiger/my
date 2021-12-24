@@ -30,6 +30,9 @@
      * @property {boolean} [label] 显示标签
      * @property {number} [radius=45] 半径，取值 0 ~ 100
      * @property {string} [title] 标题文本，在圆中心
+     * @property {boolean} [useGap] 使用间隔
+     * @property {boolean} [blur] 是否用光斑渐变 默认false
+     * @property {number} [trackWidth] 圆环宽度
      */
     props: {
       label: Boolean,
@@ -51,7 +54,7 @@
       },
       blur: {
         type: Boolean,
-        default: true
+        default: false
       },
       trackWidth: {
         type: Number,
@@ -67,10 +70,10 @@
         const data = rows.map(([name, value], index) => { 
           let blurOpts = {}
           if (this.blur) {
-            const extColors = this.extend.color // 以extend 颜色为优先
-            const defColors = DEFAULT_THEME.color // 其次以默认主题颜色
+            const extColors = this.extend && this.extend.color || [] // 以extend 颜色为优先
+            const defColors = DEFAULT_THEME.color || [] // 其次以默认主题颜色
             const color = 'rgba(255, 255, 255, .6)' // 最后为透明白色
-          
+            console.log(extColors, defColors, 'ccccc')
             blurOpts = {
               itemStyle: {
                 normal: {
@@ -79,6 +82,7 @@
                 }
               }
             }
+            console.log(blurOpts, 'dddddd')
           }
           return {
             name,

@@ -187,6 +187,70 @@ $gradual-hover-background: $neutral-black-7 !default;
     }
   }
 
+  @include when(flex) {
+    display:flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    &::before, &::after{
+      display: none !important;
+    }
+    .my-navbar__brand{
+      height: auto !important;
+      line-height: normal !important;
+      .my-navbar__logo, .my-navbar__title{
+        line-height: normal !important;
+      }
+    }
+    .my-navbar__content{
+      height: auto !important;
+      line-height: normal !important;
+      flex: 1 !important;
+    }
+    .my-navbar__menu{
+      height: 100% !important;
+      .my-menu__wrapper{
+        height: 100% !important;
+        .my-menu{
+          height: 100% !important;
+          &>.el-menu-item{
+            display:flex;
+            height: 100% !important;
+            line-height: auto; 
+            align-items: center;
+          }
+          &>.el-submenu{ 
+            height: 100% !important;
+            line-height: auto;
+            .el-submenu__title{
+              display:flex;
+              height: 100% !important;
+              line-height: auto; 
+              align-items: center;
+             }
+          }
+        }
+      }
+    }
+    .my-navbar__right{ 
+      text-align: right;
+      height: 100% !important; 
+      
+      .my-navbar__actions{
+        height: 100% !important; 
+        .my-navbar-action, .my-navbar-icon-action{
+          line-height: normal !important;
+          height: 100% !important;
+          display: inline-flex !important;
+          flex-flow: row !important;
+          align-items: center !important;
+          .my-navbar-user-action__wrapper{
+            height: auto !important;
+          }
+        }
+      }
+    }
+  }
 }
 
 

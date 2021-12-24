@@ -386,4 +386,134 @@
 ```
 :::
 
+### 添加弹性布局
+使用弹性布局(is-flex="true")，可以解决navbar组件无法调整高度的问题。（原组件高度写死60px）
+
+:::demo(navbar-6)
+```html
+<template>
+  <my-navbar class="custom-header" theme="gradual" title="" logo="" :menus="menus" is-flex>
+      <template v-slot:actions>
+        <UserAction username="Admin" 
+                    extra="超级管理员" 
+                    :dropdown-items="userDropdown" 
+                    :dropdown-options="{size: 'small'}"
+                    :avatar="{theme: 'primary'}"></UserAction>
+        <IconAction icon="el-icon-message-solid" :badge="12"></IconAction>
+        <FullScreenAction tooltip></FullScreenAction>
+        <IconAction icon="el-icon-setting" tooltip="设置"></IconAction>
+        <IconAction icon="icon-poweroff" svg></IconAction>
+      </template>           
+  </my-navbar>
+</template>
+<style  lang="scss" scoped> 
+.custom-header.my-navbar{
+  height: 40px;  
+}
+</style>
+<script>
+ import {MyNavbar} from '$ui'
+ import logo from '$ui/assets/xdh.png'
+ import '$ui/icons/poweroff'
+ const { IconAction, UserAction, FullScreenAction} = MyNavbar
+ const menus = [
+   {
+     icon: 'el-icon-setting',
+     text: '导航菜单一',
+     index: '/one',
+     trigger: 'event'
+   },
+   {
+     icon: 'el-icon-s-marketing',
+     text: '导航菜单二',
+     index: '/two',
+     disabled: true
+   },
+   {
+     icon: 'el-icon-s-data',
+     text: '导航菜单三',
+     index: '/three',
+     children: [
+       {
+         group: true,
+         title: '分组一',
+         index: 1,
+         children: [
+           {
+             text: '选项一',
+             icon: 'el-icon-tickets',
+             index: '/three/1'
+           },
+           {
+             text: '选项二',
+             icon: 'el-icon-tickets',
+             index: '/three/2'
+           }
+         ]
+       },
+       {
+         group: true,
+         title: '分组二',
+         index: 2,
+         children: [
+           {
+             text: '选项三',
+             icon: 'el-icon-tickets',
+             index: '/three/3'
+           },
+           {
+             text: '选项四',
+             icon: 'el-icon-tickets',
+             index: '/three/4'
+           }
+         ]
+       }
+     ]
+   },
+   {
+     icon: 'el-icon-menu',
+     text: '导航菜单四',
+     index: '/four'
+   },
+   {
+     icon: 'el-icon-share',
+     text: '导航菜单五',
+     index: '/five',
+     children: [
+       {
+         text: '选项一',
+         icon: 'el-icon-tickets',
+         index: '/five/1'
+       },
+       {
+         text: '选项二',
+         icon: 'el-icon-tickets',
+         index: '/five/2'
+       }
+     ]
+   }
+ ]
+ export default {
+   components: {
+     MyNavbar,
+     IconAction,
+     UserAction,
+     FullScreenAction
+   },
+   data() {
+     return {
+       logo: logo,
+       menus: menus,
+       userDropdown: [
+         { text: '个人信息', icon: 'el-icon-info'},
+         { text: '修改秘密', icon: 'el-icon-lock'},
+         { text: '退出登录', icon: 'el-icon-switch-button', divided: true}
+       ]
+     }
+   }
+ }
+</script>
+
+```
+:::
 

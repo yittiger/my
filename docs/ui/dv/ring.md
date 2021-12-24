@@ -166,3 +166,36 @@ export default {
 </script>
 ```
 :::
+
+## 间隔、扩散与圆环宽度
+
+:::demo
+```html
+<template>
+   <div style="height:600px">
+     <my-dv-page target="parent" fit> 
+        <my-dv-ring fit  :columns="columns" :rows="rows" title="渠道统计" :use-gap="true" :extend="extend" :track-width="5" :blur="true"></my-dv-ring>
+     </my-dv-page>
+   </div>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      columns: ['渠道', '访问量'],
+      rows: [
+        ['直接访问', 320],
+        ['邮件营销', 302],
+        ['联盟广告', 334],
+        ['视频广告', 390],
+        ['搜索引擎', 330]
+      ],
+      extend: {
+        color: ['#00ffff', '#00cfff', '#006ced', '#ffe000', '#ffa800', '#ff5b00', '#ff3000']
+      }
+    }
+  }
+}
+</script>
+```
+:::

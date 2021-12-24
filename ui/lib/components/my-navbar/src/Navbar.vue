@@ -123,7 +123,10 @@
         }
       },
       // 显示阴影
-      shadow: Boolean
+      shadow: Boolean,
+
+      // 是否弹性布局
+      isFlex: Boolean
 
     },
     data() {
@@ -138,7 +141,8 @@
         return {
           'my-navbar': true,
           [`is-${this.theme}`]: !!this.theme,
-          'is-shadow': this.shadow
+          'is-shadow': this.shadow,
+          'is-flex': this.isFlex
         }
       },
       triggerIcon() {

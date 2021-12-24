@@ -9,10 +9,10 @@
       <my-tag-input class="picker-field" v-bind="$attrs" :allow-create="false" v-model="selItemNames" @click.native="openPicker" @remove="selRemove"></my-tag-input>
     </slot> 
     <div class="picker-warp" v-if="type==='popover'" :style="{'height': `${popPropsProxy.height || 400}px`}">
-      <member-picker-core ref="picker" v-bind="{...$attrs, 'submitBtn': true }"  @submit="showResult"></member-picker-core>  
+      <member-picker-core ref="picker" v-bind="{...$attrs, 'personPropMap': personPropMap,'submitBtn': true }"  @submit="showResult"></member-picker-core>  
     </div> 
     <my-dialog  :visible.sync="dialogVisible" v-if="type==='dialog'" v-bind="{...dialogPropsProxy}"> 
-      <member-picker-core ref="picker" v-bind="{...$attrs, 'submitBtn': true }" @submit="showResult"></member-picker-core>
+      <member-picker-core ref="picker" v-bind="{...$attrs, 'personPropMap': personPropMap, 'submitBtn': true }" @submit="showResult"></member-picker-core>
     </my-dialog>
   </el-popover> 
 </template>
@@ -72,15 +72,16 @@ export default {
         return ['dialog', 'popover'].includes(t)
       }
     },
-    fieldPropsMap: {
+    personPropMap: {
       type: Object,
       default: () => {
         return {
-          name: 'name',
-          id: 'id'
+          label: 'name',
+          id: 'id',
+          cardNo: 'cardNo'
         }
       }
-    },
+    }, 
     dialogProps: {
       type: Object,
       default: () => {
@@ -128,7 +129,7 @@ export default {
       handler(val) {
         
         this.selItemNames = this.selItems.map((item) => {
-          return item[this.fieldPropsMap.name]
+          return item[this.personPropMap.label]
         }) 
         
         this.$emit('change', val)
@@ -143,7 +144,7 @@ export default {
       } 
     }, 
     showResult(targets, dept) {  
-      const uniTarget = this._removeDuplicate(targets, this.selItems, this.fieldPropsMap.id) 
+      const uniTarget = this._removeDuplicate(targets, this.selItems, this.personPropMap.id) 
       this.selItems = this.selItems.concat(uniTarget)
       this.dialogVisible = false
       this.popVisible = false

@@ -9,7 +9,7 @@
     >
       <div class="name">
         <i class="el-icon-user"></i>
-        {{ item[personPropMap.name] }}
+        {{ item[personPropMap.label] }}
       </div>
       <!-- <div class="dep">{{ item.address }}</div> -->
     </div>

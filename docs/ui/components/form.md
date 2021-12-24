@@ -272,8 +272,8 @@ export default {
 :::demo
 ```html
 <template>
-    <my-form @submit="handleSubmit"
-             @change="handleChange"
+    <my-form ref="form"
+            @submit="handleSubmit" 
              :model="model"
              label-width="100px"
              inline
@@ -308,18 +308,23 @@ export default {
       }
     },
     methods: {
-      handleChange(model) {
-        this.currentModel = model
-      },
+      
       handleSubmit(model) {
         alert(JSON.stringify(model))
       },
       handleAdd() {
-        this.model.users.push({name: ''})
+        const currentModel = cloneDeep(this.$refs.form.currentModel)
+        currentModel.users.push({name: ''})
+        this.$refs.form.currentModel = currentModel
+        this.model = cloneDeep(currentModel)
+        // this.model.users.push({name: ''})
       },
       handleRemove(item, index) {
-        this.currentModel.users.splice(index, 1)
-        this.model = cloneDeep(this.currentModel)
+        const currentModel = cloneDeep(this.$refs.form.currentModel)
+        currentModel.users.splice(index, 1)
+        this.$refs.form.currentModel = currentModel
+        // this.currentModel.users.splice(index, 1)
+        this.model = cloneDeep(currentModel)
       }
     }
   }

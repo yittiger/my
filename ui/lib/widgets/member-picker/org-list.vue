@@ -75,12 +75,12 @@
             style="font-size: 28px"
           ></i>
           <my-avatar v-if="item.src" :src="item.src"></my-avatar>
-          {{ item[personPropMap.name] }}
+          {{ item[personPropMap.label] }}
         </el-checkbox>
         <span v-else>
           <i class="el-icon-s-custom" v-if="!item.src"></i>
           <my-avatar v-if="item.src" :src="item.src"></my-avatar>
-          {{ item[personPropMap.name] }}
+          {{ item[personPropMap.label] }}
         </span>
       </div>
     </div>

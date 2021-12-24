@@ -1,7 +1,7 @@
 <template>
    <div style="height:600px">
      <my-dv-page target="parent" fit>
-        <my-dv-ring fit  :columns="columns" :rows="rows" title="渠道统计" :use-gap="true" :extend="extend" debug :track-width="5" :setting="setting"></my-dv-ring>
+        <my-dv-ring fit  :columns="columns" :rows="rows" title="渠道统计" :use-gap="false" :extend="extend" debug :track-width="5" :blur="true" :setting="setting"></my-dv-ring>
      </my-dv-page>
      <!-- <my-chart-pie :data="data" :extend="extend"></my-chart-pie> -->
    </div>

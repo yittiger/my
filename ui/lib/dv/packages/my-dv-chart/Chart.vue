@@ -53,7 +53,7 @@
         const opts = typeof this.options === 'function'
           ? this.options(data)
           : (this.options || {})
-        setExtend(opts, this.extend)
+        setExtend(opts, this.extend || {})
         this.currentOptions = Object.freeze(merge({}, this.currentOptions, opts))
       }
     }

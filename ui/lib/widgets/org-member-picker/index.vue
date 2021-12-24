@@ -49,7 +49,7 @@
           v-show="index < selPersonShowMax"
           closable
           @close="selPersonRemove(item, index)"
-          >{{item[personPropMap.name]}}</el-tag>
+          >{{item[personPropMap.label]}}</el-tag>
           <el-tag
             type="info" 
            key="total-person"
@@ -141,117 +141,6 @@
 }
 </style>
 <script>
-/*
-  
-  
-  // 最大显示选中人数
-  selDeptShowMax: {
-    type: Number,
-    default: 5
-  },
-  // 最大显示选中部门数
-  selPersonShowMax: {
-    type: Number,
-    default: 5
-  },
-  
-  
-  // 是否显示结果
-  isShowResult: {
-    type: Boolean,
-    default: true
-  },
-  // 是否显示确定取消按钮
-  isShowSubmit: {
-    type: Boolean,
-    default: true
-  } 
-  =======================
-  // 部门数据字段映射
-  orgPropMap: {
-    type: Object,
-    default: () => {
-      return {
-        label: 'label',
-        id: 'id',
-        children: 'children',
-        parentId: 'parentId'
-      }
-    }
-  },
-  // 异步获取初始部门树的函数，返回 输出组织架构树 的 Promise对象
-  loadOrg: Function,
-
-  // 懒加载获取部门数据
-  lazyLoadOrg: Function,
-
-  // 是否选择部门
-  orgSelect: {
-    type: Boolean,
-    default: false
-  },
-
-  // 树组件传参
-  treeProps: {
-    type: Object,
-    default: () => { 
-      return {
-        'check-strictly': true
-      } 
-    }
-  },
-  // 远程查询部门
-  remoteTreeFilter: {
-    type: Boolean,
-    default: false
-  }
-  ====================
-  // 人员是否多选 
-  // 人员数据字段映射 
-  personPropMap: {
-    type: Object,
-    default: () => {
-      return {
-        name: 'name',
-        cardNum: 'cardNum',
-        dept: 'dept',
-        id: 'id'
-      }
-    }
-  },
-  isMultiPerson: {
-    type: Boolean,
-    default: true
-  }, 
-  // 是否默认自动加载人员
-  autoLoad: {
-    type: Boolean,
-    default: false
-  },
-  // 表格组件其他传参
-  tableProps: {
-    type: Object,
-    default: () => {
-      return {}
-    }
-  },
-  // 人员加载函数
-  personLoad: {
-    type: Function
-  },
-  // 人员显示列表
-  listColumn: {
-    type: Array,
-    default: () => {
-      return [
-        { prop: 'name', label: '姓名' },
-        { prop: 'cardNum', label: '身份证' },
-        { prop: 'dept', label: '单位' }
-      ]
-    }
-  } 
-*/
-
 import OrgTree from './org-tree'
 import PersonList from './person-list'
 export default {
@@ -266,7 +155,7 @@ export default {
       type: Object,
       default: () => {
         return {
-          name: 'name',
+          label: 'name',
           cardNum: 'cardNum',
           dept: 'dept',
           id: 'id'
