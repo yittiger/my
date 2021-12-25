@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>仿钉钉人员选择器 | MyUI 4.x</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/my/favicon.ico">
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?c4e5f73318b5cb0c389e3d9a05f831cc";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+    <meta name="description" content="MyUI是美亚柏科旗下新德汇出品的Web前端一站式项目工程框架，专注于公检法行业中台系统快速搭建，框架已在多个项目实战检验。">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <link rel="preload" href="/my/assets/css/0.styles.ff5f7b33.css" as="style"><link rel="preload" href="/my/assets/js/app.7f6334e1.js" as="script"><link rel="preload" href="/my/assets/js/593.c4bd16dd.js" as="script"><link rel="preload" href="/my/assets/js/1817.7e1b448c.js" as="script"><link rel="preload" href="/my/assets/js/1272.250e2c07.js" as="script">
+    <link rel="stylesheet" href="/my/assets/css/0.styles.ff5f7b33.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/my/" class="home-link router-link-active"><img src="/my/img/logo.png" alt="MyUI 4.x" class="logo"> <span class="site-name can-hide">MyUI 4.x</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/my/guide/" class="nav-link">
+  指南
+</a></div><div class="nav-item"><a href="/my/ui/components/" class="nav-link">
+  组件
+</a></div><div class="nav-item"><a href="/my/ui/charts/" class="nav-link">
+  图表
+</a></div><div class="nav-item"><a href="/my/ui/map/" class="nav-link">
+  地图
+</a></div><div class="nav-item"><a href="/my/ui/go/" class="nav-link">
+  关系图
+</a></div><div class="nav-item"><a href="/my/ui/icon/" class="nav-link">
+  图标
+</a></div><div class="nav-item"><a href="/my/ui/dv/" class="nav-link">
+  大屏
+</a></div><div class="nav-item"><a href="/my/ui/pages/" class="nav-link">
+  页面
+</a></div><div class="nav-item"><a href="/my/ui/widgets/" class="nav-link router-link-active">
+  补丁
+</a></div><div class="nav-item"><a href="http://newgateway.gitee.io/my-web/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  演示
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="JSDoc" class="dropdown-title"><span class="title">JSDoc</span> <span class="arrow down"></span></button> <button type="button" aria-label="JSDoc" class="mobile-dropdown-title"><span class="title">JSDoc</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/my/api/components.html" class="nav-link">
+  基础组件
+</a></li><li class="dropdown-item"><!----> <a href="/my/api/utils.html" class="nav-link">
+  工具函数
+</a></li><li class="dropdown-item"><!----> <a href="/my/api/charts.html" class="nav-link">
+  图表组件
+</a></li><li class="dropdown-item"><!----> <a href="/my/api/map.html" class="nav-link">
+  地图组件
+</a></li><li class="dropdown-item"><!----> <a href="/my/api/dv.html" class="nav-link">
+  可视化大屏
+</a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/my/guide/" class="nav-link">
+  指南
+</a></div><div class="nav-item"><a href="/my/ui/components/" class="nav-link">
+  组件
+</a></div><div class="nav-item"><a href="/my/ui/charts/" class="nav-link">
+  图表
+</a></div><div class="nav-item"><a href="/my/ui/map/" class="nav-link">
+  地图
+</a></div><div class="nav-item"><a href="/my/ui/go/" class="nav-link">
+  关系图
+</a></div><div class="nav-item"><a href="/my/ui/icon/" class="nav-link">
+  图标
+</a></div><div class="nav-item"><a href="/my/ui/dv/" class="nav-link">
+  大屏
+</a></div><div class="nav-item"><a href="/my/ui/pages/" class="nav-link">
+  页面
+</a></div><div class="nav-item"><a href="/my/ui/widgets/" class="nav-link router-link-active">
+  补丁
+</a></div><div class="nav-item"><a href="http://newgateway.gitee.io/my-web/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  演示
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="JSDoc" class="dropdown-title"><span class="title">JSDoc</span> <span class="arrow down"></span></button> <button type="button" aria-label="JSDoc" class="mobile-dropdown-title"><span class="title">JSDoc</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/my/api/components.html" class="nav-link">
+  基础组件
+</a></li><li class="dropdown-item"><!----> <a href="/my/api/utils.html" class="nav-link">
+  工具函数
+</a></li><li class="dropdown-item"><!----> <a href="/my/api/charts.html" class="nav-link">
+  图表组件
+</a></li><li class="dropdown-item"><!----> <a href="/my/api/map.html" class="nav-link">
+  地图组件
+</a></li><li class="dropdown-item"><!----> <a href="/my/api/dv.html" class="nav-link">
+  可视化大屏
+</a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/my/ui/widgets/dict.html" class="sidebar-link">dict 全局字典管理</a></li><li><a href="/my/ui/widgets/member-picker.html" aria-current="page" class="active sidebar-link">仿钉钉人员选择器</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/my/ui/widgets/member-picker.html#样例" class="sidebar-link">样例：</a></li><li class="sidebar-sub-header"><a href="/my/ui/widgets/member-picker.html#安装命令" class="sidebar-link">安装命令</a></li><li class="sidebar-sub-header"><a href="/my/ui/widgets/member-picker.html#代码示例" class="sidebar-link">代码示例</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/my/ui/widgets/member-picker.html#基础用法" class="sidebar-link">基础用法</a></li><li class="sidebar-sub-header"><a href="/my/ui/widgets/member-picker.html#表单用法" class="sidebar-link">表单用法</a></li><li class="sidebar-sub-header"><a href="/my/ui/widgets/member-picker.html#自定义选中结果" class="sidebar-link">自定义选中结果</a></li><li class="sidebar-sub-header"><a href="/my/ui/widgets/member-picker.html#单独pickercore组件的用法" class="sidebar-link">单独pickerCore组件的用法</a></li></ul></li><li class="sidebar-sub-header"><a href="/my/ui/widgets/member-picker.html#属性参数" class="sidebar-link">属性参数</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/my/ui/widgets/member-picker.html#表单弹窗参数" class="sidebar-link">表单弹窗参数</a></li><li class="sidebar-sub-header"><a href="/my/ui/widgets/member-picker.html#picker参数" class="sidebar-link">picker参数</a></li><li class="sidebar-sub-header"><a href="/my/ui/widgets/member-picker.html#其他参数" class="sidebar-link">其他参数</a></li></ul></li><li class="sidebar-sub-header"><a href="/my/ui/widgets/member-picker.html#api-method" class="sidebar-link">API method</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/my/ui/widgets/member-picker.html#picker-整体组件-方法" class="sidebar-link">Picker (整体组件)方法</a></li><li class="sidebar-sub-header"><a href="/my/ui/widgets/member-picker.html#pickercore-选择器组件-方法" class="sidebar-link">PickerCore (选择器组件) 方法</a></li></ul></li><li class="sidebar-sub-header"><a href="/my/ui/widgets/member-picker.html#event-事件" class="sidebar-link">event 事件</a></li></ul></li><li><a href="/my/ui/widgets/org-member-picker.html" class="sidebar-link">部门人员关联选择器</a></li><li><a href="/my/ui/widgets/list-picker.html" class="sidebar-link">列表选择器</a></li><li><a href="/my/ui/widgets/charts1.html" class="sidebar-link">图表类插件集合1</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="仿钉钉人员选择器"><a href="#仿钉钉人员选择器" class="header-anchor">#</a> 仿钉钉人员选择器</h1> <h2 id="样例"><a href="#样例" class="header-anchor">#</a> 样例：</h2> <p><img src="/my/img/dw.jpg" alt="cover"></p> <h2 id="安装命令"><a href="#安装命令" class="header-anchor">#</a> 安装命令</h2> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token function">npm</span> run widgets member-picker
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>执行命令后，工具生成在项目的 <strong><code>&quot;.my/widgets/member-picker&quot;</code></strong> 路径下；</p> <blockquote><p>生成文件目录如下：</p> <ul><li><strong><code>auto-complete.vue</code></strong></li> <li><strong><code>core.vue</code></strong> （选择器组件）</li> <li><strong><code>index.vue</code></strong> （结合选择器的表单组件）</li> <li><strong><code>input-area.vue</code></strong></li> <li><strong><code>org-list.vue</code></strong></li></ul> <p>MemberPicker 提供两个引用方式：</p> <ul><li>引用 “index.vue” , 结合了表单 和 弹窗 的选择器功能，可以直接使用</li> <li>引用 “core.vue”, 选择器核心功能（弹窗内），可以自行使用</li></ul></blockquote> <h2 id="代码示例"><a href="#代码示例" class="header-anchor">#</a> 代码示例</h2> <h3 id="基础用法"><a href="#基础用法" class="header-anchor">#</a> 基础用法</h3> <p>引用 “index.vue”</p> <!----><h3 id="表单用法"><a href="#表单用法" class="header-anchor">#</a> 表单用法</h3> <p>引用 “index.vue”； 在my-form 使用时，需结合“my-form-custom” 容器， 且手动设置 width=&quot;100%&quot;。并监听“change”事件与“my-form”进行数据绑定</p> <!----><h3 id="自定义选中结果"><a href="#自定义选中结果" class="header-anchor">#</a> 自定义选中结果</h3> <p>引用 “index.vue”， 自定义选中结果 需要手动调用member-picker的 &quot;openPicker&quot;打开弹窗 和 “selRemove” 删除选中</p> <!----><h3 id="单独pickercore组件的用法"><a href="#单独pickercore组件的用法" class="header-anchor">#</a> 单独pickerCore组件的用法</h3> <p>引用 “core.vue”</p> <!----><h2 id="属性参数"><a href="#属性参数" class="header-anchor">#</a> 属性参数</h2> <h3 id="表单弹窗参数"><a href="#表单弹窗参数" class="header-anchor">#</a> 表单弹窗参数</h3> <table><thead><tr><th>参数</th> <th>说明</th> <th>类型</th> <th>可选值</th> <th>默认值</th></tr></thead> <tbody><tr><td>value</td> <td>用作v-model双向绑定</td> <td>array</td> <td>—</td> <td>[]</td></tr> <tr><td>type</td> <td>弹窗的打开方式</td> <td>string</td> <td>dialog / popover</td> <td>dialog</td></tr> <tr><td>fieldPropsMap</td> <td>接口返回人员列表字段映射（作用于表单的显示标签中）</td> <td>object</td> <td>-</td> <td>{ name: 'name', id: 'id' }</td></tr> <tr><td>dialogProps</td> <td>弹窗配置参数</td> <td>object</td> <td>-</td> <td>-</td></tr> <tr><td>popProps</td> <td>popover 配置参数</td> <td>object</td> <td>-</td> <td>-</td></tr></tbody></table> <h3 id="picker参数"><a href="#picker参数" class="header-anchor">#</a> picker参数</h3> <table><thead><tr><th>参数</th> <th>说明</th> <th>类型</th> <th>可选值</th> <th>默认值</th></tr></thead> <tbody><tr><td>submitBtn</td> <td>控制是否显示提交、取消按钮</td> <td>boolean</td> <td>—</td> <td>true</td></tr> <tr><td>personPropMap</td> <td>接口返回人员列表字段映射</td> <td>object</td> <td>—</td> <td>{ name: 'name', id: 'id', cardNo: 'cardNo' }</td></tr> <tr><td>multiple</td> <td>是否多选</td> <td>boolean</td> <td>—</td> <td>true</td></tr> <tr><td>showOrgList</td> <td>是否结合部门进行查询（显示右侧组织列表）</td> <td>boolean</td> <td>—</td> <td>true</td></tr> <tr><td>searchPerson</td> <td>通过搜索异步查询人员函数，必传，参数为keyword, 返回输出人员列表的 Promise对象</td> <td>function</td> <td>—</td> <td>-</td></tr> <tr><td>loadOrg</td> <td>异步获取初始部门树的函数，必传，返回 输出组织架构树 的 Promise对象</td> <td>function</td> <td>—</td> <td>-</td></tr> <tr><td>loadOrgChildren</td> <td>异步获取各个子部门树的函数（用于懒加载），选传，返回 输出 子级部门 的 Promise对象</td> <td>function</td> <td>—</td> <td>-</td></tr> <tr><td>loadUser</td> <td>根据部门信息异步获取部门成员的函数，必传，返回 输出 部门成员数组 的 Promise对象</td> <td>function</td> <td>—</td> <td>-</td></tr> <tr><td>orgPropMap</td> <td>接口返回部门数据字段映射</td> <td>object</td> <td>—</td> <td>{name: 'label', id: 'id', children: 'children', parentId: 'parentId'}</td></tr></tbody></table> <h3 id="其他参数"><a href="#其他参数" class="header-anchor">#</a> 其他参数</h3> <p>member-picker 继承 my-tag-input 参数</p> <h2 id="api-method"><a href="#api-method" class="header-anchor">#</a> API method</h2> <h3 id="picker-整体组件-方法"><a href="#picker-整体组件-方法" class="header-anchor">#</a> Picker (整体组件)方法</h3> <table><thead><tr><th>参数</th> <th>说明</th> <th>参数</th> <th>输出</th></tr></thead> <tbody><tr><td>openPicker</td> <td>打开弹窗（dialog）的函数</td> <td>-</td> <td>-</td></tr> <tr><td>selRemove</td> <td>删除标签的函数</td> <td>index</td> <td>-</td></tr></tbody></table> <h3 id="pickercore-选择器组件-方法"><a href="#pickercore-选择器组件-方法" class="header-anchor">#</a> PickerCore (选择器组件) 方法</h3> <table><thead><tr><th>参数</th> <th>说明</th> <th>参数</th> <th>输出</th></tr></thead> <tbody><tr><td>getSelctPersons</td> <td>获取选中人员</td> <td>-</td> <td>选中人员数据</td></tr> <tr><td>getSelectDept</td> <td>通过API获取选中部门</td> <td>-</td> <td>选中部门数据</td></tr></tbody></table> <h2 id="event-事件"><a href="#event-事件" class="header-anchor">#</a> event 事件</h2> <table><thead><tr><th>参数</th> <th>说明</th> <th>传参</th></tr></thead> <tbody><tr><td>change</td> <td>表单数据变化的事件</td> <td>变化的数据</td></tr> <tr><td>submit</td> <td>点击提交按钮 获取当前人员和部门</td> <td>-</td></tr> <tr><td>close</td> <td>点击取消按钮 清空右侧列表选中</td> <td>-</td></tr></tbody></table></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/my/ui/widgets/dict.html" class="prev">
+        dict 全局字典管理
+      </a></span> <span class="next"><a href="/my/ui/widgets/org-member-picker.html">
+        部门人员关联选择器
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/my/assets/js/app.7f6334e1.js" defer></script><script src="/my/assets/js/593.c4bd16dd.js" defer></script><script src="/my/assets/js/1817.7e1b448c.js" defer></script><script src="/my/assets/js/1272.250e2c07.js" defer></script>
+  </body>
+</html>
