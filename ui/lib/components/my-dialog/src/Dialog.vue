@@ -117,6 +117,7 @@
      * @property {string|object} [icon] 标题前的图标，可以是字体图标或svg
      * @property {string} [width] 弹窗宽度
      * @property {string} [height] 高度
+     * @property {array} [position] 弹窗默认位置
      * @property {boolean} [modal] 显示遮罩层
      * @property {string} [theme] 主题风格，可选值：'primary', 'dark', 'light'
      * @property {boolean|object} [draggable] 拖拽配置，参考MyDrag组件
@@ -150,6 +151,12 @@
       icon: [String, Object],
       width: String,
       height: String,
+      position: {
+        type: Array,
+        validator(val) {
+          return !val || (val && val.length === 2 && !isNaN(val[0]) && !isNaN(val[1]))
+        }
+      },
       modal: Boolean,
       theme: {
         type: String,
@@ -214,7 +221,8 @@
         dialogHeight: 0,
         zIndex: ++Z_INDEX, // Z_INDEX,
         currentMaximized: this.maximized,
-        currentMinimized: false
+        currentMinimized: false,
+        positionProxy: this.position ? [...this.position] : null
       }
     },
     computed: {
@@ -233,8 +241,15 @@
         }
       },
       dialogStyle() {
-        const left = Math.max((this.viewWidth - this.originalWidth) / 2, 0),
+        let left, top
+        if (!this.positionProxy) {
+          left = Math.max((this.viewWidth - this.originalWidth) / 2, 0)
           top = Math.max((this.viewHeight - this.originalHeight) / 2, 0)
+        } else {
+          left = Math.max(Math.min(this.positionProxy[0], this.viewWidth - this.originalWidth), 0)
+          top = Math.max(Math.min(this.positionProxy[1], this.viewHeight - this.originalHeight), 0)
+        }
+        
         return {
           left: `${left}px`,
           top: `${top}px`
@@ -468,6 +483,10 @@
         this.$emit('drag', e)
       },
       handleDragStop(e) {
+        if (this.positionProxy) { // 有定义position, 更新position
+          const dialogRect = e.$el.getBoundingClientRect()
+          this.positionProxy = [dialogRect.left, dialogRect.top]
+        }
         /**
          * 停止拖拽时触发
          * @event drag-stop
