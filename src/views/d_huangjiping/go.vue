@@ -94,7 +94,10 @@ export default {
           $(go.Shape, 'RoundedRectangle', { fill: 'transparent', stroke: 'black'}),
           $(go.TextBlock,
             { font: 'bold 12pt Arial, sans-serif', margin: new go.Margin(4, 2, 2, 2) },
-            new go.Binding('text', 'label')
+            new go.Binding('text', 'label', (v) => {
+              console.log(v)
+              return `${v}_`
+            })
           )
         ),
         $(go.Panel, // this is underneath the "BODY"
