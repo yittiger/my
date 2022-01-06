@@ -8,7 +8,7 @@
 </style>
 <script>
 import { 
-  // $, 
+  $, 
   go, 
   Diagram,
   circle, 
@@ -19,6 +19,8 @@ import {
   layered
   // grid
 } from '$ui/gojs'
+import {departmentNode, toolBtn} from '@/components/d_huangjiping/go/depNode.js'
+import {panelNode} from '@/components/d_huangjiping/go/panel-node.js'
 export default {
   mixins: [],
   components: {Diagram},
@@ -55,36 +57,66 @@ export default {
        
       nodes: [
         { 
-          key: '1',
+          key: 'a',
+          text: 'hello',
           category: 'circle'
         },
-        { 
-          key: '2',
-          category: 'circle'
+        // { 
+        //   key: '2',
+        //   category: 'circle'
+        // },
+        // { 
+        //   key: '3.0',
+        //   category: 'rectangle'
+        // },
+        // { 
+        //   key: '3.1',
+        //   category: 'rectangle'
+        // },
+        // { 
+        //   key: '4',
+        //   category: 'rectangle'
+        // },
+        // { 
+        //   key: '5',
+        //   category: 'diamond'
+        // },
+        // { 
+        //   key: '6',
+        //   category: 'diamond'
+        // },
+        // { 
+        //   key: '7',
+        //   category: 'diamond'
+        // },
+
+        {
+          key: 1,
+          title: '指挥组',
+          persons: [{name: '张云涨'}, {name: '李宇'}, {name: '曹宫韦'}, {name: '方大宇'}],
+          personCount: 4,
+          type: '内部组',
+          category: 'custom'
         },
-        { 
-          key: '3.0',
-          category: 'rectangle'
+        {
+          key: 2,
+          title: '指挥组',
+          persons: [{name: '张云涨'}, {name: '李宇'}, {name: '曹宫韦'}, {name: '方大宇'}],
+          personCount: 4,
+          type: '内部组',
+          category: 'custom'
         },
-        { 
-          key: '3.1',
-          category: 'rectangle'
+        {
+          key: 3,
+          title: '指挥组',
+          persons: [{name: '张云涨'}, {name: '李宇'}, {name: '曹宫韦'}, {name: '方大宇'}, {name: '曹宫韦'}, {name: '方大宇'}, {name: '李宇'}],
+          personCount: 4,
+          type: '内部组',
+          category: 'custom'
         },
-        { 
-          key: '4',
-          category: 'rectangle'
-        },
-        { 
-          key: '5',
-          category: 'diamond'
-        },
-        { 
-          key: '6',
-          category: 'diamond'
-        },
-        { 
-          key: '7',
-          category: 'diamond'
+        {
+          key: 'panel',
+          category: 'panel'
         }
       ],
       links: [
@@ -131,8 +163,9 @@ export default {
             },
             label: {
               $bindings: [
-                new go.Binding('text', 'key', (v) => {
-                  return `名称: ${v}`
+                new go.Binding('text', '', function(modelData, obj) {
+                  // console.log(modelData, obj, '---')
+                  return `名称: ${modelData.text}`
                 })
               ]
             }
@@ -157,35 +190,68 @@ export default {
           diamond: diamond({
             shape: {
               width: 200,
-              height: 100,
-
+              height: 100, 
               portId: '',
               fromLinkable: true,
               toLinkable: true,
               cursor: 'pointer'
-            },
-            label: {
-              $bindings: [
-                new go.Binding('text', 'key', (v) => {
-                  return `名称: ${v}`
-                })
-              ]
+              },
+              label: {
+                $bindings: [
+                  new go.Binding('text', 'key', (v) => {
+                    return `名称: ${v}`
+                  })
+                ]
+              }   
             }
-              
+          ),
+          custom: departmentNode($, go, this.depTools),
+          panel: panelNode({
+            body: {
+              width: 300
+            }
           })
         }),
         linkTemplate: corner({
           toArrow: true,
           fromArrow: false 
-            
         })
       }
     }
   },
   computed: {
   },
-  methods: {
-
+  methods: { 
+    depTools($, go) {
+      const delBtn = {
+        color: '#F7051F',
+        icon: 'delete',
+        fn: (e, obj) => {
+          console.log('delete', e)
+        }
+      }
+      const addBtn = {
+        color: '#90552C',
+        icon: 'add',
+        fn: (e, obj) => {
+          console.log('add', e)
+          // this.nodeModel.from = obj.part.data.key
+          // this.formClose = false
+        }
+      }
+      const editBtn = {
+        color: '#6A9D3B',
+        icon: 'edit',
+        fn: (e, obj) => {
+          console.log('add', e)
+        }
+      }
+      return $(go.Panel, 'Horizontal',
+        toolBtn($, go, delBtn),
+        toolBtn($, go, addBtn),
+        toolBtn($, go, editBtn)
+      )
+    }
   },
   created() {},
   mounted() {}
