@@ -88,8 +88,15 @@ export default {
         // { 
         //   key: '7',
         //   category: 'diamond'
-        // },
-
+        // }, 
+        {
+          key: 'panel',
+          data: {
+            list: ['a', 'b', 'c', 'd']
+          },
+          arr: ['1', '2', '3', '4'],
+          category: 'panel'
+        },
         {
           key: 1,
           title: '指挥组',
@@ -113,10 +120,6 @@ export default {
           personCount: 4,
           type: '内部组',
           category: 'custom'
-        },
-        {
-          key: 'panel',
-          category: 'panel'
         }
       ],
       links: [

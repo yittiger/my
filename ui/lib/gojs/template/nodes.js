@@ -390,6 +390,71 @@ export function icon(options = {}, theme) {
   }, t)
 }
 
+
+/**
+ * 生成图片
+ * @param options options 配置参数，{shape, label, image}
+ * @param theme
+ * @returns {GraphObject}
+ */
+export function imageGraph(options = {}, theme = {}) {
+  const t = merge({}, normal, theme)
+  const {shape, image} = options 
+  let {width = 64, height = 64} = shape || {}
+  const {figure = 'Circle'} = shape || {}
+  const iWidth = image.width || 64
+  const iHeight = image.height || 64
+  width = Math.max(width, iWidth)
+  height = Math.max(height, iHeight)
+  return creator({
+    name: go.Panel,
+    props: {
+      type: go.Panel.Spot 
+    },
+    children: [
+      creator({
+        name: go.Shape,
+        props: {
+          figure,
+          width: width,
+          height: height, 
+          fill: 'transparent',
+          strokeWidth: 0, 
+          ...shape
+        }
+      }), 
+      creator({
+        name: go.Panel,
+        props: {
+          type: go.Panel.Spot,
+          isClipping: true
+        },
+        children: [
+          creator({
+            name: go.Shape,
+            props: {
+              figure,
+              width,
+              height, 
+              ...shape
+            }
+          }),
+          creator({
+            name: go.Picture,
+            props: {
+              name: 'image',
+              source: t.imageSource,
+              width,
+              height,
+              ...image
+            }
+          }) 
+        ]
+      })
+    ]
+  })
+}
+
 /**
  * 带图片的普通节点
  * @param options options 配置参数，{shape, label, image}

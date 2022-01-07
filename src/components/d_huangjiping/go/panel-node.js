@@ -1,7 +1,8 @@
 // import { $ } from '$ui/gojs'
 import {go, merge} from '$ui/gojs/utils/lib';
 import creator from '$ui/gojs/utils/creator'
-import {nodeTemplate} from '$ui/gojs/template/nodes'
+import {nodeTemplate, imageGraph} from '$ui/gojs/template/nodes'
+import imgSrc from '$ui/gojs/sources/ATM.png'
 
 const defaultBodyProps = {
   isShadowed: true,
@@ -10,11 +11,8 @@ const defaultBodyProps = {
   width: 200
 }
 
-// const defaultTitleProps = {
-
-// }
-
-const titlePanelInit = function(titleProps) {
+// 头部生成
+const headerPanelInit = function(headerProps) {
   return creator({
     name: go.Panel,
     props: {
@@ -49,21 +47,126 @@ const titlePanelInit = function(titleProps) {
               font: 'bold 12pt sans-serif',
               isMultiline: false,
               editable: false,
-              text: 'title'
+              text: 'header'
             } 
           })
         ]
-      })
-        
+      }) 
     ]
   })
+}
+
+
+// 图片生成
+const imageGraphInit = function() {
+  return imageGraph({
+    image: {
+      source: imgSrc,
+      width: 80,
+      height: 80
+    },
+    shape: {
+      figure: 'Rectangle',
+      strokeWidth: 1,
+      stroke: '#cccccc'
+    } 
+  })
+}
+
+// 标题生成
+const titleBlockInit = function() {
+  return creator({
+    name: go.Panel,
+    props: {
+      type: go.Panel.Horizontal,
+      defaultAlignment: go.Spot.Bottom
+    },
+    children: [
+      creator({
+        name: go.TextBlock,
+        props: {
+          font: 'bold 16pt sans-serif',
+          isMultiline: false,
+          editable: false,
+          text: 'title' 
+        } 
+      }), 
+      creator({
+        name: go.TextBlock,
+        props: {
+          font: 'normal 14pt sans-serif',
+          isMultiline: false,
+          editable: false,
+          margin: new go.Margin(0, 0, 2, 10),
+          text: 'sub-title' 
+        } 
+      }) 
+    ]
+  }) 
+}
+
+const infoBodyInit = function() {
+  return creator({
+    name: go.Panel,
+    props: {
+      type: go.Panel.Table,
+      $bindings: [
+        new go.Binding('itemArray', 'arr')
+        // , (v) => {
+        //   console.log(v, 'list')
+        //   return v.list
+        // }
+      ]
+    }, 
+    children: [
+      creator({
+        name: go.TextBlock,
+        props: {
+          font: 'bold 12px sans-serif',
+          text: 'a',
+          $bindings: [
+            new go.Binding('row', 'itemIndex', function(i) { return Math.floor((i / 2)) }).ofObject(),
+            new go.Binding('column', 'itemIndex', function(i) { return i % 2 }).ofObject()
+          ] 
+        }
+      })
+    ]
+  })
+}
+
+// 内容生成
+const infoBlockInit = function() { 
+  return creator({
+    name: go.Panel,
+    props: {
+      type: go.Panel.Vertical,
+      margin: 5
+    },
+    children: [
+      titleBlockInit(),
+      infoBodyInit()
+    ]
+  })   
+}
+
+const bodyContentInit = function() { 
+  return creator({
+    name: go.Panel,
+    props: {
+      type: go.Panel.Horizontal,
+      defaultAlignment: go.Spot.Top 
+    },
+    children: [
+      imageGraphInit(), 
+      infoBlockInit()  
+    ]
+  })      
 }
 
 export function panelNode(options) {
   const theme = {}
   const {body} = options
-  const bodyProps = merge({}, defaultBodyProps, body)
-  console.log(bodyProps, 'ttt')
+  const bodyProps = merge({}, defaultBodyProps, body) 
   const {width} = bodyProps
   delete bodyProps.width
 
@@ -76,8 +179,8 @@ export function panelNode(options) {
         name: go.Shape,
         props: {
           strokeWidth: 0, 
-          width: width
-          // fill: 'transparent'
+          width: width,
+          fill: 'white'
         }
       }),
       creator({
@@ -86,12 +189,10 @@ export function panelNode(options) {
           type: go.Panel.Table,
           width: width,
           defaultRowSeparatorStrokeWidth: 1,
-          defaultRowSeparatorStroke: '#DEE1E6'
+          defaultRowSeparatorStroke: '#B6B7B9'
         },
         children: [
-          titlePanelInit()
-          /*
-          ,
+          headerPanelInit(),
           creator({
             name: go.Panel,
             props: {
@@ -102,18 +203,11 @@ export function panelNode(options) {
               margin: 5
             },
             children: [
-              creator({
-                name: go.TextBlock,
-                props: {
-                  font: 'normal 12pt sans-serif',
-                  isMultiline: false,
-                  editable: false,
-                  text: 'content'
-                } 
-              })  
+              bodyContentInit()
+               
+              
             ]
           })
-          */
         ]
       })  
     ].filter(n => !!n)
