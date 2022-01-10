@@ -27,75 +27,35 @@ export default {
   props: {
   },
   data() {
-    /*
-    const nodes = []
-    const links = []
-    const makeNodes = function() { 
-      for (let index = 0; index < 9; index++) {
-        const random = Math.floor(0 + Math.random() * 3)
-        const item = {
-          key: index,
-          text: `${index}`,
-          category: ['circle', 'rectangle', 'diamond'].splice(random, 1)[0]
-        }
-        nodes.push(item)
-        if (index < 8) {
-          links.push({
-            from: index,
-            to: index + 1
-          })
-        }
-      } 
-    }
-    makeNodes() 
-    console.log(links)
-    */
+    
     return {
       
       // nodes: nodes,
       // links: links,
        
       nodes: [
+        {
+          key: 'panel',
+          data: {
+            list: [
+              {label: '姓名', value: '黄吉平'}, 
+              {label: '年龄', value: '30'}, 
+              {label: '性别', value: '男'}, 
+              {label: '身份', value: '工程师'}
+            ]
+          },
+          list: [
+              {label: '姓名', value: '黄吉平'}, 
+              {label: '年龄', value: '30'}, 
+              {label: '性别', value: '男'}, 
+              {label: '身份', value: '工程师'}
+            ], 
+          category: 'panel'
+        },
         { 
           key: 'a',
           text: 'hello',
           category: 'circle'
-        },
-        // { 
-        //   key: '2',
-        //   category: 'circle'
-        // },
-        // { 
-        //   key: '3.0',
-        //   category: 'rectangle'
-        // },
-        // { 
-        //   key: '3.1',
-        //   category: 'rectangle'
-        // },
-        // { 
-        //   key: '4',
-        //   category: 'rectangle'
-        // },
-        // { 
-        //   key: '5',
-        //   category: 'diamond'
-        // },
-        // { 
-        //   key: '6',
-        //   category: 'diamond'
-        // },
-        // { 
-        //   key: '7',
-        //   category: 'diamond'
-        // }, 
-        {
-          key: 'panel',
-          data: {
-            list: ['a', 'b', 'c', 'd']
-          },
-          arr: ['1', '2', '3', '4'],
-          category: 'panel'
         },
         {
           key: 1,

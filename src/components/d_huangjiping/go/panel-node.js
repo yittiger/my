@@ -79,6 +79,7 @@ const titleBlockInit = function() {
     name: go.Panel,
     props: {
       type: go.Panel.Horizontal,
+      
       defaultAlignment: go.Spot.Bottom
     },
     children: [
@@ -109,28 +110,51 @@ const infoBodyInit = function() {
   return creator({
     name: go.Panel,
     props: {
+      name: 'detail',
       type: go.Panel.Table,
+      
       $bindings: [
-        new go.Binding('itemArray', 'arr')
-        // , (v) => {
-        //   console.log(v, 'list')
-        //   return v.list
-        // }
-      ]
-    }, 
-    children: [
-      creator({
-        name: go.TextBlock,
+        new go.Binding('itemArray', '', (v) => {
+          
+          return v.list.map((item, index) => {
+            return {...item, _index: index}
+          })
+        })
+      ],
+      itemTemplate: creator({
+        name: go.Panel,
         props: {
-          font: 'bold 12px sans-serif',
-          text: 'a',
+          type: go.Panel.Auto, 
+          margin: 4,
+          alignment: go.Spot.Left,
           $bindings: [
-            new go.Binding('row', 'itemIndex', function(i) { return Math.floor((i / 2)) }).ofObject(),
-            new go.Binding('column', 'itemIndex', function(i) { return i % 2 }).ofObject()
+            new go.Binding('row', 'data', (i, obj) => { 
+              console.log(i, obj, '+')
+              return Math.floor(i._index / 2)
+            }).ofObject(),
+            new go.Binding('column', 'itemIndex', (i) => { 
+              return i % 2
+            }).ofObject() 
           ] 
-        }
+        },
+        children: [
+          creator({
+            name: go.TextBlock,
+            props: {
+              font: '14px sans-serif', 
+              $bindings: [
+                new go.Binding('text', '', function(i) {  
+                  return `${i.label}: ${i.value}`
+                })
+              ] 
+            }
+          })
+        ]
       })
-    ]
+    }
+    // children: [
+      
+    // ]
   })
 }
 
@@ -139,7 +163,9 @@ const infoBlockInit = function() {
   return creator({
     name: go.Panel,
     props: {
+
       type: go.Panel.Vertical,
+      defaultAlignment: go.Spot.Left,
       margin: 5
     },
     children: [
