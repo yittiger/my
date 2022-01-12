@@ -36,20 +36,18 @@ export default {
       nodes: [
         {
           key: 'panel',
+          header: '头部',
           data: {
+            header: '头部2',
+            // col: 3,
             list: [
               {label: '姓名', value: '黄吉平'}, 
+              {label: '地址', value: '发射点发生d啊打发打发水分大撒旦发射点发生大的发', isRow: true}, 
               {label: '年龄', value: '30'}, 
               {label: '性别', value: '男'}, 
               {label: '身份', value: '工程师'}
             ]
           },
-          list: [
-              {label: '姓名', value: '黄吉平'}, 
-              {label: '年龄', value: '30'}, 
-              {label: '性别', value: '男'}, 
-              {label: '身份', value: '工程师'}
-            ], 
           category: 'panel'
         },
         { 
@@ -170,8 +168,15 @@ export default {
           ),
           custom: departmentNode($, go, this.depTools),
           panel: panelNode({
-            body: {
-              width: 300
+            panel: {
+              width: 300,
+              fill: '#cccccc'
+            },
+            header: {
+              fill: 'red',
+              font: '',
+              stroke: '',
+              textProps: 'data.header'
             }
           })
         }),
