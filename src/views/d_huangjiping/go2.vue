@@ -1,6 +1,9 @@
 <template>
    <div style="height: 100%">
-   
+    <div>
+      <my-icon name="icon-user" svg></my-icon>
+    </div>
+    
     <Diagram height="100%" :links="links" :nodes="nodes"  :options="options"></Diagram>
   </div>
 </template>
@@ -21,6 +24,8 @@ import {
 } from '$ui/gojs'
 import {departmentNode, toolBtn} from '@/components/d_huangjiping/go/depNode.js'
 import {panelNode} from '@/components/d_huangjiping/go/panel-node.js'
+import '$ui/icons/user'
+const userIcon = require('$ui/icons/user')
 export default {
   mixins: [],
   components: {Diagram},
@@ -222,6 +227,8 @@ export default {
     }
   },
   created() {},
-  mounted() {}
+  mounted() {
+    console.log(userIcon)
+  }
 }
 </script>

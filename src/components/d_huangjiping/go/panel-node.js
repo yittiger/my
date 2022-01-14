@@ -39,17 +39,22 @@ const headerPanelInit = function(headerProps) {
       creator({
         name: go.Panel,
         props: {
-          type: go.Panel.Horizontal,
+          type: go.Panel.Table,
           row: 0, 
-          columnSpan: 1, 
-          alignment: go.Spot.Left, 
-          margin: 5
+          columnSpan: 1,
+          stretch: go.GraphObject.Horizontal 
+          // alignment: go.Spot.Left 
+          // margin: 5
         },
         children: [ 
           creator({
             name: go.TextBlock,
             props: {
+              row: 0, 
+              column: 0,
               font: headerFont, // 'bold 12pt sans-serif',
+              alignment: go.Spot.TopLeft,
+              margin: 5,
               stroke: headerFontStroke,
               isMultiline: false,
               editable: false,
@@ -61,11 +66,86 @@ const headerPanelInit = function(headerProps) {
               ]
               // text: 'header'
             } 
-          })
+          }),
+          creator({
+            name: go.Panel,
+            props: {
+              type: go.Panel.Horizontal,
+              row: 0, 
+              column: 1,
+              alignment: go.Spot.Right  
+            },
+            children: [
+              creator({
+                name: go.Shape,
+                props: {
+                  fill: 'black',
+                  margin: 3,
+                  strokeWidth: 0,
+                  geometry: go.Geometry.parse('M2 5v10c0 0.55 0.45 1 1 1h9c0.55 0 1-0.45 1-1v-10h-11zM5 14h-1v-7h1v7zM7 14h-1v-7h1v7zM9 14h-1v-7h1v7zM11 14h-1v-7h1v7z M13.25 2h-3.25v-1.25c0-0.412-0.338-0.75-0.75-0.75h-3.5c-0.412 0-0.75 0.338-0.75 0.75v1.25h-3.25c-0.413 0-0.75 0.337-0.75 0.75v1.25h13v-1.25c0-0.413-0.338-0.75-0.75-0.75zM9 2h-3v-0.987h3v0.987z', true)
+                }
+              }),
+              creator({
+                name: go.Shape,
+                props: {
+                  fill: 'black',
+                  margin: 3,
+                  strokeWidth: 0,
+                  click: () => {
+                    console.log(arguments)
+                  },
+                  geometry: go.Geometry.parse('M2 5v10c0 0.55 0.45 1 1 1h9c0.55 0 1-0.45 1-1v-10h-11zM5 14h-1v-7h1v7zM7 14h-1v-7h1v7zM9 14h-1v-7h1v7zM11 14h-1v-7h1v7z M13.25 2h-3.25v-1.25c0-0.412-0.338-0.75-0.75-0.75h-3.5c-0.412 0-0.75 0.338-0.75 0.75v1.25h-3.25c-0.413 0-0.75 0.337-0.75 0.75v1.25h13v-1.25c0-0.413-0.338-0.75-0.75-0.75zM9 2h-3v-0.987h3v0.987z', true)
+                }
+              })
+              
+              // creator({
+              //   name: go.Panel,
+              //   props: {
+              //     type: go.Panel.Auto,
+              //     margin: 3
+              //     // click: fn
+              //   },
+              //   children: [
+              //     // creator({
+              //     //   name: go.Shape,
+              //     //   props: {
+              //     //     figure: 'Circle',
+              //     //     width: 18,
+              //     //     fill: 'transparent',
+              //     //     strokeWidth: 0
+              //     //   }
+              //     // }),
+              //     creator({
+              //       name: go.Shape,
+              //       props: {
+              //         fill: 'black',
+              //         strokeWidth: 0, 
+              //       }
+              //     })
+              //   ]
+              // })
+            ]
+          }) 
         ]
       }) 
     ]
   })
+}
+
+// 按钮生成
+export const toolBtn = function($, go, tool) {
+  return $(go.Panel, 'Auto', {margin: 2, click: tool.fn},
+    $(go.Shape, 'Circle', {
+      width: 18,
+      fill: 'transparent',
+      strokeWidth: 0
+    }),
+    $(go.Shape, {
+      fill: tool.color, // '#F7051F',
+      strokeWidth: 0,
+      geometry: go.Geometry.parse(tool.icon, true)
+    }) 
+  )
 }
 
 
