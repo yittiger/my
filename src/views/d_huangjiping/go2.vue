@@ -1,9 +1,6 @@
 <template>
    <div style="height: 100%">
-    <div>
-      <my-icon name="icon-user" svg></my-icon>
-    </div>
-    
+     
     <Diagram height="100%" :links="links" :nodes="nodes"  :options="options"></Diagram>
   </div>
 </template>
@@ -24,8 +21,9 @@ import {
 } from '$ui/gojs'
 import {departmentNode, toolBtn} from '@/components/d_huangjiping/go/depNode.js'
 import {panelNode} from '@/components/d_huangjiping/go/panel-node.js'
-import '$ui/icons/user'
-const userIcon = require('$ui/icons/user')
+import {icons} from '@/components/d_huangjiping/go/icon'
+import imgSrc from '$ui/gojs/sources/ATM.png'
+
 export default {
   mixins: [],
   components: {Diagram},
@@ -44,6 +42,7 @@ export default {
           header: '头部',
           data: {
             header: '头部2',
+            img: imgSrc,
             // col: 3,
             list: [
               {label: '姓名', value: '黄吉平'}, 
@@ -174,14 +173,42 @@ export default {
           custom: departmentNode($, go, this.depTools),
           panel: panelNode({
             panel: {
-              width: 300,
-              fill: '#cccccc'
+              width: 400,
+              fill: 'white'
             },
             header: {
-              fill: 'red',
-              font: '',
-              stroke: '',
-              textProps: 'data.header'
+              fill: '',
+              font: 'bold 16pt sans-serif',
+              color: '',
+              textProps: 'data.header',
+              tools: [
+                {
+                  icon: icons.delete, 
+                  color: 'blue', 
+                  cb: this.panelToolClick
+                },
+                {
+                  icon: icons.edit, 
+                  color: 'blue', 
+                  cb: this.panelToolClick
+                },
+                {
+                  icon: icons.add, 
+                  color: 'blue', 
+                  cb: this.panelToolClick
+                }
+              ]
+            },
+            body: {
+              image: {
+                sourceProp: 'data.img',
+                width: 100, 
+                // height: 100
+                stroke: 'blue'
+              },
+              info: {
+                
+              }
             }
           })
         }),
@@ -195,12 +222,16 @@ export default {
   computed: {
   },
   methods: { 
+    panelToolClick(e, obj) {
+      console.log(this, obj.part.location, obj.part.data)
+    },
     depTools($, go) {
       const delBtn = {
         color: '#F7051F',
         icon: 'delete',
         fn: (e, obj) => {
           console.log('delete', e)
+          console.log(obj.part.data)
         }
       }
       const addBtn = {
@@ -228,7 +259,7 @@ export default {
   },
   created() {},
   mounted() {
-    console.log(userIcon)
+     
   }
 }
 </script>

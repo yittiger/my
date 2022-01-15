@@ -3,7 +3,7 @@ import get from 'lodash/get'
 import {go, merge} from '$ui/gojs/utils/lib';
 import creator from '$ui/gojs/utils/creator'
 import {nodeTemplate, imageGraph} from '$ui/gojs/template/nodes'
-import imgSrc from '$ui/gojs/sources/ATM.png'
+// import imgSrc from '$ui/gojs/sources/ATM.png'
 
 const defaultPanelProps = {
   isShadowed: true,
@@ -16,8 +16,9 @@ const defaultPanelProps = {
 const headerPanelInit = function(headerProps) { 
   const headerFill = headerProps.fill || '#E8E8E8'
   const headerFont = headerProps.font || 'bold 12pt sans-serif'
-  const headerFontStroke = headerProps.stroke || 'black'
+  const headerFontStroke = headerProps.color || 'black'
   const textProps = headerProps.textProps
+  const headerTools = headerProps.tools
   return creator({
     name: go.Panel,
     props: {
@@ -67,7 +68,7 @@ const headerPanelInit = function(headerProps) {
               // text: 'header'
             } 
           }),
-          creator({
+          headerTools && headerTools.length ? creator({
             name: go.Panel,
             props: {
               type: go.Panel.Horizontal,
@@ -76,92 +77,71 @@ const headerPanelInit = function(headerProps) {
               alignment: go.Spot.Right  
             },
             children: [
-              creator({
-                name: go.Shape,
-                props: {
-                  fill: 'black',
-                  margin: 3,
-                  strokeWidth: 0,
-                  geometry: go.Geometry.parse('M2 5v10c0 0.55 0.45 1 1 1h9c0.55 0 1-0.45 1-1v-10h-11zM5 14h-1v-7h1v7zM7 14h-1v-7h1v7zM9 14h-1v-7h1v7zM11 14h-1v-7h1v7z M13.25 2h-3.25v-1.25c0-0.412-0.338-0.75-0.75-0.75h-3.5c-0.412 0-0.75 0.338-0.75 0.75v1.25h-3.25c-0.413 0-0.75 0.337-0.75 0.75v1.25h13v-1.25c0-0.413-0.338-0.75-0.75-0.75zM9 2h-3v-0.987h3v0.987z', true)
-                }
-              }),
-              creator({
-                name: go.Shape,
-                props: {
-                  fill: 'black',
-                  margin: 3,
-                  strokeWidth: 0,
-                  click: () => {
-                    console.log(arguments)
+              ...headerTools.map((item) => { 
+                return creator({
+                  name: 'Button',
+                  props: { 
+                    margin: 3, 
+                    'ButtonBorder.fill': 'transparent',
+                    'ButtonBorder.stroke': 'transparent',
+                    'ButtonBorder.strokeWidth': 0,
+                    _buttonFillOver: 'transparent',
+                    _buttonStrokeOver: 'transparent',
+                    _buttonFillPressed: 'transparent',
+                    $events: {
+                      click: item.cb
+                      // function(e, obj) {
+                      //   console.log(obj.part.data, 'ddd')
+                      // }
+                    }
                   },
-                  geometry: go.Geometry.parse('M2 5v10c0 0.55 0.45 1 1 1h9c0.55 0 1-0.45 1-1v-10h-11zM5 14h-1v-7h1v7zM7 14h-1v-7h1v7zM9 14h-1v-7h1v7zM11 14h-1v-7h1v7z M13.25 2h-3.25v-1.25c0-0.412-0.338-0.75-0.75-0.75h-3.5c-0.412 0-0.75 0.338-0.75 0.75v1.25h-3.25c-0.413 0-0.75 0.337-0.75 0.75v1.25h13v-1.25c0-0.413-0.338-0.75-0.75-0.75zM9 2h-3v-0.987h3v0.987z', true)
-                }
+                  children: [  
+                    creator({
+                      name: go.Shape,
+                      props: {
+                        fill: item.color,
+                        strokeWidth: 0,
+                        geometry: go.Geometry.parse(item.icon, true)
+                      }
+                    })
+                  ]
+                })
               })
-              
-              // creator({
-              //   name: go.Panel,
-              //   props: {
-              //     type: go.Panel.Auto,
-              //     margin: 3
-              //     // click: fn
-              //   },
-              //   children: [
-              //     // creator({
-              //     //   name: go.Shape,
-              //     //   props: {
-              //     //     figure: 'Circle',
-              //     //     width: 18,
-              //     //     fill: 'transparent',
-              //     //     strokeWidth: 0
-              //     //   }
-              //     // }),
-              //     creator({
-              //       name: go.Shape,
-              //       props: {
-              //         fill: 'black',
-              //         strokeWidth: 0, 
-              //       }
-              //     })
-              //   ]
-              // })
             ]
-          }) 
+          }) : null
         ]
       }) 
     ]
   })
 }
 
-// 按钮生成
-export const toolBtn = function($, go, tool) {
-  return $(go.Panel, 'Auto', {margin: 2, click: tool.fn},
-    $(go.Shape, 'Circle', {
-      width: 18,
-      fill: 'transparent',
-      strokeWidth: 0
-    }),
-    $(go.Shape, {
-      fill: tool.color, // '#F7051F',
-      strokeWidth: 0,
-      geometry: go.Geometry.parse(tool.icon, true)
-    }) 
-  )
-}
+// ================================
 
 
 // 图片生成
-const imageGraphInit = function() {
+export const imageGraphInit = function(imgProps) {
+   
+  const sourceProp = imgProps.sourceProp
+  const stroke = imgProps.stroke
+    
+  delete imgProps.sourceProp
+  delete imgProps.stroke
   return imageGraph({
-    image: {
-      source: imgSrc,
+    image: { 
       width: 80,
-      height: 80
+      $bindings: [
+        new go.Binding('source', '', (v) => { 
+          const val = get(v, sourceProp)
+          return val
+        })
+      ], 
+      ...imgProps
     },
     shape: {
       figure: 'Rectangle',
       strokeWidth: 1,
-      stroke: '#cccccc'
-    } 
+      stroke: stroke || '#cccccc'
+    }
   })
 }
 
@@ -198,12 +178,13 @@ const titleBlockInit = function() {
   }) 
 }
 
-const detailBodyInit = function() {
+const detailBodyInit = function(infoProps) {
   return creator({
     name: go.Panel,
     props: {
       name: 'detail',
       type: go.Panel.Table, 
+      width: infoProps.width,
       $bindings: [
         
         new go.Binding('itemArray', 'data', (v) => {
@@ -222,7 +203,7 @@ const detailBodyInit = function() {
             }
             return total
           }, [])
-          console.log(_arr, '55')
+          // console.log(_arr, '55')
           const table = []
           _arr.forEach((item, index) => {
             const i = Math.floor(index / 2)
@@ -279,7 +260,7 @@ const detailBodyInit = function() {
                 new go.Binding('maxSize', '', function(i) { 
                   // console.log(i) 
                   if (i.isRow) {
-                    return new go.Size(190, NaN)
+                    return new go.Size(280, NaN)
                   } else {
                     return new go.Size(85, NaN)
                   }
@@ -300,23 +281,29 @@ const detailBodyInit = function() {
 }
 
 // 内容生成
-const infoBlockInit = function() { 
+const infoBlockInit = function(infoProps) { 
+  console.log(infoProps.width, 'infoWidth')
   return creator({
     name: go.Panel,
     props: {
-
       type: go.Panel.Vertical,
       defaultAlignment: go.Spot.Left,
+      width: infoProps.width,
       margin: 5
     },
     children: [
       titleBlockInit(),
-      detailBodyInit()
+      detailBodyInit(infoProps)
     ]
   })   
 }
 
-const bodyContentInit = function() {
+const bodyContentInit = function(bodyProps) {
+  // const width = bodyProps.width
+ 
+  const {image} = bodyProps
+  const info = bodyProps.info || {}
+  info.width = bodyProps.width - (image.width || 80) - 5
   return creator({
     name: go.Panel,
     props: {
@@ -324,8 +311,8 @@ const bodyContentInit = function() {
       defaultAlignment: go.Spot.Top 
     },
     children: [ 
-      imageGraphInit(), 
-      infoBlockInit()  
+      image ? imageGraphInit(image) : null, 
+      infoBlockInit(info)  
     ]
   })  
 }
@@ -343,7 +330,8 @@ export function panelNode(options) {
 
   // header props ----------------
   const {header} = options
-
+  const {body} = options
+  const bodyProps = {...body, width: panelWidth}
   return nodeTemplate({
     props: {
       ...panelProps
@@ -377,7 +365,7 @@ export function panelNode(options) {
               margin: 5
             },
             children: [
-              bodyContentInit()
+              bodyContentInit(bodyProps)
             ]
           })
         ]
