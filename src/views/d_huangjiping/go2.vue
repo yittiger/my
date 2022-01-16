@@ -40,8 +40,9 @@ export default {
         {
           key: 'panel',
           header: '头部',
+          title: '我的标题',
           data: {
-            header: '头部2',
+            subTitle: '我的副标题',
             img: imgSrc,
             // col: 3,
             list: [
@@ -173,14 +174,15 @@ export default {
           custom: departmentNode($, go, this.depTools),
           panel: panelNode({
             panel: {
+              // sideWidth: 150,
               width: 400,
               fill: 'white'
             },
             header: {
+              textKey: 'header',
               fill: '',
               font: 'bold 16pt sans-serif',
               color: '',
-              textProps: 'data.header',
               tools: [
                 {
                   icon: icons.delete, 
@@ -201,13 +203,22 @@ export default {
             },
             body: {
               image: {
-                sourceProp: 'data.img',
-                width: 100, 
-                // height: 100
+                sourceKey: 'data.img', 
+                width: 100,
+                // height: 200,
                 stroke: 'blue'
               },
               info: {
-                
+                title: {
+                  titleKey: 'title',
+                  subTitleKey: 'data.subTitle'
+                  // titleProps: {},
+                  // subTitleProps: {}
+                },
+                detail: {
+                  dataKey: '',
+                  column: 3
+                }
               }
             }
           })

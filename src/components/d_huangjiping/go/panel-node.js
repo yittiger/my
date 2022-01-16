@@ -17,7 +17,7 @@ const headerPanelInit = function(headerProps) {
   const headerFill = headerProps.fill || '#E8E8E8'
   const headerFont = headerProps.font || 'bold 12pt sans-serif'
   const headerFontStroke = headerProps.color || 'black'
-  const textProps = headerProps.textProps
+  const textKey = headerProps.textKey
   const headerTools = headerProps.tools
   return creator({
     name: go.Panel,
@@ -61,11 +61,10 @@ const headerPanelInit = function(headerProps) {
               editable: false,
               $bindings: [
                 new go.Binding('text', '', (v) => {
-                  const val = get(v, textProps) 
+                  const val = get(v, textKey) 
                   return val || ''
                 })
               ]
-              // text: 'header'
             } 
           }),
           headerTools && headerTools.length ? creator({
@@ -121,17 +120,16 @@ const headerPanelInit = function(headerProps) {
 // 图片生成
 export const imageGraphInit = function(imgProps) {
    
-  const sourceProp = imgProps.sourceProp
-  const stroke = imgProps.stroke
-    
-  delete imgProps.sourceProp
+  const sourceKey = imgProps.sourceKey
+  const stroke = imgProps.stroke 
+  delete imgProps.sourceKey
   delete imgProps.stroke
   return imageGraph({
     image: { 
       width: 80,
       $bindings: [
         new go.Binding('source', '', (v) => { 
-          const val = get(v, sourceProp)
+          const val = get(v, sourceKey)
           return val
         })
       ], 
@@ -146,34 +144,46 @@ export const imageGraphInit = function(imgProps) {
 }
 
 // 标题生成
-const titleBlockInit = function() {
+const titleBlockInit = function(titleProps) {
   return creator({
     name: go.Panel,
     props: {
       type: go.Panel.Horizontal,
-      
       defaultAlignment: go.Spot.Bottom
     },
     children: [
-      creator({
+      titleProps.titleKey ? creator({
         name: go.TextBlock,
         props: {
           font: 'bold 16pt sans-serif',
           isMultiline: false,
-          editable: false,
-          text: '标题' 
+          // editable: false,
+          // text: '标题'
+          $bindings: [
+            new go.Binding('text', '', (v) => { 
+              const val = get(v, titleProps.titleKey)
+              return val
+            })
+          ],
+          ...titleProps.titleProps || {} 
         } 
-      }), 
-      creator({
+      }) : null, 
+      titleProps.subTitleKey ? creator({
         name: go.TextBlock,
         props: {
           font: 'normal 12pt sans-serif',
           isMultiline: false,
           editable: false,
           margin: new go.Margin(0, 0, 2, 10),
-          text: '副标题' 
+          $bindings: [
+            new go.Binding('text', '', (v) => { 
+              const val = get(v, titleProps.subTitleKey)
+              return val
+            })
+          ],
+          ...titleProps.subTitleProps || {} 
         } 
-      }) 
+      }) : null
     ]
   }) 
 }
@@ -186,7 +196,6 @@ const detailBodyInit = function(infoProps) {
       type: go.Panel.Table, 
       width: infoProps.width,
       $bindings: [
-        
         new go.Binding('itemArray', 'data', (v) => {
           const arr = v.list
           const _arr = arr.reduce((total, item, i) => {
@@ -237,6 +246,7 @@ const detailBodyInit = function(infoProps) {
           type: go.Panel.Auto, 
           margin: 4,
           alignment: go.Spot.Left,
+          stretch: go.GraphObject.Fill,
           $bindings: [
             new go.Binding('row', 'data', (i, obj) => { 
               return i._row // Math.floor(i / 2)
@@ -253,18 +263,9 @@ const detailBodyInit = function(infoProps) {
           creator({
             name: go.TextBlock,
             props: {
-              font: '14px sans-serif', 
-             
-              $bindings: [
-                // maxSize: new go.Size(190, NaN),
-                new go.Binding('maxSize', '', function(i) { 
-                  // console.log(i) 
-                  if (i.isRow) {
-                    return new go.Size(280, NaN)
-                  } else {
-                    return new go.Size(85, NaN)
-                  }
-                }),
+              font: '14px sans-serif',  
+              // background: 'green',
+              $bindings: [ 
                 new go.Binding('text', '', function(i) {  
                   return `${i.label}：${i.value}`
                 })
@@ -281,40 +282,78 @@ const detailBodyInit = function(infoProps) {
 }
 
 // 内容生成
-const infoBlockInit = function(infoProps) { 
-  console.log(infoProps.width, 'infoWidth')
+export const infoBlockInit = function(infoProps) { 
+  console.log(infoProps, 'infoWidth')
+  const titleProps = infoProps.title
   return creator({
     name: go.Panel,
     props: {
       type: go.Panel.Vertical,
       defaultAlignment: go.Spot.Left,
-      width: infoProps.width,
-      margin: 5
+      width: infoProps.width
     },
     children: [
-      titleBlockInit(),
+      titleBlockInit(titleProps),
       detailBodyInit(infoProps)
     ]
   })   
 }
 
-const bodyContentInit = function(bodyProps) {
+export const bodyContentInit = function(bodyProps) {
   // const width = bodyProps.width
- 
+   
   const {image} = bodyProps
   const info = bodyProps.info || {}
-  info.width = bodyProps.width - (image.width || 80) - 5
+  let sideWidth = bodyProps.sideWidth
+
+  if (!sideWidth) {
+    if (sideWidth !== 0) {
+      sideWidth = 80
+    }
+  }
+  if (typeof image === 'object') {
+    if (!image.width) {
+      image.width = sideWidth
+    } else {
+      sideWidth = Math.max(image.width, sideWidth)
+      image.width = sideWidth
+    }
+  }
+
+  info.width = bodyProps.width - (sideWidth ? sideWidth + 15 : 0) 
+  
   return creator({
     name: go.Panel,
     props: {
-      type: go.Panel.Horizontal,
-      defaultAlignment: go.Spot.Top 
+      type: go.Panel.Vertical
     },
-    children: [ 
-      image ? imageGraphInit(image) : null, 
-      infoBlockInit(info)  
+    children: [
+      
+      creator({
+        name: go.Panel,
+        props: {
+          type: go.Panel.Horizontal,
+          defaultAlignment: go.Spot.Top 
+        },
+        children: [ 
+          sideWidth || image ? imageGraphInit(image) : null,
+          creator({
+            name: go.Panel,
+            props: {
+              type: go.Panel.Auto,
+              padding: new go.Margin(0, 0, 0, 4),
+              width: info.width
+            },
+            children: [
+              infoBlockInit(info) 
+               
+            ] 
+          })  
+        ]
+      }) 
     ]
-  })  
+  })
+   
 }
 
 
@@ -325,13 +364,15 @@ export function panelNode(options) {
   const panelProps = merge({}, defaultPanelProps, panel) 
   const panelWidth = panelProps.width
   const panelFill = panelProps.fill
+  const sideWidth = panelProps.sideWidth
   delete panelProps.width
   delete panelProps.fill
+  delete panelProps.sideWidth
 
   // header props ----------------
   const {header} = options
   const {body} = options
-  const bodyProps = {...body, width: panelWidth}
+  const bodyProps = {...body, width: panelWidth, sideWidth: sideWidth}
   return nodeTemplate({
     props: {
       ...panelProps
