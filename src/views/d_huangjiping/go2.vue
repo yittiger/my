@@ -51,6 +51,11 @@ export default {
               {label: '年龄', value: '30'}, 
               {label: '性别', value: '男'}, 
               {label: '身份', value: '工程师'}
+            ],
+            content: [
+              {label: '1', value: '发射点发生d啊打发打发水分大撒旦发射点发生大的发'},
+              {label: '2', value: '发射点发生d啊打发打发水分大撒旦发射点发生大的发'},
+              {label: '3', value: '发射点发生d啊打发打发水分大撒旦发射点发生大的发'}
             ]
           },
           category: 'panel'
@@ -187,17 +192,20 @@ export default {
                 {
                   icon: icons.delete, 
                   color: 'blue', 
-                  cb: this.panelToolClick
+                  cb: this.panelToolClick,
+                  name: '删除'
                 },
                 {
                   icon: icons.edit, 
                   color: 'blue', 
-                  cb: this.panelToolClick
+                  cb: this.panelToolClick,
+                  name: '编辑'
                 },
                 {
                   icon: icons.add, 
                   color: 'blue', 
-                  cb: this.panelToolClick
+                  cb: this.panelToolClick,
+                  name: '新增'
                 }
               ]
             },
@@ -216,9 +224,18 @@ export default {
                   // subTitleProps: {}
                 },
                 detail: {
-                  dataKey: '',
+                  dataKey: 'data.list',
                   column: 3
                 }
+              },
+              more: {
+                buttonColor: 'rgba(0,0,0,0.3)',
+                defaultShow: false,
+                detail: {
+                  dataKey: 'data.content',
+                  column: 1
+                }           
+
               }
             }
           })

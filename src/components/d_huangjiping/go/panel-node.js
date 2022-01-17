@@ -3,7 +3,13 @@ import get from 'lodash/get'
 import {go, merge} from '$ui/gojs/utils/lib';
 import creator from '$ui/gojs/utils/creator'
 import {nodeTemplate, imageGraph} from '$ui/gojs/template/nodes'
-// import imgSrc from '$ui/gojs/sources/ATM.png'
+import {defaultTooltip} from '$ui/gojs/template/common'
+
+const MoreBtnSvgDown = 'M992.01127 416.3c-7.4 0-14.9 2.6-20.9 7.8l-417 360.8c-24 21-60.3 21-84.3 0l-0.1-0.1L52.91127 424.1c-13.4-11.6-33.6-10.1-45.1 3.3-11.6 13.4-10.1 33.6 3.3 45.1l416.7 360.6c23.3 20.4 53.2 31.6 84.2 31.6s60.9-11.2 84.2-31.6l416.7-360.6c13.4-11.6 14.8-31.8 3.3-45.1-6.3-7.4-15.2-11.1-24.2-11.1zM992.01127 159.3c-7.4 0-14.9 2.6-20.9 7.8l-417 360.8c-24 21-60.3 21-84.3 0l-0.1-0.1L52.91127 167.1c-13.4-11.6-33.6-10.1-45.1 3.3-11.6 13.4-10.1 33.6 3.3 45.1l416.7 360.6c23.3 20.4 53.2 31.6 84.2 31.6s60.9-11.2 84.2-31.6l416.7-360.6c13.4-11.6 14.8-31.8 3.3-45.1-6.3-7.4-15.2-11.1-24.2-11.1z'
+
+const MoreBtnSvgUp = 'M992.01127 607.7c-7.4 0-14.9-2.6-20.9-7.8l-417-360.8c-24-21-60.3-21-84.3 0l-0.1 0.1L52.91127 599.9c-13.4 11.6-33.6 10.1-45.1-3.3-11.6-13.4-10.1-33.6 3.3-45.1l416.7-360.6c23.3-20.4 53.2-31.6 84.2-31.6s60.9 11.2 84.2 31.6l416.7 360.6c13.4 11.6 14.8 31.8 3.3 45.1-6.3 7.4-15.2 11.1-24.2 11.1zM992.01127 864.7c-7.4 0-14.9-2.6-20.9-7.8l-417-360.8c-24-21-60.3-21-84.3 0l-0.1 0.1L52.91127 856.9c-13.4 11.6-33.6 10.1-45.1-3.3-11.6-13.4-10.1-33.6 3.3-45.1l416.7-360.6c23.3-20.4 53.2-31.6 84.2-31.6s60.9 11.2 84.2 31.6l416.7 360.6c13.4 11.6 14.8 31.8 3.3 45.1-6.3 7.4-15.2 11.1-24.2 11.1z'
+
+console.log(MoreBtnSvgUp, MoreBtnSvgDown)
 
 const defaultPanelProps = {
   isShadowed: true,
@@ -86,12 +92,10 @@ const headerPanelInit = function(headerProps) {
                     'ButtonBorder.strokeWidth': 0,
                     _buttonFillOver: 'transparent',
                     _buttonStrokeOver: 'transparent',
-                    _buttonFillPressed: 'transparent',
+                    _buttonFillPressed: 'transparent', 
+                    toolTip: defaultTooltip({text: item.name}),
                     $events: {
-                      click: item.cb
-                      // function(e, obj) {
-                      //   console.log(obj.part.data, 'ddd')
-                      // }
+                      click: item.cb 
                     }
                   },
                   children: [  
@@ -100,6 +104,8 @@ const headerPanelInit = function(headerProps) {
                       props: {
                         fill: item.color,
                         strokeWidth: 0,
+                        width: 18,
+                        height: 18,
                         geometry: go.Geometry.parse(item.icon, true)
                       }
                     })
@@ -112,150 +118,142 @@ const headerPanelInit = function(headerProps) {
       }) 
     ]
   })
-}
-
-// ================================
-
+} 
 
 // 图片生成
 export const imageGraphInit = function(imgProps) {
-   
-  const sourceKey = imgProps.sourceKey
-  const stroke = imgProps.stroke 
-  delete imgProps.sourceKey
-  delete imgProps.stroke
-  return imageGraph({
-    image: { 
-      width: 80,
-      $bindings: [
-        new go.Binding('source', '', (v) => { 
-          const val = get(v, sourceKey)
-          return val
-        })
-      ], 
-      ...imgProps
-    },
-    shape: {
-      figure: 'Rectangle',
-      strokeWidth: 1,
-      stroke: stroke || '#cccccc'
-    }
-  })
+  if (typeof imgProps === 'function') {
+    imgProps()
+  } else {
+    const sourceKey = imgProps.sourceKey
+    const stroke = imgProps.stroke 
+    delete imgProps.sourceKey
+    delete imgProps.stroke
+    return imageGraph({
+      image: { 
+        width: 80,
+        $bindings: [
+          new go.Binding('source', '', (v) => { 
+            const val = get(v, sourceKey)
+            return val
+          })
+        ], 
+        ...imgProps
+      },
+      shape: {
+        figure: 'Rectangle',
+        strokeWidth: 1,
+        stroke: stroke || '#cccccc'
+      }
+    })
+  }
 }
 
 // 标题生成
 const titleBlockInit = function(titleProps) {
-  return creator({
-    name: go.Panel,
-    props: {
-      type: go.Panel.Horizontal,
-      defaultAlignment: go.Spot.Bottom
-    },
-    children: [
-      titleProps.titleKey ? creator({
-        name: go.TextBlock,
-        props: {
-          font: 'bold 16pt sans-serif',
-          isMultiline: false,
-          // editable: false,
-          // text: '标题'
-          $bindings: [
-            new go.Binding('text', '', (v) => { 
-              const val = get(v, titleProps.titleKey)
-              return val
-            })
-          ],
-          ...titleProps.titleProps || {} 
-        } 
-      }) : null, 
-      titleProps.subTitleKey ? creator({
-        name: go.TextBlock,
-        props: {
-          font: 'normal 12pt sans-serif',
-          isMultiline: false,
-          editable: false,
-          margin: new go.Margin(0, 0, 2, 10),
-          $bindings: [
-            new go.Binding('text', '', (v) => { 
-              const val = get(v, titleProps.subTitleKey)
-              return val
-            })
-          ],
-          ...titleProps.subTitleProps || {} 
-        } 
-      }) : null
-    ]
-  }) 
+  if (typeof titleProps === 'function') {
+    return titleProps()
+  } else {
+    return creator({
+      name: go.Panel,
+      props: {
+        type: go.Panel.Horizontal,
+        defaultAlignment: go.Spot.Bottom
+      },
+      children: [
+        titleProps.titleKey ? creator({
+          name: go.TextBlock,
+          props: {
+            font: 'bold 16pt sans-serif',
+            isMultiline: false, 
+            $bindings: [
+              new go.Binding('text', '', (v) => { 
+                const val = get(v, titleProps.titleKey)
+                return val
+              })
+            ],
+            ...titleProps.titleProps || {} 
+          } 
+        }) : null, 
+        titleProps.subTitleKey ? creator({
+          name: go.TextBlock,
+          props: {
+            font: 'normal 12pt sans-serif',
+            isMultiline: false,
+            editable: false,
+            margin: new go.Margin(0, 0, 2, 10),
+            $bindings: [
+              new go.Binding('text', '', (v) => { 
+                const val = get(v, titleProps.subTitleKey)
+                return val
+              })
+            ],
+            ...titleProps.subTitleProps || {} 
+          } 
+        }) : null
+      ]
+    }) 
+  }
+  
 }
 
-const detailBodyInit = function(infoProps) {
+
+const detailInit = function(infoProps) {
+  const {detail} = infoProps
+  const infoWidth = infoProps.width 
+  const dataKey = detail.dataKey
+  const column = detail.column 
   return creator({
     name: go.Panel,
     props: {
       name: 'detail',
       type: go.Panel.Table, 
-      width: infoProps.width,
+      width: infoWidth,
       $bindings: [
-        new go.Binding('itemArray', 'data', (v) => {
-          const arr = v.list
-          const _arr = arr.reduce((total, item, i) => {
-            if (!item.isRow) {
-              if (arr[i + 1] && arr[i + 1].isRow) {
-                total.push(item)
-                total.push(null)
-              } else {
-                total.push(item)
-              }
+        new go.Binding('itemArray', '', (v) => { 
+          const data = get(v, dataKey)
+          // =============下面代码为建立数据的表格格式================
+          const temp = JSON.parse(JSON.stringify(data)).reduce((total, item) => {
+            if (item.isRow) {
+              total.row.push(item)
             } else {
-              total.push(item)
-              total.push(null)
+              total.normal.push(item)
             }
             return total
-          }, [])
-          // console.log(_arr, '55')
-          const table = []
-          _arr.forEach((item, index) => {
-            const i = Math.floor(index / 2)
-            if (!table[i]) {
-              table[i] = [item]
-            } else {
-              table[i].push(item)
-            }
+          }, {normal: [], row: []})
+
+          let currentRow = 0
+          temp.normal.forEach((item, i) => {
+            currentRow = item._row = Math.floor(i / column)
+            item._col = i % column
           })
-          
-          const tableData = table.reduce((total, row, rowNum) => {
-            const rowData = row.map((col, colNum) => {
-              if (col) {
-                col._row = rowNum
-                col._col = colNum
-              } 
-              return col
-            })
-            total = [...total, ...rowData]
-            return total  
-          }, []).filter((item) => {
-            return !!item
-          })
-          console.log(tableData)
-          return v.list
+          temp.row.forEach((item, i) => {
+            item._row = currentRow + i + 1
+            item._col = 0
+            item._span = column
+          })  
+          const _data = temp.normal.concat(temp.row)
+          // =========================================================
+          return _data
         })
-      ],
+      ], 
       itemTemplate: creator({
         name: go.Panel,
         props: {
           type: go.Panel.Auto, 
-          margin: 4,
+          margin: 2,
           alignment: go.Spot.Left,
           stretch: go.GraphObject.Fill,
           $bindings: [
-            new go.Binding('row', 'data', (i, obj) => { 
-              return i._row // Math.floor(i / 2)
+            new go.Binding('row', 'data', (i, obj) => {
+              return i._row
             }).ofObject(),
             new go.Binding('column', 'data', (i) => { 
-              return i._col // i % 2
+              // return 0 // i % 2
+              return i._col
             }).ofObject(),
-            new go.Binding('columnSpan', 'data', (i, obj) => { 
-              return i.isRow ? 2 : 1
+            new go.Binding('columnSpan', 'data', (i) => { 
+              return i._span || 1
             }).ofObject() 
           ] 
         },
@@ -267,7 +265,7 @@ const detailBodyInit = function(infoProps) {
               // background: 'green',
               $bindings: [ 
                 new go.Binding('text', '', function(i) {  
-                  return `${i.label}：${i.value}`
+                  return i.label ? `${i.label}：${i.value}` : i.value
                 })
               ] 
             }
@@ -275,15 +273,14 @@ const detailBodyInit = function(infoProps) {
         ]
       })
     }
-    // children: [
-      
-    // ]
-  })
+  })  
 }
+// ================================
+
 
 // 内容生成
 export const infoBlockInit = function(infoProps) { 
-  console.log(infoProps, 'infoWidth')
+  // console.log(infoProps, 'infoWidth')
   const titleProps = infoProps.title
   return creator({
     name: go.Panel,
@@ -294,9 +291,73 @@ export const infoBlockInit = function(infoProps) {
     },
     children: [
       titleBlockInit(titleProps),
-      detailBodyInit(infoProps)
+      detailInit(infoProps)
     ]
   })   
+}
+
+// 更多面板生成
+const moreBlockInit = function (moreProps) {
+  const panelWidth = moreProps._width
+  const buttonColor = moreProps.buttonColor || 'rgba(0,0,0,0.3)'
+  const defaultShow = moreProps.defaultShow || false
+  const moreDetail = moreProps.detail
+  return creator({
+    name: go.Panel,
+    props: {
+      type: go.Panel.Vertical,
+      width: panelWidth
+    },
+    children: [ 
+      creator({
+            name: 'PanelExpanderButton',
+            props: { 
+              'ButtonBorder.fill': 'transparent',
+              'ButtonBorder.stroke': 'transparent',
+              'ButtonBorder.strokeWidth': 1,
+              _buttonFillOver: 'transparent',
+              _buttonStrokeOver: 'transparent',
+              _buttonFillPressed: 'transparent',
+              'ButtonIcon.width': 16,
+              'ButtonIcon.height': 10,
+              'ButtonIcon.stroke': buttonColor, 
+              width: 90,
+              _buttonExpandedFigure: MoreBtnSvgUp,
+              _buttonCollapsedFigure: MoreBtnSvgDown,
+              alignment: go.Spot.Center
+            },
+            children: [
+              creator({
+                name: go.TextBlock,
+                props: {
+                  text: '更多',
+                  stroke: buttonColor,
+                  margin: new go.Margin(0, 0, 0, 50)
+                }
+              })
+            ] 
+          }),
+      creator({
+        name: go.Panel,
+        props: {
+          type: go.Panel.Auto,
+          name: 'COLLAPSIBLE',
+          width: panelWidth,
+          visible: defaultShow
+        },
+        children: [ 
+          moreDetail ? detailInit({
+            width: panelWidth,
+            detail: moreDetail
+            // detail: {
+            //   dataKey: 'data.list',
+            //   column: 4
+            // }
+          }) : null
+        ]
+      })
+    ]
+  }) 
 }
 
 export const bodyContentInit = function(bodyProps) {
@@ -318,9 +379,14 @@ export const bodyContentInit = function(bodyProps) {
       sideWidth = Math.max(image.width, sideWidth)
       image.width = sideWidth
     }
+  } 
+  info.width = bodyProps.width - (sideWidth ? sideWidth + 15 : 0)
+  
+  const moreProps = bodyProps.more
+  console.log(moreProps, 'aaaaa')
+  if (moreProps && typeof moreProps === 'object') {
+    moreProps._width = bodyProps.width - 10
   }
-
-  info.width = bodyProps.width - (sideWidth ? sideWidth + 15 : 0) 
   
   return creator({
     name: go.Panel,
@@ -328,7 +394,6 @@ export const bodyContentInit = function(bodyProps) {
       type: go.Panel.Vertical
     },
     children: [
-      
       creator({
         name: go.Panel,
         props: {
@@ -350,7 +415,8 @@ export const bodyContentInit = function(bodyProps) {
             ] 
           })  
         ]
-      }) 
+      }),
+      moreProps ? moreBlockInit(moreProps) : null
     ]
   })
    
