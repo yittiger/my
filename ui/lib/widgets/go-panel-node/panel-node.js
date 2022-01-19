@@ -376,6 +376,7 @@ const bodyContentInit = function(bodyProps) {
       sideWidth = 80
     }
   }
+  
   if (typeof image === 'object') {
     if (!image.width) {
       image.width = sideWidth
@@ -384,7 +385,7 @@ const bodyContentInit = function(bodyProps) {
       image.width = sideWidth
     }
   } 
-  info.width = bodyProps.width - (sideWidth ? sideWidth + 15 : 0)
+  info.width = bodyProps.width - (sideWidth ? sideWidth + 15 : 15)
   
   const moreProps = bodyProps.more
   // console.log(moreProps, 'aaaaa')
@@ -493,9 +494,11 @@ export function panelNode(options) {
   const panelProps = merge({}, defaultPanelProps, panel) 
   const panelWidth = panelProps.width
   const panelFill = panelProps.fill
+  const panelBg = panelProps.bg || {}
   const sideWidth = panelProps.sideWidth
   delete panelProps.width
   delete panelProps.fill
+  delete panelProps.bg
   delete panelProps.sideWidth
 
   // header props ----------------
@@ -512,12 +515,14 @@ export function panelNode(options) {
       ...panelProps
     },
     children: [
+      
       creator({
         name: go.Shape,
         props: {
           strokeWidth: 0, 
           width: panelWidth,
-          fill: panelFill || 'white'
+          fill: panelFill || 'white',
+          ...panelBg  
         }
       }),
       creator({
@@ -548,7 +553,18 @@ export function panelNode(options) {
           // footer --------------
           footer ? footerPanelInit(footer) : null
         ]
-      })  
+      }),
+      creator({
+        name: 'TreeExpanderButton',
+        props: {
+          // alignment: go.Spot.Right, 
+          alignment: new go.Spot(1, 0.5), 
+          alignmentFocus: go.Spot.TopLeft,
+          visible: true
+        }
+      })
+    
+      
     ].filter(n => !!n)
-  }, theme)
+  }, theme) 
 }

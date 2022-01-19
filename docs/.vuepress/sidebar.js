@@ -307,6 +307,7 @@ module.exports = {
     'member-picker',
     'org-member-picker',
     'list-picker',
+    'go-panel-node',
     'charts1'
   ],
   '/guide/': [
