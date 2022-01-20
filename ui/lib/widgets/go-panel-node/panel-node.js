@@ -231,11 +231,14 @@ export const detailInit = function(infoProps) {
             temp.normal.forEach((item, i) => {
               currentRow = item._row = Math.floor(i / column)
               item._col = i % column
+              
+              item._width = (infoWidth / column) - 4
             })
             temp.row.forEach((item, i) => {
               item._row = currentRow + i + 1
               item._col = 0
               item._span = column
+              item._width = infoWidth - 4
             })  
             const _data = temp.normal.concat(temp.row)
             // =========================================================
@@ -259,6 +262,9 @@ export const detailInit = function(infoProps) {
               }).ofObject(),
               new go.Binding('columnSpan', 'data', (i) => { 
                 return i._span || 1
+              }).ofObject(),
+              new go.Binding('width', 'data', (i) => { 
+                return i._width
               }).ofObject() 
             ] 
           },
@@ -386,7 +392,7 @@ const bodyContentInit = function(bodyProps) {
       image.width = sideWidth
     }
   } 
-  info.width = bodyProps.width - (sideWidth ? sideWidth + 10 : 10)
+  info.width = bodyProps.width - (sideWidth ? sideWidth + 15 : 15)
   
   const moreProps = bodyProps.more
   // console.log(moreProps, 'aaaaa')

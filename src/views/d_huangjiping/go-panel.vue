@@ -128,7 +128,7 @@ export default {
                   dataKey: 'data.list',
                   column: 2,
                   contentTemplate: () => {
-                    return [
+                    return [ 
                       creator({
                         name: go.Panel,
                         props: {
@@ -136,32 +136,35 @@ export default {
                           stretch: go.GraphObject.Fill
                         },
                         children: [
-                          creator({
-                            name: go.Shape,
-                            props: {
-                              fill: 'red',
-                              strokeWidth: 0,
-                              width: 18,
-                              height: 18,
-                              margin: 3,
-                              geometry: go.Geometry.parse(icons.edit, true)
-                            }
-                          }),
+                          // creator({
+                          //   name: go.Shape,
+                          //   props: { 
+                          //     fill: 'red',
+                          //     strokeWidth: 0,
+                          //     width: 18,
+                          //     height: 18,
+                          //     margin: 3,
+                          //     geometry: go.Geometry.parse(icons.edit, true)
+                          //   }
+                          // }),
                           creator({
                             name: go.TextBlock,
-                            props: {
+                            props: { 
                               font: '14px sans-serif', 
-                              stroke: 'blue',  
+                              stroke: 'blue', 
                               $bindings: [ 
-                                new go.Binding('text', '', function(i) {  
+                                new go.Binding('text', '', function(i) { 
                                   return i.value
+                                }),
+                                new go.Binding('width', '', function(i) { 
+                                  console.log(i, 'eee')
+                                  return i._width
                                 })
                               ] 
                             }
                           })
                         ]
-                      })
-                      
+                      })  
                     ]
                   }
                 }
@@ -227,7 +230,7 @@ export default {
             list: [
               {label: '标签', value: '内容1'}, 
               {label: '标签', value: '很长很长很长很长很长很长很长很长很长很长的内容', isRow: true}, 
-              {label: '标签', value: '内容2'}, 
+              {label: '标签', value: '内容22qwertyuioplkjhgf'}, 
               {label: '标签', value: '内容3'}, 
               {label: '标签', value: '内容4'}
             ],
@@ -250,7 +253,7 @@ export default {
             list: [
                {label: '标签', value: '内容1'}, 
               {label: '标签', value: '很长很长很长很长很长很长很长很长很长很长的内容', isRow: true}, 
-              {label: '标签', value: '内容2'}, 
+              {label: '标签', value: '内容2qwertyuioplkjhgf'}, 
               {label: '标签', value: '内容3'}, 
               {label: '标签', value: '内容4'}
             ],
