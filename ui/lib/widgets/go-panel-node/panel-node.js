@@ -309,6 +309,7 @@ const moreBlockInit = function (moreProps) {
   const buttonColor = moreProps.buttonColor || 'rgba(0,0,0,0.3)'
   const defaultShow = moreProps.defaultShow || false
   const moreDetail = moreProps.detail
+  const hideButton = moreProps.hideButton
   return creator({
     name: go.Panel,
     props: {
@@ -316,34 +317,34 @@ const moreBlockInit = function (moreProps) {
       width: panelWidth
     },
     children: [ 
-      creator({
-            name: 'PanelExpanderButton',
-            props: { 
-              'ButtonBorder.fill': 'transparent',
-              'ButtonBorder.stroke': 'transparent',
-              'ButtonBorder.strokeWidth': 1,
-              _buttonFillOver: 'transparent',
-              _buttonStrokeOver: 'transparent',
-              _buttonFillPressed: 'transparent',
-              'ButtonIcon.width': 16,
-              'ButtonIcon.height': 10,
-              'ButtonIcon.stroke': buttonColor, 
-              width: 90,
-              _buttonExpandedFigure: MoreBtnSvgUp,
-              _buttonCollapsedFigure: MoreBtnSvgDown,
-              alignment: go.Spot.Center
-            },
-            children: [
-              creator({
-                name: go.TextBlock,
-                props: {
-                  text: '更多',
-                  stroke: buttonColor,
-                  margin: new go.Margin(0, 0, 0, 50)
-                }
-              })
-            ] 
-          }),
+      !hideButton ? creator({
+        name: 'PanelExpanderButton',
+        props: { 
+          'ButtonBorder.fill': 'transparent',
+          'ButtonBorder.stroke': 'transparent',
+          'ButtonBorder.strokeWidth': 1,
+          _buttonFillOver: 'transparent',
+          _buttonStrokeOver: 'transparent',
+          _buttonFillPressed: 'transparent',
+          'ButtonIcon.width': 16,
+          'ButtonIcon.height': 10,
+          'ButtonIcon.stroke': buttonColor, 
+          width: 90,
+          _buttonExpandedFigure: MoreBtnSvgUp,
+          _buttonCollapsedFigure: MoreBtnSvgDown,
+          alignment: go.Spot.Center
+        },
+        children: [
+          creator({
+            name: go.TextBlock,
+            props: {
+              text: '更多',
+              stroke: buttonColor,
+              margin: new go.Margin(0, 0, 0, 50)
+            }
+          })
+        ] 
+      }) : null,
       creator({
         name: go.Panel,
         props: {
@@ -385,7 +386,7 @@ const bodyContentInit = function(bodyProps) {
       image.width = sideWidth
     }
   } 
-  info.width = bodyProps.width - (sideWidth ? sideWidth + 15 : 15)
+  info.width = bodyProps.width - (sideWidth ? sideWidth + 10 : 10)
   
   const moreProps = bodyProps.more
   // console.log(moreProps, 'aaaaa')
@@ -495,11 +496,13 @@ export function panelNode(options) {
   const panelWidth = panelProps.width
   const panelFill = panelProps.fill
   const panelBg = panelProps.bg || {}
+  const panelExpandBtn = panelProps.expandBtn
   const sideWidth = panelProps.sideWidth
   delete panelProps.width
   delete panelProps.fill
   delete panelProps.bg
   delete panelProps.sideWidth
+  delete panelProps.expandBtn
 
   // header props ----------------
   const {header} = options
@@ -510,61 +513,72 @@ export function panelNode(options) {
 
   // footer props ----------------
   const {footer} = options
+
   return nodeTemplate({
     props: {
       ...panelProps
     },
+    wrapper: {
+      type: go.Panel.Spot
+    },
     children: [
-      
-      creator({
-        name: go.Shape,
-        props: {
-          strokeWidth: 0, 
-          width: panelWidth,
-          fill: panelFill || 'white',
-          ...panelBg  
-        }
-      }),
       creator({
         name: go.Panel,
         props: {
-          type: go.Panel.Table,
-          width: panelWidth,
-          defaultRowSeparatorStrokeWidth: 1,
-          defaultRowSeparatorStroke: '#B6B7B9'
-        },
-        children: [ 
-          // header -------------------
-          header ? headerPanelInit(header) : null,
-          // body -------------------
+          type: go.Panel.Auto
+        },  
+        children: [
+          creator({
+            name: go.Shape,
+            props: {
+              strokeWidth: 0, 
+              width: panelWidth,
+              fill: panelFill || 'white',
+              ...panelBg  
+            }
+          }), 
           creator({
             name: go.Panel,
             props: {
-              type: go.Panel.Vertical,
-              row: 1, 
-              columnSpan: 1, 
-              alignment: go.Spot.Left, 
-              margin: 5
+              type: go.Panel.Table,
+              width: panelWidth,
+              defaultRowSeparatorStrokeWidth: 1,
+              defaultRowSeparatorStroke: '#B6B7B9'
             },
-            children: [
-              bodyContentInit(bodyProps)
+            children: [ 
+              // header -------------------
+              header ? headerPanelInit(header) : null,
+              // body -------------------
+              creator({
+                name: go.Panel,
+                props: {
+                  type: go.Panel.Vertical,
+                  row: 1, 
+                  columnSpan: 1, 
+                  alignment: go.Spot.Left, 
+                  margin: 5
+                },
+                children: [
+                  bodyContentInit(bodyProps)
+                ]
+              }),
+              // footer --------------
+              footer ? footerPanelInit(footer) : null
             ]
-          }),
-          // footer --------------
-          footer ? footerPanelInit(footer) : null
+          })
         ]
       }),
-      creator({
+      panelExpandBtn ? creator({
         name: 'TreeExpanderButton',
         props: {
           // alignment: go.Spot.Right, 
           alignment: new go.Spot(1, 0.5), 
-          alignmentFocus: go.Spot.TopLeft,
-          visible: true
+          alignmentFocus: go.Spot.Left,
+          visible: true,
+          ...panelExpandBtn || {}
         }
-      })
-    
-      
+      }) : null
+          
     ].filter(n => !!n)
   }, theme) 
 }

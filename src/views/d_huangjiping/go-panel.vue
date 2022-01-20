@@ -16,7 +16,7 @@ import {
   // grid
 } from '$ui/gojs'
 import creator from '$ui/gojs/utils/creator'
-import {panelNode} from '@/components/d_huangjiping/go/panel-node.js'
+import {panelNode} from '$ui/widgets/go-panel-node/panel-node'
 import {icons} from '@/components/d_huangjiping/go/icon'
 import imgSrc from '$ui/gojs/sources/ATM.png'
 export default {
@@ -89,8 +89,9 @@ export default {
                 }
               },
               more: {
+                hideButton: true,
                 buttonColor: 'white',
-                defaultShow: false,
+                defaultShow: true,
                 detail: {
                   dataKey: 'data.content',
                   column: 1,
@@ -108,7 +109,8 @@ export default {
             panel: {
               // sideWidth: 150,
               width: 350,
-              fill: 'white'
+              fill: 'white', 
+              expandBtn: {}
             }, 
             body: {
               image: {
@@ -182,6 +184,31 @@ export default {
                 } 
               }
             }
+          }), 
+          bubble: panelNode({
+            // 面板节点整体配置
+            panel: { 
+              width: 300, 
+              sideWidth: 0, // 左侧图片宽度设置为0, 
+              bg: {
+                figure: 'RoundedRectangle',
+                fill: 'white',
+                strokeWidth: 1,
+                stroke: 'red'
+              }
+            }, 
+            // 面板body配置
+            body: { 
+              // 信息区域配置
+              info: { 
+                // 内容配置
+                detail: {
+                  dataKey: 'data.list',
+                  column: 3
+                  // color: 'white' // 内容文字颜色
+                }
+              } 
+            } 
           })
         }),
         linkTemplate: corner({
@@ -234,11 +261,24 @@ export default {
             ]
           },
           category: 'panelNoHeader'
-        }
+        },
+        {
+            key: '3', 
+            data: { 
+              list: [
+                {label: '标签', value: '内容1'}, 
+                {label: '标签', value: '很长很长很长很长很长很长很长很长很长很长的内容', isRow: true}, 
+                {label: '标签', value: '内容2'}, 
+                {label: '标签', value: '内容3'}, 
+                {label: '标签', value: '内容4'}
+              ] 
+            },
+            category: 'bubble'
+          }  
 
       ],
       links: [
-        // {from: '1', to: '2'}
+        {from: '2', to: '3'}
       ]
     }
   },
