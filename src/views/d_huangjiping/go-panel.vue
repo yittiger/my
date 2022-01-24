@@ -115,7 +115,13 @@ export default {
             body: {
               image: {
                 sourceKey: 'data.img', 
-                width: 100 
+                width: 100,
+                isRight: true,
+                $events: {
+                  click: () => {
+                    console.log('img')
+                  }
+                } 
               },
               info: {
                 title: {
@@ -152,12 +158,12 @@ export default {
                             props: { 
                               font: '14px sans-serif', 
                               stroke: 'blue', 
+                              alignment: go.Spot.Top,
                               $bindings: [ 
                                 new go.Binding('text', '', function(i) { 
                                   return i.value
                                 }),
-                                new go.Binding('width', '', function(i) { 
-                                  console.log(i, 'eee')
+                                new go.Binding('width', '', function(i) {  
                                   return i._width
                                 })
                               ] 

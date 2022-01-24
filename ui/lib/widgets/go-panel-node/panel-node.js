@@ -129,6 +129,7 @@ export const imageGraphInit = function(imgProps) {
     const stroke = imgProps.stroke 
     delete imgProps.sourceKey
     delete imgProps.stroke
+    delete imgProps.isRight
     return imageGraph({
       image: { 
         width: 80,
@@ -214,6 +215,7 @@ export const detailInit = function(infoProps) {
         name: 'detail',
         type: go.Panel.Table, 
         width: infoWidth,
+        // defaultAlignment: go.Spot.Top,
         $bindings: [
           new go.Binding('itemArray', '', (v) => { 
             const data = get(v, dataKey)
@@ -252,6 +254,7 @@ export const detailInit = function(infoProps) {
             margin: 2,
             alignment: go.Spot.Left,
             stretch: go.GraphObject.Fill,
+            
             $bindings: [
               new go.Binding('row', 'data', (i, obj) => {
                 return i._row
@@ -294,7 +297,7 @@ export const detailInit = function(infoProps) {
 // 内容生成
 const infoBlockInit = function(infoProps) { 
   // console.log(infoProps, 'infoWidth')
-  const titleProps = infoProps.title
+  const titleProps = infoProps.title 
   return creator({
     name: go.Panel,
     props: {
@@ -383,7 +386,6 @@ const bodyContentInit = function(bodyProps) {
       sideWidth = 80
     }
   }
-  
   if (typeof image === 'object') {
     if (!image.width) {
       image.width = sideWidth
@@ -393,13 +395,15 @@ const bodyContentInit = function(bodyProps) {
     }
   } 
   info.width = bodyProps.width - (sideWidth ? sideWidth + 15 : 15)
+
+  const imgLeft = typeof image === 'object' && !image.isRight 
   
   const moreProps = bodyProps.more
   // console.log(moreProps, 'aaaaa')
   if (moreProps && typeof moreProps === 'object') {
     moreProps._width = bodyProps.width - 10
   }
-  
+   
   return creator({
     name: go.Panel,
     props: {
@@ -413,7 +417,7 @@ const bodyContentInit = function(bodyProps) {
           defaultAlignment: go.Spot.Top 
         },
         children: [ 
-          sideWidth || image ? imageGraphInit(image) : null,
+          (sideWidth || image) && imgLeft ? imageGraphInit(image) : null,
           creator({
             name: go.Panel,
             props: {
@@ -423,9 +427,9 @@ const bodyContentInit = function(bodyProps) {
             },
             children: [
               infoBlockInit(info) 
-               
             ] 
-          })  
+          }),
+          (sideWidth || image) && !imgLeft ? imageGraphInit(image) : null
         ]
       }),
       moreProps ? moreBlockInit(moreProps) : null
