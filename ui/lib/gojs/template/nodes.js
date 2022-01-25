@@ -404,8 +404,8 @@ export function imageGraph(options = {}, theme = {}) {
   const {figure = 'Circle'} = shape || {}
   const iWidth = image.width || 64
   const iHeight = image.height || 64
-  width = Math.max(width, iWidth)
-  height = Math.max(height, iHeight)
+  width = iWidth // Math.max(width, iWidth)
+  height = iHeight // Math.max(height, iHeight)
   return creator({
     name: go.Panel,
     props: {

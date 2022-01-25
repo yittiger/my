@@ -297,8 +297,6 @@ export default {
     panelToolClick(e, obj) {
       console.log(this, obj.part.location, obj.part.data)
     }
-  },
-  created() {},
-  mounted() {}
+  } 
 }
 </script>

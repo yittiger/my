@@ -2,8 +2,9 @@
 import get from 'lodash/get'
 import {go, merge} from '$ui/gojs/utils/lib';
 import creator from '$ui/gojs/utils/creator'
-import {nodeTemplate, imageGraph} from '$ui/gojs/template/nodes'
+import {nodeTemplate} from '$ui/gojs/template/nodes'
 import {defaultTooltip} from '$ui/gojs/template/common'
+import {normal} from '$ui/gojs/template/theme'
 
 const MoreBtnSvgDown = 'M992.01127 416.3c-7.4 0-14.9 2.6-20.9 7.8l-417 360.8c-24 21-60.3 21-84.3 0l-0.1-0.1L52.91127 424.1c-13.4-11.6-33.6-10.1-45.1 3.3-11.6 13.4-10.1 33.6 3.3 45.1l416.7 360.6c23.3 20.4 53.2 31.6 84.2 31.6s60.9-11.2 84.2-31.6l416.7-360.6c13.4-11.6 14.8-31.8 3.3-45.1-6.3-7.4-15.2-11.1-24.2-11.1zM992.01127 159.3c-7.4 0-14.9 2.6-20.9 7.8l-417 360.8c-24 21-60.3 21-84.3 0l-0.1-0.1L52.91127 167.1c-13.4-11.6-33.6-10.1-45.1 3.3-11.6 13.4-10.1 33.6 3.3 45.1l416.7 360.6c23.3 20.4 53.2 31.6 84.2 31.6s60.9-11.2 84.2-31.6l416.7-360.6c13.4-11.6 14.8-31.8 3.3-45.1-6.3-7.4-15.2-11.1-24.2-11.1z'
 
@@ -120,8 +121,74 @@ const headerPanelInit = function(headerProps) {
   })
 } 
 
+
+/**
+ * 生成图片
+ * @param options options 配置参数，{shape, label, image}
+ * @param theme
+ * @returns {GraphObject}
+ */
+function imageGraph(options = {}, theme = {}) {
+  const t = merge({}, normal, theme)
+  const {shape, image} = options 
+  let {width = 64, height = 64} = shape || {}
+  const {figure = 'Circle'} = shape || {}
+  const iWidth = image.width || 64
+  const iHeight = image.height || 64
+  width = iWidth // Math.max(width, iWidth)
+  height = iHeight // Math.max(height, iHeight)
+  return creator({
+    name: go.Panel,
+    props: {
+      type: go.Panel.Spot 
+    },
+    children: [
+      creator({
+        name: go.Shape,
+        props: {
+          figure,
+          width: width,
+          height: height, 
+          fill: 'transparent',
+          strokeWidth: 0, 
+          ...shape
+        }
+      }), 
+      creator({
+        name: go.Panel,
+        props: {
+          type: go.Panel.Spot,
+          isClipping: true
+        },
+        children: [
+          creator({
+            name: go.Shape,
+            props: {
+              figure,
+              width,
+              height, 
+              ...shape
+            }
+          }),
+          creator({
+            name: go.Picture,
+            props: {
+              name: 'image',
+              source: t.imageSource,
+              width,
+              height,
+              ...image
+            }
+          }) 
+        ]
+      })
+    ]
+  })
+}
+
 // 图片生成
 export const imageGraphInit = function(imgProps) {
+  if (!imgProps) return null
   if (typeof imgProps === 'function') {
     imgProps()
   } else {
@@ -158,40 +225,48 @@ const titleBlockInit = function(titleProps) {
     return creator({
       name: go.Panel,
       props: {
-        type: go.Panel.Horizontal,
-        defaultAlignment: go.Spot.Bottom
+        type: go.Panel.Auto
       },
-      children: [
-        titleProps.titleKey ? creator({
-          name: go.TextBlock,
+      children: [ 
+        creator({
+          name: go.Panel,
           props: {
-            font: 'bold 16pt sans-serif',
-            isMultiline: false, 
-            $bindings: [
-              new go.Binding('text', '', (v) => { 
-                const val = get(v, titleProps.titleKey)
-                return val
-              })
-            ],
-            ...titleProps.titleProps || {} 
-          } 
-        }) : null, 
-        titleProps.subTitleKey ? creator({
-          name: go.TextBlock,
-          props: {
-            font: 'normal 12pt sans-serif',
-            isMultiline: false,
-            editable: false,
-            margin: new go.Margin(0, 0, 2, 10),
-            $bindings: [
-              new go.Binding('text', '', (v) => { 
-                const val = get(v, titleProps.subTitleKey)
-                return val
-              })
-            ],
-            ...titleProps.subTitleProps || {} 
-          } 
-        }) : null
+            type: go.Panel.Horizontal,
+            defaultAlignment: go.Spot.Bottom
+          },
+          children: [
+            titleProps.titleKey ? creator({
+              name: go.TextBlock,
+              props: {
+                font: 'bold 16pt sans-serif',
+                isMultiline: false, 
+                $bindings: [
+                  new go.Binding('text', '', (v) => { 
+                    const val = get(v, titleProps.titleKey)
+                    return val
+                  })
+                ],
+                ...titleProps.titleProps || {} 
+              } 
+            }) : null, 
+            titleProps.subTitleKey ? creator({
+              name: go.TextBlock,
+              props: {
+                font: 'normal 12pt sans-serif',
+                isMultiline: false,
+                editable: false,
+                margin: new go.Margin(0, 0, 2, 10),
+                $bindings: [
+                  new go.Binding('text', '', (v) => { 
+                    const val = get(v, titleProps.subTitleKey)
+                    return val
+                  })
+                ],
+                ...titleProps.subTitleProps || {} 
+              } 
+            }) : null
+          ]
+        })
       ]
     }) 
   }
@@ -202,6 +277,7 @@ const titleBlockInit = function(titleProps) {
 export const detailInit = function(infoProps) {
   const {detail} = infoProps
   const infoWidth = infoProps.width 
+  if (!detail) return null
   if (typeof detail === 'function') {
     return detail()
   } else { 
@@ -277,6 +353,7 @@ export const detailInit = function(infoProps) {
               props: {
                 font: '14px sans-serif', 
                 stroke: strokeColor, 
+                wrap: go.TextBlock.WrapDesiredSize,
                 // background: 'green',
                 $bindings: [ 
                   new go.Binding('text', '', function(i) {  
@@ -379,24 +456,20 @@ const bodyContentInit = function(bodyProps) {
    
   const {image} = bodyProps
   const info = bodyProps.info || {}
-  let sideWidth = bodyProps.sideWidth
+  const defaultSideWidth = 80
+  let sideWidth = bodyProps.sideWidth // && typeof bodyProps.sideWidth === 'number' ? bodyProps.sideWidth : defaultSideWidth
 
-  if (!sideWidth) {
-    if (sideWidth !== 0) {
-      sideWidth = 80
-    }
-  }
-  if (typeof image === 'object') {
-    if (!image.width) {
-      image.width = sideWidth
+   
+  if (image && typeof image === 'object') {
+    if (!image.width || typeof image.width !== 'number') {
+      image.width = sideWidth || defaultSideWidth
     } else {
-      sideWidth = Math.max(image.width, sideWidth)
-      image.width = sideWidth
+      sideWidth = image.width 
     }
   } 
-  info.width = bodyProps.width - (sideWidth ? sideWidth + 15 : 15)
+  info.width = bodyProps.width - (sideWidth ? sideWidth + 20 : 20)
 
-  const imgLeft = typeof image === 'object' && !image.isRight 
+  const imgLeft = image && typeof image === 'object' && !image.isRight 
   
   const moreProps = bodyProps.more
   // console.log(moreProps, 'aaaaa')
