@@ -1131,8 +1131,7 @@ detail 模块 渲染的 数据必须为一个对象数组，数据格式如下�
                     column: 2 
                   }
                 },
-                more: { 
-                  hideButton: true, 
+                more: {  
                   defaultShow: true,
                   detail: () => {
                     return creator({
