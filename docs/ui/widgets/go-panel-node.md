@@ -44,13 +44,14 @@ panelNode({
   },
   footer: {
     // 面板底部区域配置  
-  }
+  },
+
+  others: [......] // 其他元素
 })
 ```
 
 ## 常规使用
 :::demo
-
 ```html
   <template>
   <Diagram height="400px" :links="[]" :nodes="nodes"  :options="options"></Diagram>
@@ -133,13 +134,12 @@ panelNode({
     } 
   }
   </script>
-```html
+```
 :::
 
 ## 色彩配置
 根据 panel、 info.title、 info.detail 中的背景与字体颜色对面板元素进行颜色的修改配置
 :::demo
-
 ```html
   <template>
   <Diagram height="400px" :links="[]" :nodes="nodes"  :options="options"></Diagram>
@@ -224,7 +224,7 @@ panelNode({
     } 
   }
   </script>
-```html
+```
 :::
 
 ## Panel节点通用配置
@@ -244,13 +244,14 @@ panelNode({
 |  width    | 面板节点宽度|  Number | -   |  200   |
 |  fill    | 面板节点背景颜色 | String | -  |  white   |
 |  sideWidth    | 定义面板内 左侧图片区域宽度 | Number | -  |  80   | 
-|  bg    | 定义面板背景图形的参数(go.Shape的配置) | Object | -  |  -   | 
+|  bg    | 定义面板背景图形的参数(go.Shape的配置) | Object | -  |  -   |
+|  expandBtn    | 节点树的展开按钮 | Object / Boolean | -  |  -   |
+ 
 > sideWidth 左侧图片宽度 可以在panel的‘sideWidth’中预设置，默认为100。也可以读取 body.image 内的 “width” 来控制图片宽度（取最大值）。 **``如果 sideWidth = 0 且 不配置 body.image， 则不显示图片``**
 #### 其他节点配置：
 panel支持其他 gojs 中的 graphObject 配置
 
 :::demo
-
 ```html
   <template>
   <Diagram height="400px" :links="links" :nodes="nodes"  :options="options"></Diagram>
@@ -359,7 +360,7 @@ panel支持其他 gojs 中的 graphObject 配置
     } 
   }
   </script>
-```html
+```
 :::
 
 
@@ -498,7 +499,7 @@ panelNode({
     } 
   }
   </script>
-```html
+```
 :::
 
 ## Body 区域配置
@@ -652,7 +653,7 @@ Body 分为三大模块： image / info / more
     } 
   }
   </script>
-```html
+```
 :::
 
 ## Body.info 内容模块
@@ -772,7 +773,7 @@ Body 分为三大模块： image / info / more
     } 
   }
   </script>
-```html
+```
 :::
 
 ### Body.info.detail 
@@ -980,7 +981,7 @@ detail 模块 渲染的 数据必须为一个对象数组，数据格式如下�
     } 
   }
 </script>
-```html
+```
 :::
 
 ## Body.more 
@@ -1230,5 +1231,1050 @@ detail 模块 渲染的 数据必须为一个对象数组，数据格式如下�
     } 
   }
   </script>
+```
+:::
+
+## Footer区域配置
+Footer 是 配置面板底部的GraphObject 的配置参数，在Body区域外面。 
+### Footer 配置参数
+Footer的参数比较简单，只保留了 fill (背景颜色) 和 content(内容渲染函数) 两个。这是为了尽可能保留 底部内容 的自由度
+> 主要是开发者累了，不想写了。还是你们自己来吧。
+
+| 参数      | 说明    | 类型      | 可选值       | 默认值   |
+|---------- |-------- |---------- |-------------  |-------- |
+|  fill   | 底部背景颜色 | String | -  |  -   |
+|  content  | 内容生成函数 | Function | -  |  -   | 
+> content 内容生成函数 需要返回一个gojs的 GraphObject 实例 （例如 go.Panel 或 go.Shape ）
+
+:::demo
 ```html
+<template>
+  <Diagram height="400px" :links="[]" :nodes="nodes"  :options="options"></Diagram>
+  </template> 
+  <script>
+  import {   
+    go,  
+    Diagram,
+    templateMap, 
+    layered 
+  } from '$ui/gojs'
+  import creator from '$ui/gojs/utils/creator'
+  import {panelNode} from '$ui/widgets/go-panel-node/panel-node'
+  import imgSrc from '$ui/gojs/sources/ATM.png'
+  export default {
+    mixins: [],
+    components: {Diagram},
+    props: {
+    },
+    data() {
+      return {
+        options: {
+          layout: layered(),
+          nodeTemplateMap: templateMap({ 
+            panel: panelNode({
+              // 面板节点整体配置
+              panel: { 
+                width: 400
+              },
+              // 面板头部配置
+              header: {
+                textKey: 'header', 
+                font: 'bold 16pt sans-serif' 
+              },
+              // 面板body配置
+              body: {
+                // 图片区域
+                image: {
+                  sourceKey: 'data.img', 
+                  width: 100, 
+                  stroke: '#B6B7B9'
+                },
+                // 信息区域配置
+                info: {
+                  // 信息标题配置
+                  title: {
+                    titleKey: 'title',
+                    titleProps: {
+                      $bindings: [
+                        new go.Binding('text', '', (v) => { 
+                          return v.confirm ? '节点已确认' : '未确认节点'
+                        }),
+                        new go.Binding('stroke', '', (v) => { 
+                          return v.confirm ? 'red' : 'black'
+                        })
+                      ]
+                    },
+                    subTitleKey: 'data.subTitle' 
+                  },
+                  // 内容配置
+                  detail: {
+                    dataKey: 'data.list',
+                    column: 3 
+                  }
+                } 
+              },
+              footer: {
+                // fill: 'pink',
+                content: () => {
+                  return creator({
+                    name: go.Panel,
+                    props: {
+                      type: go.Panel.Table,
+                      row: 0, 
+                      columnSpan: 1,
+                      stretch: go.GraphObject.Horizontal 
+                      // alignment: go.Spot.Left 
+                      // margin: 5
+                    },
+                    children: [
+                      creator({
+                        name: go.Panel,
+                        props: {
+                          type: go.Panel.Horizontal,
+                          row: 0, 
+                          column: 1,
+                          alignment: go.Spot.Right  
+                        },
+                        children: [
+                          creator({
+                            name: 'Button',
+                            props: { 
+                              margin: 3,
+                              width: 60,
+                              height: 28,
+                              $events: {
+                                click: this.footerBtnClick
+                              }
+                            },
+                            children: [
+                              creator({
+                                name: 'TextBlock',
+                                props: {
+                                  text: '确定'
+                                }
+                              })  
+                            ]
+                          })
+                        ]
+                      })
+                    ]
+                  }) 
+                }
+              } 
+            })
+          })   
+        },
+        nodes: [
+          {
+            key: '1',
+            header: '有footer的节点',
+            title: '',
+            confirm: false,
+            data: {
+              subTitle: '(内容副标题)',
+              img: imgSrc, 
+              list: [
+                {label: '标签', value: '内容1'}, 
+                {label: '标签', value: '很长很长很长很长很长很长很长很长很长很长的内容', isRow: true}, 
+                {label: '标签', value: '内容2'}, 
+                {label: '标签', value: '内容3'}, 
+                {label: '标签', value: '内容4'}
+              ] 
+            },
+            category: 'panel'
+          } 
+        ] 
+      }
+    },
+    methods: {
+      footerBtnClick(e, obj) {
+        const node = obj.part;
+        const data = node.data
+        node.diagram.model.commit((m) => {
+          m.set(data, 'confirm', !data.confirm);
+        }, 'clicked') 
+      }
+    } 
+  }
+  </script>
+```
+:::
+
+## 其他额外功能
+### panel.expandBtn 树拓展按钮
+在 panel配置（面板的全局配置）下有一个 “expandBtn”的 配置，支持 Object 和 Boolean 类型。 用于控制 节点是否显示 树展开按钮
+
+#### TreeExpandButton 的参数：
+```javascript
+{
+  // set the two additional properties used by "TreeExpanderButton"
+  // that control the shape depending on the value of Node.isTreeExpanded
+  "_treeExpandedFigure": "TriangleUp",
+  "_treeCollapsedFigure": "TriangleDown",
+  // set properties on the icon within the border
+  "ButtonIcon.fill": "darkcyan",
+  "ButtonIcon.strokeWidth": 0,
+  // set general "Button" properties
+  "ButtonBorder.figure": "Circle",
+  "ButtonBorder.stroke": "darkcyan",
+  "_buttonStrokeOver": "darkcyan",
+  alignment: go.Spot.Bottom, 
+  alignmentFocus: go.Spot.Top
+}
+```
+
+:::demo
+```html
+<template>
+<Diagram height="400px" :links="links" :nodes="nodes"  :options="options"></Diagram>
+</template> 
+<script>
+import {   
+  go,  
+  Diagram,
+  templateMap, 
+  layered 
+} from '$ui/gojs'
+import creator from '$ui/gojs/utils/creator'
+import {panelNode} from '$ui/widgets/go-panel-node/panel-node' 
+export default {
+  mixins: [],
+  components: {Diagram},
+  props: {
+  },
+  data() {
+    return {
+      options: {
+        layout: layered(),
+        nodeTemplateMap: templateMap({ 
+          panel: panelNode({
+            // 面板节点整体配置
+            panel: { 
+              width: 300,
+              fill: 'rgba(7, 18, 122, 0.7)', // '#061178', // 面板背景颜色
+              sideWidth: 0, // 左侧图片宽度设置为0, 
+              // 其他gojs 的节点配置  
+              shadowOffset: new go.Point(14, 14),
+              shadowBlur: 20, 
+              expandBtn: {}
+            }, 
+            // 面板body配置
+            body: { 
+              // 信息区域配置
+              info: { 
+                // 内容配置
+                detail: {
+                  dataKey: 'data.list',
+                  column: 3,
+                  color: 'white' // 内容文字颜色
+                }
+              } 
+            } 
+          }),
+          bubble: panelNode({
+            // 面板节点整体配置
+            panel: { 
+              width: 300, 
+              sideWidth: 0, // 左侧图片宽度设置为0, 
+              bg: {
+                figure: 'RoundedRectangle',
+                fill: 'white',
+                strokeWidth: 1,
+                stroke: 'red'
+              }, 
+              expandBtn: {
+                // 树扩展按钮的定位配置
+                // alignment: new go.Spot(1, 0.5), 
+                // alignmentFocus: go.Spot.Left
+              }
+            }, 
+            // 面板body配置
+            body: { 
+              // 信息区域配置
+              info: { 
+                // 内容配置
+                detail: {
+                  dataKey: 'data.list',
+                  column: 3
+                  // color: 'white' // 内容文字颜色
+                }
+              } 
+            } 
+          })
+        })   
+      },
+      nodes: [
+        {
+          key: '1', 
+          data: { 
+            list: [
+              {label: '标签', value: '内容1'}, 
+              {label: '标签', value: '很长很长很长很长很长很长很长很长很长很长的内容', isRow: true}, 
+              {label: '标签', value: '内容2'}, 
+              {label: '标签', value: '内容3'}, 
+              {label: '标签', value: '内容4'}
+            ] 
+          },
+          category: 'panel'
+        },
+        {
+          key: '2', 
+          data: { 
+            list: [
+              {label: '标签', value: '内容1'}, 
+              {label: '标签', value: '很长很长很长很长很长很长很长很长很长很长的内容', isRow: true}, 
+              {label: '标签', value: '内容2'}, 
+              {label: '标签', value: '内容3'}, 
+              {label: '标签', value: '内容4'}
+            ] 
+          },
+          category: 'bubble'
+        }  
+      ],
+      links: [
+        {from: '1', to: '2'}
+      ] 
+    }
+  } 
+}
+</script>
+```
+:::
+
+### Others
+Others 是个数组，里面元素为gojs 的 graphObject
+
+:::demo
+```html
+<template>
+<Diagram height="400px" :links="links" :nodes="nodes"  :options="options"></Diagram>
+</template> 
+<script>
+import {   
+  go,  
+  Diagram,
+  templateMap, 
+  layered 
+} from '$ui/gojs'
+import creator from '$ui/gojs/utils/creator'
+import {panelNode} from '$ui/widgets/go-panel-node/panel-node' 
+const AddIcon = 'M15.5 6h-5.5v-5.5c0-0.276-0.224-0.5-0.5-0.5h-3c-0.276 0-0.5 0.224-0.5 0.5v5.5h-5.5c-0.276 0-0.5 0.224-0.5 0.5v3c0 0.276 0.224 0.5 0.5 0.5h5.5v5.5c0 0.276 0.224 0.5 0.5 0.5h3c0.276 0 0.5-0.224 0.5-0.5v-5.5h5.5c0.276 0 0.5-0.224 0.5-0.5v-3c0-0.276-0.224-0.5-0.5-0.5z'
+ 
+export default {
+  mixins: [],
+  components: {Diagram},
+  props: {
+  },
+  data() {
+    return {
+      options: {
+        layout: layered(),
+        nodeTemplateMap: templateMap({ 
+          bubble: panelNode({
+            // 面板节点整体配置
+            panel: { 
+              width: 300, 
+              sideWidth: 0, // 左侧图片宽度设置为0, 
+              bg: {
+                figure: 'RoundedRectangle',
+                fill: 'white',
+                strokeWidth: 1,
+                stroke: 'red'
+              } 
+            }, 
+            // 面板body配置
+            body: { 
+              // 信息区域配置
+              info: { 
+                // 内容配置
+                detail: {
+                  dataKey: 'data.list',
+                  column: 3 
+                }
+              } 
+            },
+            others: [
+              creator({
+                name: go.Shape,
+                props: {
+                  fill: 'green',
+                  strokeWidth: 0,
+                  width: 38,
+                  height: 38,
+                  margin: 3,
+                  alignment: go.Spot.Center,
+                  geometry: go.Geometry.parse(AddIcon, true),
+                  alignment: new go.Spot(0.95, 0.15), 
+                  alignmentFocus: go.Spot.BottomLeft
+                }
+              })
+            ] 
+          })
+        })   
+      },
+      nodes: [
+        
+        {
+          key: '2', 
+          data: { 
+            list: [
+              {label: '标签', value: '内容1'}, 
+              {label: '标签', value: '很长很长很长很长很长很长很长很长很长很长的内容', isRow: true}, 
+              {label: '标签', value: '内容2'}, 
+              {label: '标签', value: '内容3'}, 
+              {label: '标签', value: '内容4'}
+            ] 
+          },
+          category: 'bubble'
+        }  
+      ],
+      links: [ 
+      ] 
+    }
+  } 
+}
+</script>
+```
+:::
+
+## panel-node.js 源码
+
+:::demo
+```javascript
+// import { $ } from '$ui/gojs'
+import get from 'lodash/get'
+import {go, merge} from '$ui/gojs/utils/lib';
+import creator from '$ui/gojs/utils/creator'
+import {nodeTemplate} from '$ui/gojs/template/nodes'
+import {defaultTooltip} from '$ui/gojs/template/common'
+import {normal} from '$ui/gojs/template/theme'
+
+const MoreBtnSvgDown = 'M992.01127 416.3c-7.4 0-14.9 2.6-20.9 7.8l-417 360.8c-24 21-60.3 21-84.3 0l-0.1-0.1L52.91127 424.1c-13.4-11.6-33.6-10.1-45.1 3.3-11.6 13.4-10.1 33.6 3.3 45.1l416.7 360.6c23.3 20.4 53.2 31.6 84.2 31.6s60.9-11.2 84.2-31.6l416.7-360.6c13.4-11.6 14.8-31.8 3.3-45.1-6.3-7.4-15.2-11.1-24.2-11.1zM992.01127 159.3c-7.4 0-14.9 2.6-20.9 7.8l-417 360.8c-24 21-60.3 21-84.3 0l-0.1-0.1L52.91127 167.1c-13.4-11.6-33.6-10.1-45.1 3.3-11.6 13.4-10.1 33.6 3.3 45.1l416.7 360.6c23.3 20.4 53.2 31.6 84.2 31.6s60.9-11.2 84.2-31.6l416.7-360.6c13.4-11.6 14.8-31.8 3.3-45.1-6.3-7.4-15.2-11.1-24.2-11.1z'
+
+const MoreBtnSvgUp = 'M992.01127 607.7c-7.4 0-14.9-2.6-20.9-7.8l-417-360.8c-24-21-60.3-21-84.3 0l-0.1 0.1L52.91127 599.9c-13.4 11.6-33.6 10.1-45.1-3.3-11.6-13.4-10.1-33.6 3.3-45.1l416.7-360.6c23.3-20.4 53.2-31.6 84.2-31.6s60.9 11.2 84.2 31.6l416.7 360.6c13.4 11.6 14.8 31.8 3.3 45.1-6.3 7.4-15.2 11.1-24.2 11.1zM992.01127 864.7c-7.4 0-14.9-2.6-20.9-7.8l-417-360.8c-24-21-60.3-21-84.3 0l-0.1 0.1L52.91127 856.9c-13.4 11.6-33.6 10.1-45.1-3.3-11.6-13.4-10.1-33.6 3.3-45.1l416.7-360.6c23.3-20.4 53.2-31.6 84.2-31.6s60.9 11.2 84.2 31.6l416.7 360.6c13.4 11.6 14.8 31.8 3.3 45.1-6.3 7.4-15.2 11.1-24.2 11.1z'
+
+
+
+const defaultPanelProps = {
+  isShadowed: true,
+  shadowOffset: new go.Point(4, 4),
+  shadowBlur: 8,
+  width: 250
+}
+
+// 头部生成
+const headerPanelInit = function(headerProps) { 
+  const headerFill = headerProps.fill || '#E8E8E8'
+  const headerFont = headerProps.font || 'bold 12pt sans-serif'
+  const headerFontStroke = headerProps.color || 'black'
+  const textKey = headerProps.textKey
+  const headerTools = headerProps.tools
+  return creator({
+    name: go.Panel,
+    props: {
+      type: go.Panel.Auto,
+      row: 0, 
+      column: 0, 
+      stretch: go.GraphObject.Horizontal 
+    },
+    children: [
+      creator({
+        name: go.Shape,
+        props: {
+          fill: headerFill, // '#E8E8E8', 
+          strokeWidth: 0, 
+          shadowVisible: false
+        },
+        children: []
+      }),
+      creator({
+        name: go.Panel,
+        props: {
+          type: go.Panel.Table,
+          row: 0, 
+          columnSpan: 1,
+          stretch: go.GraphObject.Horizontal 
+          // alignment: go.Spot.Left 
+          // margin: 5
+        },
+        children: [ 
+          creator({
+            name: go.TextBlock,
+            props: {
+              row: 0, 
+              column: 0,
+              font: headerFont, // 'bold 12pt sans-serif',
+              alignment: go.Spot.TopLeft,
+              margin: 5,
+              stroke: headerFontStroke,
+              isMultiline: false,
+              editable: false,
+              $bindings: [
+                new go.Binding('text', '', (v) => {
+                  const val = get(v, textKey) 
+                  return val || ''
+                })
+              ]
+            } 
+          }),
+          headerTools && headerTools.length ? creator({
+            name: go.Panel,
+            props: {
+              type: go.Panel.Horizontal,
+              row: 0, 
+              column: 1,
+              alignment: go.Spot.Right  
+            },
+            children: [
+              ...headerTools.map((item) => { 
+                return creator({
+                  name: 'Button',
+                  props: { 
+                    margin: 3, 
+                    'ButtonBorder.fill': 'transparent',
+                    'ButtonBorder.stroke': 'transparent',
+                    'ButtonBorder.strokeWidth': 0,
+                    _buttonFillOver: 'transparent',
+                    _buttonStrokeOver: 'transparent',
+                    _buttonFillPressed: 'transparent', 
+                    toolTip: defaultTooltip({text: item.name}),
+                    $events: {
+                      click: item.cb 
+                    }
+                  },
+                  children: [  
+                    creator({
+                      name: go.Shape,
+                      props: {
+                        fill: item.color,
+                        strokeWidth: 0,
+                        width: 18,
+                        height: 18,
+                        geometry: go.Geometry.parse(item.icon, true)
+                      }
+                    })
+                  ]
+                })
+              })
+            ]
+          }) : null
+        ]
+      }) 
+    ]
+  })
+} 
+
+
+/**
+ * 生成图片
+ * @param options options 配置参数，{shape, label, image}
+ * @param theme
+ * @returns {GraphObject}
+ */
+function imageGraph(options = {}, theme = {}) {
+  const t = merge({}, normal, theme)
+  const {shape, image} = options 
+  let {width = 64, height = 64} = shape || {}
+  const {figure = 'Circle'} = shape || {}
+  const iWidth = image.width || 64
+  const iHeight = image.height || 64
+  width = iWidth // Math.max(width, iWidth)
+  height = iHeight // Math.max(height, iHeight)
+  return creator({
+    name: go.Panel,
+    props: {
+      type: go.Panel.Spot 
+    },
+    children: [
+      creator({
+        name: go.Shape,
+        props: {
+          figure,
+          width: width,
+          height: height, 
+          fill: 'transparent',
+          strokeWidth: 0, 
+          ...shape
+        }
+      }), 
+      creator({
+        name: go.Panel,
+        props: {
+          type: go.Panel.Spot,
+          isClipping: true
+        },
+        children: [
+          creator({
+            name: go.Shape,
+            props: {
+              figure,
+              width,
+              height, 
+              ...shape
+            }
+          }),
+          creator({
+            name: go.Picture,
+            props: {
+              name: 'image',
+              source: t.imageSource,
+              width,
+              height,
+              ...image
+            }
+          }) 
+        ]
+      })
+    ]
+  })
+}
+
+// 图片生成
+export const imageGraphInit = function(imgProps) {
+  if (!imgProps) return null
+  if (typeof imgProps === 'function') {
+    imgProps()
+  } else {
+    const sourceKey = imgProps.sourceKey
+    const stroke = imgProps.stroke 
+    delete imgProps.sourceKey
+    delete imgProps.stroke
+    delete imgProps.isRight
+    return imageGraph({
+      image: { 
+        width: 80,
+        $bindings: [
+          new go.Binding('source', '', (v) => { 
+            const val = get(v, sourceKey)
+            return val
+          })
+        ], 
+        ...imgProps
+      },
+      shape: {
+        figure: 'Rectangle',
+        strokeWidth: 1,
+        stroke: stroke || '#B6B7B9'
+      }
+    })
+  }
+}
+
+// 标题生成
+const titleBlockInit = function(titleProps) {
+  if (typeof titleProps === 'function') {
+    return titleProps()
+  } else {
+    return creator({
+      name: go.Panel,
+      props: {
+        type: go.Panel.Auto
+      },
+      children: [ 
+        creator({
+          name: go.Panel,
+          props: {
+            type: go.Panel.Horizontal,
+            defaultAlignment: go.Spot.Bottom
+          },
+          children: [
+            titleProps.titleKey ? creator({
+              name: go.TextBlock,
+              props: {
+                font: 'bold 16pt sans-serif',
+                isMultiline: false, 
+                $bindings: [
+                  new go.Binding('text', '', (v) => { 
+                    const val = get(v, titleProps.titleKey)
+                    return val
+                  })
+                ],
+                ...titleProps.titleProps || {} 
+              } 
+            }) : null, 
+            titleProps.subTitleKey ? creator({
+              name: go.TextBlock,
+              props: {
+                font: 'normal 12pt sans-serif',
+                isMultiline: false,
+                editable: false,
+                margin: new go.Margin(0, 0, 2, 10),
+                $bindings: [
+                  new go.Binding('text', '', (v) => { 
+                    const val = get(v, titleProps.subTitleKey)
+                    return val
+                  })
+                ],
+                ...titleProps.subTitleProps || {} 
+              } 
+            }) : null
+          ]
+        })
+      ]
+    }) 
+  }
+  
+}
+
+// 内容生成
+export const detailInit = function(infoProps) {
+  const {detail} = infoProps
+  const infoWidth = infoProps.width 
+  if (!detail) return null
+  if (typeof detail === 'function') {
+    return detail()
+  } else { 
+    const dataKey = detail.dataKey
+    const column = detail.column
+    const strokeColor = detail.color 
+    const contentTemplate = detail.contentTemplate
+    return creator({
+      name: go.Panel,
+      props: {
+        name: 'detail',
+        type: go.Panel.Table, 
+        width: infoWidth,
+        // defaultAlignment: go.Spot.Top,
+        $bindings: [
+          new go.Binding('itemArray', '', (v) => { 
+            const data = get(v, dataKey)
+            // =============下面代码为建立数据的表格格式================
+            const temp = JSON.parse(JSON.stringify(data)).reduce((total, item) => {
+              if (item.isRow) {
+                total.row.push(item)
+              } else {
+                total.normal.push(item)
+              }
+              return total
+            }, {normal: [], row: []})
+
+            let currentRow = 0
+            temp.normal.forEach((item, i) => {
+              currentRow = item._row = Math.floor(i / column)
+              item._col = i % column
+              
+              item._width = (infoWidth / column) - 4
+            })
+            temp.row.forEach((item, i) => {
+              item._row = currentRow + i + 1
+              item._col = 0
+              item._span = column
+              item._width = infoWidth - 4
+            })  
+            const _data = temp.normal.concat(temp.row)
+            // =========================================================
+            return _data
+          })
+        ], 
+        itemTemplate: creator({
+          name: go.Panel,
+          props: {
+            type: go.Panel.Auto, 
+            margin: 2,
+            alignment: go.Spot.Left,
+            stretch: go.GraphObject.Fill,
+            
+            $bindings: [
+              new go.Binding('row', 'data', (i, obj) => {
+                return i._row
+              }).ofObject(),
+              new go.Binding('column', 'data', (i) => { 
+                // return 0 // i % 2
+                return i._col
+              }).ofObject(),
+              new go.Binding('columnSpan', 'data', (i) => { 
+                return i._span || 1
+              }).ofObject(),
+              new go.Binding('width', 'data', (i) => { 
+                return i._width
+              }).ofObject() 
+            ] 
+          },
+          children: contentTemplate && typeof contentTemplate === 'function' ? contentTemplate() : [
+            creator({
+              name: go.TextBlock,
+              props: {
+                font: '14px sans-serif', 
+                stroke: strokeColor, 
+                wrap: go.TextBlock.WrapDesiredSize,
+                // background: 'green',
+                $bindings: [ 
+                  new go.Binding('text', '', function(i) {  
+                    return i.label ? `${i.label}：${i.value}` : i.value
+                  })
+                ] 
+              }
+            })
+          ]
+        })
+      }
+    })
+  }  
+}
+// ================================
+
+
+// 内容生成
+const infoBlockInit = function(infoProps) { 
+  // console.log(infoProps, 'infoWidth')
+  const titleProps = infoProps.title 
+  return creator({
+    name: go.Panel,
+    props: {
+      type: go.Panel.Vertical,
+      defaultAlignment: go.Spot.Left,
+      width: infoProps.width
+    },
+    children: [
+      titleProps ? titleBlockInit(titleProps) : null,
+      infoProps ? detailInit(infoProps) : null
+    ]
+  })   
+}
+
+// 更多面板生成
+const moreBlockInit = function (moreProps) {
+  const panelWidth = moreProps._width
+  const buttonColor = moreProps.buttonColor || 'rgba(0,0,0,0.3)'
+  const defaultShow = moreProps.defaultShow || false
+  const moreDetail = moreProps.detail
+  const hideButton = moreProps.hideButton
+  return creator({
+    name: go.Panel,
+    props: {
+      type: go.Panel.Vertical,
+      width: panelWidth
+    },
+    children: [ 
+      !hideButton ? creator({
+        name: 'PanelExpanderButton',
+        props: { 
+          'ButtonBorder.fill': 'transparent',
+          'ButtonBorder.stroke': 'transparent',
+          'ButtonBorder.strokeWidth': 1,
+          _buttonFillOver: 'transparent',
+          _buttonStrokeOver: 'transparent',
+          _buttonFillPressed: 'transparent',
+          'ButtonIcon.width': 16,
+          'ButtonIcon.height': 10,
+          'ButtonIcon.stroke': buttonColor, 
+          width: 90,
+          _buttonExpandedFigure: MoreBtnSvgUp,
+          _buttonCollapsedFigure: MoreBtnSvgDown,
+          alignment: go.Spot.Center
+        },
+        children: [
+          creator({
+            name: go.TextBlock,
+            props: {
+              text: '更多',
+              stroke: buttonColor,
+              margin: new go.Margin(0, 0, 0, 50)
+            }
+          })
+        ] 
+      }) : null,
+      creator({
+        name: go.Panel,
+        props: {
+          type: go.Panel.Auto,
+          name: 'COLLAPSIBLE',
+          width: panelWidth,
+          visible: defaultShow
+        },
+        children: [ 
+          moreDetail ? detailInit({
+            width: panelWidth,
+            detail: moreDetail
+          }) : null
+        ]
+      })
+    ]
+  }) 
+}
+
+// body 整体生成
+const bodyContentInit = function(bodyProps) {
+  // const width = bodyProps.width
+   
+  const {image} = bodyProps
+  const info = bodyProps.info || {}
+  const defaultSideWidth = 80
+  let sideWidth = bodyProps.sideWidth // && typeof bodyProps.sideWidth === 'number' ? bodyProps.sideWidth : defaultSideWidth
+
+   
+  if (image && typeof image === 'object') {
+    if (!image.width || typeof image.width !== 'number') {
+      image.width = sideWidth || defaultSideWidth
+    } else {
+      sideWidth = image.width 
+    }
+  } 
+  info.width = bodyProps.width - (sideWidth ? sideWidth + 20 : 20)
+
+  const imgLeft = image && typeof image === 'object' && !image.isRight 
+  
+  const moreProps = bodyProps.more
+  // console.log(moreProps, 'aaaaa')
+  if (moreProps && typeof moreProps === 'object') {
+    moreProps._width = bodyProps.width - 10
+  }
+   
+  return creator({
+    name: go.Panel,
+    props: {
+      type: go.Panel.Vertical
+    },
+    children: [
+      creator({
+        name: go.Panel,
+        props: {
+          type: go.Panel.Horizontal,
+          defaultAlignment: go.Spot.Top 
+        },
+        children: [ 
+          (sideWidth || image) && imgLeft ? imageGraphInit(image) : null,
+          creator({
+            name: go.Panel,
+            props: {
+              type: go.Panel.Auto,
+              padding: new go.Margin(0, 0, 0, 4),
+              width: info.width
+            },
+            children: [
+              infoBlockInit(info) 
+            ] 
+          }),
+          (sideWidth || image) && !imgLeft ? imageGraphInit(image) : null
+        ]
+      }),
+      moreProps ? moreBlockInit(moreProps) : null
+    ]
+  })
+   
+}
+
+// footer 生成
+const footerPanelInit = function (footerProps) {
+  const footerFill = footerProps.fill
+  const content = footerProps.content 
+  return creator({
+    name: go.Panel,
+    props: {
+      type: go.Panel.Auto,
+      row: 2, 
+      column: 0, 
+      stretch: go.GraphObject.Horizontal 
+    },
+    children: content && typeof content === 'function' ? [
+      creator({
+        name: go.Shape,
+        props: {
+          fill: footerFill || '#E8E8E8', 
+          strokeWidth: 0, 
+          shadowVisible: false
+        } 
+      }),
+      content() 
+    ] : []
+      
+  })
+}
+
+
+export function panelNode(options) {
+  const theme = {}
+  // panel props ----------------
+  const {panel} = options
+  const panelProps = merge({}, defaultPanelProps, panel) 
+  const panelWidth = panelProps.width
+  const panelFill = panelProps.fill
+  const panelBg = panelProps.bg || {}
+  const panelExpandBtn = panelProps.expandBtn
+  const sideWidth = panelProps.sideWidth
+  delete panelProps.width
+  delete panelProps.fill
+  delete panelProps.bg
+  delete panelProps.sideWidth
+  delete panelProps.expandBtn
+
+  // header props ----------------
+  const {header} = options
+
+  // body props ----------------
+  const {body} = options
+  const bodyProps = {...body, width: panelWidth, sideWidth: sideWidth}
+
+  // footer props ----------------
+  const {footer} = options
+
+  return nodeTemplate({
+    props: {
+      ...panelProps
+    },
+    wrapper: {
+      type: go.Panel.Spot
+    },
+    children: [
+      creator({
+        name: go.Panel,
+        props: {
+          type: go.Panel.Auto
+        },  
+        children: [
+          creator({
+            name: go.Shape,
+            props: {
+              strokeWidth: 0, 
+              width: panelWidth,
+              fill: panelFill || 'white',
+              ...panelBg  
+            }
+          }), 
+          creator({
+            name: go.Panel,
+            props: {
+              type: go.Panel.Table,
+              width: panelWidth,
+              defaultRowSeparatorStrokeWidth: 1,
+              defaultRowSeparatorStroke: '#B6B7B9'
+            },
+            children: [ 
+              // header -------------------
+              header ? headerPanelInit(header) : null,
+              // body -------------------
+              creator({
+                name: go.Panel,
+                props: {
+                  type: go.Panel.Vertical,
+                  row: 1, 
+                  columnSpan: 1, 
+                  alignment: go.Spot.Left, 
+                  margin: 5
+                },
+                children: [
+                  bodyContentInit(bodyProps)
+                ]
+              }),
+              // footer --------------
+              footer ? footerPanelInit(footer) : null
+            ]
+          })
+        ]
+      }),
+      panelExpandBtn ? creator({
+        name: 'TreeExpanderButton',
+        props: {
+          // alignment: go.Spot.Right, 
+          alignment: new go.Spot(1, 0.5), 
+          alignmentFocus: go.Spot.Left,
+          visible: true,
+          ...panelExpandBtn || {}
+        }
+      }) : null
+          
+    ].filter(n => !!n)
+  }, theme) 
+}
+```
 :::

@@ -574,7 +574,7 @@ const footerPanelInit = function (footerProps) {
 export function panelNode(options) {
   const theme = {}
   // panel props ----------------
-  const {panel} = options
+  const {panel, others = []} = options
   const panelProps = merge({}, defaultPanelProps, panel) 
   const panelWidth = panelProps.width
   const panelFill = panelProps.fill
@@ -660,8 +660,8 @@ export function panelNode(options) {
           visible: true,
           ...panelExpandBtn || {}
         }
-      }) : null
-          
+      }) : null, 
+      ...others    
     ].filter(n => !!n)
   }, theme) 
 }
