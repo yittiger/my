@@ -1,47 +1,3 @@
-# API
-
-## creator
-creator 函数 可以用于 生成各种 gojs 实例。
-
-### creator 参数：
-```
-creator({
-  name: goType, // gojs 实例类型 (如 go.Part / go.TextBlock 等)
-  props: {}, // gojs 实例的配置项
-  children: [] // gojs 实例的子实例
-})
-```
-
-### 使用creator函数 与 gojs原版的对比
-```javascript
-// gojs 官方写法：
-$(go.Node, go.Panel.Position,
-  { background: 'lightgray' },
-  $(go.TextBlock, 'node1', { background: 'lightgreen' })
-)
-
-// 使用creator
-creator({
-  name: go.Node,
-  props: {
-    type: go.Panel.Position, 
-    background: 'lightgray'
-  },
-  children: [
-    creator({
-      name: go.TextBlock,
-      props: {
-        text: 'node2',
-        background: 'lightgreen'
-      }
-    })
-  ]
-})  
-
-```
-虽然 使用creator 函数 生成节点时 代码比官方写法复杂，但是 creator 结构更清晰，在构建比较复杂结构的节点模板时，creator 函数更有优势。
-:::demo
-```html
 <template>
   <Diagram height="400px" :links="[]" :nodes="nodes"  :options="options"></Diagram>
 </template> 
@@ -67,7 +23,8 @@ creator({
             origin: $(go.Node, go.Panel.Position,
               { background: 'lightgray' },
               $(go.TextBlock, 'node1', { background: 'lightgreen' })
-            ), 
+            ),
+
             creator: creator({
               name: go.Node,
               props: {
@@ -83,7 +40,8 @@ creator({
                   }
                 })
               ]
-            })  
+            }) 
+             
           })
         },
         nodes: [
@@ -93,9 +51,4 @@ creator({
       }
     }
   }
-</script>  
-```
-:::
-
-
-
+</script> 
