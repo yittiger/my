@@ -46,7 +46,14 @@ panelNode({
     // 面板底部区域配置  
   },
 
-  others: [......] // 其他元素
+  others: [......], // 其他元素
+
+  // ----继承nodeTemplate 函数的 其他快捷配置项----
+  tooltip: {}, // 提示 
+  lock: {}, // 锁定
+  tags: {}, // 标签
+  badge: {}, // 数字提示
+  $bindings: [] // 数据绑定
 })
 ```
 
@@ -77,6 +84,7 @@ panelNode({
           layout: layered(),
           nodeTemplateMap: templateMap({ 
             panel: panelNode({
+              lock: true,
               // 面板节点整体配置
               panel: { 
                 width: 400
@@ -165,6 +173,7 @@ panelNode({
           layout: layered(),
           nodeTemplateMap: templateMap({ 
             panel: panelNode({
+              lock: true,
               // 面板节点整体配置
               panel: { 
                 width: 400,
@@ -1601,8 +1610,7 @@ export default {
                   strokeWidth: 0,
                   width: 38,
                   height: 38,
-                  margin: 3,
-                  alignment: go.Spot.Center,
+                  margin: 3, 
                   geometry: go.Geometry.parse(AddIcon, true),
                   alignment: new go.Spot(0.95, 0.15), 
                   alignmentFocus: go.Spot.BottomLeft
@@ -1636,6 +1644,132 @@ export default {
 </script>
 ```
 :::
+
+### tooltip lock tags badge $bindings
+panelNode() 方法是基于 nodeTemplate() 函数生成的节点模板，因此 支持 以上几个 快捷配置参数
+> "nodeTemplate()" 为 "import {nodeTemplate} from '$ui/gojs/template/nodes'", 是 myGo 组件中默认的节点模板构造函数。
+
+
+
+:::demo
+```html
+<template>
+  <Diagram height="400px" :links="[]" :nodes="nodes"  :options="options"></Diagram>
+</template> 
+<script>
+  import {
+    go,   
+    Diagram,
+    // templateMap, 
+    layered 
+  } from '$ui/gojs' 
+  import {panelNode} from '$ui/widgets/go-panel-node/panel-node'
+  import imgSrc from '$ui/gojs/sources/ATM.png'
+  export default {
+    mixins: [],
+    components: {Diagram},
+    props: {
+    },
+    data() {
+      return {
+        options: {
+          layout: layered(),
+          nodeTemplate: panelNode({
+            
+            // ==========面板的常规配置===============  
+            // 面板节点整体配置
+            panel: { 
+              width: 400
+            },
+            // 面板头部配置
+            header: {
+              textKey: 'header', 
+              font: 'bold 16pt sans-serif' 
+            },
+            // 面板body配置
+            body: {
+              // 图片区域
+              image: {
+                sourceKey: 'data.img', 
+                width: 100, 
+                stroke: '#B6B7B9'
+              },
+              // 信息区域配置
+              info: {
+                // 信息标题配置
+                title: {
+                  titleKey: 'title',
+                  subTitleKey: 'data.subTitle' 
+                },
+                // 内容配置
+                detail: {
+                  dataKey: 'data.list',
+                  column: 3 
+                }
+              } 
+            },
+
+            // ======以下是 nodeTemplate 的自身的快捷配置======
+            // 全局锁定
+            lock: {
+              width: 20,
+              height: 20,
+              alignment: new go.Spot(0.95, 0.15), 
+              alignmentFocus: go.Spot.BottomLeft
+            },
+            // 全局节点 badge 
+            badge: {
+              props: {
+                alignment: new go.Spot(0, 0), 
+                alignmentFocus: go.Spot.BottomLeft
+              },
+              label: {
+                $bindings: [
+                  new go.Binding('text', 'count'),
+                  new go.Binding('visible', 'count', v => v > 0)
+                ]
+              }
+            },
+            // 全局节点tooltip提示
+            tooltip: {
+              // text: '鼠标经过提示文本'
+              $bindings: [
+                new go.Binding('text', 'title')
+              ]
+            },
+            // 全局节点数据绑定
+            $bindings: [ 
+              new go.Binding('movable', 'locked', v => !v)
+            ]
+          })
+        },
+        nodes: [
+          {
+            key: '1',
+            locked: true,
+            count: 10,
+            header: '常规面板节点',
+            title: '被锁定的面板节点',
+            data: {
+              subTitle: '(内容副标题)',
+              img: imgSrc, 
+              list: [
+                {label: '标签', value: '内容1'}, 
+                {label: '标签', value: '很长很长很长很长很长很长很长很长很长很长的内容', isRow: true}, 
+                {label: '标签', value: '内容2'}, 
+                {label: '标签', value: '内容3'}, 
+                {label: '标签', value: '内容4'}
+              ] 
+            },
+            category: 'panel'
+          } 
+        ] 
+      }
+    } 
+  }
+</script>
+```
+
 
 ## panel-node.js 源码
 
@@ -2183,9 +2317,9 @@ const footerPanelInit = function (footerProps) {
 
 
 export function panelNode(options) {
-  const theme = {}
+  const theme = normal
   // panel props ----------------
-  const {panel} = options
+  const {panel, others = [], tooltip, lock, tags, badge, $bindings} = options
   const panelProps = merge({}, defaultPanelProps, panel) 
   const panelWidth = panelProps.width
   const panelFill = panelProps.fill
@@ -2198,6 +2332,8 @@ export function panelNode(options) {
   delete panelProps.sideWidth
   delete panelProps.expandBtn
 
+  
+
   // header props ----------------
   const {header} = options
 
@@ -2206,7 +2342,7 @@ export function panelNode(options) {
   const bodyProps = {...body, width: panelWidth, sideWidth: sideWidth}
 
   // footer props ----------------
-  const {footer} = options
+  const {footer} = options 
 
   return nodeTemplate({
     props: {
@@ -2271,9 +2407,15 @@ export function panelNode(options) {
           visible: true,
           ...panelExpandBtn || {}
         }
-      }) : null
-          
-    ].filter(n => !!n)
+      }) : null, 
+      ...others    
+    ].filter(n => !!n),
+
+    tooltip: tooltip, 
+    lock: lock, 
+    tags: tags, 
+    badage: badge,
+    $bindings: $bindings
   }, theme) 
 }
 ```

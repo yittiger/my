@@ -20,7 +20,10 @@
   import {debounce} from '$ui/utils/util'
   import creator from '../utils/creator'
   import {force} from '../layouts/index'
-  import {circle, link} from '../template/index'
+  import {
+    circle, 
+    link
+    } from '../template/index'
   import factory from '../mixins/factory'
   import layout from '../mixins/layout'
   import finder from '../mixins/finder'

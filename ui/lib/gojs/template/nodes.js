@@ -184,7 +184,6 @@ function createBadge(badge = {}) {
  * @returns {GraphObject}
  */
 export function nodeTemplate(options = {}, t) {
-
   const {props, wrapper, tooltip, lock, tags, badge, children = [], $events, $bindings} = options
   return base({
     name: go.Node,

@@ -572,9 +572,9 @@ const footerPanelInit = function (footerProps) {
 
 
 export function panelNode(options) {
-  const theme = {}
+  const theme = normal
   // panel props ----------------
-  const {panel, others = []} = options
+  const {panel, others = [], tooltip, lock, tags, badge, $bindings} = options
   const panelProps = merge({}, defaultPanelProps, panel) 
   const panelWidth = panelProps.width
   const panelFill = panelProps.fill
@@ -587,6 +587,8 @@ export function panelNode(options) {
   delete panelProps.sideWidth
   delete panelProps.expandBtn
 
+  
+
   // header props ----------------
   const {header} = options
 
@@ -595,7 +597,7 @@ export function panelNode(options) {
   const bodyProps = {...body, width: panelWidth, sideWidth: sideWidth}
 
   // footer props ----------------
-  const {footer} = options
+  const {footer} = options 
 
   return nodeTemplate({
     props: {
@@ -662,6 +664,12 @@ export function panelNode(options) {
         }
       }) : null, 
       ...others    
-    ].filter(n => !!n)
+    ].filter(n => !!n),
+
+    tooltip: tooltip, 
+    lock: lock, 
+    tags: tags, 
+    badge: badge,
+    $bindings: $bindings
   }, theme) 
 }
