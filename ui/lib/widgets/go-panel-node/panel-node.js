@@ -317,8 +317,12 @@ export const detailInit = function(infoProps) {
               item._col = 0
               item._span = column
               item._width = infoWidth - 4
+              
             })  
             const _data = temp.normal.concat(temp.row)
+            _data.forEach((item, i) => {
+              item._index = i
+            })
             // =========================================================
             return _data
           })

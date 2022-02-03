@@ -257,6 +257,48 @@ creator({
 ```
 
 ## nodeTemplate 基础节点模板
-mygo 关系图中的节点模板 基础构造函数, 继承于creator
+mygo 关系图中的节点模板 基础构造函数, 继承于creator，参数为 “options”(配置) 和 “theme”(主题)
 
+### options 的配置
+| 配置名      | 说明    | 类型   | 
+|---------- |-------- |------- |
+| props | 节点（$(go.Node, {...})）的全局配置，可以覆盖其他配置 | object | 
+| wrapper | Node节点下面第一个（展示为容器）子元素的配置， 用于配置背景边框等 | object | 
+| tooltip | 配置是否显示提示语 | object | 
+| lock | 配置是否 | object/boolean | 
+| tags | 配置是否显示标签 | object/array | 
+| badge | 配置是否显示数字提示 | object | 
+| children | 给节点添加子元素 | array | 
+| $events | 给节点绑定事件 | object |
+| $bindings | 给节点绑定数据 | array/object |
 
+### theme 主题
+```javascript
+const normal = {
+  // 背景颜色
+  fill: 'rgba(124,129,143,0.3)',
+  // 边框样式
+  stroke: '#7c818f',
+  // 文本/icon颜色
+  color: '#7c818f',
+  // 形状外的文本颜色
+  textColor: '#ffffff',
+  strokeWidth: 2,
+  opacity: 1,
+  hoverOpacity: 1,
+  grayOpacity: 0.25,
+  selectedOpacity: 1,
+  // 边框厚度
+  disabledOpacity: 0.1,
+  // 默认图标
+  geometryString: defaultIcon,
+  // 默认图片
+  imageSource: defaultImage,
+  // 标签颜色
+  tags: ['#0099cc', '#ffb609', '#ef5350', '#00d156', '#f431ba'],
+
+  selectedFill: 'rgba(64,158,255,0.1)',
+  selectedStrokeWidth: 2,
+  selectedStroke: '#409eff'
+}
+```

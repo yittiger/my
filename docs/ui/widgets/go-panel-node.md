@@ -1769,6 +1769,285 @@ panelNode() 方法是基于 nodeTemplate() 函数生成的节点模板，因此 
   }
 </script>
 ```
+:::
+
+## 使用案例
+侦查组织结构图例：
+:::demo
+```html
+<template>
+  <Diagram height="400px" :links="links" :nodes="nodes"  :options="options"></Diagram>
+</template> 
+<script>
+  import {
+    go,   
+    Diagram,
+    templateMap, 
+    tree,
+    corner
+  } from '$ui/gojs' 
+  import creator from '$ui/gojs/utils/creator'
+  import {panelNode} from '$ui/widgets/go-panel-node/panel-node'
+  import imgSrc from '$ui/gojs/sources/QQ群1.png'
+  const icons = {
+    edit: 'M6 10l2-1 7-7-1-1-7 7-1 2zM4.52 13.548c-0.494-1.043-1.026-1.574-2.069-2.069l1.548-4.262 2-1.217 6-6h-3l-6 6-3 10 10-3 6-6v-3l-6 6-1.217 2z', 
+    add: 'M15.5 6h-5.5v-5.5c0-0.276-0.224-0.5-0.5-0.5h-3c-0.276 0-0.5 0.224-0.5 0.5v5.5h-5.5c-0.276 0-0.5 0.224-0.5 0.5v3c0 0.276 0.224 0.5 0.5 0.5h5.5v5.5c0 0.276 0.224 0.5 0.5 0.5h3c0.276 0 0.5-0.224 0.5-0.5v-5.5h5.5c0.276 0 0.5-0.224 0.5-0.5v-3c0-0.276-0.224-0.5-0.5-0.5z'
+  }
+  export default {
+    mixins: [],
+    components: {Diagram},
+    props: {
+    },
+    data() {
+      return {
+        options: {
+          layout: tree(),
+          linkTemplate: corner({}),
+          nodeTemplateMap: templateMap({
+            group: panelNode({ 
+              // ==========面板的常规配置===============  
+              // 面板节点整体配置
+              panel: { 
+                width: 430
+              },
+              // 面板头部配置
+              header: {
+                textKey: 'header', 
+                font: 'bold 14pt sans-serif',
+                tools: [ 
+                  {
+                    icon: icons.edit, 
+                    color: 'red', 
+                    cb: this.panelToolClick,
+                    name: '编辑专案组'
+                  },
+                  {
+                    icon: icons.add, 
+                    color: 'red', 
+                    cb: this.addTeamClick,
+                    name: '新增专案小组'
+                  } 
+                ]
+              },
+              // 面板body配置
+              body: {
+                // 图片区域
+                image: {
+                  sourceKey: 'data.img', 
+                  width: 80, 
+                  height: 80,
+                  stroke: '#B6B7B9'
+                },
+                // 信息区域配置
+                info: {
+                  // 信息标题配置
+                  title: {
+                    titleKey: 'title'
+                    // subTitleKey: 'data.subTitle' 
+                  },
+                  // 内容配置
+                  detail: {
+                    dataKey: 'data.list',
+                    column: 2 
+                  }
+                }, 
+                more: {  
+                  defaultShow: false,
+                  detail: {
+                    dataKey: 'data.other',
+                    column: 1
+                  } 
+                }
+              }
+            }),
+            team: panelNode({
+              panel: { 
+                width: 250,
+                sideWidth: 0,
+                bg: {
+                  figure: 'RoundedRectangle',
+                  fill: 'white',
+                  strokeWidth: 1,
+                  stroke: 'red'
+                }
+              },
+              body: { 
+                // 信息区域配置
+                info: {
+                  // 信息标题配置
+                  title: {
+                    titleKey: 'title',
+                    titleProps: {
+                      font: 'normal 12pt sans-serif'
+                    } 
+                  },
+                  // 内容配置
+                  detail: {
+                    dataKey: 'data.list',
+                    column: 3,
+                    contentTemplate: this.memberTextTemplate 
+                  }
+                } 
+              }
+            }) 
+          })
+          
+        },
+        nodes: [
+          {
+            key: '1', 
+            header: '专案组',
+            title: '陈戌元滥用职权案',
+            data: {
+              subTitle: '',
+              img: imgSrc, 
+              list: [
+                {label: '立案日期', value: '2022-02-01'},  
+                {label: '立案单位', value: '中央纪委'}, 
+                {label: '专案组长', value: '范智毅'}, 
+                {label: '专案组人数', value: 30}
+              ],
+              other: [
+                {label: '案件简要', value: '中X纪委于2022年2月1日即大年初一晚上10点，中国男子足球队1：3客场负于越南队后，接到匿名举报信举报中国足协主席陈戌元滥用职权，并控制国内球员转会市场操作从中牟利......'}
+              ]  
+            },
+            category: 'group'
+          },
+          {
+            key: '2', 
+            header: '',
+            title: '银行查账组',
+            data: {
+              subTitle: '',
+              img: '', 
+              list: [
+                {label: '', value: '调查员1'},  
+                {label: '', value: '调查员2'}, 
+                {label: '', value: '调查员3'}, 
+                {label: '', value: '调查员4'}
+              ] 
+            },
+            category: 'team'
+          },
+          {
+            key: '3', 
+            header: '',
+            title: '足协文件搜查组',
+            data: {
+              subTitle: '',
+              img: '', 
+              list: [
+                {label: '', value: '调查员1'},  
+                {label: '', value: '调查员2'}, 
+                {label: '', value: '调查员3'}, 
+                {label: '', value: '调查员4'}
+              ] 
+            },
+            category: 'team'
+          },
+          {
+            key: '4', 
+            header: '',
+            title: '俱乐部欠薪追查组',
+            data: {
+              subTitle: '',
+              img: '', 
+              list: [
+                {label: '', value: '调查员1'},  
+                {label: '', value: '调查员2'}, 
+                {label: '', value: '调查员3'}, 
+                {label: '', value: '调查员4'}
+              ] 
+            },
+            category: 'team'
+          },
+          {
+            key: '5', 
+            header: '',
+            title: '球员调查组',
+            data: {
+              subTitle: '',
+              img: '', 
+              list: [
+                {label: '', value: '调查员1'},  
+                {label: '', value: '调查员2'}, 
+                {label: '', value: '调查员3'}, 
+                {label: '', value: '调查员4'}
+              ] 
+            },
+            category: 'team'
+          }
+        ],
+        links: [
+          {from: '1', to: '2'},
+          {from: '1', to: '3'},
+          {from: '1', to: '4'},
+          {from: '1', to: '5'}
+        ]
+
+      }
+    },
+    methods: {
+      memberTextTemplate() {
+        return [ 
+          creator({
+            name: go.Panel,
+            props: {
+              type: go.Panel.Horizontal,
+              defaultAlignment: go.Spot.Center,
+              stretch: go.GraphObject.Fill
+            },
+            children: [
+              creator({
+                name: go.TextBlock,
+                props: { 
+                  background: 'red',
+                  stroke: 'white',
+                  width: 16,
+                  height: 16,
+                  margin: 3,
+                  alignment: go.Spot.Center,
+                  textAlign: 'center',
+                  $bindings: [ 
+                    new go.Binding('text', '', (i) => {
+                      return i._index + 1
+                    })
+                  ]
+                }
+              }),
+              creator({
+                name: go.TextBlock,
+                props: { 
+                  font: '14px sans-serif', 
+                  stroke: 'blue', 
+                  alignment: go.Spot.Center,
+                  $bindings: [ 
+                    new go.Binding('text', '', function(i) { 
+                      return i.value
+                    }),
+                    new go.Binding('width', '', function(i) {  
+                      return i._width - 20
+                    })
+                  ] 
+                }
+              })
+            ]
+          })  
+        ]
+      },
+      panelToolClick(e, obj) {
+        console.log(this, obj.part.location, obj.part.data)
+        this.$alert(JSON.stringify(obj.part.data))
+      },
+      addTeamClick() {
+        this.$alert('添加调查小组')
+      }
+    } 
+  }
+</script>
+```
+:::
+
 
 
 ## panel-node.js 源码

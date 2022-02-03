@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[1550],{3745:function(t,a,e){"use strict";e.r(a);var n=e(490);e(0).default.use(n.a);var u={},r=e(19),s=Object(r.a)(u,(function(){var t=this.$createElement;return(this._self._c||t)("my-map",{attrs:{adapter:"Baidu"}})}),[],!1,null,null,null);a.default=s.exports}}]);
