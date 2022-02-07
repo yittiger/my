@@ -28,7 +28,7 @@
 
     @include when(border) {
       background: no-repeat;
-      background-image:repeating-linear-gradient(180deg, transparent 0, transparent calc(1.6em - 3px), $--color-border calc(1.6em - 1.5px));
+      background-image:repeating-linear-gradient(180deg, transparent 0, transparent calc(1.7em - 3px), $--color-border calc(1.7em - 1.5px));
     }
 
     > .my-description {
