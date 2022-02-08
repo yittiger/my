@@ -285,6 +285,7 @@ export const detailInit = function(infoProps) {
     const column = detail.column
     const strokeColor = detail.color 
     const contentTemplate = detail.contentTemplate
+    const textProps = detail.textProps
     return creator({
       name: go.Panel,
       props: {
@@ -334,7 +335,7 @@ export const detailInit = function(infoProps) {
             margin: 2,
             alignment: go.Spot.Left,
             stretch: go.GraphObject.Fill,
-            
+           
             $bindings: [
               new go.Binding('row', 'data', (i, obj) => {
                 return i._row
@@ -359,6 +360,7 @@ export const detailInit = function(infoProps) {
                 stroke: strokeColor, 
                 wrap: go.TextBlock.WrapDesiredSize,
                 // background: 'green',
+                ...textProps,
                 $bindings: [ 
                   new go.Binding('text', '', function(i) {  
                     return i.label ? `${i.label}：${i.value}` : i.value
