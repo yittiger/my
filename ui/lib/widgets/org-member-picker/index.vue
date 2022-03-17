@@ -44,18 +44,38 @@
         <el-col :span="2" style="line-height:32px">人员：</el-col>
         <el-col :span="22"> 
           <el-tag 
-          v-for="(item, index) in selectPersons" 
-          :key="`person_${index}`"
-          v-show="index < selPersonShowMax"
-          closable
-          @close="selPersonRemove(item, index)"
+            v-for="(item, index) in selectPersons" 
+            :key="`person_${index}`"
+            v-show="index < selPersonShowMax"
+            closable
+            @close="selPersonRemove(item, index)"
           >{{item[personPropMap.label]}}</el-tag>
-          <el-tag
-            type="info" 
-           key="total-person"
-          v-show="selectPersons.length > selPersonShowMax"
-          >+{{selectPersons.length}}</el-tag>
-        
+
+          <el-popover
+            placement="top"
+            width="300"
+            trigger="hover"
+          >
+            <div>
+              <el-tag 
+                v-for="(item, index) in selectPersons" 
+                :key="`hide_person_${index}`"
+                v-show="index >= selPersonShowMax"
+                closable
+                @close="selPersonRemove(item, index)"
+                style="margin-bottom: 5px"
+              >{{item[personPropMap.label]}}</el-tag>
+            </div>
+            <el-tag
+              type="info" 
+              key="total-person"
+              v-show="selectPersons.length > selPersonShowMax"
+              slot="reference"
+              style="margin-left: 5px;cursor:pointer"
+            >
+              +{{selectPersons.length}}
+            </el-tag>
+          </el-popover>
         </el-col>
       </el-row>
 
@@ -71,11 +91,31 @@
           closable
           @close="selDeptRemove(item)"
           >{{item[orgPropMap.label]}}</el-tag>
-          <el-tag
-            type="info" 
-           key="total-dept"
-          v-show="checkedDepts.length > selDeptShowMax"
-          >+{{checkedDepts.length}}</el-tag>
+          <el-popover
+            placement="top"
+            width="300"
+            trigger="hover"
+          >
+            <div>
+              <el-tag 
+                v-for="(item, index) in checkedDepts" 
+                :key="`hide_dept_${index}`"
+                v-show="index >= selDeptShowMax"
+                closable
+                @close="selDeptRemove(item)"
+                style="margin-bottom: 5px"
+                >{{item[orgPropMap.label]}}</el-tag>
+            </div>
+            <el-tag
+              type="info" 
+              key="total-dept"
+              v-show="checkedDepts.length > selDeptShowMax"
+              slot="reference"
+              style="margin-left: 5px;cursor:pointer"
+            > 
+              +{{checkedDepts.length}}
+            </el-tag>
+           </el-popover>
         </el-col>
         <el-col v-else :span="22">
           <el-tag   
@@ -91,7 +131,7 @@
     <!--操作按钮区域-->
     <div class="btn-warp" v-show="isShowSubmit">
       <el-button type="primary" size="small" @click="submitClickHandle">确定</el-button>
-      <el-button type="warning" size="small" @click="cancelClickHandle">取消</el-button>
+      <el-button type="warning" size="small" @click="cancelClickHandle">取消选中</el-button>
     </div>
   </div>
 </template>
@@ -227,6 +267,7 @@ export default {
     orgClickHandle(nodeData, node, label) {
       this.selDeptData = nodeData 
       this.$refs.personList.searchQuery = ''
+      this.$refs.personList.query = ''
       this.$nextTick(() => { 
         this.$refs.personList.$refs.list.refresh(1)
       })

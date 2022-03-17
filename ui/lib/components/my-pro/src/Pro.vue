@@ -32,6 +32,7 @@
           :data="tabs"
           :active="activeTabValue"
           @select="handleTabSelect"
+          @icon-click="handleTabClick"
           @command="handleTabCommand"
           @remove="handleTabRemove"></Tabs>
 
@@ -522,6 +523,9 @@
          */
         this.$emit('tab-select', tab, index)
       },
+      handleTabClick(tab, index) {
+        this.$emit('tab-click', tab, index)
+      },
       handleTabRemove(tab, index) {
         this.tabs.splice(index, 1)
         // 删除的是选择的tab
@@ -538,12 +542,15 @@
         this.$emit('tab-remove', tab, index)
       },
       handleTabCommand(command, tab, index) {
+        let removeTab
         switch (command) {
           case 'left':
-            this.tabs.splice(1, index - 1)
+            removeTab = this.tabs.splice(1, index - 1)
+            this.$emit('tab-remove', removeTab, index - 1)
             break
           case 'right':
-            this.tabs.splice(index + 1, this.tabs.length)
+            removeTab = this.tabs.splice(index + 1, this.tabs.length)
+            this.$emit('tab-remove', removeTab, this.tabs.length)
             break
           case 'other':
             if (index === 0) {
@@ -551,12 +558,14 @@
             } else {
               this.tabs = [this.tabs[0], this.tabs[index]]
             }
+            this.$emit('tab-remove-other', this.tabs)
             break
           case 'all':
             this.tabs.splice(1)
             if (this.tabs[0]) {
               this.$router.push(this.tabs[0].value).catch(e => e)
             }
+            this.$emit('tab-remove-all', this.tabs)
             break
         }
       },

@@ -1,12 +1,12 @@
 <template>
   <div class="my-pro-tabs">
     <Tabs type="card" :value="active" @tab-click="handleTabClick" @tab-remove="handleTabRemove">
-      <TabPane v-for="item in data" :key="item.value" :name="item.value" :closable="item.closable">
+      <TabPane v-for="(item, index) in data" :key="item.value" :name="item.value" :closable="item.closable">
         <template v-slot:label>
-          <MyIcon v-if="item.icon" v-bind="getIconOptions(item.icon)"></MyIcon>
+          <MyIcon v-if="item.icon" v-bind="getIconOptions(item.icon)" @click.stop="handleTabIconClick(item, index)"></MyIcon>
           {{item.label}}
         </template>
-      </TabPane>
+      </TabPane> 
     </Tabs>
     <div v-if="data && data.length" class="my-pro-tabs__action">
       <Dropdown @command="handleCommand" size="small">
@@ -27,7 +27,6 @@
 <script>
   import {Tabs, TabPane, Dropdown, DropdownMenu, DropdownItem} from 'element-ui'
   import {MyIcon} from '$ui'
-
   export default {
     components: {
       Tabs,
@@ -66,6 +65,9 @@
       handleTabRemove(name) {
         const idx = this.data.findIndex(n => name === n.value)
         this.$emit('remove', this.data[idx], idx)
+      },
+      handleTabIconClick(tab, index) {
+        this.$emit('icon-click', tab, index)
       }
     }
   }

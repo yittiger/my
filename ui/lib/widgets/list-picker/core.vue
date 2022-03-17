@@ -3,13 +3,14 @@
     <div class="filter-warp">
       <slot name="filter">
         <my-filter is-flex label-width="60px" @submit="filterSubmitHandle" :columns="1" size="mini">
-          <my-input name="keyword" label="关键字" placeholder="请输入关键字" width="65%"></my-input> 
+          <my-input name="keyword" label="关键字" placeholder="请输入关键字进行查询" width="65%"></my-input> 
         </my-filter>
       </slot>
     </div>
     <div class="list-warp">
       <div class="inner">
         <my-list 
+          v-if="styleMode === 'list'"
           ref="list"
           class="options-list" 
           v-bind="{...defaultListProps, ...$attrs}"
@@ -28,6 +29,30 @@
             </div>
           </template> 
         </my-list>
+
+        <my-table 
+          v-if="styleMode === 'table'"
+          ref="list" 
+          size="mini"
+          v-bind="{pageSize: 20, border: true, ...tableProps}" 
+          :columns="columns" 
+          :loader="loader" 
+          :fit="true"  
+        >
+          <template v-slot:ctrl="{row}">
+            <el-button type="text" 
+            style="padding: 4px;"
+            @click="itemSelectHandle(row)"
+            :disabled="definedSelected(row)"
+            v-if="!definedSelected(row)"
+            >选择</el-button>
+
+            <el-button type="danger" size="mini" 
+            @click="removeItemSel(row)"
+            v-show="definedSelected(row)"
+            >去除</el-button>
+          </template>
+        </my-table>
       </div>
     </div>
     <div class="result-warp" v-show="isShowResult"> 
@@ -47,7 +72,7 @@
     </div> 
     <div class="btn-warp"  v-show="isShowSubmit">
       <el-button type="primary" size="small" @click="submitClickHandle">确定</el-button>
-      <el-button type="warning" size="small" @click="cancelClickHandle">取消</el-button>
+      <el-button type="warning" size="small" @click="cancelClickHandle">取消选中</el-button>
     </div>
   </div>
 </template>
@@ -64,6 +89,10 @@ export default {
   mixins: [],
   components: {},
   props: {
+    styleMode: {
+      type: String,
+      default: 'list'
+    },
     listLoad: Function,
     optionsPropsMap: {
       type: Object,
@@ -92,6 +121,17 @@ export default {
     isMultiSel: {
       type: Boolean,
       default: true
+    },
+    // 表格组件其他传参
+    tableProps: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    },
+    // 显示列表
+    listColumn: {
+      type: Array 
     }
   },
   data() {
@@ -103,6 +143,9 @@ export default {
     }
   },
   computed: { 
+    columns() {
+      return [...this.listColumn, {prop: 'ctrl', label: '操作', fixed: 'right', width: 80}]
+    }
   },
   methods: {
     loader(page, pageSize) {
@@ -189,13 +232,14 @@ export default {
   & > div {
     width: 100%
   }
-  .filter-warp, .result-warp, .btn-warp{
+  .filter-warp, .result-warp, .btn-warp, .header-warp{
     flex: 0 0 auto;
    
   }
   .list-warp{
     flex: 1;
     position: relative;
+    margin-bottom: 5px;
     .inner{
       position: absolute;
       width: 100%;

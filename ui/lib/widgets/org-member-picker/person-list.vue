@@ -1,7 +1,7 @@
 <template>
   <div class="person-list-warp">
     <div class="input-warp" >
-      <el-input size="small" placeholder="请输入人员关键字" v-model="query"  > 
+      <el-input size="small" placeholder="请输入姓名身份证和警号" v-model="query"  > 
         <el-button slot="append" icon="el-icon-search" @click="searchHandle"></el-button>
       </el-input>
     </div>
@@ -15,7 +15,7 @@
         <my-table 
           ref="list" 
           size="mini"
-          v-bind="{...tableProps}" 
+          v-bind="{border: true, ...tableProps}" 
           :columns="columns" 
           :loader="listLoader" 
           :fit="true" 

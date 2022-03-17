@@ -96,9 +96,13 @@ export default {
     }, 
     // 选择器的确认回调函数
     confirmHandle() { 
-      const selects = this.$refs.picker.getSelectItems()
-      const adds = this.$refs.field._removeDuplicate(selects, this.selectItems, this.optionsPropsMap.id)
-      this.selectItems = this.selectItems.concat(adds)
+      const selects = this.$refs.picker.getSelectItems() 
+      if (this.$refs.picker.isMultiSel) { // 选择器是多选
+        const adds = this.$refs.field._removeDuplicate(selects, this.selectItems, this.optionsPropsMap.id)
+        this.selectItems = this.selectItems.concat(adds)
+      } else {
+        this.selectItems = selects
+      }
       this.$refs.field.closePicker()
       this.$emit('on-submit', this.selectItems)
     },

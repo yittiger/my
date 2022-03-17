@@ -52,11 +52,14 @@ export default class Socket extends Events {
       server: '',
       reconnect: true,
       reconnectDelay: 3000,
+      maxConnectTimes: 0,
       ...options
     }
     this.isConnected = false
     this.ws = null
     this.reconnectTimer = null
+    this.isReconnecting = false
+    this.connectTimes = 0
     this.connect()
   }
   
@@ -69,12 +72,17 @@ export default class Socket extends Events {
     this.ws.onmessage = this.handleMessage.bind(this)
     this.ws.onopen = this.handleOpen.bind(this)
     this.ws.onclose = this.handleClose.bind(this)
-    this.ws.onerror = this.handleConnect.bind(this)
-    
+    this.ws.onerror = this.handleError.bind(this) // this.handleConnect.bind(this)
+    this.connectTimes += 1 // 连接次数+1
   }
   
   delayReconnect() {
+    if (this.options.maxConnectTimes > 0 && this.connectTimes >= this.options.maxConnectTimes) { // 超过最大重连次数
+      console.log('ws stop forever, please run ‘handleConnect’ to restart')
+      return
+    }
     this.isConnected = false
+    this.isReconnecting = true
     this.reconnectTimer = setTimeout(() => {
       this.reconnect()
     }, this.options.reconnectDelay)
@@ -95,7 +103,9 @@ export default class Socket extends Events {
      * @event close
      */
     this.$emit('close', this)
-    this.options.reconnect && this.delayReconnect()
+    if (this.options.reconnect  && !this.isReconnecting) {
+      this.delayReconnect()
+    }
   }
   
   handleError() {
@@ -104,10 +114,13 @@ export default class Socket extends Events {
      * @event error
      */
     this.$emit('error', this)
-    this.delayReconnect()
+    if (this.options.reconnect && !this.isReconnecting) {
+      this.delayReconnect()
+    }
   }
   
   handleConnect() {
+    this.connectTimes = 0
     this.isConnected = false
     this.reconnectTimer = setTimeout(() => {
       this.reconnect()
@@ -133,7 +146,8 @@ export default class Socket extends Events {
    */
   reconnect() {
     clearTimeout(this.reconnectTimer)
-    if (this.isConnected) return
+    if (this.isConnected) return 
+    this.isReconnecting = false 
     this.connect()
   }
   
