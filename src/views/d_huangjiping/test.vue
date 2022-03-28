@@ -1,63 +1,21 @@
 <template>
-  <div style="height: 100%">
-    <my-tabs :tabs="tabs" position="top" fit>
-      <template v-slot="{tab}">
-        <div  style="height: 100%">
-          <col1 v-show="tab.name === 'tab1'"></col1>
-
-          <col2 v-show="tab.name === 'tab2'"></col2>
-        </div>   
-      </template>
-    </my-tabs>
-  </div>
+  <my-form>
+    <my-checkbox name="select" :options="options" :props="{border: false}"></my-checkbox>
+  </my-form>
 </template>
-<style lang="scss" scoped>
-</style>
-<script>
 
-import Col1 from '@/components/col1'
-import Col2 from '@/components/col2'
+<script>
 export default {
-  mixins: [],
-  components: {Col1, Col2},
-  props: {
-  },
   data() {
     return {
-      tabs: [
-         {
-          name: 'tab1', 
-          label: '基本设置'
-          // component: Col1, 
-          // props: {}, 
-          // on: {
-          //   'on-listShow': this.colFirstShow
-          // },
-          // ref: 'col1'
-        },
-        {
-          name: 'tab2', 
-          label: '账号绑定'
-          // component: Col2, 
-          // props: {}, 
-          // on: {
-          //   'on-listShow': this.colFirstShow
-          // },
-          // ref: 'col2'
-        }
-         
+      options: [
+          {label: '选项一', value: 1},
+          {label: '选项二', value: 2},
+          {label: '选项三', value: 3},
+          {label: '选项四', value: 4},
+          {label: '选项五', value: 5}
       ]
     }
-  },
-  computed: {
-  },
-  methods: {
-    colFirstShow() {
-      console.log('col1 is show') 
-      
-    }
-  },
-  created() {},
-  mounted() {}
+  }
 }
 </script>
