@@ -3,7 +3,7 @@
 @include b(description) {
   margin-bottom: 8px;
   clear: both;
-
+  @include utils-clearfix;
   @include e(title) {
     display: inline-block;
     float: left;

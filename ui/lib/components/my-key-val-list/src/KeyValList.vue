@@ -6,7 +6,7 @@
 
         </slot>
         <slot v-else :name="item.prop"  v-bind="{...item, $index: index, value: data[item.prop]}">
-          <my-description :border="showBorder(item)" :title="item.label" :width="item.width ? item.width : 100" :align="item.align ? item.align : 'right'">
+          <my-description :border="showBorder(item)" :title="item.label" :width="item.width ? item.width : labelWidth" :align="item.align ? item.align : labelAlign">
            {{data[item.prop]}}
           </my-description>  
         </slot>
@@ -59,6 +59,18 @@ export default {
     },
     border: {
       type: Boolean,
+      default: false
+    },
+    labelWidth: {
+      type: Number,
+      default: 100
+    },
+    labelAlign: {
+      type: String,
+      default: 'right'
+    },
+    strict: {
+      type: Boolean,
       default: true
     }
   },
@@ -93,11 +105,16 @@ export default {
       } else if (item.span > 24) {
         return 24
       } else {
-        if (24 % item.span === 0) {
-          return item.span
+        if (this.strict) {
+          const colSpan = Math.round(24 / this.currentColumn)
+          if (item.span % colSpan === 0) {
+            return item.span
+          } else {
+            return 24
+          }
         } else {
-          return 24 / this.currentColumn
-        }
+          return item.span
+        } 
       } 
     },
     showBorder(item) {
