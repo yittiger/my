@@ -3,8 +3,9 @@
         ref="elForm"
         v-bind="$attrs"
         v-on="$listeners"
-        @keyup.native.enter="submit"
+        @submit.native.prevent
         :model="currentModel">
+        <!-- @keyup.native.enter="submit" -->
     <slot></slot>
     <FormItem label=" " v-if="footer" class="my-form__footer" :class="footerClass">
       <slot name="footer">

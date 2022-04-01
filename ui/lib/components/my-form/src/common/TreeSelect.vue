@@ -280,6 +280,9 @@
           this.checked = _opts.filter(item => {
             return vals.includes(item[value])
           })
+          if (!this.checked.length) { // 若checked为空，直接置空tree组件
+            this.$refs.tree && this.$refs.tree.setCheckedNodes([])
+          }
         } else {
           this.checked = _opts.find(item => {
             return val === item[value]
