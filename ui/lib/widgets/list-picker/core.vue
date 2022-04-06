@@ -39,6 +39,12 @@
           :loader="loader" 
           :fit="true"  
         >
+          <template v-for="item in listColumn" v-slot:[item.prop]="scope"> 
+            <slot name="column"  v-bind="scope">
+              <span :key="item.prop" >{{scope.row[item.prop]}}</span>
+            </slot>
+          </template>
+
           <template v-slot:ctrl="{row}">
             <el-button type="text" 
             style="padding: 4px;"
@@ -58,17 +64,39 @@
     <div class="result-warp" v-show="isShowResult"> 
         选中:
         <el-tag 
+          size="small"
           v-for="(item, index) in selectItems" 
           :key="`sel_${index}`"
           v-show="index < selItemShowMax"
           closable
           @close="removeItemSel(item)"
           >{{item[optionsPropsMap.label]}}</el-tag>
-        <el-tag
-          type="info" 
-          key="total-item"
-        v-show="selectItems.length > selItemShowMax"
-        >+{{selectItems.length}}</el-tag> 
+
+        <el-popover
+          placement="top"
+          width="300"
+          trigger="hover"
+        >
+          <div>
+            <el-tag 
+              size="small"
+              v-for="(item, index) in selectItems" 
+              :key="`sel_${index}`"
+              v-show="index >= selItemShowMax"
+              closable
+              @close="removeItemSel(item)"
+               style="margin-bottom: 2px"
+              >{{item[optionsPropsMap.label]}}</el-tag>
+          </div>   
+          <el-tag
+            size="small"
+            type="info" 
+            key="total-item"
+            v-show="selectItems.length > selItemShowMax"  
+            slot="reference"
+            style="margin-left: 5px;cursor:pointer"
+          >+{{selectItems.length}}</el-tag> 
+        </el-popover> 
     </div> 
     <div class="btn-warp"  v-show="isShowSubmit">
       <el-button type="primary" size="small" @click="submitClickHandle">确定</el-button>
@@ -275,6 +303,9 @@ export default {
   }
   .result-warp{ 
     padding: 5px 0; 
+    /deep/ .el-tag{
+      margin-bottom: 2px;
+    }
   }
   .btn-warp{
     text-align: right; 

@@ -22,6 +22,10 @@
       <template v-slot:option="{item}">
         <slot name="option" :item="item"></slot>
       </template>
+
+      <template v-slot:column="scope">
+        <slot name="column" v-bind="scope"></slot>
+      </template>
     </list-picker> 
   </my-select-field>
 </template>

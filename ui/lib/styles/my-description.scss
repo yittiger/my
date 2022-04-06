@@ -25,10 +25,10 @@
     color: $--color-primary-text;
     text-align: left;
     line-height: 1.6em;
-
+    min-height: 1.6em;  
     @include when(border) {
       background: no-repeat;
-      background-image:repeating-linear-gradient(180deg, transparent 0, transparent calc(1.7em - 3px), $--color-border calc(1.7em - 1.5px));
+      background-image:repeating-linear-gradient(180deg, transparent 0, transparent calc(1.6em - 5px), $--color-border calc(1.6em - 5px), $--color-border 1.6em);
     }
 
     > .my-description {

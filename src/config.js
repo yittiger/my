@@ -34,6 +34,22 @@ setConfig({
 
     // 权限不足页面路径
     authorizePath: '/403'
+
+    // preprocess: ({to, from, access, next}) => {
+    //   return new Promise(resolve => {
+    //     let info = ''
+    //     info = to.query.info  
+    //     setTimeout(() => {
+    //     if(info) { // 单点登录
+    //       console.log('info', info, to) 
+    //       next = next({path: to.path})
+    //       resolve()
+    //     } else { 
+    //       resolve();
+    //     }
+    //     }, 200) 
+    //   });
+    // }
   },
   /**
    * 开启访问分析追踪

@@ -1,12 +1,12 @@
 <template> 
-  <el-row class="my-key-val-list " v-bind="$attrs" >
+  <el-row class="my-key-val-list" v-bind="$attrs" >
     <el-col v-for="(item, index) in showColList" :key="`${item.prop}_${index}`" :span="setSpan(item)"> 
       <template>
         <slot v-if="item.type === 'devide'" :name="item.prop">
 
         </slot>
         <slot v-else :name="item.prop"  v-bind="{...item, $index: index, value: data[item.prop]}">
-          <my-description :border="showBorder(item)" :title="item.label" :width="item.width ? item.width : labelWidth" :align="item.align ? item.align : labelAlign">
+          <my-description :border="item.border" :title="item.label" :width="item.width ? item.width : labelWidth" :align="item.align ? item.align : labelAlign">
            {{data[item.prop]}}
           </my-description>  
         </slot>
@@ -116,15 +116,7 @@ export default {
           return item.span
         } 
       } 
-    },
-    showBorder(item) {
-      if (Object.prototype.hasOwnProperty.call(item, 'border')) {
-        return item.border
-      } else {
-        return this.border
-      }
-      
-    }
+    } 
   } 
 }
 </script>

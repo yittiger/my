@@ -1,66 +1,93 @@
 <template>
-  <div >
-    <my-key-val-list  :column="column" :data="data"  :border="false" :label-width="null"> </my-key-val-list>
-    <!-- <hr/>
-    <el-row>
-      <el-col :span="8">
-        <my-description title="标题左对齐" :width="100">数据项内容</my-description>  
-      </el-col>
-      <el-col :span="8">
-        <my-description title="标题居中" :width="100" align="center">数据项内容</my-description> 
-      </el-col>
-      <el-col :span="8">
-        <my-description title="标题右对齐" :width="100" align="right">数据项内容</my-description> 
-      </el-col>
-    </el-row>
-    <hr/>
-      <el-row>
-      <el-col :span="8">
-        <my-description title="标题左对齐" :width="100" top>
-          <my-title :level="3">253个</my-title>
-        </my-description>  
-      </el-col>
-      <el-col :span="8">
-        <my-description title="标题居中" :width="100" align="center" top>
-        <my-title :level="3">253个</my-title>
-      </my-description> 
-      </el-col>
-      <el-col :span="8">
-        <my-description title="标题右对齐" :width="100" align="right" top>
-        <my-title :level="3">253个</my-title>
-        </my-description> 
-      </el-col>
-    </el-row> -->
+  <div > 
+    <list-picker 
+      ref="listPicker"
+      :field-props="{type: 'popover', 'popProps': {'width': 800}}"
+      :list-load="caseListLoadFn"
+      :options-props-map="casePropsMap"
+      style-mode="table"
+      :list-column="listColumn"
+      v-model="selects"
+      @change="pickerChange"
+      @on-submit="pickerSubmit" 
+      @on-pickerOpen="pickerOpen"
+    > 
+      <template v-slot:column="scope">
+        <div v-if="scope.column.prop === 'caseName'" style="color: red"   >
+          {{scope.row.caseName}} 
+        </div>
+        <div v-else>{{scope.row[scope.column.prop]}}</div>
+      </template>
+    </list-picker> 
+    <div>
+      <div v-for="(item, index) in selects" :key="index" >{{item}} 
+        <el-button @click="removeSel(index)">删除</el-button>
+      </div>
+    </div>
   </div>
 </template>
-<style scoped lang="scss">
+<style lang="scss" scoped>
 
 </style>
 <script>
-   
-  export default {
-     
-    data() {
-      return {
-        column: [
-          { label: '姓名', prop: 'name'},
-          { label: '身份证', prop: 'id' },
-          { label: '地址', prop: 'address', span: 24}, 
-          { label: '电话', prop: 'phone'},
-          { label: '年龄', prop: 'age'},
-          { label: '日期', prop: 'date'},
-          { label: '性别', prop: 'gender'}
-        ],
-        data: {
-          name: '王菲',
-          id: '23456',
-          age: '21',
-          address: '广东省广州市荔湾区黄沙大道西郊游泳场三号楼12345号',
-          date: '',
-          phone: '1234',
-          gender: '男'
-        }
-      }
+import Mock from 'mockjs'
+import ListPicker from '$ui/widgets/list-picker'
+export default {
+  mixins: [],
+  components: {ListPicker},
+  props: {
+  },
+  data() {
+    return {
+      casePropsMap: {
+        label: 'caseName',
+        id: 'id',
+        value: 'id'
+      },
+      selects: [],
+      listColumn: [
+        {prop: 'id', label: 'id'},
+        {prop: 'caseName', label: '名称'},
+        {prop: 'content', label: '内容'}
+      ]
     }
-  }
+  },
+  computed: {
+  },
+  methods: { 
+    caseListLoadFn(page, pageSize, filter) {
+      return new Promise((resolve, reject) => {
+        console.log(page, pageSize, filter)
+        setTimeout(() => {
+          const data = Mock.mock({
+            [`list|${pageSize}`]: [
+              {
+                id: '@id',
+                caseName: '@ctitle', 
+                content: '@ctitle'
+              }
+            ]
+          })
+    
+          resolve({
+            total: 80,
+            list: data.list
+          })
+        }, 300)
+      })
+    }, 
+    removeSel(index) {
+      this.selects.splice(index, 1)
+    },
+    pickerChange(sels) {
+      console.log(sels, 'change')
+    },
+    pickerSubmit(sels) {
+      console.log(sels, 'submit')
+    },
+    pickerOpen() {
+      console.log('picker open')
+    }
+  } 
+}
 </script>
