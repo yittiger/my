@@ -36,8 +36,9 @@
       overflow: auto; 
       
       /deep/ .org-tree.el-tree {
-        .el-tree-node{
-          width: fit-content !important;
+        & > :nth-child(n+1) {
+          display: inline-block;
+          min-width: 100%;
         }
       } 
        

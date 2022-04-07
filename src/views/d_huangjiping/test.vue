@@ -1,93 +1,81 @@
 <template>
-  <div > 
-    <list-picker 
-      ref="listPicker"
-      :field-props="{type: 'popover', 'popProps': {'width': 800}}"
-      :list-load="caseListLoadFn"
-      :options-props-map="casePropsMap"
-      style-mode="table"
-      :list-column="listColumn"
-      v-model="selects"
-      @change="pickerChange"
-      @on-submit="pickerSubmit" 
-      @on-pickerOpen="pickerOpen"
-    > 
-      <template v-slot:column="scope">
-        <div v-if="scope.column.prop === 'caseName'" style="color: red"   >
-          {{scope.row.caseName}} 
-        </div>
-        <div v-else>{{scope.row[scope.column.prop]}}</div>
-      </template>
-    </list-picker> 
+  <div >
     <div>
-      <div v-for="(item, index) in selects" :key="index" >{{item}} 
-        <el-button @click="removeSel(index)">删除</el-button>
-      </div>
+      <el-switch v-model="darkTheme" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
     </div>
+    <div style="width: 100px; height: 300px; border: 1px solid; overflow: auto">
+      <el-tree class="is-line" style="width: 100%" :data="data" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
+    </div> 
   </div>
 </template>
-<style lang="scss" scoped>
-
-</style>
 <script>
-import Mock from 'mockjs'
-import ListPicker from '$ui/widgets/list-picker'
+// import Mock from 'mockjs'
+// import OrgMemberPicker from '$ui/widgets/org-member-picker'
+// // import axios from 'axios'
+// import CityData from '@/assets/data/CITY.json'
+// import {create as createTree} from '$ui/utils/tree'
+import skin from '$ui/utils/skin' 
 export default {
-  mixins: [],
-  components: {ListPicker},
-  props: {
-  },
-  data() {
-    return {
-      casePropsMap: {
-        label: 'caseName',
-        id: 'id',
-        value: 'id'
-      },
-      selects: [],
-      listColumn: [
-        {prop: 'id', label: 'id'},
-        {prop: 'caseName', label: '名称'},
-        {prop: 'content', label: '内容'}
-      ]
+   mixins: [skin()],
+    data() {
+      return {
+        darkTheme: false,
+        data: [{
+          label: '一级 1',
+          children: [{
+            label: '二级 1-1',
+            children: [{
+              label: '三级 1-1-1'
+            }]
+          }]
+        }, {
+          label: '一级 2',
+          children: [{
+            label: '二级 2-1',
+            children: [{
+              label: '三级 2-1-1'
+            }]
+          }, {
+            label: '二级 2-2',
+            children: [{
+              label: '三级 2-2-1'
+            }]
+          }]
+        }, {
+          label: '一级 3',
+          children: [{
+            label: '二级 3-1',
+            children: [{
+              label: '三级 3-1-1'
+            }]
+          }, {
+            label: '二级 3-2',
+            children: [{
+              label: '三级 3-2-1'
+            }]
+          }]
+        }],
+        defaultProps: {
+          children: 'children',
+          label: 'label'
+        }
+      };
+    },
+    watch: {
+      darkTheme(val) {
+        if (val) {
+          this.changeTheme('dark')
+        } else {
+          this.changeTheme('default')
+        }
+      }
+    },
+    methods: {
+      handleNodeClick(data) {
+        console.log(data);
+      }
     }
-  },
-  computed: {
-  },
-  methods: { 
-    caseListLoadFn(page, pageSize, filter) {
-      return new Promise((resolve, reject) => {
-        console.log(page, pageSize, filter)
-        setTimeout(() => {
-          const data = Mock.mock({
-            [`list|${pageSize}`]: [
-              {
-                id: '@id',
-                caseName: '@ctitle', 
-                content: '@ctitle'
-              }
-            ]
-          })
-    
-          resolve({
-            total: 80,
-            list: data.list
-          })
-        }, 300)
-      })
-    }, 
-    removeSel(index) {
-      this.selects.splice(index, 1)
-    },
-    pickerChange(sels) {
-      console.log(sels, 'change')
-    },
-    pickerSubmit(sels) {
-      console.log(sels, 'submit')
-    },
-    pickerOpen() {
-      console.log('picker open')
-    }
-  } 
-}
+  };
 </script>
+<style lang="scss" scoped>
+</style>
