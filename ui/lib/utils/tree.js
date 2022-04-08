@@ -13,13 +13,13 @@
  * @return {Array}
  */
 export function create(list = [], parentId = null, idKey = 'id', parentIdKey = 'parentId', withRoot = false) {
-  const _list = cloneDeep(list)
+  const _list = cloneDeep(list)  
   const temp = new Map(), tree = []
   _list.forEach(item => {
     temp.set(item[idKey], {...item})
   })
   for (const item of temp.values()) {
-    if (item[parentIdKey] === parentId) {
+    if (item[parentIdKey] === parentId || (!parentId && !item[parentIdKey])) {
       tree.push(item)
     } else {
       const parent = temp.get(item[parentIdKey])
@@ -31,6 +31,7 @@ export function create(list = [], parentId = null, idKey = 'id', parentIdKey = '
       }
     }
   }
+  console.log(tree, '+++++++++++++')
   if (parentId && withRoot) {
     const target = list.find((item) => {
       return item[idKey] === parentId
