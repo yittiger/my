@@ -7,8 +7,8 @@ title: 树结构列表
     <el-row :gutter="14">
       <el-col :span="8" :xs="24">
         <my-panel theme="border-left" shadow="never" title="组织机构">
-          <el-tree ref="tree"
-                   v-treeConnect
+          <el-tree class="is-line" 
+                   ref="tree" 
                    lazy
                    :load="loader"
                    node-key="id"
@@ -46,12 +46,10 @@ title: 树结构列表
 </template>
 
 <script>
-  import MockForExample from '$my/code/mixin/mock-for-example'
-  import treeConnect from '$ui/directives/tree-connect'
+  import MockForExample from '$my/code/mixin/mock-for-example' 
 
   export default {
-    mixins: [MockForExample],
-    directives: {treeConnect},
+    mixins: [MockForExample], 
     data() {
       return {
         columns: [

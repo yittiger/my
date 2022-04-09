@@ -11,7 +11,8 @@
     </div>
     <div class="tree-warp">
       <div class="inner" v-loading="loading">
-        <el-tree class="org-tree" v-if="treeInit" ref="tree" v-tree-connect v-bind="{...treePropsProxy}"  @node-click="handleNodeClick" @check-change="handleCheckChange"></el-tree>
+        <el-tree class="org-tree is-line" v-if="treeInit" ref="tree"  
+        v-bind="{...treePropsProxy}"  @node-click="handleNodeClick" @check-change="handleCheckChange"></el-tree>
       </div>
     </div>
   </div>
@@ -47,14 +48,12 @@
 }
 </style>
 <script>
-import treeConnect from '$ui/directives/tree-connect'
 const DefaultTreeProps = {
   'check-strictly': true
 }
 export default {
   mixins: [],
-  components: {},
-  directives: {'tree-connect': treeConnect},
+  components: {}, 
   props: {
     // 异步获取初始部门树的函数，返回 输出组织架构树 的 Promise对象
     loadOrg: Function,

@@ -38,7 +38,6 @@
                clearable
                placeholder="请输入筛选关键字"></ElInput>
       <Tree class="my-tree-select__tree is-line"
-            v-tree-connect
             ref="tree"
             v-bind="tree"
             :highlight-current="!multiple"
@@ -72,7 +71,6 @@
   import TagInput from './TagInput'
   import {create as createTree, treeRevert} from '$ui/utils/tree'
   import {cloneDeep, isEqual} from '$ui/utils/util'
-  import treeConnect from '$ui/directives/tree-connect'
 
   /**
    * 属性参数
@@ -95,8 +93,7 @@
    * @property {object} [tree] el-tree的其他参数
    *
    */
-  export default {
-    directives: {'tree-connect': treeConnect},
+  export default { 
     components: {
       ElInput: Input,
       TagInput,

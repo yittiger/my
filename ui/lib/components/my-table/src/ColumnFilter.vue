@@ -13,9 +13,11 @@
                       :label="col.prop">{{col.label}}
           </el-checkbox>
         </el-checkbox-group>
-        <div style="margin-top:5px; text-align:center" v-if="filterConfirm">
-          <el-button type="primary" size="mini" @click="filterConfirmClick">确定</el-button>
-        </div>
+        <slot v-if="filterConfirm">
+          <div style="margin-top:5px; text-align:center" > 
+              <el-button type="primary" size="mini" @click="filterConfirmClick">确定</el-button>
+          </div>
+        </slot>
       </div>
       
       <div v-else>没有可显示的列</div>

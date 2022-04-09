@@ -43,7 +43,9 @@
 
             <TableColumn v-if="columnFilter" :resizable="false" width="24px" class-name="my-table--not-drag"
                          fixed="right">
-              <ColumnFilter slot="header" :columns="columns" v-model="displayColumnProps" v-bind="$attrs" @column-change-confirm="colChangeConfirm"></ColumnFilter>
+              <ColumnFilter slot="header" :columns="columns" v-model="displayColumnProps" v-bind="$attrs" @column-change-confirm="colChangeConfirm">
+                <slot name="filter-confirm"></slot>
+              </ColumnFilter>
             </TableColumn>
           </template>
           <template v-slot:append>
