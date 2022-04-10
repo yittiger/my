@@ -14,8 +14,13 @@
           </el-checkbox>
         </el-checkbox-group>
         <slot v-if="filterConfirm">
-          <div style="margin-top:5px; text-align:center" > 
-              <el-button type="primary" size="mini" @click="filterConfirmClick">确定</el-button>
+          <div style="text-align:center" > 
+            <el-button type="text" size="mini" :disabled="!isColChanged" 
+            @click="filterConfirmClick">
+              确定
+              <span v-show="isColChanged">*</span>
+            </el-button>
+            <el-button type="text" size="mini" v-show="isColChanged"  @click="colChangeReset">还原</el-button>
           </div>
         </slot>
       </div>
@@ -26,51 +31,60 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      columns: {
-        type: Array,
-        default() {
-          return []
-        }
-      },
-      value: {
-        type: Array,
-        default() {
-          return []
-        }
-      },
-      filterConfirm: {
-        type: Boolean,
-        default: false
+import {isEqual} from '$ui/utils/util'
+export default {
+  props: {
+    columns: {
+      type: Array,
+      default() {
+        return []
       }
     },
-    data() {
-      return {
-        currentValue: this.value || []
+    value: {
+      type: Array,
+      default() {
+        return []
       }
     },
-    computed: {
-      checkboxList() {
-        return this.columns.filter(col => !!col.prop && !col.type)
+    filterConfirm: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      currentValue: this.value || [],
+      originValue: [...this.value || []]
+    }
+  },
+  computed: {
+    checkboxList() {
+      return this.columns.filter(col => !!col.prop && !col.type)
+    }, 
+    isColChanged() {
+      return !isEqual(this.originValue, this.currentValue)
+    } 
+  },
+  watch: {
+    value: {
+      immediate: true,
+      handler(val) {
+        this.currentValue = val
       }
     },
-    watch: {
-      value: {
-        immediate: true,
-        handler(val) {
-          this.currentValue = val
-        }
-      },
-      currentValue(val) {
-        this.$emit('input', val)
-      }
+    currentValue(val) {
+      this.$emit('input', val)
+    }
+  },
+  methods: {
+    filterConfirmClick() {
+      this.$emit('column-change-confirm')
     },
-    methods: {
-      filterConfirmClick() {
-        this.$emit('column-change-confirm')
-      }
+    colChangeReset() {
+      this.$emit('column-change-reset')
+      // this.$parent.resetDisplayColumns()
     }
   }
+}
 </script>
 
