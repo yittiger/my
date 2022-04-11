@@ -87,7 +87,7 @@ export default {
         height: '80%', 
         footer: true 
       },
-      submitLoading: false
+      submitLoading: false 
     }
   },
   computed: {
@@ -104,11 +104,11 @@ export default {
     },
     removeClick(row, index) {
       console.log(row, index)
-    }
+    } 
    
   },
   mounted() {
-   
+     
   }
 }
 </script>

@@ -33,7 +33,7 @@ export default function (options) {
         exportProps: {
           useExport: 'true',
           exportMaxNum: 2000
-        }
+        } 
       }
     },
     computed: {
@@ -96,8 +96,7 @@ export default function (options) {
         // 列表导出配置
 
 
-      }
-
+      } 
     
     },
     mounted() {

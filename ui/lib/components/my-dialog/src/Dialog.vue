@@ -403,7 +403,7 @@
       },
       updateView() {
         if (!this.$el || !this.$refs.dialog) return
-        const rect = this.$el.getBoundingClientRect()
+        const rect = this.$el.getBoundingClientRect() 
         this.viewHeight = rect.height
         this.viewWidth = rect.width
         this.viewLeft = Math.max(document.documentElement.scrollLeft, document.body.scrollLeft)
@@ -411,10 +411,11 @@
         if (this.currentMaximized) {
           this.maximize(true)
         }
+
         if (!this.dialogWidth || !this.dialogHeight) {
           const dialogRect = this.$refs.dialog.$el.getBoundingClientRect()
-          this.originalWidth = this.dialogWidth = getLength(this.viewWidth, this.width) || dialogRect.width
-          this.originalHeight = this.dialogHeight = getLength(this.viewHeight, this.height) || dialogRect.height
+          this.originalWidth = this.dialogWidth = Math.min(getLength(this.viewWidth, this.width) || dialogRect.width, this.viewWidth - 20)
+          this.originalHeight = this.dialogHeight = Math.min(getLength(this.viewHeight, this.height) || dialogRect.height, this.viewHeight - 20)
         }
       },
       // 重置窗体宽高方法：参数为
@@ -430,12 +431,12 @@
         const newDialogHeight = innerNodeHeight + hHeight + fHeight + 24
         
         const resizeObj = {
-          height: opt.h || newDialogHeight,
-          width: opt.w
+          height: Math.min(getLength(this.viewHeight, opt.h) || newDialogHeight, this.viewHeight - 20),
+          width: Math.min(getLength(this.viewWidth, opt.w), this.viewWidth - 20)
         }
         this.$nextTick(() => {
-          this.originalHeight = resizeObj.height || this.dialogHeight
-          this.originalWidth = resizeObj.width || this.dialogWidth
+          this.originalHeight = Math.min(resizeObj.height || this.dialogHeight, this.viewHeight - 20)
+          this.originalWidth = Math.min(resizeObj.width || this.dialogWidth, this.viewWidth - 20) 
           this.handleResize(resizeObj)
         })
       },
