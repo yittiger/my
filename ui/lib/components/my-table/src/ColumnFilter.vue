@@ -78,6 +78,7 @@ export default {
   },
   methods: {
     filterConfirmClick() {
+      this.originValue = [...this.currentValue]
       this.$emit('column-change-confirm')
     },
     colChangeReset() {

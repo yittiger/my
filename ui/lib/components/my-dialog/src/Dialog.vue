@@ -421,7 +421,7 @@
       // 重置窗体宽高方法：参数为
       redoLayout(opt = {width: null, height: null}) {
         const hHeight = this.$refs.panel.headerHeight
-        const fHeight = this.$refs.panel.footerHeight
+        const fHeight = this.footer ? this.$refs.panel.footerHeight : 10
         const innerNodes = this.$slots.default 
         const innerNodeHeight = innerNodes.reduce((total, node) => {
           const nodeHeight = node.elm.offsetHeight || 0

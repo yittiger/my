@@ -235,41 +235,44 @@
        * @method submit
        */
       submit() {
-        this.$refs.elForm.validate((valid, object) => {
-          if (valid) {
-            /**
-             *  表单验证通过
-             *  @event validate-success
-             */
-            this.$emit('validate-success')
-            const model = cloneDeep(this.currentModel)
-            if (this.onSubmit) {
-              this.submitting = true
-              this.onSubmit(model, this)
-                .then(() => {
-                  // 提交表单成功后，重置
-                  this.resetSubmitSuccess && this.reset()
-                })
-                .finally(() => {
-                  this.submitting = false
-                })
-            }
-            /**
-             * 表单提交时触发
-             * @event submit
-             * @param {object} model 表单模型数据
-             * @param {VueComponent} vm 表单实例
-             */
-            this.$emit('submit', model, this)
-          } else {
-            /**
-             *  表单验证不通过
-             *  @event validate-fail
-             *  @param {object} object 未通过校验的字段
-             */
-            this.$emit('validate-fail', object)
-          }
-
+        return new Promise((resolve, reject) => { 
+          this.$refs.elForm.validate((valid, object) => {
+            if (valid) {
+              /**
+               *  表单验证通过
+               *  @event validate-success
+               */
+              this.$emit('validate-success')
+              const model = cloneDeep(this.currentModel)
+              if (this.onSubmit) {
+                this.submitting = true
+                this.onSubmit(model, this)
+                  .then(() => {
+                    // 提交表单成功后，重置
+                    this.resetSubmitSuccess && this.reset()
+                  })
+                  .finally(() => {
+                    this.submitting = false
+                  })
+              }
+              /**
+               * 表单提交时触发
+               * @event submit
+               * @param {object} model 表单模型数据
+               * @param {VueComponent} vm 表单实例
+               */
+              this.$emit('submit', model, this)
+              resolve(model)
+            } else {
+              /**
+               *  表单验证不通过
+               *  @event validate-fail
+               *  @param {object} object 未通过校验的字段
+               */
+              this.$emit('validate-fail', object)
+              reject(object)
+            } 
+          })
         })
       },
       /**
