@@ -103,7 +103,7 @@ export default class Socket extends Events {
      * @event close
      */
     this.$emit('close', this)
-    if (this.options.reconnect  && !this.isReconnecting) {
+    if (this.options.reconnect && !this.isReconnecting) {
       this.delayReconnect()
     }
   }
