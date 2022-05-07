@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[1550],{3353:function(e,t,n){"use strict";n.r(t);var a=n(495);n(0).default.use(a.a);var r={},s=n(19),u=Object(s.a)(r,(function(){var e=this.$createElement;return(this._self._c||e)("my-map",{attrs:{zoom:12,center:[120,33]}})}),[],!1,null,null,null);t.default=u.exports}}]);
