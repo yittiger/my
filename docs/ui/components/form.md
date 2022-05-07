@@ -440,14 +440,55 @@ export default {
 ```
 :::
 
+### submit().then
 
-### 自定义表单项
+MyForm组件的submit 方法输出一个promise对象，一般使用在自定义提交按钮的情况下
+
+:::demo(form-10)
+```html
+<template>
+  <div>
+    <my-form ref="form" :rules="rules" label-width="80px" submit-text="" reset-text="">
+      <my-input name="title" label="标题"></my-input>
+      <my-input name="content" label="内容"
+        :props="{type:'textarea'}" 
+        :rules="{required:true, message:'内容不能为空'}"></my-input>
+    </my-form>
+    <el-button  type="primary" @click="submitHandle">提交</el-button>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      rules: {
+        title: {required: true, message: '标题是必填项'}
+      }
+    }
+  },
+  methods: {
+    submitHandle() {
+      this.$refs.form.submit().then((res) => {
+        alert('提交的数据：'+JSON.stringify(res))
+      }).catch((err) => {
+        this.$message.warning('请填写必填项')
+      })
+    }
+  }
+}
+</script>
+
+```
+:::
+
+### 自定义表单项 （setFormModel()） 
 
 在一些特殊情况下，myForm 需要结合 element-ui 的表单组件或者其他个性化表单组件使用， 可以使用“my-form-custom” 进行表单项个性化定制。
 - “my-form-custom” 内的 表单组件，不能用v-model 直接绑定 myForm 对应的“model”
-- “my-form-custom” 内的 表单组件修改后，需要通过“change”方法对myForm组件内的“currentModel”进行修改
+- “my-form-custom” 内的 表单组件修改后，可以调用组件的 setFormModel() 方法
 
-:::demo(form-10)
+:::demo(form-11)
 ```html
 <template>
   <my-form 
@@ -479,8 +520,7 @@ export default {
   </my-form>
 </template>
 
-<script>
-import {cloneDeep} from '$ui/utils/util'
+<script> 
 export default {
   data() {
     return { 
@@ -489,13 +529,11 @@ export default {
   },
   methods: {
     timeAreaChange(val) {
-      const currentModel = cloneDeep(this.$refs.form.currentModel)
-      currentModel.timeArea = val
-      this.$refs.form.currentModel = currentModel
+      this.$refs.form.setFormModel({timeArea: val})
     },
     handleSubmit(model) {
       alert('提交的数据：'+JSON.stringify(model))
-    },
+    }
     
   }
 }

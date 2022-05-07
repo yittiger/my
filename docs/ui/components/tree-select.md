@@ -11,6 +11,9 @@
 <template>
   <my-form :model="model" @submit="handleSubmit">
     <my-tree-select name="tree" label="下拉树" :options="options"></my-tree-select>
+    <my-form-custom label="">
+      <el-button type="text" @click="showTree">查看tree数据格式</el-button> 
+    </my-form-custom>
   </my-form>
 </template>
 
@@ -29,6 +32,9 @@
     methods: {
       handleSubmit(model) {
         alert(`submit: ${JSON.stringify(model)}`)
+      },
+      showTree() {
+        console.log(tree)
       }
     }
   }
@@ -189,6 +195,40 @@
   }
 </script>
 
+```
+:::
+
+### 展示完整选中路径
+使用“showFull”参数可以在输入框中显示选中树节点的完整路径名
+:::demo
+```html
+<template>
+  <my-form :model="model" @submit="handleSubmit">
+    <my-tree-select name="tree1" label="下拉树单选" :options="options" :props="{multiple: false, collapseTags: false, showFull: true}"></my-tree-select>
+    <my-tree-select name="tree2" label="下拉树多选" :options="options" :props="{multiple: true, collapseTags: false, showFull: true}"></my-tree-select> 
+  </my-form>
+</template>
+
+<script>
+  import tree from '@/assets/data/tree.json'
+
+  export default {
+    data() {
+      return {
+        options: tree,
+        model: {
+          tree1: 'yizhi',
+          tree2: ['yizhi']
+        }
+      }
+    },
+    methods: {
+      handleSubmit(model) {
+        alert(`submit: ${JSON.stringify(model)}`)
+      } 
+    }
+  }
+</script>
 ```
 :::
 

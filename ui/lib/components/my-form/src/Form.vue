@@ -327,6 +327,11 @@
           this.$emit('change', cloneDeep(val))
         }, 100)
 
+      },
+      setFormModel(data) {
+        const currentModel = cloneDeep(this.currentModel)
+        const newCurrentModel = {...currentModel, ...data}
+        this.currentModel = newCurrentModel
       }
     }
   }

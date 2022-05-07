@@ -30,8 +30,7 @@ export function create(list = [], parentId = null, idKey = 'id', parentIdKey = '
         parent.children.push(item)
       }
     }
-  }
-  console.log(tree, '+++++++++++++')
+  } 
   if (parentId && withRoot) {
     const target = list.find((item) => {
       return item[idKey] === parentId

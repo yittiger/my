@@ -1,5 +1,8 @@
 <template>
   <div>
+    <my-description title="标题左对齐" :width="100"  border> 
+      文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容
+      </my-description> 
     <el-button type="primary" size="small" @click="dialogShow = true"  >添加</el-button>   
          
     <my-dialog :visible.sync="dialogShow" v-bind="{...dialogProps}" ref="dialog"

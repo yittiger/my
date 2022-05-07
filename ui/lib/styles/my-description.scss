@@ -28,7 +28,7 @@
     min-height: 1.6em;  
     @include when(border) {
       background: no-repeat;
-      background-image:repeating-linear-gradient(180deg, transparent 0, transparent calc(1.6em - 5px), $--color-border calc(1.6em - 5px), $--color-border 1.6em);
+      background-image:repeating-linear-gradient(180deg, transparent 0, transparent calc(1.6em - 1px), $--color-border calc(1.6em - 1px), $--color-border 1.6em);
     }
 
     > .my-description {

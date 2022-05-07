@@ -18,8 +18,9 @@
                 icon="el-icon-arrow-down" 
                 > 
                 </TagInput>
+                <!-- :value="checked ? checked[keyMap.label]:''" -->
       <ElInput v-else
-               :value="checked ? checked[keyMap.label]:''"
+               :value="singleSelValShow()"
                :placeholder="placeholder"
                :size="size"
                :disabled="disabled"
@@ -69,7 +70,7 @@
   import {Input, Tree} from 'element-ui'
   import BasePicker from './BasePicker'
   import TagInput from './TagInput'
-  import {create as createTree, treeRevert} from '$ui/utils/tree'
+  import {create as createTree, treeRevert, findPath} from '$ui/utils/tree'
   import {cloneDeep, isEqual} from '$ui/utils/util'
 
   /**
@@ -183,6 +184,11 @@
       useOriginOpts: {
         type: Boolean,
         default: false
+      },
+      // 是否显示选中完整路径
+      showFull: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
@@ -227,8 +233,19 @@
           }
       },
       tags() {
-        const {label} = this.keyMap
-        return (this.checked || []).map(n => n[label])
+        const {label, value} = this.keyMap
+        return (this.checked || []).map(n => {
+          let output = ''
+          if (this.showFull) {
+            const path = this.getCheckedPath(n[value])
+            output = path && path.length ? path.map((item) => {
+              return item[label]
+            }).join('/') : n[label]
+          } else {
+            output = n[label]
+          }
+         return output
+        })
       }
     },
     watch: {
@@ -277,9 +294,8 @@
           this.checked = _opts.filter(item => {
             return vals.includes(item[value])
           })
-          if (!this.checked.length) { // 若checked为空，直接置空tree组件
-            this.$refs.tree && this.$refs.tree.setCheckedNodes([])
-          }
+          // 重置tree组件
+          this.$refs.tree && this.$refs.tree.setCheckedNodes(this.checked)
         } else {
           this.checked = _opts.find(item => {
             return val === item[value]
@@ -331,6 +347,28 @@
       clearClickHandle() {
         this.checked = null
         this.$emit('input', '')
+      },
+      singleSelValShow() {
+        if (this.checked) {
+          if (this.showFull) { 
+            const path = this.getCheckedPath(this.checked[this.keyMap.value])
+            const output = path && path.length ? path.map((item) => {
+              return item[this.keyMap.label]
+            }).join('/') : this.checked[this.keyMap.label]
+            return output
+          } else { 
+            return this.checked[this.keyMap.label]
+          }
+        } else {
+          return ''
+        }
+      },
+      getCheckedPath(value) {
+        const treeChildrenProp = this.tree.props && this.tree.props.children || 'children'
+        const path = findPath(this.optionsTree, (item, index, data) => {
+          return item[this.keyMap.value] === value
+        }, treeChildrenProp)
+        return path
       }
     }
   }
