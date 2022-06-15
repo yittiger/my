@@ -121,5 +121,3 @@ module.exports = {
 ![输入图片说明](1655290016051.jpg)
 
 
-## 交流QQ群
-![info](http://newgateway.gitee.io/my/img/qqgroup.jpg)
