@@ -118,6 +118,7 @@ module.exports = {
 调用组件库功能示例工程 [https://gitee.com/newgateway/my-example](https://gitee.com/newgateway/my-example)
 
 ## 反馈、交流钉钉群
-![输入图片说明](1655290016051.jpg)
+![输入图片说明](https://gitee.com/newgateway/vtj/raw/master/dev/public/ding.jpg)
+
 
 
