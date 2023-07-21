@@ -23,7 +23,7 @@
       <slot name="setup__footer">
         <div class="ercode">
           <div>交流钉钉群</div>
-          <img src="~$docs/public/img/dingtalk.png" alt="">
+          <img src="https://gitee.com/newgateway/vtj/raw/master/dev/public/ding.jpg" alt="">
         </div>
         <!--        <p>新德汇前端团队出品 @ 2020</p>-->
       </slot>

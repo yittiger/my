@@ -1,14 +1,21 @@
 <template>
-  <div >
-    
-   index
+  <div>
+    <my-form :model="model">
+      <my-editor name="content"></my-editor>
+    </my-form>
   </div>
 </template>
-<script> 
+<script>
 
-export default {
- 
-}
+  export default {
+    data() {
+      return {
+        model: {
+          content: 'abc'
+        }
+      }
+    }
+  }
 </script>
 <style lang="scss" scoped>
 
