@@ -1,22 +1,15 @@
 <template>
-  <div>
-    <my-form :model="model">
-      <my-editor name="content"></my-editor>
-    </my-form>
-  </div>
+  <my-map :adapter="adapter"></my-map>
 </template>
 <script>
-
-  export default {
-    data() {
-      return {
-        model: {
-          content: 'abc'
-        }
+export default {
+  data() {
+    return {
+      adapter: {
+        type: 'TDT',
+        tk: '464554f64aa4f4e90e0321c17a57a331'
       }
     }
   }
+}
 </script>
-<style lang="scss" scoped>
-
-</style>
