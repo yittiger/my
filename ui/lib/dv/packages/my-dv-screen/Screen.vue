@@ -70,7 +70,7 @@
         }
       },
       unregister() {
-        let screens = this.page?.screens
+        const screens = this.page?.screens
         if (screens) {
           this.page.screens = screens.filter(n => n !== this)
         }
