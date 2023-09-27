@@ -65,6 +65,7 @@ export function getWMTSGrid(proj = 'EPSG:4326') {
 /**
  * 天地图
  * @param {string} t
+ * @param {string} tk
  *
  * vec_w: 矢量底图
  * cva_w: 矢量注记
@@ -74,10 +75,10 @@ export function getWMTSGrid(proj = 'EPSG:4326') {
  * cta_w: 地形注记
  * ibo_w: 境界（省级以上）
  */
-function createTdtLayer(t = 'vec_c') {
+function createTdtLayer(t = 'vec_c', tk = '464554f64aa4f4e90e0321c17a57a331') {
   return new TileLayer({
     source: new XYZ({
-      url: 'http://t{0-7}.tianditu.com/DataServer?T=' + t + '&x={x}&y={y}&l={z}&tk=464554f64aa4f4e90e0321c17a57a331'
+      url: 'http://t{0-7}.tianditu.com/DataServer?T=' + t + '&x={x}&y={y}&l={z}&tk=' + tk
     })
   })
 }
@@ -88,7 +89,7 @@ function createTdtLayer(t = 'vec_c') {
  * @return {LayerGroup}
  */
 function createTdtLayerGroup(settings) {
-  const layers = settings.layers.map(n => createTdtLayer(n))
+  const layers = settings.layers.map(n => createTdtLayer(n, settings.tk))
   return new LayerGroup({
     layers: layers
   })
@@ -225,6 +226,8 @@ export function createLayer(adapter, opts = {}) {
   // 字符串类型转换成对象描述
   const settings = typeof adapter === 'object' ? {...adapter} : {type: adapter}
   const type = settings.type
+  const tk = settings.tk;
+  delete settings.tk
   delete settings.type
   switch (type) {
     case 'OSM':
@@ -253,6 +256,7 @@ export function createLayer(adapter, opts = {}) {
     // 天地图
     case 'TDT':
       return createTdtLayerGroup({
+        tk,
         layers: ['vec_c', 'vec_w', 'cva_w', 'ibo_w'],
         ...settings
       })
