@@ -136,7 +136,8 @@ export default {
         if (this.pause) {
           this.fraction = fraction
         } else {
-          this.$emit('move', coordinate, rotation)
+          this.fraction = fraction
+          this.$emit('move', coordinate, rotation, fraction)
           this.aId = window.requestAnimationFrame(animate)
         }
       }

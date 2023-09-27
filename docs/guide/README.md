@@ -119,4 +119,4 @@ module.exports = {
 
 ## 反馈、交流钉钉群
 
-![info](/my/img/dingtalk.png)
+![info](https://gitee.com/newgateway/vtj/raw/master/dev/public/ding.jpg)
