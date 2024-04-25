@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>权限控制 | MyUI 4.x</title>
-    <meta name="generator" content="VuePress 1.8.2">
+    <meta name="generator" content="VuePress 1.7.1">
     <link rel="icon" href="/my/favicon.ico">
     <script>
       var _hmt = _hmt || [];
@@ -20,8 +20,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     
-    <link rel="preload" href="/my/assets/css/0.styles.c434b2ea.css" as="style"><link rel="preload" href="/my/assets/js/app.5ed62364.js" as="script"><link rel="preload" href="/my/assets/js/587.c5f28ec8.js" as="script"><link rel="preload" href="/my/assets/js/1638.5954e705.js" as="script">
-    <link rel="stylesheet" href="/my/assets/css/0.styles.c434b2ea.css">
+    <link rel="preload" href="/my/assets/css/0.styles.4c9d5ded.css" as="style"><link rel="preload" href="/my/assets/js/app.abf311ad.js" as="script"><link rel="preload" href="/my/assets/js/584.71eeb2dd.js" as="script"><link rel="preload" href="/my/assets/js/1611.b745cbda.js" as="script">
+    <link rel="stylesheet" href="/my/assets/css/0.styles.4c9d5ded.css">
   </head>
   <body>
     <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/my/" class="home-link router-link-active"><img src="/my/img/logo.png" alt="MyUI 4.x" class="logo"> <span class="site-name can-hide">MyUI 4.x</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/my/guide/" class="nav-link router-link-active">
@@ -88,99 +88,99 @@
 
 <span class="token function">setConfig</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
   <span class="token comment">// 权限控制实例化配置 </span>
-  access<span class="token operator">:</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">access</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token comment">// 启用请求权限控制</span>
-    axios<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">axios</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
     <span class="token comment">// 启用路由权限控制</span>
-    router<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">router</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
     <span class="token comment">// 缓存存储方式 session 或 local</span>
-    storage<span class="token operator">:</span> <span class="token string">'session'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">storage</span><span class="token operator">:</span> <span class="token string">'session'</span><span class="token punctuation">,</span>
     <span class="token comment">// 登录页面路径</span>
-    loginPath<span class="token operator">:</span> <span class="token string">'/login'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">loginPath</span><span class="token operator">:</span> <span class="token string">'/login'</span><span class="token punctuation">,</span>
     <span class="token comment">// 权限不足页面路径</span>
-    authorizePath<span class="token operator">:</span> <span class="token string">'/403'</span>
+    <span class="token literal-property property">authorizePath</span><span class="token operator">:</span> <span class="token string">'/403'</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span>
 
 </code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div><p>完整的配置项包括</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
   <span class="token comment">// 缓存key</span>
-  cacheKey<span class="token operator">:</span> <span class="token string">'__MY_ACCESS__'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">cacheKey</span><span class="token operator">:</span> <span class="token string">'__MY_ACCESS__'</span><span class="token punctuation">,</span>
 
   <span class="token comment">// 缓存存储方式 session 或 local</span>
-  storage<span class="token operator">:</span> <span class="token string">'session'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">storage</span><span class="token operator">:</span> <span class="token string">'session'</span><span class="token punctuation">,</span>
 
   <span class="token comment">// 启用请求拦截</span>
-  axios<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">axios</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
 
   <span class="token comment">// 登录页面路径</span>
-  loginPath<span class="token operator">:</span> <span class="token string">'/login'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">loginPath</span><span class="token operator">:</span> <span class="token string">'/login'</span><span class="token punctuation">,</span>
 
   <span class="token comment">// 登录页面是路由，false表示url模式</span>
-  loginPathIsRoute<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">loginPathIsRoute</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
 
   <span class="token comment">// 权限不足页面路径</span>
-  authorizePath<span class="token operator">:</span> <span class="token string">'/403'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">authorizePath</span><span class="token operator">:</span> <span class="token string">'/403'</span><span class="token punctuation">,</span>
 
   <span class="token comment">// 权限不足页面是路由</span>
-  authorizePathIsRoute<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">authorizePathIsRoute</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
 
   <span class="token comment">// token注入请求头的名称</span>
-  authorization<span class="token operator">:</span> <span class="token string">'Authorization'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">authorization</span><span class="token operator">:</span> <span class="token string">'Authorization'</span><span class="token punctuation">,</span>
 
   <span class="token comment">// 请求拦截函数，axios=true 有效</span>
-  request<span class="token operator">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">request</span><span class="token operator">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
 
   <span class="token comment">// 请求响应成功拦截函数，axios=true 有效</span>
-  response<span class="token operator">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">response</span><span class="token operator">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
 
   <span class="token comment">// 请求响应失败拦截函数，axios=true 有效</span>
-  responseFail<span class="token operator">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">responseFail</span><span class="token operator">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
 
   <span class="token comment">// 启用路由守卫</span>
-  router<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">router</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
 
   <span class="token comment">// VueRouter实例</span>
-  $router<span class="token operator">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">$router</span><span class="token operator">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
 
   <span class="token comment">// Vuex实例</span>
-  $store<span class="token operator">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">$store</span><span class="token operator">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
 
   <span class="token comment">// 进入路由预处理函数，在进入路页面前进行某些处理，例如单点登录，必须返回Promise</span>
-  preprocess<span class="token operator">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">preprocess</span><span class="token operator">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
 
   <span class="token comment">// 前置路由守卫</span>
-  beforeEach<span class="token operator">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">beforeEach</span><span class="token operator">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
 
   <span class="token comment">// 后置路由守卫</span>
-  afterEach<span class="token operator">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">afterEach</span><span class="token operator">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
 
   <span class="token comment">// 中间件名称分隔符</span>
-  nameSplit<span class="token operator">:</span> <span class="token string">':'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">nameSplit</span><span class="token operator">:</span> <span class="token string">':'</span><span class="token punctuation">,</span>
 
   <span class="token comment">// 中间件参数个数分隔符</span>
-  paramSplit<span class="token operator">:</span> <span class="token string">','</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">paramSplit</span><span class="token operator">:</span> <span class="token string">','</span><span class="token punctuation">,</span>
 
   <span class="token comment">// 中间件参数值列表分隔符</span>
-  argSplit<span class="token operator">:</span> <span class="token string">'|'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">argSplit</span><span class="token operator">:</span> <span class="token string">'|'</span><span class="token punctuation">,</span>
 
   <span class="token comment">// can中间件的角色分隔符</span>
-  canRoleSplit<span class="token operator">:</span> <span class="token string">'.'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">canRoleSplit</span><span class="token operator">:</span> <span class="token string">'.'</span><span class="token punctuation">,</span>
 
   <span class="token comment">// 权限层级分隔</span>
-  canParentSplit<span class="token operator">:</span> <span class="token string">'#'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">canParentSplit</span><span class="token operator">:</span> <span class="token string">'#'</span><span class="token punctuation">,</span>
 
   <span class="token comment">// 路由数组判断的字段</span>
-  routerListProp<span class="token operator">:</span> <span class="token string">'path'</span><span class="token punctuation">,</span> 
+  <span class="token literal-property property">routerListProp</span><span class="token operator">:</span> <span class="token string">'path'</span><span class="token punctuation">,</span> 
 
   <span class="token comment">// 路由加载进度控制</span>
-  progress<span class="token operator">:</span> <span class="token keyword">null</span>
+  <span class="token literal-property property">progress</span><span class="token operator">:</span> <span class="token keyword">null</span>
 <span class="token punctuation">}</span>
 
 </code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br></div></div><h2 id="实例方法"><a href="#实例方法" class="header-anchor">#</a> 实例方法</h2> <h3 id="access-login-data"><a href="#access-login-data" class="header-anchor">#</a> $access.login(data)</h3> <p>写入登录信息，通常在用户登录成功时调用，写入角色、权限编码、token等用户信息。参数对象data选项</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token punctuation">{</span>
-  roles<span class="token operator">:</span> Array<span class="token punctuation">,</span> <span class="token comment">// 角色列表</span>
-  can<span class="token operator">:</span> Array<span class="token punctuation">,</span> <span class="token comment">// 权限编码列表</span>
-  token<span class="token operator">:</span> String <span class="token comment">// 登录token</span>
-  routerList<span class="token operator">:</span> Array <span class="token comment">// 动态路由表</span>
+  <span class="token literal-property property">roles</span><span class="token operator">:</span> Array<span class="token punctuation">,</span> <span class="token comment">// 角色列表</span>
+  <span class="token literal-property property">can</span><span class="token operator">:</span> Array<span class="token punctuation">,</span> <span class="token comment">// 权限编码列表</span>
+  <span class="token literal-property property">token</span><span class="token operator">:</span> String <span class="token comment">// 登录token</span>
+  <span class="token literal-property property">routerList</span><span class="token operator">:</span> Array <span class="token comment">// 动态路由表</span>
 <span class="token punctuation">}</span>
 </code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>其中 roles 与 can 必须要有一个，即可以用角色或权限编码鉴权，或两者同时使用。
 routerList 为后端返回的带权限的路由列表。
@@ -231,18 +231,18 @@ routerList 为后端返回的带权限的路由列表。
     <span class="token keyword">return</span> canArray<span class="token punctuation">.</span><span class="token function">some</span><span class="token punctuation">(</span><span class="token parameter">item</span> <span class="token operator">=&gt;</span> item<span class="token punctuation">.</span><span class="token function">startsWith</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>code<span class="token interpolation-punctuation punctuation">}</span></span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>options<span class="token punctuation">.</span>canParentSplit<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span>
   <span class="token punctuation">}</span>
 </code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><h3 id="access-logout"><a href="#access-logout" class="header-anchor">#</a> $access.logout()</h3> <p>注销登录，清空登录信息，并跳转到登录页面</p> <h2 id="视图鉴权"><a href="#视图鉴权" class="header-anchor">#</a> 视图鉴权</h2> <p>在模板使用<code>v-if</code> <code>v-show</code> 指令 或按钮的<code>disabled</code>属性控制，如：</p> <div class="language-html line-numbers-mode"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>el-button</span> <span class="token attr-name">v-if</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>$access.is(<span class="token punctuation">'</span>admin<span class="token punctuation">'</span>)<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>按钮<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>el-button</span><span class="token punctuation">&gt;</span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>el-button</span> <span class="token attr-name">v-if</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>$access.has(<span class="token punctuation">'</span>update<span class="token punctuation">'</span>)<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>按钮<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>el-button</span><span class="token punctuation">&gt;</span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>el-button</span> <span class="token attr-name">:disabled</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>!$access.has(<span class="token punctuation">'</span>update<span class="token punctuation">'</span>)<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>按钮<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>el-button</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>el-button</span> <span class="token attr-name">v-if</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>$access.is('admin')<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>按钮<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>el-button</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>el-button</span> <span class="token attr-name">v-if</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>$access.has('update')<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>按钮<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>el-button</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>el-button</span> <span class="token attr-name">:disabled</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>!$access.has('update')<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>按钮<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>el-button</span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
 
 </code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><h2 id="路由守卫"><a href="#路由守卫" class="header-anchor">#</a> 路由守卫</h2> <h3 id="使用路由中间件功能"><a href="#使用路由中间件功能" class="header-anchor">#</a> 使用路由中间件功能</h3> <p><code>Access</code> 默认提供了登录，鉴权中间件，使用路由相关功能，也比较简单。只需要在路由中<code>meta</code>中，添加<code>access</code>字段，是数组类型。如：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span>get<span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
   <span class="token keyword">return</span> <span class="token punctuation">[</span>
     <span class="token punctuation">{</span>
-      path<span class="token operator">:</span> <span class="token string">'/'</span><span class="token punctuation">,</span>
-      component<span class="token operator">:</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'index'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-      meta<span class="token operator">:</span> <span class="token punctuation">{</span>
-        access<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'login'</span><span class="token punctuation">,</span> <span class="token string">'can:add|update'</span><span class="token punctuation">]</span>
+      <span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token string">'/'</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">component</span><span class="token operator">:</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'index'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">meta</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token literal-property property">access</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'login'</span><span class="token punctuation">,</span> <span class="token string">'can:add|update'</span><span class="token punctuation">]</span>
       <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
   <span class="token punctuation">]</span>
@@ -271,11 +271,11 @@ access:
 <span class="token comment">// 写入运行时配置</span>
 <span class="token function">setConfig</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
   
-  access<span class="token operator">:</span> <span class="token punctuation">{</span>    
+  <span class="token literal-property property">access</span><span class="token operator">:</span> <span class="token punctuation">{</span>    
     <span class="token comment">// 启用路由权限控制</span>
-    router<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">router</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
     
-    <span class="token function-variable function">beforeEach</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">to<span class="token punctuation">,</span> <span class="token keyword">from</span><span class="token punctuation">,</span> next</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token function-variable function">beforeEach</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">to<span class="token punctuation">,</span> from<span class="token punctuation">,</span> next</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
       <span class="token comment">// 逻辑实现</span>
       <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
@@ -283,8 +283,8 @@ access:
     <span class="token function-variable function">afterEach</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">to<span class="token punctuation">,</span> <span class="token keyword">from</span></span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
     
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
-  mock<span class="token operator">:</span> <span class="token punctuation">{</span>
-    timeout<span class="token operator">:</span> <span class="token string">'200-500'</span>
+  <span class="token literal-property property">mock</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">timeout</span><span class="token operator">:</span> <span class="token string">'200-500'</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span>
 
@@ -302,7 +302,7 @@ access:
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
   
   <span class="token comment">// 请求响应失败拦截函数，axios=true 有效</span>
-  responseFail<span class="token operator">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">responseFail</span><span class="token operator">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
 </code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
       ←
       <a href="/my/guide/cmd.html" class="prev">
@@ -312,6 +312,6 @@ access:
       </a>
       →
     </span></p></div> </main></div><div class="global-ui"></div></div>
-    <script src="/my/assets/js/app.5ed62364.js" defer></script><script src="/my/assets/js/587.c5f28ec8.js" defer></script><script src="/my/assets/js/1638.5954e705.js" defer></script>
+    <script src="/my/assets/js/app.abf311ad.js" defer></script><script src="/my/assets/js/584.71eeb2dd.js" defer></script><script src="/my/assets/js/1611.b745cbda.js" defer></script>
   </body>
 </html>

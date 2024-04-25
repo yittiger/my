@@ -21,10 +21,10 @@
 
     <div class="copyright">
       <slot name="setup__footer">
-        <div class="ercode">
-          <div>交流钉钉群</div>
-          <img src="https://gitee.com/newgateway/vtj/raw/master/dev/public/ding.jpg" alt="">
-        </div>
+<!--        <div class="ercode">-->
+<!--          <div>交流钉钉群</div>-->
+<!--          <img src="../assets/images/dingding.png" alt="">-->
+<!--        </div>-->
         <!--        <p>新德汇前端团队出品 @ 2020</p>-->
       </slot>
     </div>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>API | MyUI 4.x</title>
-    <meta name="generator" content="VuePress 1.8.2">
+    <meta name="generator" content="VuePress 1.7.1">
     <link rel="icon" href="/my/favicon.ico">
     <script>
       var _hmt = _hmt || [];
@@ -20,8 +20,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     
-    <link rel="preload" href="/my/assets/css/0.styles.c434b2ea.css" as="style"><link rel="preload" href="/my/assets/js/app.5ed62364.js" as="script"><link rel="preload" href="/my/assets/js/587.c5f28ec8.js" as="script"><link rel="preload" href="/my/assets/js/1779.a22353a4.js" as="script"><link rel="preload" href="/my/assets/js/1279.d50c6ba0.js" as="script">
-    <link rel="stylesheet" href="/my/assets/css/0.styles.c434b2ea.css">
+    <link rel="preload" href="/my/assets/css/0.styles.4c9d5ded.css" as="style"><link rel="preload" href="/my/assets/js/app.abf311ad.js" as="script"><link rel="preload" href="/my/assets/js/584.71eeb2dd.js" as="script"><link rel="preload" href="/my/assets/js/1752.b2b79a0a.js" as="script"><link rel="preload" href="/my/assets/js/1268.eadf4642.js" as="script">
+    <link rel="stylesheet" href="/my/assets/css/0.styles.4c9d5ded.css">
   </head>
   <body>
     <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/my/" class="home-link router-link-active"><img src="/my/img/logo.png" alt="MyUI 4.x" class="logo"> <span class="site-name can-hide">MyUI 4.x</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/my/guide/" class="nav-link">
@@ -91,23 +91,23 @@
 })
 </code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h3 id="使用creator函数-与-gojs原版的对比"><a href="#使用creator函数-与-gojs原版的对比" class="header-anchor">#</a> 使用creator函数 与 gojs原版的对比</h3> <div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// gojs 官方写法：</span>
 <span class="token function">$</span><span class="token punctuation">(</span>go<span class="token punctuation">.</span>Node<span class="token punctuation">,</span> go<span class="token punctuation">.</span>Panel<span class="token punctuation">.</span>Position<span class="token punctuation">,</span>
-  <span class="token punctuation">{</span> background<span class="token operator">:</span> <span class="token string">'lightgray'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
-  <span class="token function">$</span><span class="token punctuation">(</span>go<span class="token punctuation">.</span>TextBlock<span class="token punctuation">,</span> <span class="token string">'node1'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> background<span class="token operator">:</span> <span class="token string">'lightgreen'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">{</span> <span class="token literal-property property">background</span><span class="token operator">:</span> <span class="token string">'lightgray'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token function">$</span><span class="token punctuation">(</span>go<span class="token punctuation">.</span>TextBlock<span class="token punctuation">,</span> <span class="token string">'node1'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token literal-property property">background</span><span class="token operator">:</span> <span class="token string">'lightgreen'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token punctuation">)</span>
 
 <span class="token comment">// 使用creator</span>
 <span class="token function">creator</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
-  name<span class="token operator">:</span> go<span class="token punctuation">.</span>Node<span class="token punctuation">,</span>
-  props<span class="token operator">:</span> <span class="token punctuation">{</span>
-    type<span class="token operator">:</span> go<span class="token punctuation">.</span>Panel<span class="token punctuation">.</span>Position<span class="token punctuation">,</span> 
-    background<span class="token operator">:</span> <span class="token string">'lightgray'</span>
+  <span class="token literal-property property">name</span><span class="token operator">:</span> go<span class="token punctuation">.</span>Node<span class="token punctuation">,</span>
+  <span class="token literal-property property">props</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">type</span><span class="token operator">:</span> go<span class="token punctuation">.</span>Panel<span class="token punctuation">.</span>Position<span class="token punctuation">,</span> 
+    <span class="token literal-property property">background</span><span class="token operator">:</span> <span class="token string">'lightgray'</span>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
-  children<span class="token operator">:</span> <span class="token punctuation">[</span>
+  <span class="token literal-property property">children</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token function">creator</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
-      name<span class="token operator">:</span> go<span class="token punctuation">.</span>TextBlock<span class="token punctuation">,</span>
-      props<span class="token operator">:</span> <span class="token punctuation">{</span>
-        text<span class="token operator">:</span> <span class="token string">'node2'</span><span class="token punctuation">,</span>
-        background<span class="token operator">:</span> <span class="token string">'lightgreen'</span>
+      <span class="token literal-property property">name</span><span class="token operator">:</span> go<span class="token punctuation">.</span>TextBlock<span class="token punctuation">,</span>
+      <span class="token literal-property property">props</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token literal-property property">text</span><span class="token operator">:</span> <span class="token string">'node2'</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">background</span><span class="token operator">:</span> <span class="token string">'lightgreen'</span>
       <span class="token punctuation">}</span>
     <span class="token punctuation">}</span><span class="token punctuation">)</span>
   <span class="token punctuation">]</span>
@@ -115,20 +115,20 @@
 
 </code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br></div></div><p>虽然 使用creator 函数 生成节点时 代码比官方写法复杂，但是 creator 结构更清晰，在构建比较复杂结构的节点模板时，creator 函数更有优势。</p> <!----><h3 id="creator-的-专属配置"><a href="#creator-的-专属配置" class="header-anchor">#</a> creator 的 专属配置：</h3> <p>在 creator() 函数中 的 “props”配置中，预设了以下几个专属的配置项，</p> <ul><li>$bindings：数据绑定</li> <li>$events： 绑定事件</li> <li>$gray： 绑定置灰状态（在预设节点模板中使用，绑定主题中的置灰效果）</li> <li>$selected：绑定选中状态（在预设节点模板中使用，绑定主题中的选中效果）</li> <li>$disabled：绑定禁用状态（在预设节点模板中使用，绑定主题中的禁用效果）</li> <li>$hover：绑定鼠标经过状态（在预设节点模板中使用，绑定主题中的鼠标经过效果）</li></ul> <blockquote><p>上述所提到的主题 来自于 import {normal} from '$ui/go/template/theme'</p></blockquote> <div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span>theme<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'$ui/go/template/theme'</span>
 <span class="token function">creator</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
-  name<span class="token operator">:</span> go<span class="token punctuation">.</span>Node<span class="token punctuation">,</span>
-  props<span class="token operator">:</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">name</span><span class="token operator">:</span> go<span class="token punctuation">.</span>Node<span class="token punctuation">,</span>
+  <span class="token literal-property property">props</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token operator">...</span><span class="token operator">...</span><span class="token punctuation">,</span>
-    $gray<span class="token operator">:</span> <span class="token punctuation">{</span> 
-      opacity<span class="token operator">:</span> theme<span class="token punctuation">.</span>grayOpacity
+    <span class="token literal-property property">$gray</span><span class="token operator">:</span> <span class="token punctuation">{</span> 
+      <span class="token literal-property property">opacity</span><span class="token operator">:</span> theme<span class="token punctuation">.</span>grayOpacity
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
-    $hover<span class="token operator">:</span> <span class="token punctuation">{</span>
-      opacity<span class="token operator">:</span> theme<span class="token punctuation">.</span>hoverOpacity
+    <span class="token literal-property property">$hover</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">opacity</span><span class="token operator">:</span> theme<span class="token punctuation">.</span>hoverOpacity
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
-    $disabled<span class="token operator">:</span> <span class="token punctuation">{</span>
-      opacity<span class="token operator">:</span> theme<span class="token punctuation">.</span>disabledOpacity
+    <span class="token literal-property property">$disabled</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">opacity</span><span class="token operator">:</span> theme<span class="token punctuation">.</span>disabledOpacity
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
-    $selected<span class="token operator">:</span> <span class="token punctuation">{</span>
-      opacity<span class="token operator">:</span> theme<span class="token punctuation">.</span>selectedOpacity
+    <span class="token literal-property property">$selected</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">opacity</span><span class="token operator">:</span> theme<span class="token punctuation">.</span>selectedOpacity
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
     $events<span class="token punctuation">,</span>
     $bindings
@@ -136,36 +136,36 @@
 <span class="token punctuation">}</span><span class="token punctuation">)</span>
 </code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br></div></div><h2 id="nodetemplate-基础节点模板"><a href="#nodetemplate-基础节点模板" class="header-anchor">#</a> nodeTemplate 基础节点模板</h2> <p>mygo 关系图中的节点模板 基础构造函数, 继承于creator，参数为 “options”(配置) 和 “theme”(主题)</p> <h3 id="options-的配置"><a href="#options-的配置" class="header-anchor">#</a> options 的配置</h3> <table><thead><tr><th>配置名</th> <th>说明</th> <th>类型</th></tr></thead> <tbody><tr><td>props</td> <td>节点（$(go.Node, {...})）的全局配置，可以覆盖其他配置</td> <td>object</td></tr> <tr><td>wrapper</td> <td>Node节点下面第一个（展示为容器）子元素的配置， 用于配置背景边框等</td> <td>object</td></tr> <tr><td>tooltip</td> <td>配置是否显示提示语</td> <td>object</td></tr> <tr><td>lock</td> <td>配置是否</td> <td>object/boolean</td></tr> <tr><td>tags</td> <td>配置是否显示标签</td> <td>object/array</td></tr> <tr><td>badge</td> <td>配置是否显示数字提示</td> <td>object</td></tr> <tr><td>children</td> <td>给节点添加子元素</td> <td>array</td></tr> <tr><td>$events</td> <td>给节点绑定事件</td> <td>object</td></tr> <tr><td>$bindings</td> <td>给节点绑定数据</td> <td>array/object</td></tr></tbody></table> <h3 id="theme-主题"><a href="#theme-主题" class="header-anchor">#</a> theme 主题</h3> <div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code><span class="token keyword">const</span> normal <span class="token operator">=</span> <span class="token punctuation">{</span>
   <span class="token comment">// 背景颜色</span>
-  fill<span class="token operator">:</span> <span class="token string">'rgba(124,129,143,0.3)'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">fill</span><span class="token operator">:</span> <span class="token string">'rgba(124,129,143,0.3)'</span><span class="token punctuation">,</span>
   <span class="token comment">// 边框样式</span>
-  stroke<span class="token operator">:</span> <span class="token string">'#7c818f'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">stroke</span><span class="token operator">:</span> <span class="token string">'#7c818f'</span><span class="token punctuation">,</span>
   <span class="token comment">// 文本/icon颜色</span>
-  color<span class="token operator">:</span> <span class="token string">'#7c818f'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">color</span><span class="token operator">:</span> <span class="token string">'#7c818f'</span><span class="token punctuation">,</span>
   <span class="token comment">// 形状外的文本颜色</span>
-  textColor<span class="token operator">:</span> <span class="token string">'#ffffff'</span><span class="token punctuation">,</span>
-  strokeWidth<span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
-  opacity<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-  hoverOpacity<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-  grayOpacity<span class="token operator">:</span> <span class="token number">0.25</span><span class="token punctuation">,</span>
-  selectedOpacity<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">textColor</span><span class="token operator">:</span> <span class="token string">'#ffffff'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">strokeWidth</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">opacity</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">hoverOpacity</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">grayOpacity</span><span class="token operator">:</span> <span class="token number">0.25</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">selectedOpacity</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
   <span class="token comment">// 边框厚度</span>
-  disabledOpacity<span class="token operator">:</span> <span class="token number">0.1</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">disabledOpacity</span><span class="token operator">:</span> <span class="token number">0.1</span><span class="token punctuation">,</span>
   <span class="token comment">// 默认图标</span>
-  geometryString<span class="token operator">:</span> defaultIcon<span class="token punctuation">,</span>
+  <span class="token literal-property property">geometryString</span><span class="token operator">:</span> defaultIcon<span class="token punctuation">,</span>
   <span class="token comment">// 默认图片</span>
-  imageSource<span class="token operator">:</span> defaultImage<span class="token punctuation">,</span>
+  <span class="token literal-property property">imageSource</span><span class="token operator">:</span> defaultImage<span class="token punctuation">,</span>
   <span class="token comment">// 标签颜色</span>
-  tags<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'#0099cc'</span><span class="token punctuation">,</span> <span class="token string">'#ffb609'</span><span class="token punctuation">,</span> <span class="token string">'#ef5350'</span><span class="token punctuation">,</span> <span class="token string">'#00d156'</span><span class="token punctuation">,</span> <span class="token string">'#f431ba'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">tags</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'#0099cc'</span><span class="token punctuation">,</span> <span class="token string">'#ffb609'</span><span class="token punctuation">,</span> <span class="token string">'#ef5350'</span><span class="token punctuation">,</span> <span class="token string">'#00d156'</span><span class="token punctuation">,</span> <span class="token string">'#f431ba'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
 
-  selectedFill<span class="token operator">:</span> <span class="token string">'rgba(64,158,255,0.1)'</span><span class="token punctuation">,</span>
-  selectedStrokeWidth<span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
-  selectedStroke<span class="token operator">:</span> <span class="token string">'#409eff'</span>
+  <span class="token literal-property property">selectedFill</span><span class="token operator">:</span> <span class="token string">'rgba(64,158,255,0.1)'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">selectedStrokeWidth</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">selectedStroke</span><span class="token operator">:</span> <span class="token string">'#409eff'</span>
 <span class="token punctuation">}</span>
 </code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br></div></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
       ←
       <a href="/my/ui/go/app.html" class="prev">
         综合应用
       </a></span> <!----></p></div> </main></div><div class="global-ui"></div></div>
-    <script src="/my/assets/js/app.5ed62364.js" defer></script><script src="/my/assets/js/587.c5f28ec8.js" defer></script><script src="/my/assets/js/1779.a22353a4.js" defer></script><script src="/my/assets/js/1279.d50c6ba0.js" defer></script>
+    <script src="/my/assets/js/app.abf311ad.js" defer></script><script src="/my/assets/js/584.71eeb2dd.js" defer></script><script src="/my/assets/js/1752.b2b79a0a.js" defer></script><script src="/my/assets/js/1268.eadf4642.js" defer></script>
   </body>
 </html>
