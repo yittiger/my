@@ -37,7 +37,7 @@ module.exports = [
   },
   {
     text: '演示',
-    link: 'http://newgateway.gitee.io/my-web/'
+    link: 'http://myui.vtj.pro/my-web/'
   },
   {
     text: 'JSDoc',

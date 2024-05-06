@@ -10,7 +10,7 @@
       <slot name="description">
         <div>为Web前端开发提供基于Vue项目的一站式解决方案。</div>
         <div class="setup__buttons">
-          <el-button round type="primary" icon="el-icon-view" @click="go('http://newgateway.gitee.io/my-web/')">演示预览
+          <el-button round type="primary" icon="el-icon-view" @click="go('http://myui.vtj.pro/my-web/')">演示预览
           </el-button>
           <el-button round type="success" icon="el-icon-video-play" @click="go('/my/guide/')">快速上手</el-button>
           <el-button round icon="el-icon-s-promotion" @click="go('https://gitee.com/newgateway/my',true)">源码仓库

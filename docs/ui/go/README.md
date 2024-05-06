@@ -368,7 +368,7 @@ GoJS是一个JavaScript库，可以让您轻松地在现代Web浏览器中创建
         return $(go.Node,
           $('HyperlinkText', 
             function(node) {
-              return `http://newgateway.gitee.io/my/ui/components/${node.data.key}.html` 
+              return `http://myui.vtj.pro/my/ui/components/${node.data.key}.html` 
             }, 
             $(go.Panel, 'Auto',
               $(go.Shape, { fill: '#1F4963', stroke: null }),
