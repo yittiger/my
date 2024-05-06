@@ -1,0 +1,1 @@
+(function(global){global.__MY_THEMES_map__={"dark":"/my-web/map/assets/css/dark-style.ec5ddebc.css"}})(window)
