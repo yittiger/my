@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d230a36"],{ecac:function(e,c,n){"use strict";n.r(c);var t=function(){var e=this,c=e.$createElement,n=e._self._c||c;return n("div")},a=[],r=(n("ac1f"),n("5319"),{created:function(){this.$router.replace("/profile/basic")}}),u=r,i=n("2877"),l=Object(i["a"])(u,t,a,!1,null,null,null);c["default"]=l.exports}}]);

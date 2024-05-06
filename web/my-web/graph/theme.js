@@ -1,0 +1,1 @@
+(function(global){global.__MY_THEMES_graph__={"dark":"/my-web/graph/assets/css/dark-style.f866cdf4.css"}})(window)

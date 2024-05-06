@@ -21,14 +21,14 @@
 
 ## 开发指南
 
-- [官网](http://newgateway.gitee.io/my/)
-- [开发指南](http://newgateway.gitee.io/my/guide/)
-- [基础组件库](http://newgateway.gitee.io/my/ui/components/)
-- [地图应用类库](http://newgateway.gitee.io/my/ui/map/)
-- [组件主题预览](http://newgateway.gitee.io/my-web/#/suit)
+- [官网](http://myui.vtj.pro/my/)
+- [开发指南](http://myui.vtj.pro/my/guide/)
+- [基础组件库](http://myui.vtj.pro/my/ui/components/)
+- [地图应用类库](http://myui.vtj.pro/my/ui/map/)
+- [组件主题预览](http://myui.vtj.pro/my-web/#/suit)
 
 ## 旧版本
-- [xdh-web v3.2](https://newgateway.gitee.io/xdh-web-doc/)
+- [xdh-web v3.2](https://myui.vtj.pro/xdh-web-doc/)
 
 ## 安装
 
